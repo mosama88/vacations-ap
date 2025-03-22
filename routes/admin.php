@@ -4,11 +4,13 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\AdminLoginController;
 use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Dashboard\FinanceCalendarController;
 
 
 Route::middleware('auth:admin')->group(function () {
-    Route::get('/', [DashboardController::class, 'index'])
-        ->name('index');
+    Route::get('/', [DashboardController::class, 'index'])->name('index');
+    //--------------------------------------- Finance Calendars
+    Route::resource('/financeCalendars', FinanceCalendarController::class);
 });
 
 

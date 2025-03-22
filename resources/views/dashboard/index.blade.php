@@ -1,6 +1,19 @@
 @extends('dashboard.layouts.master')
+@section('active-dashboard', 'active')
 @section('title', 'الصفحة الرئيسية')
 @section('content')
+
+
+    @include('dashboard.layouts.breadcrumb', [
+        'pageTitle' => 'لوحة التحكم',
+        'previousPage' => '',
+        'urlPreviousPage' => '',
+        'currentPage' => 'الصفحه الرئيسية',
+    ])
+
+
+
+
     <section class="content">
         <div class="container-fluid">
             <!-- Small boxes (Stat box) -->
