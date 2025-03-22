@@ -17,7 +17,6 @@ return new class extends Migration
         Schema::create('leave_balances', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Employee::class)->nullable()->constrained()->nullOnDelete();
-            $table->foreignIdFor(Leave::class)->nullable()->constrained()->nullOnDelete();
             $table->foreignIdFor(FinanceCalendar::class)->nullable()->constrained()->nullOnDelete();
             $table->integer('total_days')->nullable();
             $table->integer('used_days')->nullable();
