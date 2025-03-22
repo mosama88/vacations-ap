@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\FinanceCalendar;
+use App\Models\Month;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,12 +15,12 @@ return new class extends Migration
     {
         Schema::create('finance_cln_periods', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('finance_calendars_id')->references('id')->on('finance_calendars')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignIdFor(FinanceCalendar::class)->nullable()->constrained()->nullOnDelete();
             $table->string('finance_yr')->comment('السنة المالية');
-            $table->foreignId('month_id')->references('id')->on('months')->onDelete('cascade')->onUpdate('cascade')->comment('كود الشهر المالى');
+            $table->foreignIdFor(Month::class)->nullable()->constrained()->nullOnDelete();
             $table->string('year_and_month', 10)->comment('محتاج ان اقوم بالتسجيل بالشهر و السنه و ليس باليوم');
-            $table->date('start_date_m');
-            $table->date('end_date_m');
+            $table->date('start_date_month');
+            $table->date('end_date_month');
             $table->integer('number_of_days')->comment('عدد الايام فى الشهر');
             $table->enum('status', [0, 1, 2])->default(0); //غير مفعله او مفعله
             $table->foreignId('created_by')->references('id')->on('admins')->onUpdate('cascade');
