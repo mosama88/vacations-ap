@@ -3,22 +3,26 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\AdminLoginController;
+use App\Http\Controllers\Dashboard\DashboardController;
 
-Route::get('/', function () {
-    return view('welcome');
+
+Route::middleware('auth:admin')->group(function () {
+    Route::get('/', [DashboardController::class, 'index'])
+        ->name('index');
 });
 
 
-
-Route::middleware('guest:admin')->name('dashboard.')->group(function () {
+//------------------------ Login
+Route::middleware('guest:admin')->group(function () {
     Route::get('login', [AdminLoginController::class, 'create'])
         ->name('login');
 
     Route::post('login', [AdminLoginController::class, 'store']);
 });
 
-Route::middleware('auth:admin')->name('dashboard.')->group(function () {
 
+//------------------------ Logout
+Route::middleware('auth:admin')->group(function () {
     Route::post('logout', [AdminLoginController::class, 'destroy'])
         ->name('logout');
 });

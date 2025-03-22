@@ -1,5 +1,6 @@
 *{
     direction: rtl !important;
+    font-family: DroidKufi-Regular;
 }
 .layout-fixed .main-sidebar {
     right: 0;
