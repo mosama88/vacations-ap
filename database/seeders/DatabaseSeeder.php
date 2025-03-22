@@ -25,5 +25,12 @@ class DatabaseSeeder extends Seeder
             'name' => 'محمد أسامه',
             'username' => 'mosama',
         ]);
+
+
+        $this->call([
+            WeekSeeder::class,
+            MonthSeeder::class,
+            GovernorateSeeder::class,
+        ]);
     }
 }

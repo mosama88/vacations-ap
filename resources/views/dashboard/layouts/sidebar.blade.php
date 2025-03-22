@@ -49,7 +49,7 @@
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="{{ route('dashboard.financeCalendars.index') }}"
-                                class="nav-link @yield('active-financial')">
+                                class="nav-link @yield('active-financeCalendars')">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>السنوات المالية</p>
                             </a>
