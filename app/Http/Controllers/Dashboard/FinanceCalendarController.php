@@ -93,6 +93,10 @@ class FinanceCalendarController extends Controller
      */
     public function edit(FinanceCalendar $financeCalendar)
     {
+        if ($financeCalendar->status === StatusActive::Active) {
+            return redirect()->back()->withErrors(['error' => 'عفوآ سنه مالية مفتوحة لا يمكن تعديلها ']);
+        }
+
         return view('dashboard.financeCalendars.edit', compact('financeCalendar'));
     }
 

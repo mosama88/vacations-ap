@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Month;
+use App\Enum\StatusOpen;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -46,4 +47,8 @@ class financeClnPeriod extends Model
     {
         return $this->belongsTo(Month::class, 'month_id');
     }
+
+    protected $casts = [
+        'status' => StatusOpen::class,
+    ];
 }
