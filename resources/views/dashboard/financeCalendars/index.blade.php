@@ -2,7 +2,6 @@
 @section('active-financeCalendars', 'active')
 @section('title', 'الصفحة الرئيسية')
 @push('css')
-
 @endpush
 @section('content')
 
@@ -13,7 +12,7 @@
         'currentPage' => 'جدول السنوات المالية',
     ])
 
-@include('dashboard.layouts.message')
+    @include('dashboard.layouts.message')
     <section class="content">
         <div class="container-fluid">
 
@@ -41,7 +40,7 @@
                             </div>
                         </div>
                         <!-- /.card-header -->
-                        <div class="card-body table-responsive p-0">
+                        <div class="card-body p-0">
                             <table class="table table-head-fixed text-nowrap">
                                 <thead>
                                     <tr>
@@ -79,7 +78,7 @@
                                                     لا يوجد تحديث
                                                 @endif
                                             </td>
-                                            <td class="project-actions">
+                                            {{-- <td class="project-actions">
                                                 <a class="btn btn-primary btn-sm"
                                                     href="{{ route('dashboard.financeCalendars.show', $info->id) }}">
                                                     <i class="fas fa-folder">
@@ -94,7 +93,38 @@
                                                     <i class="fas fa-trash">
                                                     </i>
                                                 </a>
+                                            </td> --}}
+
+                                            <td>
+                                                <!-- Example single danger button -->
+                                                <div class="btn-group">
+                                                    <button type="button" class="btn btn-secondary  dropdown-toggle"
+                                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                                        Action
+                                                    </button>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a class="dropdown-item text-primary"
+                                                                href="{{ route('dashboard.financeCalendars.show', $info->id) }}">
+                                                                <i class="fas fa-folder">
+                                                                </i> عرض </li>
+                                                        <li><a class="dropdown-item text-info"
+                                                                href="{{ route('dashboard.financeCalendars.edit', $info->id) }}">
+                                                                <i class="fas fa-pencil-alt">
+                                                                </i> تعديل </li>
+                                                        <li><a class="dropdown-item text-danger"
+                                                                href="{{ route('dashboard.financeCalendars.destroy', $info->id) }}">
+                                                                <i class="fas fa-trash">
+                                                                </i> حذف </li>
+                                                        <li>
+                                                            <hr class="dropdown-divider">
+                                                        </li>
+                                                        <li><a class="dropdown-item" href="#">Separated link</a></li>
+                                                    </ul>
+                                                </div>
                                             </td>
+
+
+
                                         </tr>
                                     @empty
                                         <div class="alert alert-primary" role="alert">
@@ -115,4 +145,8 @@
     </section>
 
 @endsection
-
+@push('js')
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
+@endpush
