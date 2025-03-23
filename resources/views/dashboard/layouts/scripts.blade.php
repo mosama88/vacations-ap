@@ -35,5 +35,15 @@
     <script src="{{ asset('dashboard') }}/assets/dist/js/pages/dashboard.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="{{ asset('dashboard') }}/assets/dist/js/demo.js"></script>
-    
+
+    <!-- Toastr -->
+    <script src="{{ asset('dashboard') }}/assets/plugins/toastr/toastr.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            @if ($errors->has('error'))
+                toastr.error('{{ $errors->first('error') }}');
+            @endif
+        });
+    </script>
     @stack('js')

@@ -1,6 +1,9 @@
 @extends('dashboard.layouts.master')
 @section('active-financeCalendars', 'active')
 @section('title', 'الصفحة الرئيسية')
+@push('css')
+
+@endpush
 @section('content')
 
     @include('dashboard.layouts.breadcrumb', [
@@ -110,4 +113,6 @@
             <!-- /.row (main row) -->
         </div><!-- /.container-fluid -->
     </section>
+
 @endsection
+

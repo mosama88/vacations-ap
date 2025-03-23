@@ -29,5 +29,6 @@
 <!-- Custom style for RTL -->
 <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/custom.css">
 <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/style.css">
-
+<!-- Toastr -->
+<link rel="stylesheet" href="{{ asset('dashboard') }}/assets/plugins/toastr/toastr.min.css">
 @stack('css')

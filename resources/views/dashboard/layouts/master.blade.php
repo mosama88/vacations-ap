@@ -20,7 +20,7 @@
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
-   
+
             <!-- /.content-header -->
 
             <!-- Main content -->
@@ -39,6 +39,8 @@
     <!-- ./wrapper -->
 
     @include('dashboard.layouts.scripts')
+
 </body>
 
 </html>
+
