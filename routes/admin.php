@@ -10,7 +10,14 @@ use App\Http\Controllers\Dashboard\FinanceCalendarController;
 Route::middleware('auth:admin')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('index');
     //--------------------------------------- Finance Calendars
+
+
+    // بداية تكويد السنوات المالية
     Route::resource('/financeCalendars', FinanceCalendarController::class);
+    Route::controller(FinanceCalendarController::class)->name('financeCalendars.')->prefix('financeCalendars')->group(function () {
+        Route::get('open/{id}', 'open')->name('open');
+        Route::get('close/{id}', 'close')->name('close');
+    });
 });
 
 
