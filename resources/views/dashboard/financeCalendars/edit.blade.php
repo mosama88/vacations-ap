@@ -67,8 +67,9 @@
                                     <div class="form-group col-6">
                                         <label>نهاية السنه</label>
                                         <input type="date" name="end_date"
-                                            class="form-control @error('end_date', $financeCalendar['end_date']) is-invalid @enderror"
-                                            value="{{ old('end_date') }}" placeholder="أدخل السنه المالية">
+                                            class="form-control @error('end_date') is-invalid @enderror"
+                                            value="{{ old('end_date', $financeCalendar['end_date']) }}"
+                                            placeholder="أدخل السنه المالية">
                                         @error('end_date')
                                             <span class="invalid-feedback text-right" role="alert">
                                                 <strong>{{ $message }}</strong>

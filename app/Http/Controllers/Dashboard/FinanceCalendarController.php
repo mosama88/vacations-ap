@@ -13,6 +13,10 @@ use App\Models\financeClnPeriod;
 use App\Http\Controllers\Controller;
 use Illuminate\Container\Attributes\Auth;
 use App\Http\Requests\Dashboard\FinanceCalendarRequest;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
+
+
 
 class FinanceCalendarController extends Controller
 {
@@ -76,7 +80,8 @@ class FinanceCalendarController extends Controller
                 financeClnPeriod::insert($dataMonth);
             }
         }
-        return redirect()->route('dashboard.financeCalendars.index')->with('success', 'تم أضافة السنه المالية بنجاح');
+        session()->flash('success', 'تم أضافة السنه المالية بنجاح!');
+        return redirect()->route('dashboard.financeCalendars.index');
     }
 
     /**
@@ -103,10 +108,68 @@ class FinanceCalendarController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(FinanceCalendarRequest $request, $id)
     {
-        //
+
+        $data = FinanceCalendar::select('*')->where(['id' => $id])->first();
+        if (empty($data)) {
+            return redirect()->back()->with(['error' => ' عفوا حدث خطأ ']);
+        }
+        if ($data->status === StatusActive::Active) {
+            return redirect()->route('dashboard.financeCalendars.index')->withErrors(['error' => 'عفوآ سنه مالية مفتوحة لا يمكن تعديلها ']);
+        }
+        $validator = Validator::make($request->all(), [
+            'finance_yr' => ['required', Rule::unique('finance_calendars')->ignore($id)],
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->with(['error' => ' عفوا اسم السنة المالية مسجل من قبل'])->withInput();
+        }
+
+        $FinanceCalendar['finance_yr'] = $request->finance_yr;
+        $FinanceCalendar['finance_yr_desc'] = $request->finance_yr_desc;
+        $FinanceCalendar['start_date'] = $request->start_date;
+        $FinanceCalendar['end_date'] = $request->end_date;
+        $FinanceCalendar['updated_by'] = auth()->guard('admin')->user()->id;
+        $UpdateData = FinanceCalendar::where(['id' => $id])->update($FinanceCalendar);
+        if ($UpdateData) {
+            if ($data['start_date'] != $request->start_date or $data['end_date'] != $request->end_date) {
+                $flagDelete = FinanceClnPeriod::where(['finance_calendar_id' => $id])->delete();
+                if ($flagDelete) {
+                    $startDate = new DateTime($request->start_date);
+                    $endDate = new DateTime($request->end_date);
+                    $dareInterval = new DateInterval('P1M');
+                    $datePerioud = new DatePeriod($startDate, $dareInterval, $endDate);
+                    foreach ($datePerioud as $date) {
+                        $dataMonth['finance_calendar_id'] = $id;
+                        $Montname_en = $date->format('F');
+                        $dataParentMonth = Month::select('id')->where(['name->en' => $Montname_en])->first();
+                        $dataMonth['month_id'] = $dataParentMonth['id'];
+                        $dataMonth['finance_yr'] = $FinanceCalendar['finance_yr'];
+                        $dataMonth['start_date_month'] = date('Y-m-01', strtotime($date->format('Y-m-d')));
+                        $dataMonth['end_date_month'] = date('Y-m-t', strtotime($date->format('Y-m-d')));
+                        $dataMonth['year_and_month'] = date('Y-m', strtotime($date->format('Y-m-d')));
+                        $datediff = strtotime($dataMonth['end_date_month']) - strtotime($dataMonth['start_date_month']);
+                        $dataMonth['number_of_days'] = round($datediff / (60 * 60 * 24)) + 1;
+                        $dataMonth['updated_at'] = now();
+                        $dataMonth['created_at'] = now();
+                        $dataMonth['created_by'] = auth()->guard('admin')->user()->id;
+                        $dataMonth['updated_by'] = auth()->guard('admin')->user()->id;
+                        $dataMonth['start_date_fp'] = date('Y-m-01', strtotime($date->format('Y-m-d')));
+                        $dataMonth['end_date_fp'] = date('Y-m-t', strtotime($date->format('Y-m-d')));
+                        FinanceClnPeriod::create($dataMonth);
+                    }
+                }
+            }
+        }
+
+        session()->flash('success', 'تم تعديل السنه المالية بنجاح!');
+        return redirect()->route('dashboard.financeCalendars.index');
     }
+
+
+
+
 
     /**
      * Remove the specified resource from storage.

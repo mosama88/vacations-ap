@@ -22,7 +22,7 @@ class financeClnPeriod extends Model
         'end_date_month',
         'number_of_days',
         'status',
-        'created_by ',
+        'created_by',
         'updated_by',
     ];
 

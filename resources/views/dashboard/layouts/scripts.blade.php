@@ -39,11 +39,5 @@
     <!-- Toastr -->
     <script src="{{ asset('dashboard') }}/assets/plugins/toastr/toastr.min.js"></script>
 
-    <script>
-        $(document).ready(function() {
-            @if ($errors->has('error'))
-                toastr.error('{{ $errors->first('error') }}');
-            @endif
-        });
-    </script>
+
     @stack('js')
