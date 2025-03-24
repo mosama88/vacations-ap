@@ -1,15 +1,15 @@
 @extends('dashboard.layouts.master')
-@section('active-branches', 'active')
+@section('active-employees', 'active')
 @section('title', 'الصفحة الرئيسية')
 @push('css')
 @endpush
 @section('content')
 
     @include('dashboard.layouts.breadcrumb', [
-        'pageTitle' => 'الفروع',
+        'pageTitle' => 'الموظفين',
         'previousPage' => 'لوحة التحكم',
         'urlPreviousPage' => 'index',
-        'currentPage' => 'جدول الفروع',
+        'currentPage' => 'جدول الموظفين',
     ])
 
     @include('dashboard.layouts.message')
@@ -21,7 +21,7 @@
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">
-                                <a href="{{ route('dashboard.branches.create') }}"
+                                <a href="{{ route('dashboard.employees.create') }}"
                                     class="btn btn-block text-white btn-success"> <i class="fas fa-plus-circle mx-1"></i>
                                     أنشاء</a>
                             </h3>
@@ -45,7 +45,7 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>أسم الفرع</th>
+                                        <th>أسم الموظف</th>
                                         <th>المحافظة</th>
                                         <th>أنشاء بواسطة</th>
                                         <th>تحديث بواسطة</th>
@@ -68,7 +68,7 @@
                                             </td>
                                             <td class="project-actions">
                                                 @include('dashboard.partials.action', [
-                                                    'name' => 'branches',
+                                                    'name' => 'employees',
                                                     'name_id' => $info,
                                                 ])
 

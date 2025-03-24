@@ -2,8 +2,14 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Http\Controllers\Controller;
+use App\Models\Week;
+use App\Models\Branch;
+use App\Models\Employee;
+use App\Models\JobGrade;
+use App\Models\Governorate;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Dashboard\EmployeeRequest;
 
 class EmployeeController extends Controller
 {
@@ -12,7 +18,8 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        //
+        $data = Employee::orderByDesc('id')->paginate(10);
+        return view('dashboard.employees.index', compact('data'));
     }
 
     /**
@@ -20,15 +27,29 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        //
+        $other['governorates'] = Governorate::get();
+        $other['weeks'] = Week::get();
+        $other['job_grades'] = JobGrade::get();
+        $other['branches'] = Branch::get();
+        return view('dashboard.employees.create', compact('other'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(EmployeeRequest $request)
     {
-        //
+        $lastEmployees = Employee::orderByDesc('employee_code')->value('employee_code');
+        $new_employeeCode = $lastEmployees ? $lastEmployees + 1 : 1000;
+        $employees = $request->validated();
+        $data = array_merge($employees, [
+            'employee_code' => $new_employeeCode,
+            'created_by' => auth()->guard('admin')->user()->id,
+        ]);
+        Employee::create($data);
+        session()->flash('success', 'تم أضافة الموظف بنجاح');
+
+        return redirect()->route('dashboard.employees.index');
     }
 
     /**

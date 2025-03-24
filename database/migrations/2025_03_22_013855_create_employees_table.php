@@ -17,9 +17,10 @@ return new class extends Migration
     {
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
+            $table->integer('employee_code')->unique();
             $table->string('name', 255);
             $table->string('slug', 255)->nullable();
-            $table->string('username', 20);
+            $table->string('username', 20)->unique();
             $table->string('password');
             $table->string('mobile');
             $table->foreignIdFor(Week::class)->nullable()->constrained()->nullOnDelete();

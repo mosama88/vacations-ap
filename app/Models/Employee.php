@@ -20,6 +20,7 @@ class Employee extends Authenticatable implements HasMedia
     protected $table = 'employees';
 
     protected $fillable = [
+        'employee_code',
         'name',
         'slug',
         'username',
