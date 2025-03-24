@@ -55,17 +55,24 @@ class EmployeeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Employee $employee)
     {
-        //
+        $other['governorates'] = Governorate::get();
+        $other['weeks'] = Week::get();
+        $other['job_grades'] = JobGrade::get();
+        $other['branches'] = Branch::get();
+        return view('dashboard.employees.show', compact('employee', 'other'));
     }
-
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Employee $employee)
     {
-        //
+        $other['governorates'] = Governorate::get();
+        $other['weeks'] = Week::get();
+        $other['job_grades'] = JobGrade::get();
+        $other['branches'] = Branch::get();
+        return view('dashboard.employees.edit', compact('employee', 'other'));
     }
 
     /**

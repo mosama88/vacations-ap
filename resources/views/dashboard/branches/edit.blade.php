@@ -64,7 +64,7 @@
                     <!-- /.card-body -->
 
                     <div class="card-footer text-center ">
-                        <button type="submit" class="btn btn-primary">حفظ البيانات <i class="fas fa-save mx-1"></i>
+                        <button type="submit" class="btn btn-info">حفظ البيانات <i class="fas fa-save mx-1"></i>
                         </button>
                     </div>
                     </form>
