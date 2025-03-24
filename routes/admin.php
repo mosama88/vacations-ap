@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\AdminLoginController;
+use App\Http\Controllers\Dashboard\BranchController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\FinanceCalendarController;
 
@@ -18,6 +19,10 @@ Route::middleware('auth:admin')->group(function () {
         Route::get('open/{id}', 'open')->name('open');
         Route::get('close/{id}', 'close')->name('close');
     });
+
+
+    // بداية تكويد الفروع
+    Route::resource('/branches', BranchController::class);
 });
 
 

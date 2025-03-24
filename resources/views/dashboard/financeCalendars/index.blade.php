@@ -78,25 +78,8 @@
                                                     لا يوجد تحديث
                                                 @endif
                                             </td>
-                                            {{-- <td class="project-actions">
-                                                <a class="btn btn-primary btn-sm"
-                                                    href="{{ route('dashboard.financeCalendars.show', $info->id) }}">
-                                                    <i class="fas fa-folder">
-                                                    </i>
-                                                </a>
-                                                <a class="btn btn-info btn-sm"
-                                                    href="{{ route('dashboard.financeCalendars.edit', $info->id) }}">
-                                                    <i class="fas fa-pencil-alt">
-                                                    </i>
-                                                </a>
-                                                <a class="btn btn-danger btn-sm" href="#">
-                                                    <i class="fas fa-trash">
-                                                    </i>
-                                                </a>
-                                            </td> --}}
-
+                                            
                                             <td>
-                                                <!-- Example single danger button -->
                                                 <div class="btn-group">
                                                     <button type="button" class="btn btn-secondary  dropdown-toggle"
                                                         data-bs-toggle="dropdown" aria-expanded="false">

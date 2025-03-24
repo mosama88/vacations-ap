@@ -55,7 +55,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="./index.html" class="nav-link @yield('active-branches')">
+                            <a href="{{ route('dashboard.branches.index') }}" class="nav-link @yield('active-branches')">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>الفروع</p>
                             </a>

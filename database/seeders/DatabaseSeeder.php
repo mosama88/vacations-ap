@@ -31,6 +31,7 @@ class DatabaseSeeder extends Seeder
             WeekSeeder::class,
             MonthSeeder::class,
             GovernorateSeeder::class,
+            BranchSeeder::class,
         ]);
     }
 }
