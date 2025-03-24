@@ -22,8 +22,6 @@ return new class extends Migration
             $table->string('username', 20);
             $table->string('password');
             $table->string('mobile');
-            $table->date('hiring_date');
-            $table->date('birth_date');
             $table->foreignIdFor(Week::class)->nullable()->constrained()->nullOnDelete();
             $table->foreignIdFor(JobGrade::class)->nullable()->constrained()->nullOnDelete();
             $table->foreignIdFor(Branch::class)->nullable()->constrained()->nullOnDelete();
