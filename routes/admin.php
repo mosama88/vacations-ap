@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\AdminLoginController;
 use App\Http\Controllers\Dashboard\BranchController;
+use App\Http\Controllers\Dashboard\JobGradeController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\FinanceCalendarController;
 
@@ -23,6 +24,9 @@ Route::middleware('auth:admin')->group(function () {
 
     // بداية تكويد الفروع
     Route::resource('/branches', BranchController::class);
+
+    // بداية تكويد الدرجات الوظيفية
+    Route::resource('/jobGrades', JobGradeController::class);
 });
 
 

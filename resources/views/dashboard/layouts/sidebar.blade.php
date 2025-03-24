@@ -63,7 +63,7 @@
 
 
                         <li class="nav-item">
-                            <a href="./index.html" class="nav-link @yield('active-jobGrades')">
+                            <a href="{{ route('dashboard.jobGrades.index') }}" class="nav-link @yield('active-jobGrades')">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>الدرجات الوظيفية</p>
                             </a>
