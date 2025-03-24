@@ -1,12 +1,12 @@
 @extends('dashboard.layouts.master')
-@section('active-branches', 'active')
+@section('active-jobGrades', 'active')
 @section('title', 'عرض الدرجه الوظيفية')
 @section('content')
 
     @include('dashboard.layouts.breadcrumb', [
         'pageTitle' => 'عرض الدرجه الوظيفية',
         'previousPage' => 'جدول الفروع',
-        'urlPreviousPage' => 'branches.index',
+        'urlPreviousPage' => 'jobGrades.index',
         'currentPage' => 'عرض الدرجه الوظيفية',
     ])
 
@@ -26,7 +26,7 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="exampleInputName">اسم الدرجه الوظيفية</label>
-                                <input type="text" name="name" value="{{ old('name', $branch->name) }}"
+                                <input type="text" name="name" value="{{ old('name', $jobGrade->name) }}"
                                     class="form-control @error('name') is-invalid @enderror" id="exampleInputName"
                                     placeholder="أدخل الدرجه الوظيفية">
                             </div>

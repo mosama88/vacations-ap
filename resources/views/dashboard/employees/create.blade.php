@@ -1,13 +1,13 @@
 @extends('dashboard.layouts.master')
 @section('active-branches', 'active')
-@section('title', 'أنشاء درجه وظيفية جديدة')
+@section('title', 'أنشاء فرع جديد')
 @section('content')
 
     @include('dashboard.layouts.breadcrumb', [
-        'pageTitle' => 'أنشاء درجه وظيفية جديدة',
+        'pageTitle' => 'أنشاء فرع جديد',
         'previousPage' => 'جدول الفروع',
-        'urlPreviousPage' => 'jobGrades.index',
-        'currentPage' => 'أنشاء درجه وظيفية جديدة',
+        'urlPreviousPage' => 'branches.index',
+        'currentPage' => 'أنشاء فرع جديد',
     ])
 
     @include('dashboard.layouts.message')
@@ -20,25 +20,43 @@
                     <!-- general form elements -->
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">أنشاء درجه وظيفية جديدة</h3>
+                            <h3 class="card-title">أنشاء فرع جديد</h3>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="{{ route('dashboard.job_grades.store') }}" method="POST">
+                        <form action="{{ route('dashboard.branches.store') }}" method="POST">
                             @csrf
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="exampleInputName">اسم الدرجه وظيفية</label>
+                                    <label for="exampleInputName">اسم الفرع</label>
                                     <input type="text" name="name" value="{{ old('name') }}"
                                         class="form-control @error('name') is-invalid @enderror" id="exampleInputName"
-                                        placeholder="أدخل اسم الدرجه وظيفية">
+                                        placeholder="أدخل فرع جديد">
                                     @error('name')
                                         <span class="invalid-feedback text-right" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
                                 </div>
-
+                                <div class="form-group">
+                                    <label for="exampleSelectBorder">المحافظة التابع لها <code>الفرع</code></label>
+                                    <select name="governorate_id"
+                                        class="custom-select form-control-border @error('governorate_id') is-invalid @enderror"
+                                        id="exampleSelectBorder">
+                                        <option value="">-- أختر المحافظة --</option>
+                                        @forelse ($other['governorates'] as $governorate)
+                                            <option @if (old('governorate_id') == $governorate->id) selected @endif
+                                                value="{{ $governorate->id }}">{{ $governorate->name }}</option>
+                                        @empty
+                                            عفوآ لا توجد بيانات!
+                                        @endforelse
+                                    </select>
+                                    @error('governorate_id')
+                                        <span class="invalid-feedback text-right" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
                             </div>
 
                     </div>

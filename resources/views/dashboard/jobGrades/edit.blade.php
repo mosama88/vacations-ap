@@ -1,12 +1,12 @@
 @extends('dashboard.layouts.master')
-@section('active-branches', 'active')
+@section('active-jobGrades', 'active')
 @section('title', 'تعديل الدرجه الوظيفية')
 @section('content')
 
     @include('dashboard.layouts.breadcrumb', [
         'pageTitle' => 'تعديل الدرجه الوظيفية',
         'previousPage' => 'جدول الفروع',
-        'urlPreviousPage' => 'branches.index',
+        'urlPreviousPage' => 'jobGrades.index',
         'currentPage' => 'تعديل الدرجه الوظيفية',
     ])
 
@@ -24,13 +24,13 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="{{ route('dashboard.job_grades.update', $branch->slug) }}" method="POST">
+                        <form action="{{ route('dashboard.jobGrades.update', $jobGrade->slug) }}" method="POST">
                             @csrf
                             @method('PUT')
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="exampleInputName">اسم الدرجه الوظيفية</label>
-                                    <input type="text" name="name" value="{{ old('name', $branch->name) }}"
+                                    <input type="text" name="name" value="{{ old('name', $jobGrade->name) }}"
                                         class="form-control @error('name') is-invalid @enderror" id="exampleInputName"
                                         placeholder="أدخل الدرجه">
                                     @error('name')
