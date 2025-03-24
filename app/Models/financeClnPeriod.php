@@ -51,4 +51,6 @@ class financeClnPeriod extends Model
     protected $casts = [
         'status' => StatusOpen::class,
     ];
+
+ 
 }

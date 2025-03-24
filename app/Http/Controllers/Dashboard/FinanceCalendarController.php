@@ -6,6 +6,7 @@ use DateTime;
 use DatePeriod;
 use DateInterval;
 use App\Models\Month;
+use App\Enum\StatusOpen;
 use App\Enum\StatusActive;
 use Illuminate\Http\Request;
 use App\Models\FinanceCalendar;
@@ -182,77 +183,59 @@ class FinanceCalendarController extends Controller
 
     public function open($id)
     {
-        try {
-
-            $data = FinanceCalendar::select('*')->where(['id' => $id])->first();
-            if (empty($data)) {
-                return redirect()->back()->with(['error' => ' عفوا حدث خطأ ']);
-            }
-            if ($data['is_open'] != 0) {
-                return redirect()->back()->with(['error' => ' عفوا لايمكن فتح السنة المالية في هذه الحالة']);
-            }
-            $CheckDataOpenCounter = FinanceCalendar::where(['is_open' => 1])->count();
-            if ($CheckDataOpenCounter > 0) {
-                return redirect()->back()->with(['error' => '   عفوا هناك بالفعل سنة مالية مازالت مفتوحة ']);
-            }
-            $dataToUpdate['is_open'] = 1;
-            $dataToUpdate['updated_by'] = auth()->guard('admin')->user()->id;
-            $flag = FinanceCalendar::where(['id' => $id])->update($dataToUpdate);
-
-            return redirect()->route('dashboard.financeCalendars.index')->with(['success' => 'تم تحديث البيانات بنجاح']);
-        } catch (\Exception $ex) {
-            return redirect()->back()->with(['error' => ' عفوا حدث خطأ '] . $ex->getMessage());
+        $data = FinanceCalendar::select('*')->where(['id' => $id])->first();
+        if (empty($data)) {
+            return redirect()->route('dashboard.financeCalendars.index')->withErrors(['error' => 'عفوآ حدث خطأ ']);
         }
+        if ($data->status === StatusActive::Active) {
+            return redirect()->route('dashboard.financeCalendars.index')->withErrors(['error' => ' عفوا لايمكن فتح السنة المالية في هذه الحالة']);
+        }
+
+        $CheckDataOpenCounter = FinanceCalendar::where(['status' => StatusActive::Active])->count();
+        if ($CheckDataOpenCounter > 0) {
+            return redirect()->back()->with(['error' => '   عفوا هناك بالفعل سنة مالية مازالت مفتوحة ']);
+        }
+        $dataToUpdate['status'] = StatusActive::Active;
+        $dataToUpdate['updated_by'] = auth()->guard('admin')->user()->id;
+        FinanceCalendar::where(['id' => $id])->update($dataToUpdate);
+
+        session()->flash('success', 'تم تحديث البيانات بنجاح!');
+
+        return redirect()->route('dashboard.financeCalendars.index');
     }
+
+
+
 
     public function close($id)
     {
-        try {
+        // البحث عن بيانات السنة المالية باستخدام المعرف المقدم
+        $data = FinanceCalendar::select('*')->where('id', $id)->first();
 
-            // ابدأ معاملة قاعدة البيانات
-            DB::beginTransaction();
-
-            // البحث عن بيانات السنة المالية باستخدام المعرف المقدم
-            $data = FinanceCalendar::select('*')->where('id', $id)->first();
-
-            // التحقق من وجود البيانات
-            if (empty($data)) {
-                return redirect()->back()->with(['error' => 'عفوا، لا توجد بيانات للسنة المالية المحددة.']);
-            }
-
-            // البحث عن الشهور المفتوحة أو المعلقة
-            $finance_cln_periods = FinanceClnPeriod::where('finance_calendars_id', $id)
-                ->whereIn('is_open', [0, 1]) // تحقق من الشهور المعلقة أو المفتوحة
-                ->count();
-
-            // إذا كان هناك شهور معلقة أو مفتوحة
-            if ($finance_cln_periods > 0) {
-                return redirect()->back()->with(['error' => 'عفوا، هناك شهور مالية معلقة أو مفتوحة. لا يمكن غلق السنة المالية حتى يتم أرشفة جميع الشهور.']);
-            }
-
-            // تحديث حالة السنة المالية إلى مؤرشف (مغلقة)
-            $dataToUpdate = [
-                'is_open' => 2,
-                'updated_by' => auth()->guard('admin')->user()->id,
-            ];
-
-            $flag = FinanceCalendar::where('id', $id)->update($dataToUpdate);
-
-            if ($flag) {
-                // إذا تم التحديث بنجاح، قم بتأكيد المعاملة
-                DB::commit();
-
-                return redirect()->route('dashboard.financeCalendars.index')->with(['success' => 'تم غلق السنة المالية بنجاح.']);
-            } else {
-                // إذا لم يتم التحديث، ارجع بخطأ
-                DB::rollBack();
-
-                return redirect()->back()->with(['error' => 'حدث خطأ أثناء تحديث البيانات.']);
-            }
-        } catch (\Exception $e) {
-            // في حالة حدوث خطأ، قم بالتراجع عن المعاملة
-            DB::rollBack();
-            return redirect()->back()->with('error', 'حدث خطأ أثناء التعديل: ' . $e->getMessage());
+        // التحقق من وجود البيانات
+        if (empty($data)) {
+            return redirect()->back()->with(['error' => 'عفوا، لا توجد بيانات للسنة المالية المحددة.']);
         }
+
+        // البحث عن الشهور المفتوحة أو المعلقة
+        $finance_cln_periods = FinanceClnPeriod::where('finance_calendar_id', $id)
+            ->whereIn('status', [StatusOpen::Pending, StatusOpen::Open]) // تحقق من الشهور المعلقة أو المفتوحة
+            ->count();
+
+        // إذا كان هناك شهور معلقة أو مفتوحة
+        if ($finance_cln_periods > 0) {
+            return redirect()->route('dashboard.financeCalendars.index')->withErrors(['error' => ' عفوا، هناك شهور مالية معلقة أو مفتوحة. لا يمكن غلق السنة المالية حتى يتم أرشفة جميع الشهور.']);
+        }
+
+        // تحديث حالة السنة المالية إلى مؤرشف (مغلقة)
+        $dataToUpdate = [
+            'status' =>  StatusOpen::Archive,
+            'updated_by' => auth()->guard('admin')->user()->id,
+        ];
+
+        FinanceCalendar::where('id', $id)->update($dataToUpdate);
+
+        session()->flash('success', 'تم تحديث البيانات بنجاح!');
+        return redirect()->route('dashboard.financeCalendars.index');
     }
 }

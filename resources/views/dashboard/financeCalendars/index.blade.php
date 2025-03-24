@@ -100,31 +100,50 @@
                                                 <div class="btn-group">
                                                     <button type="button" class="btn btn-secondary  dropdown-toggle"
                                                         data-bs-toggle="dropdown" aria-expanded="false">
-                                                        Action
+                                                        العمليات
                                                     </button>
                                                     <ul class="dropdown-menu">
-                                                        <li><a class="dropdown-item text-primary"
+                                                        <li>
+                                                            <a class="dropdown-item text-primary"
                                                                 href="{{ route('dashboard.financeCalendars.show', $info->id) }}">
-                                                                <i class="fas fa-folder">
-                                                                </i> عرض </li>
-                                                        <li><a class="dropdown-item text-info"
+                                                                <i class="mx-1 fas fa-folder">
+                                                                </i> عرض
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item text-info"
                                                                 href="{{ route('dashboard.financeCalendars.edit', $info->id) }}">
-                                                                <i class="fas fa-pencil-alt">
-                                                                </i> تعديل </li>
-                                                        <li><a class="dropdown-item text-danger"
+                                                                <i class="mx-1 fas fa-pencil-alt">
+                                                                </i> تعديل
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item text-danger"
                                                                 href="{{ route('dashboard.financeCalendars.destroy', $info->id) }}">
-                                                                <i class="fas fa-trash">
-                                                                </i> حذف </li>
+                                                                <i class="mx-1 fas fa-trash">
+                                                                </i> حذف
+                                                        </li>
                                                         <li>
                                                             <hr class="dropdown-divider">
                                                         </li>
-                                                        <li><a class="dropdown-item" href="#">Separated link</a></li>
+                                                        @if ($info->status === App\Enum\StatusActive::Inactive)
+                                                            <li>
+                                                                <a class="dropdown-item text-success"
+                                                                    href="{{ route('dashboard.financeCalendars.open', $info->id) }}">
+                                                                    <i class="mx-1 fas fa-lock-open"></i> فتح
+                                                                    السنه</a>
+                                                            </li>
+                                                            @elseif ($info->status === App\Enum\StatusActive::Active)
+                                                                <li>
+                                                                    <a class="dropdown-item text-secondary"
+                                                                        href="{{ route('dashboard.financeCalendars.close', $info->id) }}">
+                                                                        <i class="mx-1 fas fa-lock"></i> غلق
+                                                                        السنه</a>
+                                                                </li>
+                                                            @else
+                                                                السنه مؤرشفه
+                                                            @endif
                                                     </ul>
                                                 </div>
                                             </td>
-
-
-
                                         </tr>
                                     @empty
                                         <div class="alert alert-primary" role="alert">
