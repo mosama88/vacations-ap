@@ -176,9 +176,28 @@ class FinanceCalendarController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request, $id)
     {
-        //
+
+        $financeCalendar = FinanceCalendar::findOrFail($id);
+
+        if ($financeCalendar->status === StatusActive::Active) {
+            return response()->json([
+                'error' => true,
+                'message' => 'عفوآ، سنة مالية مفتوحة لا يمكن تعديلها.'
+            ]);
+        }
+
+        $flagDelete = $financeCalendar->delete();
+
+        if ($flagDelete) {
+            FinanceClnPeriod::where('finance_calendar_id', $id)->delete();
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'تم حذف السنة المالية بنجاح!'
+        ]);
     }
 
     public function open($id)

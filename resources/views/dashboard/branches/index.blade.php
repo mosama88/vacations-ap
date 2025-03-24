@@ -67,20 +67,11 @@
                                                 @endif
                                             </td>
                                             <td class="project-actions">
-                                                <a class="btn btn-primary btn-sm"
-                                                    href="{{ route('dashboard.branches.show', $info->id) }}">
-                                                    <i class="fas fa-folder">
-                                                    </i>
-                                                </a>
-                                                <a class="btn btn-info btn-sm"
-                                                    href="{{ route('dashboard.branches.edit', $info->id) }}">
-                                                    <i class="fas fa-pencil-alt">
-                                                    </i>
-                                                </a>
-                                                <a class="btn btn-danger btn-sm" href="#">
-                                                    <i class="fas fa-trash">
-                                                    </i>
-                                                </a>
+                                                @include('dashboard.partials.action', [
+                                                    'name' => 'branches',
+                                                    'name_id' => $info,
+                                                ])
+
                                             </td>
                                         </tr>
                                     @empty
