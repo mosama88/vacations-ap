@@ -1,13 +1,13 @@
 @extends('dashboard.layouts.master')
 @section('active-branches', 'active')
-@section('title', 'عرض الفرع')
+@section('title', 'عرض بيانات الموظف')
 @section('content')
 
     @include('dashboard.layouts.breadcrumb', [
-        'pageTitle' => 'عرض الفرع',
-        'previousPage' => 'جدول الفروع',
+        'pageTitle' => 'عرض بيانات الموظف',
+        'previousPage' => 'جدول الموظفين',
         'urlPreviousPage' => 'branches.index',
-        'currentPage' => 'عرض الفرع',
+        'currentPage' => 'عرض بيانات الموظف',
     ])
 
     <section class="content">
@@ -18,7 +18,7 @@
                     <!-- general form elements -->
                     <div class="card card-secondary">
                         <div class="card-header">
-                            <h3 class="card-title">عرض الفرع</h3>
+                            <h3 class="card-title">عرض بيانات الموظف</h3>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
@@ -66,11 +66,11 @@
                             </div>
                             <div class="row">
                                 <div class="form-group col-6">
-                                    <label for="exampleSelectBorder">الفرع التابع له <code>الموظف</code></label>
+                                    <label for="exampleSelectBorder">بيانات الموظف التابع له <code>الموظف</code></label>
                                     <select name="branch_id"
                                         class="custom-select form-control-border @error('branch_id') is-invalid @enderror"
                                         id="exampleSelectBorder">
-                                        <option value="">-- أختر الفرع --</option>
+                                        <option value="">-- أختر بيانات الموظف --</option>
                                         @forelse ($other['branches'] as $branche)
                                             <option @if (old('branch_id', $employee->branch_id) == $branche->id) selected @endif
                                                 value="{{ $branche->id }}">{{ $branche->name }}</option>

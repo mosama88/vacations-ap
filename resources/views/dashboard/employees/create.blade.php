@@ -5,7 +5,7 @@
 
     @include('dashboard.layouts.breadcrumb', [
         'pageTitle' => 'أنشاء موظف جديد',
-        'previousPage' => 'جدول الفروع',
+        'previousPage' => 'جدول الموظفين',
         'urlPreviousPage' => 'employees.index',
         'currentPage' => 'أنشاء موظف جديد',
     ])
