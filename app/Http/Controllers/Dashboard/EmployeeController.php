@@ -18,8 +18,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $data = Employee::orderByDesc('id')->paginate(10);
-        return view('dashboard.employees.index', compact('data'));
+        return view('dashboard.employees.index');
     }
 
     /**
