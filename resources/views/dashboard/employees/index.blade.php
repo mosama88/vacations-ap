@@ -46,6 +46,9 @@
                                     <tr>
                                         <th>#</th>
                                         <th>أسم الموظف</th>
+                                        <th>أسم المستخدم</th>
+                                        <th>الموبايل</th>
+                                        <th>الراحه</th>
                                         <th>المحافظة</th>
                                         <th>أنشاء بواسطة</th>
                                         <th>تحديث بواسطة</th>
@@ -57,11 +60,14 @@
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $info->name }}</td>
+                                            <td>{{ $info->username }}</td>
+                                            <td>{{ $info->mobile }}</td>
+                                            <td>{{ $info->week->name }}</td>
                                             <td>{{ $info->governorate->name }}</td>
-                                            <td>{{ $info->createdBy->name }}</td>
+                                            <td>{{ $info->createdBy->username }}</td>
                                             <td>
                                                 @if ($info->updated_by > 0)
-                                                    {{ $info->UpdatedBy->name }}
+                                                    {{ $info->UpdatedBy->username }}
                                                 @else
                                                     لا يوجد تحديث
                                                 @endif

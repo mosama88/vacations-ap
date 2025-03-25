@@ -33,6 +33,7 @@ class DatabaseSeeder extends Seeder
             GovernorateSeeder::class,
             BranchSeeder::class,
             JobGradeSeeder::class,
+            EmployeeSeeder::class,
         ]);
     }
 }

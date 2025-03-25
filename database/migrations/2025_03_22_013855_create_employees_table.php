@@ -22,6 +22,8 @@ return new class extends Migration
             $table->string('slug', 255)->nullable();
             $table->string('username', 20)->unique();
             $table->string('password');
+            $table->enum('gender', [0, 1]);
+            $table->enum('type', [0, 1]);
             $table->string('mobile');
             $table->foreignIdFor(Week::class)->nullable()->constrained()->nullOnDelete();
             $table->foreignIdFor(JobGrade::class)->nullable()->constrained()->nullOnDelete();

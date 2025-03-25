@@ -12,13 +12,6 @@
 
     @include('dashboard.layouts.message')
 
-    @if($errors->any())
-    @foreach($errors->all() as $error)
-    <div class="alert alert-danger text-center">
-            {{$error}}
-        </div>
-    @endforeach
-@endif
 
     <section class="content">
         <div class="container-fluid">
@@ -167,7 +160,40 @@
                                         @enderror
                                     </div>
                                 </div>
-
+                                <div class="row">
+                                    <div class="form-group col-6">
+                                        <label for="exampleSelectBorder">نوع الجنس</code></label>
+                                        <select name="gender"
+                                            class="custom-select form-control-border @error('gender') is-invalid @enderror"
+                                            id="exampleSelectBorder">
+                                            <option value="">-- أختر النوع --</option>
+                                            <option @if (old('gender') == 0) selected @endif
+                                                value="{{ App\Enum\EmployeeGender::Male }}">ذكر</option>
+                                            <option @if (old('gender') == 1) selected @endif
+                                                value="{{ App\Enum\EmployeeGender::Female }}">انثى</option>
+                                        </select>
+                                        @error('gender')
+                                            <span class="invalid-feedback text-right" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <label for="exampleSelectBorder">نوع حساب الموظف</code></label>
+                                        <select name="type"
+                                            class="custom-select form-control-border @error('type') is-invalid @enderror"
+                                            id="exampleSelectBorder">
+                                            <option value="">-- أختر نوع الحساب --</option>
+                                            <option @if (old('type') == 0) selected @endif value="{{ App\Enum\EmployeeType::User }}">موظف</option>
+                                            <option @if (old('type') == 1) selected @endif value="{{ App\Enum\EmployeeType::Manager }}">مدير</option>
+                                        </select>
+                                        @error('type')
+                                            <span class="invalid-feedback text-right" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
 
                             </div>
 
