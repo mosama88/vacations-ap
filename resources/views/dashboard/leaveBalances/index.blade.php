@@ -45,10 +45,11 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>أسم الفرع</th>
-                                        <th>المحافظة</th>
-                                        <th>أنشاء بواسطة</th>
-                                        <th>تحديث بواسطة</th>
+                                        <th>أسم الموظف</th>
+                                        <th>السنه</th>
+                                        <th>رصيد</th>
+                                        <th>الرصيد المستخدم</th>
+                                        <th>الرصيد المتبقى</th>
                                         <th>العمليات</th>
                                     </tr>
                                 </thead>
@@ -56,16 +57,12 @@
                                     @forelse ($data as $info)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $info->name }}</td>
-                                            <td>{{ $info->governorate->name }}</td>
-                                            <td>{{ $info->createdBy->name }}</td>
-                                            <td>
-                                                @if ($info->updated_by > 0)
-                                                    {{ $info->UpdatedBy->name }}
-                                                @else
-                                                    لا يوجد تحديث
-                                                @endif
-                                            </td>
+                                            <td>{{ $info->employee->name }}</td>
+                                            <td>{{ $info->financeCalendar->finance_yr }}</td>
+                                            <td>{{ $info->total_days }}</td>
+                                            <td>{{ $info->used_days }}</td>
+                                            <td>{{ $info->remainig_days }}</td>
+
                                             <td class="project-actions">
                                                 @include('dashboard.partials.action', [
                                                     'name' => 'leaveBalances',

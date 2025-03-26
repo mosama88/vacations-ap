@@ -40,7 +40,7 @@ class LeaveBalanceController extends Controller
             'created_by' => auth()->guard('admin')->user()->id,
         ]);
         LeaveBalance::create($data);
-        session()->flash('success', 'تم أضافة الفرع بنجاح');
+        session()->flash('success', 'تم أضافة رصيد أجازات الموظف بنجاح');
 
         return redirect()->route('dashboard.leaveBalances.index');
     }
@@ -75,7 +75,7 @@ class LeaveBalanceController extends Controller
         $leaveBalance->updated_by = auth()->guard('admin')->user()->id;
 
         $leaveBalance->update();
-        session()->flash('success', 'تم تعديل الفرع بنجاح');
+        session()->flash('success', 'تم تعديل رصيد أجازات الموظف بنجاح');
 
         return redirect()->route('dashboard.leaveBalances.index');
     }
@@ -88,7 +88,7 @@ class LeaveBalanceController extends Controller
         $leaveBalance->delete();
         return response()->json([
             'success' => true,
-            'message' => 'تم حذف الفرع بنجاح!'
+            'message' => 'تم حذف رصيد أجازات الموظف بنجاح!'
         ]);
     }
 }
