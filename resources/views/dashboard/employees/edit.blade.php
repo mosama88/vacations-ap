@@ -2,7 +2,11 @@
 @section('active-employees', 'active')
 @section('title', 'تعديل بيانات الموظف')
 @section('content')
-
+    @push('css')
+        <!-- Select2 -->
+        <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/plugins/select2/css/select2.min.css">
+        <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+    @endpush
     @include('dashboard.layouts.breadcrumb', [
         'pageTitle' => 'تعديل بيانات الموظف',
         'previousPage' => 'جدول الموظفين',
@@ -83,8 +87,7 @@
                                     <div class="form-group col-6">
                                         <label for="exampleSelectBorder">بيانات الموظف التابع له <code>الموظف</code></label>
                                         <select name="branch_id"
-                                            class="custom-select form-control-border @error('branch_id') is-invalid @enderror"
-                                            id="exampleSelectBorder">
+                                            class="form-control select2 @error('branch_id') is-invalid @enderror">
                                             <option value="">-- أختر بيانات الموظف --</option>
                                             @forelse ($other['branches'] as $branche)
                                                 <option @if (old('branch_id', $employee->branch_id) == $branche->id) selected @endif
@@ -102,8 +105,7 @@
                                     <div class="form-group col-6">
                                         <label for="exampleSelectBorder">المحافظة التابع لها <code>الموظف</code></label>
                                         <select name="governorate_id"
-                                            class="custom-select form-control-border @error('governorate_id') is-invalid @enderror"
-                                            id="exampleSelectBorder">
+                                            class="form-control select2 @error('governorate_id') is-invalid @enderror">
                                             <option value="">-- أختر المحافظة --</option>
                                             @forelse ($other['governorates'] as $governorate)
                                                 <option @if (old('governorate_id', $employee->governorate_id) == $governorate->id) selected @endif
@@ -220,3 +222,19 @@
         </div><!-- /.container-fluid -->
     </section>
 @endsection
+@push('js')
+    <!-- Select2 -->
+    <script src="{{ asset('dashboard') }}/assets/plugins/select2/js/select2.full.min.js"></script>
+
+    <script>
+        $(function() {
+            //Initialize Select2 Elements
+            $('.select2').select2()
+
+            //Initialize Select2 Elements
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+        })
+    </script>
+@endpush
