@@ -73,8 +73,10 @@
 
 
 
-                <li class="nav-item has-treeview {{ request()->is('dashboard/employees*') ? 'menu-open' : '' }} ">
-                    <a href="#" class="nav-link {{ request()->is('employees*') ? 'active' : '' }} ">
+                <li
+                    class="nav-item has-treeview {{ request()->is('dashboard/employees*') || request()->is('dashboard/leaveBalances*') ? 'menu-open' : '' }} ">
+                    <a href="#"
+                        class="nav-link {{ request()->is('employees*') || request()->is('employees*') ? 'active' : '' }} ">
                         <i class="nav-icon fas fa-users"></i>
                         <p>
                             إدارة شئون الموظفين
@@ -86,6 +88,12 @@
                             <a href="{{ route('dashboard.employees.index') }}" class="nav-link @yield('active-employees')">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>شئون الموظفين</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('dashboard.leaveBalances.index') }}" class="nav-link @yield('active-leaveBalances')">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>رصيد أجازات الموظف</p>
                             </a>
                         </li>
                     </ul>

@@ -7,6 +7,7 @@ use App\Http\Controllers\Dashboard\BranchController;
 use App\Http\Controllers\Dashboard\EmployeeController;
 use App\Http\Controllers\Dashboard\JobGradeController;
 use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Dashboard\LeaveBalanceController;
 use App\Http\Controllers\Dashboard\FinanceCalendarController;
 
 
@@ -31,6 +32,9 @@ Route::middleware('auth:admin')->group(function () {
 
     // بداية تكويد الموظف
     Route::resource('/employees', EmployeeController::class);
+
+    // بداية رصيد الأجازات
+    Route::resource('/leaveBalances', LeaveBalanceController::class);
 });
 
 
