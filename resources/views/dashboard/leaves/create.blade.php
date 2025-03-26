@@ -1,5 +1,5 @@
 @extends('dashboard.layouts.master')
-@section('active-branches', 'active')
+@section('active-leaves', 'active')
 @section('title', 'أنشاء فرع جديد')
 @push('css')
     <!-- Select2 -->
@@ -8,10 +8,10 @@
 @endpush
 @section('content')
 
-    @include('dashboard.layouts.breadcrumb', [
+    @include('dashboard.layouts.breadcrumb-front', [
         'pageTitle' => 'أنشاء فرع جديد',
         'previousPage' => 'جدول الفروع',
-        'urlPreviousPage' => 'branches.index',
+        'urlPreviousPage' => 'leaves.index',
         'currentPage' => 'أنشاء فرع جديد',
     ])
 
@@ -29,7 +29,7 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="{{ route('dashboard.branches.store') }}" method="POST">
+                        <form action="{{ route('leaves.store') }}" method="POST">
                             @csrf
                             <div class="card-body">
                                 <div class="row">

@@ -1,12 +1,12 @@
 @extends('dashboard.layouts.master')
-@section('active-branches', 'active')
+@section('active-leaves', 'active')
 @section('title', 'عرض الفرع')
 @section('content')
 
     @include('dashboard.layouts.breadcrumb', [
         'pageTitle' => 'عرض الفرع',
         'previousPage' => 'جدول الفروع',
-        'urlPreviousPage' => 'branches.index',
+        'urlPreviousPage' => 'leaves.index',
         'currentPage' => 'عرض الفرع',
     ])
 

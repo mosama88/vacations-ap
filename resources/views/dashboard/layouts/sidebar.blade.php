@@ -111,7 +111,7 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="{{ route('leaves.create') }}" class="nav-link @yield('active-employees')">
+                                <a href="{{ route('leaves.create') }}" class="nav-link @yield('active-leaves')">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>طلب أجازه</p>
                                 </a>

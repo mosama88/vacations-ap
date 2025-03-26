@@ -1,12 +1,12 @@
 @extends('dashboard.layouts.master')
-@section('active-branches', 'active')
+@section('active-leaves', 'active')
 @section('title', 'تعديل الفرع')
 @section('content')
 
     @include('dashboard.layouts.breadcrumb', [
         'pageTitle' => 'تعديل الفرع',
         'previousPage' => 'جدول الفروع',
-        'urlPreviousPage' => 'branches.index',
+        'urlPreviousPage' => 'leaves.index',
         'currentPage' => 'تعديل الفرع',
     ])
 
@@ -24,7 +24,7 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="{{ route('dashboard.branches.update', $branch->slug) }}" method="POST">
+                        <form action="{{ route('dashboard.leaves.update', $branch->slug) }}" method="POST">
                             @csrf
                             @method('PUT')
                             <div class="card-body">

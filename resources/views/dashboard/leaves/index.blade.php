@@ -1,5 +1,5 @@
 @extends('dashboard.layouts.master')
-@section('active-branches', 'active')
+@section('active-leaves', 'active')
 @section('title', 'الصفحة الرئيسية')
 @push('css')
 @endpush
@@ -21,7 +21,7 @@
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">
-                                <a href="{{ route('dashboard.branches.create') }}"
+                                <a href="{{ route('leaves.create') }}"
                                     class="btn btn-block text-white btn-success"> <i class="fas fa-plus-circle mx-1"></i>
                                     أنشاء</a>
                             </h3>
@@ -68,7 +68,7 @@
                                             </td>
                                             <td class="project-actions">
                                                 @include('dashboard.partials.action', [
-                                                    'name' => 'branches',
+                                                    'name' => 'leaves',
                                                     'name_id' => $info,
                                                 ])
 
