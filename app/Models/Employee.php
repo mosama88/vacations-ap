@@ -86,4 +86,17 @@ class Employee extends Authenticatable implements HasMedia
     {
         return $this->belongsTo(Governorate::class, 'governorate_id');
     }
+
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+
+    protected function casts(): array
+    {
+        return [
+            'password' => 'hashed',
+        ];
+    }
 }

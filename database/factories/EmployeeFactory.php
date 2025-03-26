@@ -807,7 +807,7 @@ class EmployeeFactory extends Factory
             'job_grade_id' => JobGrade::inRandomOrder()->first()->id,
             'week_id' => Week::inRandomOrder()->first()->id,
             'created_by' => Admin::all()->random()->id,
-
+            'remember_token' => Str::random(10),
         ];
     }
 }

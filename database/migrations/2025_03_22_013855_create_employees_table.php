@@ -31,6 +31,7 @@ return new class extends Migration
             $table->foreignIdFor(Governorate::class)->nullable()->constrained()->nullOnDelete();
             $table->foreignId('created_by')->references('id')->on('admins')->onUpdate('cascade');
             $table->foreignId('updated_by')->nullable()->references('id')->on('admins')->onUpdate('cascade');
+            $table->rememberToken();
             $table->timestamps();
         });
     }
