@@ -6,6 +6,8 @@ use App\Models\Leave;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Dashboard\LeaveRequest;
+use App\Models\Employee;
+use App\Models\LeaveBalance;
 
 class LeaveController extends Controller
 {
@@ -23,6 +25,8 @@ class LeaveController extends Controller
      */
     public function create()
     {
+        $other['employees'] = Employee::get();
+        $other['leave_balances'] = LeaveBalance::get();
         return view('dashboard.leaves.create', compact('other'));
     }
 
@@ -84,4 +88,25 @@ class LeaveController extends Controller
             'message' => 'تم حذف الأجازه بنجاح!'
         ]);
     }
+
+    public function getLeaveBalance(Request $request)
+    {
+        if ($request->ajax()) {
+            $employee_id = $request->employee_id;
+            $leave_balance = LeaveBalance::select('total_days', 'used_days', 'remainig_days')
+                ->where('employee_id', $employee_id)
+                ->orderBy('id', 'desc')
+                ->first();  // فقط أول سجل للحصول على البيانات المطلوبة
+    
+            // التأكد من أن البيانات موجودة وإرجاعها بتنسيق JSON
+            if ($leave_balance) {
+                return response()->json([
+                    'leave_balance' => $leave_balance
+                ]);
+            } else {
+                return response()->json(['leave_balance' => null]);
+            }
+        }
+    }
+    
 }

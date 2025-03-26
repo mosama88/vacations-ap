@@ -100,11 +100,9 @@
                     </li>
                 @endauth
 
-                @auth('admin')
-                    <li
-                        class="nav-item has-treeview {{ request()->is('dashboard/employees*') || request()->is('dashboard/leaveBalances*') ? 'menu-open' : '' }} ">
-                        <a href="#"
-                            class="nav-link {{ request()->is('employees*') || request()->is('employees*') ? 'active' : '' }} ">
+                @auth('employee')
+                    <li class="nav-item has-treeview {{ request()->is('leaves*') ? 'menu-open' : '' }} ">
+                        <a href="#" class="nav-link {{ request()->is('leaves*') ? 'active' : '' }} ">
                             <i class="nav-icon fas fa-users"></i>
                             <p>
                                 إدارة شئون الأجازات
@@ -113,9 +111,9 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="{{ route('dashboard.leaves.create') }}" class="nav-link @yield('active-employees')">
+                                <a href="{{ route('leaves.create') }}" class="nav-link @yield('active-employees')">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>شئون الموظفين</p>
+                                    <p>طلب أجازه</p>
                                 </a>
                             </li>
 

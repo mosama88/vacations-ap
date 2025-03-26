@@ -56,7 +56,7 @@
                                     </div>
 
                                     <div class="form-group col-6">
-                                        <label for="exampleInputName">اسم الرصيد الأجازات</label>
+                                        <label for="exampleInputName"> الرصيد الأجازات</label>
                                         <input type="text" name="total_days" value="{{ old('total_days') }}"
                                             class="form-control @error('total_days') is-invalid @enderror"
                                             id="exampleInputtotal_days" placeholder="أدخل رصيد الأجازات ">

@@ -1,12 +1,12 @@
 @extends('dashboard.layouts.master')
 @section('active-employees', 'active')
 @section('title', 'أنشاء موظف جديد')
+@push('css')
+    <!-- Select2 -->
+    <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+@endpush
 @section('content')
-    @push('css')
-        <!-- Select2 -->
-        <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/plugins/select2/css/select2.min.css">
-        <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
-    @endpush
     @include('dashboard.layouts.breadcrumb', [
         'pageTitle' => 'أنشاء موظف جديد',
         'previousPage' => 'جدول الموظفين',
