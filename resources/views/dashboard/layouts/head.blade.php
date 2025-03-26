@@ -32,3 +32,16 @@
 <!-- Toastr -->
 <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/plugins/toastr/toastr.min.css">
 @stack('css')
+<style>
+    .select2-container--default .select2-selection--single {
+        height: 40px;
+        /* لتحديد ارتفاع الحقل */
+        /* line-height: 40px; */
+        /* لضبط النص في المنتصف */
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+        height: 40px;
+        /* لضبط السهم */
+    }
+</style>

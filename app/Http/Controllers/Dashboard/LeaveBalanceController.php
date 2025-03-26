@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Enum\StatusOpen;
+use App\Models\Employee;
 use App\Models\LeaveBalance;
+use function Termwind\parse;
 use Illuminate\Http\Request;
+use App\Models\FinanceCalendar;
+
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Dashboard\LeaveBalanceRequest;
-use App\Models\Employee;
-use App\Models\FinanceCalendar;
 
 class LeaveBalanceController extends Controller
 {
@@ -26,7 +29,6 @@ class LeaveBalanceController extends Controller
     public function create()
     {
         $other['employees'] = Employee::get();
-        $other['finance_calendars'] = FinanceCalendar::get();
         return view('dashboard.leaveBalances.create', compact('other'));
     }
 
@@ -35,10 +37,14 @@ class LeaveBalanceController extends Controller
      */
     public function store(LeaveBalanceRequest $request)
     {
+        $financial_year = FinanceCalendar::select('id', 'finance_yr')->where('status', StatusOpen::Open)->first();
         $leaveBalancees = $request->validated();
         $data = array_merge($leaveBalancees, [
-            'created_by' => auth()->guard('admin')->user()->id,
+            'finance_calendar_id' => $financial_year['id'],
+            'remainig_days' => $remainig_days = $request->total_days,
+            'used_days' => parse($remainig_days - $request->total_days),
         ]);
+
         LeaveBalance::create($data);
         session()->flash('success', 'تم أضافة رصيد أجازات الموظف بنجاح');
 
