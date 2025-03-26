@@ -4,9 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\EmployeeLoginController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 
 Route::get('/employee-panel', function () {
@@ -15,14 +15,16 @@ Route::get('/employee-panel', function () {
 
 
 
-//------------------------ Login
-Route::middleware('guest:employee')->group(function () {
-    Route::get('login', [EmployeeLoginController::class, 'create'])
-        ->name('employees.login');
+if (redirect('/')) {
+    //------------------------ Login
+    Route::middleware('guest:employee')->group(function () {
 
-    Route::post('login', [EmployeeLoginController::class, 'store']);
-});
+        Route::get('/', [EmployeeLoginController::class, 'create'])->name('employees.login');
 
+
+        Route::post('/', [EmployeeLoginController::class, 'store']);
+    });
+}
 
 //------------------------ Logout
 Route::middleware('auth:employee')->group(function () {
