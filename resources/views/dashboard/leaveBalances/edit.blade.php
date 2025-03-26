@@ -19,13 +19,14 @@
 
     <section class="content">
         <div class="container-fluid">
-
             <div class="row">
                 <div class="col-12">
                     <!-- general form elements -->
                     <div class="card card-info">
                         <div class="card-header">
-                            <h3 class="card-title">تعديل رصيد الأجازات</h3>
+                            <h3 class="card-title">تعديل رصيد الأجازات لسنه
+                                <span>{{ $leaveBalance->financeCalendar->finance_yr }}</span>
+                            </h3>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->

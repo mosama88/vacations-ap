@@ -79,15 +79,19 @@ class LeaveBalanceController extends Controller
     public function update(LeaveBalanceRequest $request, LeaveBalance $leaveBalance)
     {
         $financial_year = FinanceCalendar::select('id', 'finance_yr')->where('status', StatusOpen::Open)->first();
-        $checkExists = LeaveBalance::where('employee_id', $request->employee_id)->where('id', $request->id)->exists();
+        if (!$financial_year) {
+            return redirect()->back()->withErrors(['error' => 'السنه المالية غير مفعله'])->withInput();
+        }
+        $checkExists = LeaveBalance::where('employee_id', $request->employee_id)->where('id', "!=", $leaveBalance->id)->exists();
         if ($checkExists) {
             return redirect()->back()->withErrors(['error' => 'الموظف مسجل من قبل'])->withInput();
         }
 
+        $leaveBalance->fill($request->validated());
         $leaveBalance->finance_calendar_id = $financial_year['id'];
         $leaveBalance->total_days = $request->total_days;
-        $leaveBalance->remainig_days = $request->remainig_days;
-        $leaveBalance->used_days = parse($request->remainig_days - $request->total_days);
+        $leaveBalance->remainig_days = parse($request->total_days - $request->used_days);
+        $leaveBalance->used_days = parse($request->total_days - $request->remainig_days);
 
         $leaveBalance->update();
         session()->flash('success', 'تم تعديل رصيد أجازات الموظف بنجاح');
