@@ -27,40 +27,29 @@
 
                         <div class="card-body">
 
-                            <div class="row">
-                                <div class="form-group col-6">
-                                    <label for="exampleSelectBorder">أسم الموظف </label>
-                                    <select name="employee_id"
-                                        class="form-control select2 vh-100 @error('employee_id') is-invalid @enderror"
-                                        id="exampleSelectBorder">
-                                        <option value="">-- أختر المحافظة --</option>
-                                        @forelse ($other['employees'] as $employee)
-                                            <option @if (old('employee_id', $leaveBalance->employee_id) == $employee->id) selected @endif
-                                                value="{{ $employee->id }}">{{ $employee->name }}</option>
-                                        @empty
-                                            عفوآ لا توجد بيانات!
-                                        @endforelse
-                                    </select>
-                                    @error('employee_id')
-                                        <span class="invalid-feedback text-right" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
+                            <table class="table table-head-fixed text-nowrap">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>أسم الموظف</th>
+                                        <th>السنه</th>
+                                        <th>رصيد</th>
+                                        <th>الرصيد المستخدم</th>
+                                        <th>الرصيد المتبقى</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>{{ $leaveBalance->iteration }}</td>
+                                        <td>{{ $leaveBalance->employee->name }}</td>
+                                        <td>{{ $leaveBalance->financeCalendar->finance_yr }}</td>
+                                        <td>{{ $leaveBalance->total_days }}</td>
+                                        <td>{{ $leaveBalance->used_days }}</td>
+                                        <td>{{ $leaveBalance->remainig_days }}</td>
+                                    </tr>
 
-                                <div class="form-group col-6">
-                                    <label for="exampleInputName">اسم الرصيد الأجازات</label>
-                                    <input type="text" name="total_days"
-                                        value="{{ old('total_days', $leaveBalance->total_days) }}"
-                                        class="form-control @error('total_days') is-invalid @enderror"
-                                        id="exampleInputtotal_days" placeholder="أدخل رصيد الأجازات ">
-                                    @error('total_days')
-                                        <span class="invalid-feedback text-right" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
+                                </tbody>
+                            </table>
 
 
                         </div>
