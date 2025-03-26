@@ -38,6 +38,10 @@ class LeaveBalanceController extends Controller
     public function store(LeaveBalanceRequest $request)
     {
         $financial_year = FinanceCalendar::select('id', 'finance_yr')->where('status', StatusOpen::Open)->first();
+        $checkExists = LeaveBalance::where('employee_id', $request->employee_id)->exists();
+        if ($checkExists) {
+            return redirect()->back()->withErrors(['error' => 'الموظف مسجل من قبل'])->withInput();
+        }
         $leaveBalancees = $request->validated();
         $data = array_merge($leaveBalancees, [
             'finance_calendar_id' => $financial_year['id'],
@@ -57,7 +61,6 @@ class LeaveBalanceController extends Controller
     public function show(LeaveBalance $leaveBalance)
     {
         $other['employees'] = Employee::get();
-        $other['finance_calendars'] = FinanceCalendar::get();
         return view('dashboard.leaveBalances.show', compact('leaveBalance', 'other'));
     }
 
@@ -67,8 +70,6 @@ class LeaveBalanceController extends Controller
     public function edit(LeaveBalance $leaveBalance)
     {
         $other['employees'] = Employee::get();
-        $other['finance_calendars'] = FinanceCalendar::get();
-
         return view('dashboard.leaveBalances.edit', compact('leaveBalance', 'other'));
     }
 
@@ -77,8 +78,16 @@ class LeaveBalanceController extends Controller
      */
     public function update(LeaveBalanceRequest $request, LeaveBalance $leaveBalance)
     {
-        $leaveBalance->fill($request->validated());
-        $leaveBalance->updated_by = auth()->guard('admin')->user()->id;
+        $financial_year = FinanceCalendar::select('id', 'finance_yr')->where('status', StatusOpen::Open)->first();
+        $checkExists = LeaveBalance::where('employee_id', $request->employee_id)->where('id', $request->id)->exists();
+        if ($checkExists) {
+            return redirect()->back()->withErrors(['error' => 'الموظف مسجل من قبل'])->withInput();
+        }
+
+        $leaveBalance->finance_calendar_id = $financial_year['id'];
+        $leaveBalance->total_days = $request->total_days;
+        $leaveBalance->remainig_days = $request->remainig_days;
+        $leaveBalance->used_days = parse($request->remainig_days - $request->total_days);
 
         $leaveBalance->update();
         session()->flash('success', 'تم تعديل رصيد أجازات الموظف بنجاح');

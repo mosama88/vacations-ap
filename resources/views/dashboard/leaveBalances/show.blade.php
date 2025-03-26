@@ -5,7 +5,7 @@
 
     @include('dashboard.layouts.breadcrumb', [
         'pageTitle' => 'عرض رصيد الأجازات',
-        'previousPage' => 'جدول الفروع',
+        'previousPage' => 'جدول رصيد الأجازات',
         'urlPreviousPage' => 'leaveBalances.index',
         'currentPage' => 'عرض رصيد الأجازات',
     ])
