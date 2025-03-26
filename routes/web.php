@@ -5,9 +5,9 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Dashboard\LeaveController;
 use App\Http\Controllers\Auth\EmployeeLoginController;
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/', function () {
+    return view('welcome');
+});
 
 
 Route::get('/employee-panel', function () {
@@ -19,16 +19,15 @@ Route::middleware('auth:employee')->group(function () {
     Route::resource('/leaves', LeaveController::class);
     Route::post('leaves/leaves/balance', [LeaveController::class, 'getLeaveBalance'])->name('leaves.getLeavesBalances');
 });
-if (redirect('/')) {
     //------------------------ Login
     Route::middleware('guest:employee')->group(function () {
 
-        Route::get('/', [EmployeeLoginController::class, 'create'])->name('employees.login');
+        Route::get('/login', [EmployeeLoginController::class, 'create'])->name('employees.login');
 
 
-        Route::post('/', [EmployeeLoginController::class, 'store']);
+        Route::post('/login', [EmployeeLoginController::class, 'store']);
     });
-}
+
 
 //------------------------ Logout
 Route::middleware('auth:employee')->group(function () {

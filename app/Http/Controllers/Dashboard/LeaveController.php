@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Models\Leave;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Dashboard\LeaveRequest;
 use App\Models\Employee;
 use App\Models\LeaveBalance;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\Dashboard\LeaveRequest;
 
 class LeaveController extends Controller
 {
@@ -25,9 +26,11 @@ class LeaveController extends Controller
      */
     public function create()
     {
-        $other['employees'] = Employee::get();
-        $other['leave_balances'] = LeaveBalance::get();
-        return view('dashboard.leaves.create', compact('other'));
+        // $data = Leave::orderByDESC('id')->select('*')->value('leave_balance_id');
+        $emplyeeId = Auth::user()->id;
+        $employees = Employee::with('leaveBalance')->where('id', $emplyeeId)->first();
+        // dd($employees);
+        return view('front.leaves.create', compact('employees'));
     }
 
     /**
@@ -97,7 +100,7 @@ class LeaveController extends Controller
                 ->where('employee_id', $employee_id)
                 ->orderBy('id', 'desc')
                 ->first();  // فقط أول سجل للحصول على البيانات المطلوبة
-    
+
             // التأكد من أن البيانات موجودة وإرجاعها بتنسيق JSON
             if ($leave_balance) {
                 return response()->json([
@@ -108,5 +111,4 @@ class LeaveController extends Controller
             }
         }
     }
-    
 }

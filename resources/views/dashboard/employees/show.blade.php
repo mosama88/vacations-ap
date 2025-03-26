@@ -18,7 +18,7 @@
                     <!-- general form elements -->
                     <div class="card card-secondary">
                         <div class="card-header">
-                            <h3 class="card-title">عرض بيانات الموظف</h3>
+                            <h3 class="card-title">عرض بيانات الموظف {{$employee->employee_code}}</h3>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
