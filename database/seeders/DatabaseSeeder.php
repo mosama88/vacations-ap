@@ -2,10 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\Admin;
 use App\Models\User;
+use App\Models\Admin;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Database\Factories\LeaveBalanceFactory;
 
 class DatabaseSeeder extends Seeder
 {
@@ -34,6 +35,7 @@ class DatabaseSeeder extends Seeder
             BranchSeeder::class,
             JobGradeSeeder::class,
             EmployeeSeeder::class,
+            LeaveBalanceFactory::class,
         ]);
     }
 }

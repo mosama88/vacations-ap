@@ -6,6 +6,8 @@ use App\Models\LeaveBalance;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Dashboard\LeaveBalanceRequest;
+use App\Models\Employee;
+use App\Models\FinanceCalendar;
 
 class LeaveBalanceController extends Controller
 {
@@ -23,7 +25,8 @@ class LeaveBalanceController extends Controller
      */
     public function create()
     {
-        // $other['governorates'] = Governorate::get();
+        $other['employees'] = Employee::get();
+        $other['finance_calendars'] = FinanceCalendar::get();
         return view('dashboard.leaveBalances.create', compact('other'));
     }
 
@@ -47,8 +50,8 @@ class LeaveBalanceController extends Controller
      */
     public function show(LeaveBalance $leaveBalance)
     {
-        // $other['governorates'] = Governorate::get();
-
+        $other['employees'] = Employee::get();
+        $other['finance_calendars'] = FinanceCalendar::get();
         return view('dashboard.leaveBalances.show', compact('leaveBalance', 'other'));
     }
 
@@ -57,7 +60,8 @@ class LeaveBalanceController extends Controller
      */
     public function edit(LeaveBalance $leaveBalance)
     {
-        // $other['governorates'] = Governorate::get();
+        $other['employees'] = Employee::get();
+        $other['finance_calendars'] = FinanceCalendar::get();
 
         return view('dashboard.leaveBalances.edit', compact('leaveBalance', 'other'));
     }

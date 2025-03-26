@@ -32,3 +32,8 @@ return new class extends Migration
         Schema::dropIfExists('finance_calendars');
     }
 };
+
+
+
+// INSERT INTO `finance_calendars` (`id`, `finance_yr`, `finance_yr_desc`, `start_date`, `end_date`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+// (1, '2024', 'السنه المالية لسنه 2024', '2024-06-30', '2025-07-01', '0', 11, NULL, '2025-03-25 22:35:38', '2025-03-25 22:35:38');
