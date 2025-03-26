@@ -32,6 +32,19 @@ class EmployeeLoginRequest extends FormRequest
         ];
     }
 
+    public function messages(): array
+    {
+        return [
+            'username.required' => 'اسم المستخدم مطلوب.',
+            'username.string' => 'اسم المستخدم يجب أن يكون نصيًا.',
+            'username.min' => 'اسم المستخدم يجب أن يحتوي على 5 حروف على الأقل.',
+
+            'password.required' => 'كلمة المرور مطلوبة.',
+            'password.string' => 'كلمة المرور يجب أن تكون نصًا.',
+            'password.min' => 'كلمة المرور يجب أن تحتوي على 8 حروف على الأقل.',
+        ];
+    }
+
     /**
      * Attempt to authenticate the request's credentials.
      *
