@@ -22,7 +22,32 @@ class LeaveRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'start_date' => 'required|date|after_or_equal:today',
+            'end_date' => 'required|date|after:start_date',
+            'leave_type' => 'required|in:1,2,3,4',
+            'leave_status' => 'nullable|in:1,2,3',
+            'description' => 'nullable|string|max:500',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'start_date.required' => 'تاريخ بداية الاجازه مطلوب',
+            'start_date.date' => 'تاريخ بداية الاجازه يجب أن يكون تاريخ صحيح',
+            'start_date.after_or_equal' => 'تاريخ بداية الاجازه يجب أن يكون اليوم أو بعده',
+
+            'end_date.required' => 'تاريخ نهاية الاجازه مطلوب',
+            'end_date.date' => 'تاريخ نهاية الاجازه يجب أن يكون تاريخ صحيح',
+            'end_date.after' => 'تاريخ نهاية الاجازه يجب أن يكون بعد تاريخ بداية الاجازه',
+
+            'leave_type.required' => 'نوع الإجازة مطلوب',
+            'leave_type.in' => 'نوع الإجازة غير صالح',
+
+            'leave_status.in' => 'حالة الإجازة غير صالحة',
+
+            'description.string' => 'الوصف يجب أن يكون نصًا',
+            'description.max' => 'الوصف يجب ألا يتجاوز 500 حرفًا',
         ];
     }
 }

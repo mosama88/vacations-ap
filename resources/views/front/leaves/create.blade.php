@@ -20,6 +20,14 @@
     <section class="content">
         <div class="container-fluid">
 
+            @if($errors->any())
+            @foreach($errors->all() as $error)
+            <div class="alert alert-danger text-center">
+                    {{$error}}
+                </div>
+            @endforeach
+@endif
+
             <div class="row">
                 <div class="col-12">
                     <!-- general form elements -->

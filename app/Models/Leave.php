@@ -13,7 +13,6 @@ class Leave extends Model
 
     protected $fillable = [
         'employee_id',
-        'leave_balance_id',
         'start_date',
         'end_date',
         'leave_type',
@@ -26,21 +25,16 @@ class Leave extends Model
 
     public function createdBy()
     {
-        return $this->belongsTo(Admin::class, 'created_by');
+        return $this->belongsTo(Employee::class, 'created_by');
     }
 
     public function updatedBy()
     {
-        return $this->belongsTo(Admin::class, 'updated_by');
+        return $this->belongsTo(Employee::class, 'updated_by');
     }
 
     public function employee()
     {
         return $this->belongsTo(Employee::class, 'employee_id');
-    }
-
-    public function leaveBalance()
-    {
-        return $this->belongsTo(LeaveBalance::class, 'leave_balance_id');
     }
 }

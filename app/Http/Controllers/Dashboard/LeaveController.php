@@ -6,6 +6,7 @@ use App\Models\Leave;
 use App\Models\Employee;
 use App\Models\LeaveBalance;
 use Illuminate\Http\Request;
+use App\Enum\LeaveStatusEnum;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Dashboard\LeaveRequest;
@@ -26,10 +27,8 @@ class LeaveController extends Controller
      */
     public function create()
     {
-        // $data = Leave::orderByDESC('id')->select('*')->value('leave_balance_id');
         $emplyeeId = Auth::user()->id;
         $employees = Employee::with('leaveBalance')->where('id', $emplyeeId)->first();
-        // dd($employees);
         return view('front.leaves.create', compact('employees'));
     }
 
@@ -40,12 +39,14 @@ class LeaveController extends Controller
     {
         $leavees = $request->validated();
         $data = array_merge($leavees, [
-            'created_by' => auth()->guard('admin')->user()->id,
+            'employee_id' => Auth::user()->id,
+            'leave_status' => LeaveStatusEnum::Pending,
+            'created_by' => Auth::user()->id,
         ]);
         Leave::create($data);
         session()->flash('success', 'تم أضافة الأجازه بنجاح');
 
-        return redirect()->route('dashboard.leaves.index');
+        return redirect()->route('leaves.create');
     }
 
     /**
