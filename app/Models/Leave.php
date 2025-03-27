@@ -4,7 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Observers\LeavesObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 
+#[ObservedBy([LeavesObserver::class])]
 class Leave extends Model
 {
     use HasFactory;
@@ -16,6 +19,7 @@ class Leave extends Model
         'start_date',
         'end_date',
         'leave_type',
+        'days_taken',
         'leave_status',
         'description',
         'created_by',

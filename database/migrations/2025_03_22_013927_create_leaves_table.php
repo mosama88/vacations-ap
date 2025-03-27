@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignIdFor(Employee::class)->nullable()->constrained()->nullOnDelete();
             $table->date('start_date');
             $table->date('end_date');
+            $table->integer('days_taken')->nullable();
             $table->enum('leave_type', [1, 2, 3, 4])->default(1);
             $table->enum('leave_status', [1, 2, 3])->default(1);
             $table->text('description')->nullable();

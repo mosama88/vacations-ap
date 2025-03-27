@@ -10,6 +10,7 @@ use App\Enum\LeaveStatusEnum;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Dashboard\LeaveRequest;
+use Carbon\Carbon;
 
 class LeaveController extends Controller
 {
@@ -38,8 +39,12 @@ class LeaveController extends Controller
     public function store(LeaveRequest $request)
     {
         $leavees = $request->validated();
+        $startDate = Carbon::parse($request->start_date);
+        $endDate = Carbon::parse($request->end_date);
+        $daysTaken = $startDate->diffInDays($endDate) + 1;
         $data = array_merge($leavees, [
             'employee_id' => Auth::user()->id,
+            'days_taken' => $daysTaken,
             'leave_status' => LeaveStatusEnum::Pending,
             'created_by' => Auth::user()->id,
         ]);
