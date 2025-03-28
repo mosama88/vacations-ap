@@ -22,6 +22,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->redirectGuestsTo('login');
         $middleware->alias([
             'redirect.employee' => \App\Http\Middleware\RedirectEmployeePanel::class,
+            // 'redirect.employeeType' => \App\Http\Middleware\RedirectToEmployeeType::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

@@ -1,3 +1,10 @@
+@php
+    use App\Enum\EmployeeType;
+    $user = auth('employee')->user();
+    $isManager = $user->type == EmployeeType::Manager;
+    $route = $isManager ? route('employee-panel.manager') : route('employee-panel.user');
+    $activeClass = request()->routeIs('employee-panel.*') ? 'active' : '';
+@endphp
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
@@ -102,12 +109,13 @@
 
                 @auth('employee')
                     <li class="nav-item">
-                        <a href="{{ route('employee-panel.index') }}" class="nav-link @yield('active-index')">
+                        <a href="{{ $route }}" class="nav-link {{ $activeClass }}">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
                                 الصفحة الرئيسية
                             </p>
                         </a>
+
                     </li>
 
 

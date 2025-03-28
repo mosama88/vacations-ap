@@ -14,7 +14,8 @@ Route::get('/', function () {
 
 Route::middleware('auth:employee')->group(function () {
 
-    Route::get('employee-panel', [EmployeePanel::class, 'index'])->name('employee-panel.index');
+    Route::get('employee-panel/user', [EmployeePanel::class, 'index'])->name('employee-panel.user');
+    Route::get('employee-panel', [EmployeePanel::class, 'managerIndex'])->name('employee-panel.manager');
 
     // بداية تكويد الأجازات
     Route::resource('/leaves', LeaveController::class);

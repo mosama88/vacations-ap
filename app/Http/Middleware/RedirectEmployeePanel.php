@@ -15,7 +15,7 @@ class RedirectEmployeePanel
         if (Auth::guard('employee')->check()) {
             // إذا حاول الوصول إلى صفحة الدخول أو الصفحة الرئيسية
             if ($request->is('login') || $request->is('/')) {
-                return redirect()->route('employee-panel.index');
+                return redirect()->route('employee-panel.user');
             }
         }
         // إذا كان زائراً ويحاول الوصول إلى لوحة الموظفين
