@@ -2,12 +2,13 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
+use App\Models\Employee;
+use App\Enum\EmployeeStatus;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
 
 class UserRolePermissionSeeder extends Seeder
 {
@@ -17,30 +18,108 @@ class UserRolePermissionSeeder extends Seeder
     public function run(): void
     {
         // Create Permissions
+        // Define the guard
+        $guardAdmin = 'employee';
+
+        // Create Permissions
         $permissions = [
-            ['name' => 'view role', 'category' => 'Roles'],
-            ['name' => 'create role', 'category' => 'Roles'],
-            ['name' => 'update role', 'category' => 'Roles'],
-            ['name' => 'delete role', 'category' => 'Roles'],
+            ['name' => 'view role', 'category' => 'Roles', 'guard_name' => $guardAdmin],
+            ['name' => 'create role', 'category' => 'Roles', 'guard_name' => $guardAdmin],
+            ['name' => 'update role', 'category' => 'Roles', 'guard_name' => $guardAdmin],
+            ['name' => 'delete role', 'category' => 'Roles', 'guard_name' => $guardAdmin],
 
-            ['name' => 'view permission', 'category' => 'Permissions'],
-            ['name' => 'create permission', 'category' => 'Permissions'],
-            ['name' => 'update permission', 'category' => 'Permissions'],
-            ['name' => 'delete permission', 'category' => 'Permissions'],
+            ['name' => 'view permission', 'category' => 'Permissions', 'guard_name' => $guardAdmin],
+            ['name' => 'create permission', 'category' => 'Permissions', 'guard_name' => $guardAdmin],
+            ['name' => 'update permission', 'category' => 'Permissions', 'guard_name' => $guardAdmin],
+            ['name' => 'delete permission', 'category' => 'Permissions', 'guard_name' => $guardAdmin],
 
-            ['name' => 'view user', 'category' => 'Users'],
-            ['name' => 'create user', 'category' => 'Users'],
-            ['name' => 'update user', 'category' => 'Users'],
-            ['name' => 'delete user', 'category' => 'Users'],
+            ['name' => 'view user', 'category' => 'Users', 'guard_name' => $guardAdmin],
+            ['name' => 'create user', 'category' => 'Users', 'guard_name' => $guardAdmin],
+            ['name' => 'update user', 'category' => 'Users', 'guard_name' => $guardAdmin],
+            ['name' => 'delete user', 'category' => 'Users', 'guard_name' => $guardAdmin],
 
-            ['name' => 'الموظفين', 'category' => 'Employees'],
-            ['name' => 'أضافة موظف', 'category' => 'Employees'],
-            ['name' => 'تعديل الموظف', 'category' => 'Employees'],
-            ['name' => 'حذف الموظف', 'category' => 'Employees'],
-            ['name' => 'عرض الموظفين', 'category' => 'Employees'],
-            ['name' => 'بيانات الموظفين', 'category' => 'Employees'],
-            ['name' => 'عرض حساب الأجازات', 'category' => 'Employees'],
-            ['name' => 'عرض كل أجازات الموظف', 'category' => 'Employees'],
+            
+
+            // السنوات المالية
+            ['name' => 'السنوات المالية', 'category' => 'financeCalendars', 'guard_name' => $guardAdmin],
+            ['name' => 'اضافة السنوات المالية', 'category' => 'financeCalendars', 'guard_name' => $guardAdmin],
+            ['name' => 'تعديل السنوات المالية', 'category' => 'financeCalendars', 'guard_name' => $guardAdmin],
+            ['name' => 'حذف السنوات المالية', 'category' => 'financeCalendars', 'guard_name' => $guardAdmin],
+            ['name' => 'عرض شهور السنه السنوات مالية', 'category' => 'financeCalendars', 'guard_name' => $guardAdmin],
+            ['name' => 'فتح السنوات المالية', 'category' => 'financeCalendars', 'guard_name' => $guardAdmin],
+            ['name' => 'غلق السنوات المالية', 'category' => 'financeCalendars', 'guard_name' => $guardAdmin],
+
+            // الفروع
+            ['name' => 'الفروع', 'category' => 'branches', 'guard_name' => $guardAdmin],
+            ['name' => 'اضافة الفروع', 'category' => 'branches', 'guard_name' => $guardAdmin],
+            ['name' => 'تعديل الفروع', 'category' => 'branches', 'guard_name' => $guardAdmin],
+            ['name' => 'حذف الفروع', 'category' => 'branches', 'guard_name' => $guardAdmin],
+
+         
+            // الدرجات الوظيفية
+            ['name' => 'الدرجات الوظيفية', 'category' => 'jobsGrades', 'guard_name' => $guardAdmin],
+            ['name' => 'اضافة الدرجات الوظيفية', 'category' => 'jobsGrades', 'guard_name' => $guardAdmin],
+            ['name' => 'تعديل الدرجات الوظيفية', 'category' => 'jobsGrades', 'guard_name' => $guardAdmin],
+            ['name' => 'حذف الدرجات الوظيفية', 'category' => 'jobsGrades', 'guard_name' => $guardAdmin],
+
+        
+            //    أنواع الأجازات
+            ['name' => 'الأجازات', 'category' => 'leaves', 'guard_name' => $guardAdmin],
+            ['name' => 'اضافة الأجازات', 'category' => 'leaves', 'guard_name' => $guardAdmin],
+            ['name' => 'تعديل الأجازات', 'category' => 'leaves', 'guard_name' => $guardAdmin],
+            ['name' => 'حذف الأجازات', 'category' => 'leaves', 'guard_name' => $guardAdmin],
+
+
+            //    المحافظات
+            ['name' => 'المحافظات', 'category' => 'governorates', 'guard_name' => $guardAdmin],
+            ['name' => 'اضافة المحافظات', 'category' => 'governorates', 'guard_name' => $guardAdmin],
+            ['name' => 'تعديل المحافظات', 'category' => 'governorates', 'guard_name' => $guardAdmin],
+            ['name' => 'حذف المحافظات', 'category' => 'governorates', 'guard_name' => $guardAdmin],
+
+         
+            // ###################################################################################################################
+
+            // قائمة بيانات شئون الموظفين
+            ['name' => 'قائمة بيانات شئون الموظفين', 'category' => 'affairsEmployees', 'guard_name' => $guardAdmin],
+
+            // بيانات الموظفين
+            ['name' => 'بيانات الموظفين', 'category' => 'Employees', 'guard_name' => $guardAdmin],
+            ['name' => 'جدول الموظفين', 'category' => 'Employees', 'guard_name' => $guardAdmin],
+            ['name' => 'أضافة موظف', 'category' => 'Employees', 'guard_name' => $guardAdmin],
+            ['name' => 'تعديل الموظف', 'category' => 'Employees', 'guard_name' => $guardAdmin],
+            ['name' => 'حذف الموظف', 'category' => 'Employees', 'guard_name' => $guardAdmin],
+            ['name' => 'عرض حساب الأجازات', 'category' => 'Employees', 'guard_name' => $guardAdmin],
+            ['name' => 'بحث الموظفين', 'category' => 'Employees', 'guard_name' => $guardAdmin],
+            ['name' => 'اضافة بدل ثابت', 'category' => 'Employees', 'guard_name' => $guardAdmin],
+            ['name' => 'الراتب المؤرشف', 'category' => 'Employees', 'guard_name' => $guardAdmin],
+            ['name' => 'جدول الملفات الشخصية', 'category' => 'Employees', 'guard_name' => $guardAdmin],
+            ['name' => 'اضافة ملفات شخصية', 'category' => 'Employees', 'guard_name' => $guardAdmin],
+            ['name' => 'تحميل من جدول ملفات شخصية', 'category' => 'Employees', 'guard_name' => $guardAdmin],
+            ['name' => 'حذف من جدول ملفات شخصية', 'category' => 'Employees', 'guard_name' => $guardAdmin],
+
+       
+
+            //    قائمة المستخدمين
+            ['name' => 'قائمة المستخدمين', 'category' => 'UserList', 'guard_name' => $guardAdmin],
+
+            // المستخدمين
+            ['name' => 'المستخدمين', 'category' => 'users', 'guard_name' => $guardAdmin],
+            ['name' => 'اضافة المستخدمين', 'category' => 'users', 'guard_name' => $guardAdmin],
+            ['name' => 'تعديل المستخدمين', 'category' => 'users', 'guard_name' => $guardAdmin],
+            ['name' => 'حذف المستخدمين', 'category' => 'users', 'guard_name' => $guardAdmin],
+
+            // الصلاحيات
+            ['name' => 'الصلاحيات', 'category' => 'roles', 'guard_name' => $guardAdmin],
+            ['name' => 'اضافة الصلاحيات', 'category' => 'roles', 'guard_name' => $guardAdmin],
+            ['name' => 'تعديل الصلاحيات', 'category' => 'roles', 'guard_name' => $guardAdmin],
+            ['name' => 'حذف الصلاحيات', 'category' => 'roles', 'guard_name' => $guardAdmin],
+            ['name' => 'إضافة وتعديل أذونات الصلاحية', 'category' => 'roles', 'guard_name' => $guardAdmin],
+
+            // الأذونات
+            ['name' => 'الأذونات', 'category' => 'permissions', 'guard_name' => $guardAdmin],
+            ['name' => 'اضافة الأذونات', 'category' => 'permissions', 'guard_name' => $guardAdmin],
+            ['name' => 'تعديل الأذونات', 'category' => 'permissions', 'guard_name' => $guardAdmin],
+            ['name' => 'حذف الأذونات', 'category' => 'permissions', 'guard_name' => $guardAdmin],
 
         ];
 
@@ -49,13 +128,13 @@ class UserRolePermissionSeeder extends Seeder
         }
 
         // Create Roles
-        $superAdminRole = Role::create(['name' => 'super-admin']); //as super-admin
-        $adminRole = Role::create(['name' => 'admin']);
-        $staffRole = Role::create(['name' => 'staff']);
-        $userRole = Role::create(['name' => 'user']);
+        $superAdminRole = Role::create(['name' => 'super-admin', 'guard_name' => $guardAdmin]); //as super-admin
+        $adminRole = Role::create(['name' => 'admin', 'guard_name' => $guardAdmin]);
+        $staffRole = Role::create(['name' => 'staff', 'guard_name' => $guardAdmin]);
+        $userRole = Role::create(['name' => 'user', 'guard_name' => $guardAdmin]);
 
         // Lets give all permission to super-admin role.
-        $allPermissionNames = Permission::pluck('name')->toArray();
+        $allPermissionNames = Permission::where('guard_name', $guardAdmin)->pluck('name')->toArray();
         $superAdminRole->givePermissionTo($allPermissionNames);
 
         // Let's give few permissions to admin role.
@@ -69,56 +148,102 @@ class UserRolePermissionSeeder extends Seeder
             'view user',
             'update user',
         ];
+
         $adminRole->givePermissionTo($adminPermissions);
 
         // Let's Create User and assign Role to it.
-        $superAdminUser = User::firstOrCreate([
-            'email' => 'superadmin@dt.com',
+        $superAdminUser = Employee::firstOrCreate([
+            'username' => 'superadmin',
         ], [
+            'employee_code' => 98,
             'name' => 'Super Admin',
-            'email' => 'superadmin@dt.com',
-            'password' => Hash::make('12345678'),
-            'status' => 'active',
+            'username' => 'superadmin',
+            'password' => Hash::make('password'),
+            'gender' => '0',
+            'type' => '1',
+            'mobile' => '01196371215',
+            'status' => EmployeeStatus::Active,
+            'week_id' => 7,
+            'job_grade_id' => 4,
+            'branch_id' => 26,
+            'governorate_id' => 23,
+            'created_by' => 1,
         ]);
         $superAdminUser->assignRole($superAdminRole);
 
-        $superAdminUser2 = User::firstOrCreate([
-            'email' => 'mosama@dt.com',
+        $superAdminUser2 = Employee::firstOrCreate([
+            'username' => 'mosama',
         ], [
+            'employee_code' => 99,
             'name' => 'محمد أسامه',
-            'email' => 'mosama@dt.com',
-            'password' => Hash::make('@Osama88'),
-            'status' => 'active',
+            'username' => 'mosama',
+            'password' => Hash::make('password'),
+            'gender' => '0',
+            'type' => '1',
+            'mobile' => '01196371215',
+            'status' => EmployeeStatus::Active,
+            'week_id' => 7,
+            'job_grade_id' => 4,
+            'branch_id' => 26,
+            'governorate_id' => 23,
+            'created_by' => 1,
         ]);
         $superAdminUser2->assignRole($superAdminRole);
 
-        $adminUser = User::firstOrCreate([
-            'email' => 'admin@dt.com'
+        $adminUser = Employee::firstOrCreate([
+            'username' => 'admin'
         ], [
+            'employee_code' => 100,
             'name' => 'Admin',
-            'email' => 'admin@dt.com',
-            'password' => Hash::make('12345678'),
-            'status' => 'active',
+            'username' => 'admin',
+            'password' => Hash::make(value: 'password'),
+            'gender' => '0',
+            'type' => '1',
+            'mobile' => '01196371215',
+            'status' => EmployeeStatus::Active,
+            'week_id' => 7,
+            'job_grade_id' => 4,
+            'branch_id' => 26,
+            'governorate_id' => 23,
+            'created_by' => 1,
         ]);
         $adminUser->assignRole($adminRole);
 
-        $staffUser = User::firstOrCreate([
-            'email' => 'staff@dt.com',
+        $staffUser = Employee::firstOrCreate([
+            'username' => 'staff',
         ], [
+            'employee_code' => 101,
             'name' => 'Staff',
-            'email' => 'staff@dt.com',
-            'password' => Hash::make('12345678'),
-            'status' => 'inactive',
+            'username' => 'staff',
+            'password' => Hash::make('password'),
+            'gender' => '0',
+            'type' => '1',
+            'mobile' => '01196371215',
+            'status' => EmployeeStatus::Inactive,
+            'week_id' => 7,
+            'job_grade_id' => 4,
+            'branch_id' => 26,
+            'governorate_id' => 23,
+            'created_by' => 1,
         ]);
         $staffUser->assignRole($staffRole);
 
-        $staffUser2 = User::firstOrCreate([
-            'email' => 'heba@dt.com',
+        $staffUser2 = Employee::firstOrCreate([
+            'username' => 'heba',
         ], [
-            'name' => 'هبة الله سمير',
-            'email' => 'heba@dt.com',
-            'password' => Hash::make('123456789'),
-            'status' => 'active',
+            'employee_code' => 102,
+            'name' => 'heba',
+            'username' => 'heba',
+            'password' => Hash::make('password'),
+            'gender' => '0',
+            'type' => '1',
+            'mobile' => '01196371215',
+            'status' => EmployeeStatus::Active,
+            'week_id' => 7,
+            'job_grade_id' => 4,
+            'branch_id' => 26,
+            'governorate_id' => 23,
+            'created_by' => 1,
         ]);
         $staffUser2->assignRole($staffRole);
     }

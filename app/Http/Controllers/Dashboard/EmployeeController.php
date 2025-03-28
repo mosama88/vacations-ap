@@ -7,6 +7,7 @@ use App\Models\Branch;
 use App\Models\Employee;
 use App\Models\JobGrade;
 use App\Models\Governorate;
+use App\Enum\EmployeeStatus;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Dashboard\EmployeeRequest;
@@ -43,6 +44,7 @@ class EmployeeController extends Controller
         $employees = $request->validated();
         $data = array_merge($employees, [
             'employee_code' => $new_employeeCode,
+            'status' => EmployeeStatus::Active,
             'created_by' => auth()->guard('admin')->user()->id,
         ]);
         Employee::create($data);

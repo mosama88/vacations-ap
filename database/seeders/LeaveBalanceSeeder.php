@@ -2,10 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\Employee;
 use App\Models\LeaveBalance;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-
 
 class LeaveBalanceSeeder extends Seeder
 {
@@ -14,8 +13,6 @@ class LeaveBalanceSeeder extends Seeder
      */
     public function run(): void
     {
-        LeaveBalance::factory()->count(1000)->create([
-            'employee_id' => Employee::inRandomOrder()->limit(1000)->pluck('id')->toArray(),
-        ]);
+        LeaveBalance::factory()->count(125)->create();
     }
 }

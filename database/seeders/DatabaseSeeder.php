@@ -31,6 +31,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             WeekSeeder::class,
             MonthSeeder::class,
+            FinanceCalendarSeeder::class,
+            FinanceClnPeriodSeeder::class,
             GovernorateSeeder::class,
             BranchSeeder::class,
             JobGradeSeeder::class,

@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enum\EmployeeType;
 use Spatie\Image\Enums\Fit;
 use App\Enum\EmployeeGender;
+use App\Enum\EmployeeStatus;
 use Spatie\Sluggable\HasSlug;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\Sluggable\SlugOptions;
@@ -26,6 +27,7 @@ class Employee extends Authenticatable implements HasMedia
         'employee_code',
         'name',
         'slug',
+        'status',
         'username',
         'password',
         'mobile',
@@ -112,5 +114,6 @@ class Employee extends Authenticatable implements HasMedia
     protected $casts = [
         'gender' => EmployeeGender::class,
         'type' => EmployeeType::class,
+        'status' => EmployeeStatus::class,
     ];
 }

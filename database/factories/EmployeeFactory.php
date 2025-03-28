@@ -10,6 +10,7 @@ use App\Enum\EmployeeType;
 use App\Models\Governorate;
 use Illuminate\Support\Str;
 use App\Enum\EmployeeGender;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -786,7 +787,6 @@ class EmployeeFactory extends Factory
 
         ];
 
-        // خلط الأسماء
         shuffle($maleNames);
         shuffle($femaleNames);
 
@@ -795,8 +795,8 @@ class EmployeeFactory extends Factory
 
         // توليد الاسم حسب الجنس
         $name = $gender === EmployeeGender::Male
-            ? implode(' ', array_slice($maleNames, 0, 3))  // أسماء ذكور فقط
-            : fake()->randomElement($femaleNames) . ' ' . implode(' ', array_slice($maleNames, 0, 2));  // اسم بنت + اسمين ذكور
+            ? implode(' ', array_slice($maleNames, 0, 3))
+            : fake()->randomElement($femaleNames) . ' ' . implode(' ', array_slice($maleNames, 0, 2));
 
         // توليد اسم المستخدم من الاسم
         $nameParts = explode(' ', $name);
@@ -813,12 +813,24 @@ class EmployeeFactory extends Factory
         // إزالة أي رموز وتحويله لصيغة صالحة كـ username
         $username = Str::slug($username, '');
 
+        // تحديد طول عشوائي بين 6 و 8 حروف
+        $length = fake()->numberBetween(6, 8);
+
+        // قص الـ username ليتناسب مع الطول العشوائي
+        $username = mb_substr($username, 0, $length);
+
+        // التأكد من أن الـ username فريد
+        while (DB::table('employees')->where('username', $username)->exists()) {
+            // إذا كان الـ username مكررًا، قم بتغيير شيء فيه
+            $username = $username . fake()->randomLetter(); // إضافة حرف عشوائي لإيجاد اسم مستخدم فريد
+        }
+
         return [
             'employee_code' => fake()->unique()->numberBetween(1000, 9999),
             'gender' => $gender,
             'name' => $name,
             'username' => $username,
-            'password' => Hash::make('password'), // Hashing the password
+            'password' => Hash::make('password'),
             'mobile' => fake()->regexify('/^(012|015|010|011)[0-9]{8}$/'),
             'type' => fake()->randomElement([EmployeeType::User, EmployeeType::Manager]),
             'branch_id' => Branch::inRandomOrder()->first()->id,

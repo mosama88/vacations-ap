@@ -25,6 +25,7 @@ return new class extends Migration
             $table->enum('gender', [0, 1]);
             $table->enum('type', [0, 1]);
             $table->string('mobile');
+            $table->enum('status', [0, 1])->default(1);
             $table->foreignIdFor(Week::class)->nullable()->constrained()->nullOnDelete();
             $table->foreignIdFor(JobGrade::class)->nullable()->constrained()->nullOnDelete();
             $table->foreignIdFor(Branch::class)->nullable()->constrained()->nullOnDelete();
