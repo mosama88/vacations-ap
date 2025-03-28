@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('leaves', function (Blueprint $table) {
             $table->id();
+            $table->integer('leave_code')->unique();
             $table->foreignIdFor(Employee::class)->nullable()->constrained()->nullOnDelete();
             $table->date('start_date');
             $table->date('end_date');

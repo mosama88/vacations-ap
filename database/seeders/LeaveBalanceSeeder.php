@@ -13,6 +13,6 @@ class LeaveBalanceSeeder extends Seeder
      */
     public function run(): void
     {
-        LeaveBalance::factory()->count(123)->create();
+        LeaveBalance::factory()->count(200)->create();
     }
 }

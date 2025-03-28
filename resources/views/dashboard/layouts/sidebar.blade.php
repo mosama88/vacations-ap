@@ -1,17 +1,3 @@
-@php
-    use App\Enum\EmployeeType;
-
-    $user = auth('employee')->user();
-
-    if ($user) {
-        $isManager = $user->type == EmployeeType::Manager;
-        $route = $isManager ? route('employee-panel.manager') : route('employee-panel.user');
-    } else {
-        $route = route('dashboard.index'); // أو أي صفحة افتراضية
-    }
-
-    $activeClass = request()->routeIs('employee-panel.*') ? 'active' : '';
-@endphp
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
@@ -116,7 +102,7 @@
 
                 @auth('employee')
                     <li class="nav-item">
-                        <a href="{{ $route }}" class="nav-link {{ $activeClass }}">
+                        <a href="{{ route('employee-panel.user') }}" class="nav-link {{ 'active-employeePanel' }}">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
                                 الصفحة الرئيسية

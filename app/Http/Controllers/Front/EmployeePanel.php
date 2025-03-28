@@ -16,10 +16,5 @@ class EmployeePanel extends Controller
         return view('front.index', compact('data'));
     }
 
-    public function managerIndex()
-    {
-        $employee = Auth::user()->id;
-        $data = Leave::where('employee_id', $employee)->orderByDesc('id')->paginate(10);
-        return view('front.manager', compact('data'));
-    }
+
 }

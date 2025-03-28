@@ -40,11 +40,14 @@ class LeaveController extends Controller
      */
     public function store(LeaveRequest $request)
     {
+        $lastLeave = Leave::orderByDesc('leave_code')->value('leave_code');
+        $new_LeaveCode = $lastLeave ? $lastLeave + 1 : 5000;
         $leavees = $request->validated();
         $startDate = Carbon::parse($request->start_date);
         $endDate = Carbon::parse($request->end_date);
         $daysTaken = $startDate->diffInDays($endDate) + 1;
         $data = array_merge($leavees, [
+            'leave_code' => $new_LeaveCode,
             'employee_id' => Auth::user()->id,
             'days_taken' => $daysTaken,
             'leave_status' => LeaveStatusEnum::Pending,
