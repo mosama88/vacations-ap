@@ -10,6 +10,7 @@ use App\Enum\LeaveStatusEnum;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Dashboard\LeaveRequest;
+use App\Models\Week;
 use Carbon\Carbon;
 
 class LeaveController extends Controller
@@ -29,8 +30,9 @@ class LeaveController extends Controller
     public function create()
     {
         $emplyeeId = Auth::user()->id;
+        $other['weeks'] = Week::where('id', $emplyeeId)->get();
         $employees = Employee::with('leaveBalance')->where('id', $emplyeeId)->first();
-        return view('front.leaves.create', compact('employees'));
+        return view('front.leaves.create', compact('employees', 'other'));
     }
 
     /**

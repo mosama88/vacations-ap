@@ -1,8 +1,15 @@
 @php
     use App\Enum\EmployeeType;
+
     $user = auth('employee')->user();
-    $isManager = $user->type == EmployeeType::Manager;
-    $route = $isManager ? route('employee-panel.manager') : route('employee-panel.user');
+
+    if ($user) {
+        $isManager = $user->type == EmployeeType::Manager;
+        $route = $isManager ? route('employee-panel.manager') : route('employee-panel.user');
+    } else {
+        $route = route('dashboard.index'); // أو أي صفحة افتراضية
+    }
+
     $activeClass = request()->routeIs('employee-panel.*') ? 'active' : '';
 @endphp
 <aside class="main-sidebar sidebar-dark-primary elevation-4">

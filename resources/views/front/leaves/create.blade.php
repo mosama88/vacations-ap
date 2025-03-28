@@ -11,7 +11,7 @@
     @include('dashboard.layouts.breadcrumb-front', [
         'pageTitle' => 'أنشاء طلب أجازه',
         'previousPage' => 'جدول الأجازات',
-        'urlPreviousPage' => 'leaves.index',
+        'urlPreviousPage' => 'employee-panel.user',
         'currentPage' => 'أنشاء طلب أجازه',
     ])
 
@@ -20,13 +20,13 @@
     <section class="content">
         <div class="container-fluid">
 
-            @if($errors->any())
-            @foreach($errors->all() as $error)
-            <div class="alert alert-danger text-center">
-                    {{$error}}
-                </div>
-            @endforeach
-@endif
+            @if ($errors->any())
+                @foreach ($errors->all() as $error)
+                    <div class="alert alert-danger text-center">
+                        {{ $error }}
+                    </div>
+                @endforeach
+            @endif
 
             <div class="row">
                 <div class="col-12">
@@ -41,17 +41,22 @@
                             @csrf
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="form-group col-6" id="employee_div">
+                                    <div class="form-group col-4" id="employee_div">
                                         <label for="exampleInputName">كود الموظف</label>
                                         <input disabled type="text" id="employee_code"
                                             value="{{ $employees->employee_code }}" name="employee_code"
                                             class="form-control" id="exampleInputemployee_id" placeholder="">
                                     </div>
-                                    <div class="form-group col-6" id="employee_div">
+                                    <div class="form-group col-4" id="employee_div">
                                         <label for="exampleInputName">أسم الموظف</label>
                                         <input disabled type="text" id="employee_id" value="{{ $employees->name }}"
                                             name="employee_id" class="form-control" id="exampleInputemployee_id"
                                             placeholder="">
+                                    </div>
+                                    <div class="form-group col-4">
+                                        <label for="exampleSelectBorder">الراحه الاسبوعية</code></label>
+                                        <input disabled type="text" id="week_id" value="{{ $employees->week->name }}"
+                                            name="week_id" class="form-control" id="exampleInputweek_id" placeholder="">
                                     </div>
                                 </div>
                                 <div class="row">
