@@ -57,7 +57,7 @@ class AdminLoginRequest extends FormRequest
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
-                'username' => trans('auth.failed'),
+                'username' => 'أسم المستخدم غير مسجل.',
             ]);
         }
 
