@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\RedirectLogin;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -19,6 +20,9 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->redirectGuestsTo('login');
+        $middleware->alias([
+            'redirect.employee' => \App\Http\Middleware\RedirectEmployeePanel::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

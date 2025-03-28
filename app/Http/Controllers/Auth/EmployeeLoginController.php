@@ -22,13 +22,13 @@ class EmployeeLoginController extends Controller
     /**
      * Handle an incoming authentication request.
      */
-    public function store(EmployeeLoginRequest $request): RedirectResponse
+    public function store(EmployeeLoginRequest $request)
     {
         $request->authenticate();
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('employee-panel', absolute: false));
+        return redirect()->intended(route('employee-panel.index', absolute: false));
     }
 
     /**

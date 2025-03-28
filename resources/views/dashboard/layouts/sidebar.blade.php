@@ -101,6 +101,16 @@
                 @endauth
 
                 @auth('employee')
+                    <li class="nav-item">
+                        <a href="{{ route('employee-panel.index') }}" class="nav-link @yield('active-index')">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>
+                                الصفحة الرئيسية
+                            </p>
+                        </a>
+                    </li>
+
+
                     <li class="nav-item has-treeview {{ request()->is('leaves*') ? 'menu-open' : '' }} ">
                         <a href="#" class="nav-link {{ request()->is('leaves*') ? 'active' : '' }} ">
                             <i class="nav-icon fas fa-users"></i>
