@@ -8,6 +8,7 @@ use App\Enum\EmployeeGender;
 use Spatie\Sluggable\HasSlug;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\Sluggable\SlugOptions;
+use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -17,7 +18,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Employee extends Authenticatable implements HasMedia
 {
-    use HasFactory, HasSlug, Notifiable, InteractsWithMedia;
+    use HasFactory, HasSlug, Notifiable, InteractsWithMedia, HasRoles;
 
     protected $table = 'employees';
 
