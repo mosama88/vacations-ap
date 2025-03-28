@@ -26,90 +26,94 @@
 
     <!-- Right navbar links -->
     <ul class="navbar-nav mr-auto-navbav">
-        @if (Auth::guard('admin')->check())
-            <!-- Profile-->
-            <form action="{{ route('dashboard.logout') }}" method="POST">
-                @csrf
-                <a class="nav-link" data-toggle="dropdown" href=""
-                    onclick="event.preventDefault(); this.closest('form').submit();">
-                    <i class="fas fa-sign-out-alt mx-1"></i> تسجيل الخروج
-                </a>
-            </form>
-        @else
-            <form action="{{ route('employees.logout') }}" method="POST">
-                @csrf
-                <a class="nav-link" data-toggle="dropdown" href=""
-                    onclick="event.preventDefault(); this.closest('form').submit();">
-                    <i class="fas fa-sign-out-alt mx-1"></i> تسجيل الخروج
-                </a>
-            </form>
-        @endif
-
-
-
-
-
-        <!-- Messages Dropdown Menu -->
-        <li class="nav-item dropdown">
-            <a class="nav-link" data-toggle="dropdown" href="#">
-                <i class="far fa-comments"></i>
-                <span class="badge badge-danger navbar-badge">3</span>
+        <li class="nav-item dropdown user-menu">
+            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+                <span>
+                    {{ Auth::user()->name }}
+                </span>
             </a>
-            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                <a href="#" class="dropdown-item">
-                    <!-- Message Start -->
-                    <div class="media">
-                        <img src="{{ asset('dashboard') }}/assets/dist/img/user1-128x128.jpg" alt="User Avatar"
-                            class="img-size-50 mr-3 img-circle">
-                        <div class="media-body">
-                            <h3 class="dropdown-item-title">
-                                Brad Diesel
-                                <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
-                            </h3>
-                            <p class="text-sm">Call me whenever you can...</p>
-                            <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                        </div>
-                    </div>
-                    <!-- Message End -->
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item">
-                    <!-- Message Start -->
-                    <div class="media">
-                        <img src="{{ asset('dashboard') }}/assets/dist/img/user8-128x128.jpg" alt="User Avatar"
-                            class="img-size-50 img-circle mr-3">
-                        <div class="media-body">
-                            <h3 class="dropdown-item-title">
-                                John Pierce
-                                <span class="float-right text-sm text-muted"><i class="fas fa-star"></i></span>
-                            </h3>
-                            <p class="text-sm">I got your message bro</p>
-                            <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                        </div>
-                    </div>
-                    <!-- Message End -->
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item">
-                    <!-- Message Start -->
-                    <div class="media">
-                        <img src="{{ asset('dashboard') }}/assets/dist/img/user3-128x128.jpg" alt="User Avatar"
-                            class="img-size-50 img-circle mr-3">
-                        <div class="media-body">
-                            <h3 class="dropdown-item-title">
-                                Nora Silvester
-                                <span class="float-right text-sm text-warning"><i class="fas fa-star"></i></span>
-                            </h3>
-                            <p class="text-sm">The subject goes here</p>
-                            <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                        </div>
-                    </div>
-                    <!-- Message End -->
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
-            </div>
+            <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                <li>
+                    <a class="btn btn-default btn-flat float-right btn-block" data-toggle="dropdown" href="">
+                        <i class="fas fa-user mx-1"></i> الملف الشخصى
+                    </a>
+                </li>
+                <li class="user-footer">
+                    @if (Auth::guard('admin')->check())
+                        <!-- Profile-->
+                        <form action="{{ route('dashboard.logout') }}" method="POST">
+                            @csrf
+                            <a class="btn btn-default btn-flat float-right btn-block" data-toggle="dropdown"
+                                href="" onclick="event.preventDefault(); this.closest('form').submit();">
+                                <i class="fas fa-sign-out-alt mx-1"></i> تسجيل الخروج
+                            </a>
+                        </form>
+                    @else
+                        <form action="{{ route('employees.logout') }}" method="POST">
+                            @csrf
+                            <a class="btn btn-default btn-flat float-right btn-block" data-toggle="dropdown"
+                                href="" onclick="event.preventDefault(); this.closest('form').submit();">
+                                <i class="fas fa-sign-out-alt mx-1"></i> تسجيل الخروج
+                            </a>
+                        </form>
+                    @endif
+                </li>
+
+            </ul>
+
         </li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         <!-- Notifications Dropdown Menu -->
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">

@@ -19,13 +19,19 @@ class LeaveBalanceFactory extends Factory
      */
     public function definition(): array
     {
+        // تحديد الأيام الإجمالية
+        $total_days = fake()->randomElement([21, 30, 45]);
+
+        // حساب الأيام المتبقية والأيام المستخدمة
+        $remaining_days = $total_days;
+        $used_days = $total_days - $remaining_days; // الأيام المستخدمة هي الفرق بين الأيام الإجمالية والأيام المتبقية
+
         return [
             'employee_id' => Employee::inRandomOrder()->first()->id,
             'finance_calendar_id' => 1,
-            'total_days' => $total_days = fake()->randomElement([21, 30, 45]),
-            'remainig_days' => $remainig_days = $total_days,
-            'used_days' =>  parse($remainig_days - $total_days),
-
+            'total_days' => $total_days,
+            'remaining_days' => $remaining_days,
+            'used_days' => $used_days, // لا نحتاج إلى دالة parse() هنا
         ];
     }
 }

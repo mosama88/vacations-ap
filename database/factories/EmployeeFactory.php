@@ -790,15 +790,34 @@ class EmployeeFactory extends Factory
         shuffle($maleNames);
         shuffle($femaleNames);
 
+        // تحديد الجنس
+        $gender = fake()->randomElement([EmployeeGender::Male, EmployeeGender::Female]);
+
+        // توليد الاسم حسب الجنس
+        $name = $gender === EmployeeGender::Male
+            ? implode(' ', array_slice($maleNames, 0, 3))  // أسماء ذكور فقط
+            : fake()->randomElement($femaleNames) . ' ' . implode(' ', array_slice($maleNames, 0, 2));  // اسم بنت + اسمين ذكور
+
+        // توليد اسم المستخدم من الاسم
+        $nameParts = explode(' ', $name);
+        $username = '';
+
+        foreach ($nameParts as $i => $part) {
+            if ($i < count($nameParts) - 1) {
+                $username .= mb_substr($part, 0, 1); // أول حرف من كل اسم ما عدا الأخير
+            } else {
+                $username .= mb_substr($part, 0, 4); // أول 4 حروف من آخر اسم
+            }
+        }
+
+        // إزالة أي رموز وتحويله لصيغة صالحة كـ username
+        $username = Str::slug($username, '');
 
         return [
             'employee_code' => fake()->unique()->numberBetween(1000, 9999),
-            'gender' => $gender = fake()->randomElement([EmployeeGender::Male, EmployeeGender::Female]),
-            'name' => $gender === EmployeeGender::Male
-                ? implode(' ', array_slice($maleNames, 0, 3))  // أسماء ذكور فقط
-                : fake()->randomElement($femaleNames) . ' ' . implode(' ', array_slice($maleNames, 0, 2)),  // اسم بنت + اسمين ذكور
-            // 'slug' => Str::slug($name),
-            'username' => fake()->userName(),
+            'gender' => $gender,
+            'name' => $name,
+            'username' => $username,
             'password' => Hash::make('password'), // Hashing the password
             'mobile' => fake()->regexify('/^(012|015|010|011)[0-9]{8}$/'),
             'type' => fake()->randomElement([EmployeeType::User, EmployeeType::Manager]),
