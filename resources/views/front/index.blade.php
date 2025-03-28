@@ -115,7 +115,7 @@
                                     @forelse ($data as $info)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $info->leave_code }}</td>
                                             <td>
                                                 @if ($info->leave_type == LeaveTypeEnum::Emergency)
                                                     عارضه
