@@ -112,7 +112,9 @@
                     </li>
 
 
-                    <li class="nav-item has-treeview {{ request()->is('leaves*') ? 'menu-open' : '' }} ">
+                    <li
+                        class="nav-item has-treeview {{ request()->is('users*') || request()->is('roles*') || request()->is('permissions*') ? 'menu-open' : '' }}">
+                        ">
                         <a href="#" class="nav-link {{ request()->is('leaves*') ? 'active' : '' }} ">
                             <i class="nav-icon fas fa-users"></i>
                             <p>
@@ -131,6 +133,38 @@
                         </ul>
                     </li>
                 @endauth
+
+
+                <li class="nav-item has-treeview {{ request()->is('leaves*') ? 'menu-open' : '' }} ">
+                    <a href="#"
+                        class="nav-link {{ request()->is('users*') || request()->is('roles*') || request()->is('permissions*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-users"></i>
+                        <p>
+                            إدارة شئون المستخدمين
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="" class="nav-link @yield('active-users')">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>جدول المستخدمين</p>
+                            </a>
+
+                            <a href="{{ route('dashboard.roles.index') }}" class="nav-link @yield('active-roles')">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>الصلاحيات</p>
+                            </a>
+
+                            <a href="{{ route('dashboard.permissions.index') }}" class="nav-link @yield('active-permissions')">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>الأذونات</p>
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+
 
             </ul>
         </nav>

@@ -1,9 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\RoleController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\ProfileController;
+
 use App\Http\Controllers\Front\EmployeePanel;
 use App\Http\Controllers\Dashboard\LeaveController;
 use App\Http\Controllers\Auth\EmployeeLoginController;
@@ -38,9 +36,3 @@ Route::middleware('auth:employee')->group(function () {
 });
 
 
-
-Route::group(['middleware' => ['role:super-admin|admin']], function () {
-    Route::get('roles/{roleId}/give-permissions', [App\Http\Controllers\RoleController::class, 'addPermissionToRole']);
-    Route::put('roles/{roleId}/give-permissions', [App\Http\Controllers\RoleController::class, 'givePermissionToRole']);
-    Route::get('permissions/{permissionId}/delete', [App\Http\Controllers\PermissionController::class, 'destroy']);
-});

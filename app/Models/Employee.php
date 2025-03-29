@@ -116,4 +116,6 @@ class Employee extends Authenticatable implements HasMedia
         'type' => EmployeeType::class,
         'status' => EmployeeStatus::class,
     ];
+
+    protected $guard_name = 'employee'; // or whatever guard you want 
 }

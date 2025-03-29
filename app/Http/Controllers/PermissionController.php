@@ -7,6 +7,22 @@ use Spatie\Permission\Models\Permission;
 
 class PermissionController extends Controller
 {
+    protected array $middleware = [
+        'role:admin', // Applies to all methods
+
+        [
+            'middleware' => 'permission:create-product',
+            'only' => ['create', 'store']
+        ],
+        [
+            'middleware' => 'permission:edit-product',
+            'only' => ['edit', 'update']
+        ],
+        [
+            'middleware' => 'permission:delete-product',
+            'only' => ['destroy']
+        ]
+    ];
 
 
     public function index()
@@ -32,7 +48,7 @@ class PermissionController extends Controller
                 'required',
                 'string'
             ],
-           
+
         ]);
 
         Permission::create([
@@ -56,7 +72,7 @@ class PermissionController extends Controller
             'name' => [
                 'required',
                 'string',
-                'unique:permissions,name,'.$permission->id
+                'unique:permissions,name,' . $permission->id
             ]
         ]);
 
@@ -64,13 +80,13 @@ class PermissionController extends Controller
             'name' => $request->name
         ]);
 
-        return redirect('permissions')->with('status','تم تعديل الاذونات بنجاح');
+        return redirect('permissions')->with('status', 'تم تعديل الاذونات بنجاح');
     }
 
     public function destroy($permissionId)
     {
         $permission = Permission::find($permissionId);
         $permission->delete();
-        return redirect('permissions')->with('status','تم حذف الأذونات بنجاح');
+        return redirect('permissions')->with('status', 'تم حذف الأذونات بنجاح');
     }
 }

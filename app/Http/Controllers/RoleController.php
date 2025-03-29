@@ -9,8 +9,12 @@ use Illuminate\Support\Facades\DB;
 
 class RoleController extends Controller
 {
-
-
+    protected array $middleware = [
+        'permission:view role' => ['only' => ['index']],
+        'permission:create role' => ['only' => ['create', 'store', 'addPermissionToRole', 'givePermissionToRole']],
+        'permission:update role' => ['only' => ['update', 'edit']],
+        'permission:delete role' => ['only' => ['destroy']],
+    ];
     public function index()
     {
         $roles = Role::get();

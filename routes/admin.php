@@ -1,7 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\Auth\AdminLoginController;
 use App\Http\Controllers\Dashboard\BranchController;
 use App\Http\Controllers\Dashboard\EmployeeController;
@@ -55,6 +58,40 @@ Route::middleware('auth:admin')->group(function () {
 
 
 
+Route::controller(RoleController::class)->group(function () {
+    Route::middleware('permission:view role')->get('/roles', 'index');
+    Route::middleware('permission:create role')->group(function () {
+        Route::get('/roles/create', 'create')->name('roles.index');
+        Route::post('/roles', 'store');
+        Route::post('/roles/add-permission', 'addPermissionToRole');
+        Route::post('/roles/give-permission', 'givePermissionToRole');
+    });
+    Route::middleware('permission:update role')->group(function () {
+        Route::get('/roles/{role}/edit', 'edit');
+        Route::put('/roles/{role}', 'update');
+    });
+    Route::middleware('permission:delete role')->delete('/roles/{role}', 'destroy');
+});
+
+
+Route::controller(PermissionController::class)
+    ->middleware('role:admin') // Applies to all routes
+    ->group(function () {
+        Route::middleware('permission:create-product')->group(function () {
+            Route::get('/permissions/create', 'create')->name('permissions.index');
+            Route::post('/permissions', 'store');
+        });
+
+        Route::middleware('permission:edit-product')->group(function () {
+            Route::get('/permissions/{permission}/edit', 'edit');
+            Route::put('/permissions/{permission}', 'update');
+        });
+
+        Route::middleware('permission:delete-product')->delete('/permissions/{permission}', 'destroy');
+
+        // Index doesn't need additional middleware beyond 'role:admin'
+        Route::get('/permissions', 'index');
+    });
 
 
 // Route::get('/dashboard', function () {
