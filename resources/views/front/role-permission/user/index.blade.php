@@ -89,7 +89,7 @@
                                             <a  href="#delete{{ $user->id }}" data-effect="effect-scale" data-toggle="modal" class="btn btn-outline-danger btn-sm">حذف</a>
                                         @endcan
                                     </td>
-                                    @include('role-permission.user.delete')
+                                    @include('front.role-permission.user.delete')
                                 </tr>
                             @endforeach
                             </tbody>
