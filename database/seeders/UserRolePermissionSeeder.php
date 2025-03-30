@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Admin;
 use App\Models\Employee;
 use App\Enum\EmployeeStatus;
 use Illuminate\Database\Seeder;
@@ -19,7 +20,7 @@ class UserRolePermissionSeeder extends Seeder
     {
         // Create Permissions
         // Define the guard
-        $guardAdmin = 'employee';
+        $guardAdmin = 'admin';
 
         // Create Permissions
         $permissions = [
@@ -152,98 +153,56 @@ class UserRolePermissionSeeder extends Seeder
         $adminRole->givePermissionTo($adminPermissions);
 
         // Let's Create User and assign Role to it.
-        $superAdminUser = Employee::firstOrCreate([
+        $superAdminUser = Admin::firstOrCreate([
             'username' => 'superadmin',
         ], [
-            'employee_code' => 98,
             'name' => 'Super Admin',
             'username' => 'superadmin',
             'password' => Hash::make('password'),
-            'gender' => '0',
-            'type' => '1',
-            'mobile' => '01196371215',
-            'status' => EmployeeStatus::Active,
-            'week_id' => 7,
-            'job_grade_id' => 4,
-            'branch_id' => 26,
-            'governorate_id' => 23,
-            'created_by' => 1,
         ]);
         $superAdminUser->assignRole($superAdminRole);
 
-        $superAdminUser2 = Employee::firstOrCreate([
+        $superAdminUser2 = Admin::firstOrCreate([
             'username' => 'mosama',
         ], [
-            'employee_code' => 99,
             'name' => 'محمد أسامه',
             'username' => 'mosama',
             'password' => Hash::make('password'),
-            'gender' => '0',
-            'type' => '1',
-            'mobile' => '01196371215',
-            'status' => EmployeeStatus::Active,
-            'week_id' => 7,
-            'job_grade_id' => 4,
-            'branch_id' => 26,
-            'governorate_id' => 23,
-            'created_by' => 1,
+        ]);
+
+        $superAdminUser2 = Admin::firstOrCreate([
+            'username' => 'Mohamed Osama',
+        ], [
+            'name' => 'محمد أسامه',
+            'username' => 'admin',
+            'password' => Hash::make('password'),
         ]);
         $superAdminUser2->assignRole($superAdminRole);
 
-        $adminUser = Employee::firstOrCreate([
+        $adminUser = Admin::firstOrCreate([
             'username' => 'admin'
         ], [
-            'employee_code' => 100,
             'name' => 'Admin',
             'username' => 'admin',
             'password' => Hash::make(value: 'password'),
-            'gender' => '0',
-            'type' => '1',
-            'mobile' => '01196371215',
-            'status' => EmployeeStatus::Active,
-            'week_id' => 7,
-            'job_grade_id' => 4,
-            'branch_id' => 26,
-            'governorate_id' => 23,
-            'created_by' => 1,
         ]);
         $adminUser->assignRole($adminRole);
 
-        $staffUser = Employee::firstOrCreate([
+        $staffUser = Admin::firstOrCreate([
             'username' => 'staff',
         ], [
-            'employee_code' => 101,
             'name' => 'Staff',
             'username' => 'staff',
             'password' => Hash::make('password'),
-            'gender' => '0',
-            'type' => '1',
-            'mobile' => '01196371215',
-            'status' => EmployeeStatus::Inactive,
-            'week_id' => 7,
-            'job_grade_id' => 4,
-            'branch_id' => 26,
-            'governorate_id' => 23,
-            'created_by' => 1,
         ]);
         $staffUser->assignRole($staffRole);
 
-        $staffUser2 = Employee::firstOrCreate([
+        $staffUser2 = Admin::firstOrCreate([
             'username' => 'heba',
         ], [
-            'employee_code' => 102,
             'name' => 'heba',
             'username' => 'heba',
             'password' => Hash::make('password'),
-            'gender' => '0',
-            'type' => '1',
-            'mobile' => '01196371215',
-            'status' => EmployeeStatus::Active,
-            'week_id' => 7,
-            'job_grade_id' => 4,
-            'branch_id' => 26,
-            'governorate_id' => 23,
-            'created_by' => 1,
         ]);
         $staffUser2->assignRole($staffRole);
     }
