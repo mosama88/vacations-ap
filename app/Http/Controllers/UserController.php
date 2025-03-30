@@ -9,23 +9,24 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    protected array $middleware = [
-        'permission:view user' => ['only' => ['index']],
-        'permission:create user' => ['only' => ['create', 'store']],
-        'permission:update user' => ['only' => ['update', 'edit']],
-        'permission:delete user' => ['only' => ['destroy']],
-    ];
+    // public function __construct()
+    // {
+    //     $this->middleware('permission:view user', ['only' => ['index']]);
+    //     $this->middleware('permission:create user', ['only' => ['create','store']]);
+    //     $this->middleware('permission:update user', ['only' => ['update','edit']]);
+    //     $this->middleware('permission:delete user', ['only' => ['destroy']]);
+    // }
 
     public function index()
     {
         $users = User::get();
-        return view('role-permission.user.index', ['users' => $users]);
+        return view('front.role-permission.user.index', ['users' => $users]);
     }
 
     public function create()
     {
-        $roles = Role::pluck('name', 'name')->all();
-        return view('role-permission.user.create', ['roles' => $roles]);
+        $roles = Role::pluck('name','name')->all();
+        return view('front.role-permission.user.create', ['roles' => $roles]);
     }
 
     public function store(Request $request)
@@ -46,14 +47,14 @@ class UserController extends Controller
 
         $user->syncRoles($request->roles);
 
-        return redirect('/users')->with('status', 'تم إنشاء المستخدم بالصلاحيات بنجاح');
+        return redirect('/users')->with('status','تم إنشاء المستخدم بالصلاحيات بنجاح');
     }
 
     public function edit(User $user)
     {
-        $roles = Role::pluck('name', 'name')->all();
-        $userRoles = $user->roles->pluck('name', 'name')->all();
-        return view('role-permission.user.edit', [
+        $roles = Role::pluck('name','name')->all();
+        $userRoles = $user->roles->pluck('name','name')->all();
+        return view('front.role-permission.user.edit', [
             'user' => $user,
             'roles' => $roles,
             'userRoles' => $userRoles
@@ -75,7 +76,7 @@ class UserController extends Controller
             'status' => $request->status,
         ];
 
-        if (!empty($request->password)) {
+        if(!empty($request->password)){
             $data += [
                 'password' => Hash::make($request->password),
             ];
@@ -84,7 +85,7 @@ class UserController extends Controller
         $user->update($data);
         $user->syncRoles($request->roles);
 
-        return redirect('/users')->with('status', 'تم تعديل المستخدم بالصلاحيات بنجاح');
+        return redirect('/users')->with('status','تم تعديل المستخدم بالصلاحيات بنجاح');
     }
 
     public function destroy($userId)
@@ -92,6 +93,6 @@ class UserController extends Controller
         $user = User::findOrFail($userId);
         $user->delete();
 
-        return redirect('/users')->with('status', 'حذف المستخدم بنجاح');
+        return redirect('/users')->with('status','حذف المستخدم بنجاح');
     }
 }

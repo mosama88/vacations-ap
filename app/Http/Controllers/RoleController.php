@@ -6,24 +6,28 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Route;
 
 class RoleController extends Controller
 {
+
+
     protected array $middleware = [
         'permission:view role' => ['only' => ['index']],
         'permission:create role' => ['only' => ['create', 'store', 'addPermissionToRole', 'givePermissionToRole']],
         'permission:update role' => ['only' => ['update', 'edit']],
-        'permission:delete role' => ['only' => ['destroy']],
+        'permission:delete role' => ['only' => ['destroy']]
     ];
+
     public function index()
     {
         $roles = Role::get();
-        return view('role-permission.role.index', ['roles' => $roles]);
+        return view('front.role-permission.role.index', ['roles' => $roles]);
     }
 
     public function create()
     {
-        return view('role-permission.role.create');
+        return view('front.role-permission.role.create');
     }
 
     public function store(Request $request)
@@ -40,12 +44,12 @@ class RoleController extends Controller
             'name' => $request->name
         ]);
 
-        return redirect('roles')->with('status','إنشاء الصلاحية بنجاح');
+        // return redirect('roles')->with('status','إنشاء الصلاحية بنجاح');
     }
 
     public function edit(Role $role)
     {
-        return view('role-permission.role.edit',[
+        return view('front.role-permission.role.edit',[
             'role' => $role
         ]);
     }
@@ -64,7 +68,7 @@ class RoleController extends Controller
             'name' => $request->name
         ]);
 
-        return redirect('roles')->with('status','تعديل الصلاحية بنجاح');
+        // return redirect('roles')->with('status','تعديل الصلاحية بنجاح');
     }
 
     public function destroy($roleId)
@@ -83,7 +87,7 @@ class RoleController extends Controller
             ->pluck('role_has_permissions.permission_id','role_has_permissions.permission_id')
             ->all();
 
-        return view('role-permission.role.add-permissions', [
+        return view('front.role-permission.role.add-permissions', [
             'role' => $role,
             'permissions' => $permissions,
             'rolePermissions' => $rolePermissions

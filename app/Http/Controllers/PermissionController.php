@@ -7,24 +7,13 @@ use Spatie\Permission\Models\Permission;
 
 class PermissionController extends Controller
 {
+
+
     protected array $middleware = [
-        'role:admin', // Applies to all methods
-
-        [
-            'middleware' => 'permission:create-product',
-            'only' => ['create', 'store']
-        ],
-        [
-            'middleware' => 'permission:edit-product',
-            'only' => ['edit', 'update']
-        ],
-        [
-            'middleware' => 'permission:delete-product',
-            'only' => ['destroy']
-        ]
+        'permission:create-product' => ['only' => ['create', 'store']],
+        'permission:edit-product' => ['only' => ['update', 'edit']],
+        'permission:delete-product' => ['only' => ['destroy']]
     ];
-
-
     public function index()
     {
         $permissions = Permission::get();

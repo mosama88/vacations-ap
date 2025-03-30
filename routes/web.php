@@ -2,7 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\Front\EmployeePanel;
+use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\Dashboard\LeaveController;
 use App\Http\Controllers\Auth\EmployeeLoginController;
 
@@ -35,4 +37,38 @@ Route::middleware('auth:employee')->group(function () {
         ->name('employees.logout');
 });
 
+Route::middleware(['auth:admin', 'role:super-admin,admin'])
+    ->name('dashboard.')
+    ->group(function () {
+        
+        // Role Routes
+        Route::prefix('roles')->controller(RoleController::class)->group(function () {
+            Route::get('/', 'index')->name('roles.index');
+            Route::get('/create', 'create')->name('roles.create');
+            Route::post('/', 'store')->name('roles.store');
+            Route::get('/{role}/edit', 'edit')->name('roles.edit');
+            Route::put('/{role}', 'update')->name('roles.update');
+            Route::delete('/{role}', 'destroy')->name('roles.destroy');
+            
+            // Permission specific routes
+            Route::get('/{role}/give-permissions', 'addPermissionToRole')->name('roles.add-permission');
+            Route::put('/{role}/give-permissions', 'givePermissionToRole')->name('roles.give-permission');
+        });
 
+
+        
+
+        Route::prefix('permission')->controller(PermissionController::class)->group(function () {
+            Route::get('/', 'index')->name('permissions.index');
+            Route::get('/create', 'create')->name('permissions.create');
+            Route::post('/', 'store')->name('permissions.store');
+            Route::get('/{role}/edit', 'edit')->name('permissions.edit');
+            Route::put('/{role}', 'update')->name('permissions.update');
+            Route::delete('/{role}', 'destroy')->name('permissions.destroy');
+            
+            
+        });
+        
+        
+        // Other routes...
+    });
