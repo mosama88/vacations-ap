@@ -135,10 +135,12 @@
                 @endauth
 
 
-                <li class="nav-item has-treeview {{ request()->is('leaves*') ? 'menu-open' : '' }} ">
+                <li
+                    class="nav-item has-treeview {{ request()->is('users*') || request()->is('roles*') || request()->is('permissions*') ? 'menu-open' : '' }} ">
                     <a href="#"
-                        class="nav-link {{ request()->is('users*') || request()->is('roles*') || request()->is('permissions*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-users"></i>
+                        class="nav-link {{ request()->is('users*') || request()->is('roles*') || request()->is('permission*') ? 'active' : '' }}">
+
+                        <i class="fas fa-user-tag mx-1"></i>
                         <p>
                             إدارة شئون المستخدمين
                             <i class="right fas fa-angle-left"></i>
@@ -146,17 +148,17 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="" class="nav-link @yield('active-users')">
+                            {{-- <a href="" class="nav-link @yield('active-users')">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>جدول المستخدمين</p>
-                            </a>
+                            </a> --}}
 
                             <a href="{{ route('dashboard.roles.index') }}" class="nav-link @yield('active-roles')">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>الصلاحيات</p>
                             </a>
 
-                            <a href="{{ route('dashboard.permissions.index') }}" class="nav-link @yield('active-permissions')">
+                            <a href="{{ route('dashboard.permission.index') }}" class="nav-link @yield('active-permission')">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>الأذونات</p>
                             </a>

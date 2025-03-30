@@ -58,13 +58,13 @@ Route::middleware(['auth:admin', 'role:super-admin,admin'])
 
         
 
-        Route::prefix('permission')->controller(PermissionController::class)->group(function () {
-            Route::get('/', 'index')->name('permissions.index');
-            Route::get('/create', 'create')->name('permissions.create');
-            Route::post('/', 'store')->name('permissions.store');
-            Route::get('/{role}/edit', 'edit')->name('permissions.edit');
-            Route::put('/{role}', 'update')->name('permissions.update');
-            Route::delete('/{role}', 'destroy')->name('permissions.destroy');
+        Route::prefix('permissions')->controller(PermissionController::class)->group(function () {
+            Route::get('/', 'index')->name('permission.index');
+            Route::get('/create', 'create')->name('permission.create');
+            Route::post('/', 'store')->name('permission.store');
+            Route::get('/{role}/edit', 'edit')->name('permission.edit');
+            Route::put('/{role}', 'update')->name('permission.update');
+            Route::delete('/{role}', 'destroy')->name('permission.destroy');
             
             
         });

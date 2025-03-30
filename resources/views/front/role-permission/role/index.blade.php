@@ -1,5 +1,5 @@
 @extends('dashboard.layouts.master')
-@section('active-leaves', 'active')
+@section('active-roles', 'active')
 @section('title', 'أنشاء طلب أجازه')
 @push('css')
     <!-- Select2 -->
@@ -70,8 +70,8 @@
                                                 @endcan
 
                                                 @can('delete role')
-                                                    <a href="#delete{{ $role->id }}" data-effect="effect-scale"
-                                                        data-toggle="modal" class="btn btn-outline-danger btn-sm">حذف</a>
+                                                    <a href="#delete{{ $role->id }}" class="btn btn-outline-danger btn-sm"
+                                                        data-toggle="modal">حذف</a>
                                                 @endcan
                                             </td>
                                         </tr>
@@ -85,4 +85,5 @@
                 </div>
             </div>
         </div>
-        @endsection
+    </div>
+@endsection

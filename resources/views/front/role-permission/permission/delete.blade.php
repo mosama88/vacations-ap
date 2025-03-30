@@ -7,7 +7,7 @@
                 <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button> <i class="icon icon ion-ios-close-circle-outline tx-100 tx-danger lh-1 mg-t-20 d-inline-block"></i>
                 <h4 class="tx-danger mg-b-20">إحذر: ستقوم بحذف العملية !</h4>
 
-                <form action="{{ route('dashboard.permissions.destroy', $permission->id) }}" method="post">
+                <form action="{{ route('dashboard.permission.destroy', $permission->id) }}" method="post">
                     @csrf
                     @method('DELETE')
                     <div class="modal-body">

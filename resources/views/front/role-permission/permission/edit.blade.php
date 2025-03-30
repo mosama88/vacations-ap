@@ -1,5 +1,5 @@
 @extends('dashboard.layouts.master')
-@section('active-leaves', 'active')
+@section('active-permissions', 'active')
 @section('title', 'أنشاء طلب أجازه')
 @push('css')
     <!-- Select2 -->
