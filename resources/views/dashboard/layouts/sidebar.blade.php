@@ -130,6 +130,13 @@
                                 </a>
                             </li>
 
+                            <li class="nav-item">
+                                <a href="{{ route('leaves.all') }}" class="nav-link @yield('active-all')">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p> أجازات الموظف</p>
+                                </a>
+                            </li>
+
                         </ul>
                     </li>
                 @endauth

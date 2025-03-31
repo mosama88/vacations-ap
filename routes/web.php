@@ -16,6 +16,7 @@ Route::get('/', function () {
 
 Route::middleware('auth:employee')->group(function () {
 
+    Route::get('employee-panel/user/leaves/all', [EmployeePanel::class, 'allLeaves'])->name('leaves.all');
     Route::get('employee-panel/user', [EmployeePanel::class, 'index'])->name('employee-panel.user');
 
     // بداية تكويد الأجازات

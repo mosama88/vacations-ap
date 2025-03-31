@@ -67,7 +67,7 @@ class LeaveController extends Controller
     public function show(Leave $leave)
     {
 
-        return view('dashboard.leaves.show', compact('leave', 'other'));
+        // 
     }
 
     /**
@@ -98,11 +98,7 @@ class LeaveController extends Controller
      */
     public function destroy(Leave $leave)
     {
-        $leave->delete();
-        return response()->json([
-            'success' => true,
-            'message' => 'تم حذف الأجازه بنجاح!'
-        ]);
+        //
     }
 
     public function getLeaveBalance(Request $request)
@@ -124,4 +120,7 @@ class LeaveController extends Controller
             }
         }
     }
+
+
+
 }
