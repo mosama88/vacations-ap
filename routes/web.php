@@ -40,7 +40,7 @@ Route::middleware('auth:employee')->group(function () {
 Route::middleware(['auth:admin', 'role:super-admin,admin'])
     ->name('dashboard.')
     ->group(function () {
-        
+
         // Role Routes
         Route::prefix('roles')->controller(RoleController::class)->group(function () {
             Route::get('/', 'index')->name('roles.index');
@@ -49,14 +49,14 @@ Route::middleware(['auth:admin', 'role:super-admin,admin'])
             Route::get('/{role}/edit', 'edit')->name('roles.edit');
             Route::put('/{role}', 'update')->name('roles.update');
             Route::delete('/{role}', 'destroy')->name('roles.destroy');
-            
+
             // Permission specific routes
             Route::get('/{role}/give-permissions', 'addPermissionToRole')->name('roles.add-permission');
             Route::put('/{role}/give-permissions', 'givePermissionToRole')->name('roles.give-permission');
         });
 
 
-        
+
 
         Route::prefix('permissions')->controller(PermissionController::class)->group(function () {
             Route::get('/', 'index')->name('permission.index');
@@ -65,10 +65,8 @@ Route::middleware(['auth:admin', 'role:super-admin,admin'])
             Route::get('/{role}/edit', 'edit')->name('permission.edit');
             Route::put('/{role}', 'update')->name('permission.update');
             Route::delete('/{role}', 'destroy')->name('permission.destroy');
-            
-            
         });
-        
-        
+
+
         // Other routes...
     });

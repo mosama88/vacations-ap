@@ -1,82 +1,43 @@
-@extends('dashboard.layouts.master')
-@section('active-leaves', 'active')
-@section('title', 'تعديل الفرع')
-@section('content')
-
-    @include('dashboard.layouts.breadcrumb', [
-        'pageTitle' => 'تعديل الفرع',
-        'previousPage' => 'جدول الفروع',
-        'urlPreviousPage' => 'leaves.index',
-        'currentPage' => 'تعديل الفرع',
-    ])
-
-    @include('dashboard.layouts.message')
-
-    <section class="content">
-        <div class="container-fluid">
-
-            <div class="row">
-                <div class="col-12">
-                    <!-- general form elements -->
-                    <div class="card card-info">
-                        <div class="card-header">
-                            <h3 class="card-title">تعديل الفرع</h3>
-                        </div>
-                        <!-- /.card-header -->
-                        <!-- form start -->
-                        <form action="{{ route('dashboard.leaves.update', $branch->slug) }}" method="POST">
-                            @csrf
-                            @method('PUT')
-                            <div class="card-body">
-                                <div class="form-group">
-                                    <label for="exampleInputName">اسم الفرع</label>
-                                    <input type="text" name="name" value="{{ old('name', $branch->name) }}"
-                                        class="form-control @error('name') is-invalid @enderror" id="exampleInputName"
-                                        placeholder="أدخل فرع">
-                                    @error('name')
-                                        <span class="invalid-feedback text-right" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleSelectBorder">المحافظة التابع لها <code>الفرع</code></label>
-                                    <select name="governorate_id"
-                                        class="custom-select form-control-border @error('governorate_id') is-invalid @enderror"
-                                        id="exampleSelectBorder">
-                                        <option value="">-- أختر المحافظة --</option>
-                                        @forelse ($other['governorates'] as $governorate)
-                                            <option @if (old('governorate_id', $branch->governorate_id) == $governorate->id) selected @endif
-                                                value="{{ $governorate->id }}">{{ $governorate->name }}</option>
-                                        @empty
-                                            عفوآ لا توجد بيانات!
-                                        @endforelse
-                                    </select>
-                                    @error('governorate_id')
-                                        <span class="invalid-feedback text-right" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-
-                    </div>
-                    <!-- /.card-body -->
-
-                    <div class="card-footer text-center ">
-                        <button type="submit" class="btn btn-info">حفظ البيانات <i class="fas fa-save mx-1"></i>
-                        </button>
-                    </div>
-                    </form>
+    <div class="modal fade" id="actionleave{{ $info->id }}">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">أخذ إجراء الأجازه</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-                <!-- /.card -->
-
-                <!-- general form elements -->
-
-                <!-- /.card -->
+                <form action="{{ route('leaves.action.leave', $info->id) }}" method="POST">
+                    @csrf
+                    $leave->
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="exampleSelectBorder">نوع الأجازه</code></label>
+                            <select name="leave_status"
+                                class="custom-select form-control-border @error('leave_status') is-invalid @enderror"
+                                id="exampleSelectBorder">
+                                <option value="">-- أختر نوع الأجازه --</option>
+                                <option @if (old('leave_status', $info->leave_status) == 1) selected @endif
+                                    value="{{ App\Enum\LeaveStatusEnum::Approved }}">موافق</option>
+                                <option @if (old('leave_status', $info->leave_status) == 2) selected @endif
+                                    value="{{ App\Enum\LeaveStatusEnum::Pending }}">معلق</option>
+                                <option @if (old('leave_status', $info->leave_status) == 3) selected @endif
+                                    value="{{ App\Enum\LeaveStatusEnum::Refused }}">مرفوض</option>
+                            </select>
+                            @error('leave_status')
+                                <span class="invalid-feedback text-right" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">إغلاق</button>
+                        <button type="submit" class="btn btn-primary">تأكيد</button>
+                    </div>
+                </form>
             </div>
+            <!-- /.modal-content -->
         </div>
-        <!-- /.row (main row) -->
-        </div><!-- /.container-fluid -->
-    </section>
-@endsection
+        <!-- /.modal-dialog -->
+    </div>

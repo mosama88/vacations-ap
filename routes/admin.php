@@ -38,6 +38,7 @@ Route::middleware('auth:admin')->group(function () {
 
     // بداية رصيد الأجازات
     Route::resource('/leaveBalances', LeaveBalanceController::class);
+    
 });
 
 

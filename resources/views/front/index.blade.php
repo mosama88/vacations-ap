@@ -14,6 +14,7 @@
         'urlPreviousPage' => '',
         'currentPage' => 'الصفحه الرئيسية',
     ])
+    @include('dashboard.layouts.message')
 
 
 
@@ -138,7 +139,14 @@
                                                 @else
                                                     مرفوض
                                                 @endif
+                                                <a class="modal-effect btn btn-info btn-sm" data-toggle="modal"
+                                                    href="#editLeaveModal{{ $info->id }}" data-id="{{ $info->id }}">
+                                                    أخذ إجراء
+                                                </a>
+
                                             </td>
+
+                                            @include('front.leaves.edit')
                                             <td>{{ $info->description }}</td>
                                             <td>{{ $info->created_by ? $info->createdBy->name : 'لا يوجد' }}</td>
                                             <td>{{ $info->updated_by ? $info->updatedBy->name : 'لا يوجد تحديث' }}</td>
@@ -148,6 +156,7 @@
                                     </tr>
                                 </tbody>
                             </table>
+                            {{-- @include('front.leaves.edit') --}}
                         </div>
                         <!-- /.card-body -->
 
@@ -160,4 +169,10 @@
             <!-- /.row (main row) -->
         </div><!-- /.container-fluid -->
     </section>
+
+
+
+
 @endsection
+@push('js')
+@endpush

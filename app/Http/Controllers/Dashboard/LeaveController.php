@@ -24,6 +24,8 @@ class LeaveController extends Controller
         return view('dashboard.leaves.index', compact('data'));
     }
 
+
+
     /**
      * Show the form for creating a new resource.
      */
@@ -71,24 +73,24 @@ class LeaveController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Leave $leave)
+    public function edit($id)
     {
+        $leaves = Leave::findOrFail($id);
 
-        return view('dashboard.leaves.edit', compact('leave', 'other'));
+        return view('front.leaves.edit', compact('leaves'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(LeaveRequest $request, Leave $leave)
+    public function update(Request $request, $id)
     {
-        $leave->fill($request->validated());
-        $leave->updated_by = auth()->guard('admin')->user()->id;
-
+        $leave = Leave::findOrFail($id);
+        $leave->leave_status = $request->leave_status;
+        $leave->updated_by = auth()->guard()->user()->id;
         $leave->update();
         session()->flash('success', 'تم تعديل الأجازه بنجاح');
-
-        return redirect()->route('dashboard.leaves.index');
+        return redirect()->back();
     }
 
     /**
