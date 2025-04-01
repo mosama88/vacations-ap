@@ -42,20 +42,27 @@ class LeaveController extends Controller
      */
     public function store(LeaveRequest $request)
     {
+        $employeeId = Auth::user()->id;
         $lastLeave = Leave::orderByDesc('leave_code')->value('leave_code');
         $new_LeaveCode = $lastLeave ? $lastLeave + 1 : 5000;
-        $leavees = $request->validated();
+
         $startDate = Carbon::parse($request->start_date);
         $endDate = Carbon::parse($request->end_date);
         $daysTaken = $startDate->diffInDays($endDate) + 1;
-        $data = array_merge($leavees, [
-            'leave_code' => $new_LeaveCode,
-            'employee_id' => Auth::user()->id,
-            'days_taken' => $daysTaken,
-            'leave_status' => LeaveStatusEnum::Pending,
-            'created_by' => Auth::user()->id,
-        ]);
-        Leave::create($data);
+
+        $leavees = new Leave();
+
+        $leavees->leave_code = $new_LeaveCode;
+        $leavees->employee_id = $employeeId;
+        $leavees->start_date = $startDate;
+        $leavees->end_date = $endDate;
+        $leavees->days_taken = $daysTaken;
+        $leavees->leave_type = $request->leave_type;
+        $leavees->leave_status = LeaveStatusEnum::Pending;
+        $leavees->description = $request->description;
+        $leavees->created_by  = $employeeId;
+
+        $leavees->save();
         session()->flash('success', 'تم أضافة الأجازه بنجاح');
 
         return redirect()->route('leaves.create');
@@ -120,7 +127,4 @@ class LeaveController extends Controller
             }
         }
     }
-
-
-
 }

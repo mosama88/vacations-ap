@@ -23,7 +23,7 @@ class LeaveRequest extends FormRequest
     {
         return [
             'start_date' => 'required|date|after_or_equal:today',
-            'end_date' => 'required|date|after:start_date',
+            'end_date' => 'required|date',
             'leave_type' => 'required|in:1,2,3,4',
             'leave_status' => 'nullable|in:1,2,3',
             'description' => 'nullable|string|max:500',

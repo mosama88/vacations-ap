@@ -16,8 +16,8 @@ class LeavesObserver
         $leaveBalance = LeaveBalance::where('employee_id', $employeeId)->first();
     
         if ($leaveBalance) {
-            $leaveBalance->remainig_days -= $leave->days_taken;
-            $leaveBalance->used_days += $leave->days_taken;
+            $leaveBalance->remainig_days -= $leave->days_taken; //10-2 =8
+            $leaveBalance->used_days += $leave->days_taken; //10+2=12
     
             $leaveBalance->save();
         }
