@@ -50,22 +50,26 @@ class LeaveController extends Controller
         $endDate = Carbon::parse($request->end_date);
         $daysTaken = $startDate->diffInDays($endDate) + 1;
 
-        $leavees = new Leave();
+        // dd($this->checkExists($employeeId, $request->start_date, $request->endDate));
+        if ($this->checkExists($employeeId, $request->start_date, $request->endDate)) {
+            return redirect()->back()->withErrors(['error' => 'عفوآ الأجازه موجود بالفعل ']);
+        } else {
+            $leavees = new Leave();
+            $leavees->leave_code = $new_LeaveCode;
+            $leavees->employee_id = $employeeId;
+            $leavees->start_date = $startDate;
+            $leavees->end_date = $endDate;
+            $leavees->days_taken = $daysTaken;
+            $leavees->leave_type = $request->leave_type;
+            $leavees->leave_status = LeaveStatusEnum::Pending;
+            $leavees->description = $request->description;
+            $leavees->created_by  = $employeeId;
 
-        $leavees->leave_code = $new_LeaveCode;
-        $leavees->employee_id = $employeeId;
-        $leavees->start_date = $startDate;
-        $leavees->end_date = $endDate;
-        $leavees->days_taken = $daysTaken;
-        $leavees->leave_type = $request->leave_type;
-        $leavees->leave_status = LeaveStatusEnum::Pending;
-        $leavees->description = $request->description;
-        $leavees->created_by  = $employeeId;
+            $leavees->save();
+            session()->flash('success', 'تم أضافة الأجازه بنجاح');
 
-        $leavees->save();
-        session()->flash('success', 'تم أضافة الأجازه بنجاح');
-
-        return redirect()->route('leaves.create');
+            return redirect()->route('leaves.create');
+        }
     }
 
     /**
@@ -127,4 +131,32 @@ class LeaveController extends Controller
             }
         }
     }
+
+    public function checkExists($employeeId, $dataRequestStart, $dataRequestEnd)
+    {
+        //
+    }
 }
+
+
+
+// public function checkExists($employeeId, $dataRequestStart, $dataRequestEnd)
+// {
+//     // تحويل التواريخ إلى كائنات Carbon للتأكد من التنسيق الصحيح
+//     $dataRequestStart = Carbon::parse($dataRequestStart);
+//     $dataRequestEnd = Carbon::parse($dataRequestEnd);
+
+//     // البحث عن الإجازات السابقة للموظف والتي تتداخل مع الإجازة الجديدة
+//     $leave = Leave::where('employee_id', $employeeId)
+//         ->where(function ($query) use ($dataRequestStart, $dataRequestEnd) {
+//             $query->whereBetween('start_date', [$dataRequestStart, $dataRequestEnd])
+//                 ->orWhereBetween('end_date', [$dataRequestStart, $dataRequestEnd])
+//                 ->orWhere(function ($query) use ($dataRequestStart, $dataRequestEnd) {
+//                     $query->where('start_date', '<=', $dataRequestEnd)
+//                         ->where('end_date', '>=', $dataRequestStart);
+//                 });
+//         })
+//         ->exists(); // التحقق إذا كانت توجد إجازة متداخلة
+
+//     return $leave;
+// }
