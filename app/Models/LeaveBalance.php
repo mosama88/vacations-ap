@@ -14,6 +14,7 @@ class LeaveBalance extends Model
     protected $fillable = [
         'employee_id',
         'finance_calendar_id',
+        'total_days_emergency',
         'total_days',
         'used_days',
         'remainig_days',

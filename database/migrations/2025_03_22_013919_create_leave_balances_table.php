@@ -18,6 +18,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Employee::class)->nullable()->constrained()->nullOnDelete();
             $table->foreignIdFor(FinanceCalendar::class)->nullable()->constrained()->nullOnDelete();
+            $table->integer('total_days_emergency')->nullable();
             $table->integer('total_days')->nullable();
             $table->integer('used_days')->nullable();
             $table->integer('remainig_days')->nullable();
