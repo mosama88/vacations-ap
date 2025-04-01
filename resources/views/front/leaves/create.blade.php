@@ -61,7 +61,8 @@
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-4">
-                                        <label for="exampleInputName">رصيد الأجازات</label>
+                                        <label for="exampleInputName">رصيد الأجازات
+                                            <span class="text-info">(الأعتيادى)</span> </label>
                                         <input disabled type="text" name="total_days"
                                             value="{{ $employees->leaveBalance->total_days ?? 'لا يوجد رصيد' }}"
                                             class="form-control" id="exampleInputtotal_days" placeholder="">
@@ -69,18 +70,48 @@
 
 
                                     <div class="form-group col-4">
-                                        <label for="exampleInputName">الرصيد المستخدم</label>
+                                        <label for="exampleInputName">الرصيد المستخدم <span
+                                                class="text-info">(الأعتيادى)</span> </label>
                                         <input disabled type="text" name="used_days"
                                             value="{{ $employees->leaveBalance->used_days ?? 'لا يوجد رصيد' }}"
                                             name="used_days" class="form-control" id="exampleInputused_days" placeholder="">
                                     </div>
 
                                     <div class="form-group col-4">
-                                        <label for="exampleInputName">الرصيد المتبقى</label>
+                                        <label for="exampleInputName">الرصيد المتبقى <span
+                                                class="text-info">(الأعتيادى)</span> </label>
                                         <input disabled type="text"
                                             value="{{ $employees->leaveBalance->remainig_days ?? 'لا يوجد رصيد' }}"
                                             name="remainig_days" class="form-control" id="exampleInputremainig_days"
                                             placeholder="">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-4">
+                                        <label for="exampleInputName"> رصيد
+                                            الأجازات <span class="text-danger">(العارضه)</span> </label>
+                                        <input disabled type="text" name="total_days_emergency"
+                                            value="{{ $employees->leaveBalance->total_days_emergency ?? 'لا يوجد رصيد' }}"
+                                            class="form-control" id="exampleInputtotal_days_emergency" placeholder="">
+                                    </div>
+
+
+                                    <div class="form-group col-4">
+                                        <label for="exampleInputName">الرصيد المستخدم <span
+                                                class="text-danger">(العارضه)</span> </label>
+                                        <input disabled type="text" name="used_days_emergency"
+                                            value="{{ $employees->leaveBalance->used_days_emergency ?? 'لا يوجد رصيد' }}"
+                                            name="used_days_emergency" class="form-control"
+                                            id="exampleInputused_days_emergency" placeholder="">
+                                    </div>
+
+                                    <div class="form-group col-4">
+                                        <label for="exampleInputName">الرصيد المتبقى <span
+                                                class="text-danger">(العارضه)</span> </label>
+                                        <input disabled type="text"
+                                            value="{{ $employees->leaveBalance->remainig_days_emergency ?? 'لا يوجد رصيد' }}"
+                                            name="remainig_days_emergency" class="form-control"
+                                            id="exampleInputremainig_days_emergency" placeholder="">
                                     </div>
                                 </div>
                                 <div class="row">

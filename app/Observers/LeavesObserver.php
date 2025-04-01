@@ -34,6 +34,16 @@ class LeavesObserver
                 $leaveBalance->save();
             }
         }
+
+        if ($leave->leave_status == LeaveStatusEnum::Approved && $leave->leave_type == LeaveTypeEnum::Emergency) {
+
+            if ($leaveBalance) {
+                $leaveBalance->remainig_days_emergency -= $leave->days_taken; //10-2 =8
+                $leaveBalance->used_days_emergency += $leave->days_taken; //10+2=12
+
+                $leaveBalance->save();
+            }
+        }
     }
 
     /**
