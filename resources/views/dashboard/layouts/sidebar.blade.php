@@ -102,7 +102,7 @@
 
                 @auth('employee')
                     <li class="nav-item">
-                        <a href="{{ route('employee-panel.user') }}" class="nav-link {{ 'active-employeePanel' }}">
+                        <a href="{{ route('employee-panel.user') }}" class="nav-link @yield('active-employeePanel')">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
                                 الصفحة الرئيسية
@@ -112,8 +112,7 @@
                     </li>
 
 
-                    <li
-                        class="nav-item has-treeview {{ request()->is('users*') || request()->is('roles*') || request()->is('permissions*') ? 'menu-open' : '' }}">
+                    <li class="nav-item has-treeview {{ request()->is('leaves*') ? 'menu-open' : '' }}">
                         ">
                         <a href="#" class="nav-link {{ request()->is('leaves*') ? 'active' : '' }} ">
                             <i class="nav-icon fas fa-users"></i>

@@ -3,7 +3,7 @@
     use App\Enum\LeaveTypeEnum;
 @endphp
 @extends('dashboard.layouts.master')
-@section('active-dashboard', 'active')
+@section('active-employeePanel', 'active')
 @section('title', 'الصفحة الرئيسية')
 @section('content')
 

@@ -3,7 +3,9 @@
 namespace App\Observers;
 
 use App\Models\Leave;
+use App\Enum\LeaveTypeEnum;
 use App\Models\LeaveBalance;
+use App\Enum\LeaveStatusEnum;
 
 class LeavesObserver
 {
@@ -12,24 +14,26 @@ class LeavesObserver
      */
     public function created(Leave $leave): void
     {
-        $employeeId = $leave->employee_id;
-        $leaveBalance = LeaveBalance::where('employee_id', $employeeId)->first();
-    
-        if ($leaveBalance) {
-            $leaveBalance->remainig_days -= $leave->days_taken; //10-2 =8
-            $leaveBalance->used_days += $leave->days_taken; //10+2=12
-    
-            $leaveBalance->save();
-        }
+        //
     }
-    
+
 
     /**
      * Handle the Leave "updated" event.
      */
     public function updated(Leave $leave): void
     {
-        //
+        $employeeId = $leave->employee_id;
+        $leaveBalance = LeaveBalance::where('employee_id', $employeeId)->first();
+        if ($leave->leave_status == LeaveStatusEnum::Approved && $leave->leave_type !== LeaveTypeEnum::Emergency) {
+
+            if ($leaveBalance) {
+                $leaveBalance->remainig_days -= $leave->days_taken; //10-2 =8
+                $leaveBalance->used_days += $leave->days_taken; //10+2=12
+
+                $leaveBalance->save();
+            }
+        }
     }
 
     /**
