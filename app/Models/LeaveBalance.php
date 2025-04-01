@@ -15,6 +15,8 @@ class LeaveBalance extends Model
         'employee_id',
         'finance_calendar_id',
         'total_days_emergency',
+        'used_days_emergency',
+        'remainig_days_emergency',
         'total_days',
         'used_days',
         'remainig_days',
