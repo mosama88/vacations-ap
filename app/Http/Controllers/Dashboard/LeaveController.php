@@ -50,7 +50,6 @@ class LeaveController extends Controller
         $endDate = Carbon::parse($request->end_date);
         $daysTaken = $startDate->diffInDays($endDate) + 1;
 
-        // dd($this->checkExists($employeeId, $request->start_date, $request->endDate));
         if ($this->checkExists($employeeId, $request->start_date, $request->endDate)) {
             return redirect()->back()->withErrors(['error' => 'عفوآ الأجازه موجود بالفعل ']);
         } else {
