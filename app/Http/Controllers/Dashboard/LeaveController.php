@@ -50,25 +50,53 @@ class LeaveController extends Controller
         $endDate = Carbon::parse($request->end_date);
         $daysTaken = $startDate->diffInDays($endDate) + 1;
 
-        if ($this->checkExists($employeeId, $request->start_date, $request->endDate)) {
-            return redirect()->back()->withErrors(['error' => 'عفوآ الأجازه موجود بالفعل ']);
-        } else {
-            $leavees = new Leave();
-            $leavees->leave_code = $new_LeaveCode;
-            $leavees->employee_id = $employeeId;
-            $leavees->start_date = $startDate;
-            $leavees->end_date = $endDate;
-            $leavees->days_taken = $daysTaken;
-            $leavees->leave_type = $request->leave_type;
-            $leavees->leave_status = LeaveStatusEnum::Pending;
-            $leavees->description = $request->description;
-            $leavees->created_by  = $employeeId;
+        $existingLeave = Leave::where('employee_id', $employeeId)
+            ->where(function ($query) use ($request) {
+                $startDate = Carbon::parse($request->start_date);
+                $endDate = Carbon::parse($request->end_date);
 
-            $leavees->save();
-            session()->flash('success', 'تم أضافة الأجازه بنجاح');
-
-            return redirect()->route('leaves.create');
+                $query->where(function ($q) use ($startDate, $endDate) {
+                    // الحالة 1: نفس تواريخ البداية والنهاية بالضبط
+                    $q->where('start_date', $startDate)
+                        ->where('end_date', $endDate);
+                })
+                    ->orWhere(function ($q) use ($startDate, $endDate) {
+                        // الحالة 2: إجازة موجودة تبدأ ضمن الفترة الجديدة
+                        $q->whereBetween('start_date', [$startDate, $endDate]);
+                    })
+                    ->orWhere(function ($q) use ($startDate, $endDate) {
+                        // الحالة 3: إجازة موجودة تنتهي ضمن الفترة الجديدة
+                        $q->whereBetween('end_date', [$startDate, $endDate]);
+                    })
+                    ->orWhere(function ($q) use ($startDate, $endDate) {
+                        // الحالة 4: إجازة موجودة تحتوي الفترة الجديدة بالكامل
+                        $q->where('start_date', '<', $startDate)
+                            ->where('end_date', '>', $endDate);
+                    });
+            })
+            ->first();
+        if (!empty($existingLeave)) {
+            return redirect()->back()->withErrors(['error' => 'عفواً يوجد إجازة مسجلة في هذه الفترة من ' . 
+            $existingLeave->start_date . ' إلى ' . $existingLeave->end_date])->withInput();
         }
+
+
+
+        $leavees = new Leave();
+        $leavees->leave_code = $new_LeaveCode;
+        $leavees->employee_id = $employeeId;
+        $leavees->start_date = $startDate;
+        $leavees->end_date = $endDate;
+        $leavees->days_taken = $daysTaken;
+        $leavees->leave_type = $request->leave_type;
+        $leavees->leave_status = LeaveStatusEnum::Pending;
+        $leavees->description = $request->description;
+        $leavees->created_by  = $employeeId;
+
+        $leavees->save();
+        session()->flash('success', 'تم أضافة الأجازه بنجاح');
+
+        return redirect()->route('leaves.create');
     }
 
     /**
@@ -130,25 +158,4 @@ class LeaveController extends Controller
             }
         }
     }
-
-public function checkExists($employeeId, $dataRequestStart, $dataRequestEnd)
-{
-    // تحويل التواريخ إلى كائنات Carbon للتأكد من التنسيق الصحيح
-    $dataRequestStart = Carbon::parse($dataRequestStart);
-    $dataRequestEnd = Carbon::parse($dataRequestEnd);
-
-    // البحث عن الإجازات السابقة للموظف والتي تتداخل مع الإجازة الجديدة
-    $leave = Leave::where('employee_id', $employeeId)
-        ->where(function ($query) use ($dataRequestStart, $dataRequestEnd) {
-            $query->whereBetween('start_date', [$dataRequestStart, $dataRequestEnd])
-                ->orWhereBetween('end_date', [$dataRequestStart, $dataRequestEnd])
-                ->orWhere(function ($query) use ($dataRequestStart, $dataRequestEnd) {
-                    $query->where('start_date', '<=', $dataRequestEnd)
-                        ->where('end_date', '>=', $dataRequestStart);
-                });
-        })
-        ->exists(); // التحقق إذا كانت توجد إجازة متداخلة
-
-    return $leave;
-}
 }
