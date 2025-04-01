@@ -132,31 +132,24 @@ class LeaveController extends Controller
         }
     }
 
-    public function checkExists($employeeId, $dataRequestStart, $dataRequestEnd)
-    {
-        //
-    }
+public function checkExists($employeeId, $dataRequestStart, $dataRequestEnd)
+{
+    // تحويل التواريخ إلى كائنات Carbon للتأكد من التنسيق الصحيح
+    $dataRequestStart = Carbon::parse($dataRequestStart);
+    $dataRequestEnd = Carbon::parse($dataRequestEnd);
+
+    // البحث عن الإجازات السابقة للموظف والتي تتداخل مع الإجازة الجديدة
+    $leave = Leave::where('employee_id', $employeeId)
+        ->where(function ($query) use ($dataRequestStart, $dataRequestEnd) {
+            $query->whereBetween('start_date', [$dataRequestStart, $dataRequestEnd])
+                ->orWhereBetween('end_date', [$dataRequestStart, $dataRequestEnd])
+                ->orWhere(function ($query) use ($dataRequestStart, $dataRequestEnd) {
+                    $query->where('start_date', '<=', $dataRequestEnd)
+                        ->where('end_date', '>=', $dataRequestStart);
+                });
+        })
+        ->exists(); // التحقق إذا كانت توجد إجازة متداخلة
+
+    return $leave;
 }
-
-
-
-// public function checkExists($employeeId, $dataRequestStart, $dataRequestEnd)
-// {
-//     // تحويل التواريخ إلى كائنات Carbon للتأكد من التنسيق الصحيح
-//     $dataRequestStart = Carbon::parse($dataRequestStart);
-//     $dataRequestEnd = Carbon::parse($dataRequestEnd);
-
-//     // البحث عن الإجازات السابقة للموظف والتي تتداخل مع الإجازة الجديدة
-//     $leave = Leave::where('employee_id', $employeeId)
-//         ->where(function ($query) use ($dataRequestStart, $dataRequestEnd) {
-//             $query->whereBetween('start_date', [$dataRequestStart, $dataRequestEnd])
-//                 ->orWhereBetween('end_date', [$dataRequestStart, $dataRequestEnd])
-//                 ->orWhere(function ($query) use ($dataRequestStart, $dataRequestEnd) {
-//                     $query->where('start_date', '<=', $dataRequestEnd)
-//                         ->where('end_date', '>=', $dataRequestStart);
-//                 });
-//         })
-//         ->exists(); // التحقق إذا كانت توجد إجازة متداخلة
-
-//     return $leave;
-// }
+}
