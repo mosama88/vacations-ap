@@ -32,6 +32,7 @@ class EmployeeRequest extends FormRequest
             'governorate_id' => 'required|exists:governorates,id', // تأكد من أن governorate_id موجود في جدول governorates
             'type' => 'required|in:0,1', // تأكد من أن governorate_id موجود في جدول governorates
             'gender' => 'required|in:0,1', // تأكد من أن governorate_id موجود في جدول governorates
+            'roles' => 'required',
         ];
     }
 
@@ -70,6 +71,7 @@ class EmployeeRequest extends FormRequest
             'gender.required' => 'نوع الجنس مطلوب.',
 
             'type.required' => 'نوع حساب الموظف مطلوب.',
+            'roles.required' => 'صلاحيات الموظف مطلوبة.',
 
             'governorate_id.required' => 'المحافظة مطلوب.',
             'governorate_id.exists' => 'المحافظة غير موجود في قاعدة البيانات.',

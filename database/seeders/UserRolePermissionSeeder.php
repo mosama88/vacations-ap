@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Admin;
 use App\Models\Employee;
+use App\Enum\EmployeeType;
 use App\Enum\EmployeeStatus;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
@@ -20,7 +21,7 @@ class UserRolePermissionSeeder extends Seeder
     {
         // Create Permissions
         // Define the guard
-        $guardAdmin = 'admin';
+        $guardAdmin = 'employee';
 
         // Create Permissions
         $permissions = [
@@ -154,56 +155,116 @@ class UserRolePermissionSeeder extends Seeder
         $adminRole->givePermissionTo($adminPermissions);
 
         // Let's Create User and assign Role to it.
-        $superAdminUser = Admin::firstOrCreate([
+        $superAdminUser = Employee::firstOrCreate([
             'username' => 'superadmin',
         ], [
+            'employee_code' => 500,
             'name' => 'Super Admin',
             'username' => 'superadmin',
             'password' => Hash::make('password'),
+            'gender' => '1',
+            'type' => EmployeeType::Manager,
+            'mobile' => '01150559683',
+            'status' => EmployeeStatus::Active,
+            'week_id' => 7,
+            'job_grade_id' => 9,
+            'branch_id' => 10,
+            'governorate_id' => 24,
+            'created_by' => 5,
         ]);
         $superAdminUser->assignRole($superAdminRole);
 
-        $superAdminUser2 = Admin::firstOrCreate([
+        $superAdminUser2 = Employee::firstOrCreate([
             'username' => 'mosama',
         ], [
+            'employee_code' => 501,
             'name' => 'محمد أسامه',
             'username' => 'mosama',
             'password' => Hash::make('password'),
+            'gender' => '1',
+            'type' => EmployeeType::Manager,
+            'mobile' => '01150559683',
+            'status' => EmployeeStatus::Active,
+            'week_id' => 7,
+            'job_grade_id' => 9,
+            'branch_id' => 10,
+            'governorate_id' => 24,
+            'created_by' => 5,
         ]);
 
-        $superAdminUser2 = Admin::firstOrCreate([
+        $superAdminUser2 = Employee::firstOrCreate([
             'username' => 'Mohamed Osama',
         ], [
+            'employee_code' => 502,
             'name' => 'محمد أسامه',
             'username' => 'admin',
             'password' => Hash::make('password'),
+            'gender' => '1',
+            'type' => EmployeeType::Manager,
+            'mobile' => '01150559683',
+            'status' => EmployeeStatus::Active,
+            'week_id' => 7,
+            'job_grade_id' => 9,
+            'branch_id' => 10,
+            'governorate_id' => 24,
+            'created_by' => 5,
         ]);
         $superAdminUser2->assignRole($superAdminRole);
 
-        $adminUser = Admin::firstOrCreate([
+        $adminUser = Employee::firstOrCreate([
             'username' => 'admin'
         ], [
+            'employee_code' => 503,
             'name' => 'Admin',
             'username' => 'admin',
             'password' => Hash::make(value: 'password'),
+            'gender' => '1',
+            'type' => EmployeeType::Manager,
+            'mobile' => '01150559683',
+            'status' => EmployeeStatus::Active,
+            'week_id' => 7,
+            'job_grade_id' => 9,
+            'branch_id' => 10,
+            'governorate_id' => 24,
+            'created_by' => 5,
         ]);
         $adminUser->assignRole($adminRole);
 
-        $staffUser = Admin::firstOrCreate([
+        $staffUser = Employee::firstOrCreate([
             'username' => 'staff',
         ], [
+            'employee_code' => 504,
             'name' => 'Staff',
             'username' => 'staff',
             'password' => Hash::make('password'),
+            'gender' => '1',
+            'type' => EmployeeType::Manager,
+            'mobile' => '01150559683',
+            'status' => EmployeeStatus::Active,
+            'week_id' => 7,
+            'job_grade_id' => 9,
+            'branch_id' => 10,
+            'governorate_id' => 24,
+            'created_by' => 5,
         ]);
         $staffUser->assignRole($staffRole);
 
-        $staffUser2 = Admin::firstOrCreate([
+        $staffUser2 = Employee::firstOrCreate([
             'username' => 'heba',
         ], [
+            'employee_code' => 505,
             'name' => 'heba',
             'username' => 'heba',
             'password' => Hash::make('password'),
+            'gender' => '1',
+            'type' => EmployeeType::Manager,
+            'mobile' => '01150559683',
+            'status' => EmployeeStatus::Active,
+            'week_id' => 7,
+            'job_grade_id' => 9,
+            'branch_id' => 10,
+            'governorate_id' => 24,
+            'created_by' => 5,
         ]);
         $staffUser2->assignRole($staffRole);
     }

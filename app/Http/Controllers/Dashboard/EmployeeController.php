@@ -11,6 +11,7 @@ use App\Enum\EmployeeStatus;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Dashboard\EmployeeRequest;
+use Spatie\Permission\Models\Role;
 
 class EmployeeController extends Controller
 {
@@ -31,7 +32,9 @@ class EmployeeController extends Controller
         $other['weeks'] = Week::get();
         $other['job_grades'] = JobGrade::get();
         $other['branches'] = Branch::get();
-        return view('dashboard.employees.create', compact('other'));
+        $roles = Role::pluck('name', 'name')->all();
+
+        return view('dashboard.employees.create', compact('other', 'roles'));
     }
 
     /**
@@ -47,7 +50,9 @@ class EmployeeController extends Controller
             'status' => EmployeeStatus::Active,
             'created_by' => auth()->guard('admin')->user()->id,
         ]);
-        Employee::create($data);
+        $employee = Employee::create($data);
+        $employee->syncRoles($request->roles);
+
         session()->flash('success', 'تم أضافة الموظف بنجاح');
 
         return redirect()->route('dashboard.employees.index');

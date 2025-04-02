@@ -197,6 +197,21 @@
                                             </span>
                                         @enderror
                                     </div>
+
+
+
+                                    <div class="form-group col-6">
+                                        <label>الصلاحيات</label>
+                                        <select class="select2bs4" name="roles[]" multiple="multiple"
+                                            data-placeholder="-- حدد الصلاحية --" style="width: 100%;">
+                                            @foreach ($roles as $role)
+                                                <option value="{{ $role }}">{{ $role }}</option>
+                                            @endforeach
+                                        </select>
+                                        <!-- /.form-group -->
+                                    </div>
+
+
                                 </div>
 
                             </div>
