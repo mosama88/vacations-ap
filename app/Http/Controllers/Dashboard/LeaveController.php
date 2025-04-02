@@ -72,8 +72,8 @@ class LeaveController extends Controller
                 ->withInput();
         }
 
-        // حساب الأيام بدون الجمعة
-        $daysTaken = $this->calculateWorkingDays($startDate, $endDate);
+        // حساب الأيام بدون الجمعة و اجازه الموظف
+        $daysTaken = $this->calculateWorkingDays($startDate, $endDate, $employeeId);
 
         // إنشاء الإجازة
         try {
@@ -191,19 +191,49 @@ class LeaveController extends Controller
 
         return $leave;
     }
-
-    private function calculateWorkingDays($startDate, $endDate): int
+    private function calculateWorkingDays($startDate, $endDate, $employeeId): int
     {
+        $employee = Employee::with('week')->find($employeeId);
+        
+        if (!$employee) {
+            throw new \Exception("Employee not found");
+        }
+    
+        // أيام العطلة الافتراضية (الجمعة)
+        $weekendDays = [Carbon::FRIDAY];
+        
+        // إذا كان للموظف يوم عطلة أسبوعية مختلف
+        if ($employee->week) {
+            // تحويل اسم اليوم إلى رقم اليوم في الأسبوع
+            $dayName = $employee->week->name;
+            $weekendDays[] = $this->convertArabicDayToNumber($dayName);
+        }
+    
         $days = 0;
         $start = Carbon::parse($startDate);
         $end = Carbon::parse($endDate);
-
+    
         for ($date = $start; $date->lte($end); $date->addDay()) {
-            if ($date->dayOfWeek !== Carbon::FRIDAY) {
+            if (!in_array($date->dayOfWeek, $weekendDays)) {
                 $days++;
             }
         }
-
+    
         return $days;
+    }
+    
+    private function convertArabicDayToNumber($arabicDayName): int
+    {
+        $daysMap = [
+            'السبت' => Carbon::SATURDAY,
+            'الأحد' => Carbon::SUNDAY,
+            'الأثنين' => Carbon::MONDAY,
+            'الثلاثاء' => Carbon::TUESDAY,
+            'الآربعاء' => Carbon::WEDNESDAY,
+            'الخميس' => Carbon::THURSDAY,
+            'الجمعه' => Carbon::FRIDAY,
+        ];
+    
+        return $daysMap[$arabicDayName] ?? Carbon::FRIDAY;
     }
 }
