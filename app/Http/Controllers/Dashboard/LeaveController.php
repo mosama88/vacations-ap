@@ -42,61 +42,60 @@ class LeaveController extends Controller
      */
     public function store(LeaveRequest $request)
     {
-        $employeeId = Auth::user()->id;
-        $lastLeave = Leave::orderByDesc('leave_code')->value('leave_code');
-        $new_LeaveCode = $lastLeave ? $lastLeave + 1 : 5000;
+        $employeeId = Auth::id();
 
+        // التحقق من صحة التواريخ
         $startDate = Carbon::parse($request->start_date);
         $endDate = Carbon::parse($request->end_date);
-        $daysTaken = $startDate->diffInDays($endDate) + 1;
 
-        $existingLeave = Leave::where('employee_id', $employeeId)
-            ->where(function ($query) use ($request) {
-                $startDate = Carbon::parse($request->start_date);
-                $endDate = Carbon::parse($request->end_date);
-
-                $query->where(function ($q) use ($startDate, $endDate) {
-                    // الحالة 1: نفس تواريخ البداية والنهاية بالضبط
-                    $q->where('start_date', $startDate)
-                        ->where('end_date', $endDate);
-                })
-                    ->orWhere(function ($q) use ($startDate, $endDate) {
-                        // الحالة 2: إجازة موجودة تبدأ ضمن الفترة الجديدة
-                        $q->whereBetween('start_date', [$startDate, $endDate]);
-                    })
-                    ->orWhere(function ($q) use ($startDate, $endDate) {
-                        // الحالة 3: إجازة موجودة تنتهي ضمن الفترة الجديدة
-                        $q->whereBetween('end_date', [$startDate, $endDate]);
-                    })
-                    ->orWhere(function ($q) use ($startDate, $endDate) {
-                        // الحالة 4: إجازة موجودة تحتوي الفترة الجديدة بالكامل
-                        $q->where('start_date', '<', $startDate)
-                            ->where('end_date', '>', $endDate);
-                    });
-            })
-            ->first();
-        if (!empty($existingLeave)) {
-            return redirect()->back()->withErrors(['error' => 'عفواً يوجد إجازة مسجلة في هذه الفترة من ' . 
-            $existingLeave->start_date . ' إلى ' . $existingLeave->end_date])->withInput();
+        if ($startDate->gt($endDate)) {
+            return redirect()->back()
+                ->withErrors(['error' => 'تاريخ البداية يجب أن يكون قبل تاريخ النهاية'])
+                ->withInput();
         }
 
+        // توليد كود الإجازة
+        $newLeaveCode = Leave::max('leave_code') + 1 ?? 5000;
 
+        // التحقق من وجود إجازات متداخلة
+        if ($this->hasOverlappingLeaves($employeeId, $startDate, $endDate)) {
+            $existingLeave = $this->getOverlappingLeave($employeeId, $startDate, $endDate);
+            $message = 'عفواً يوجد إجازة مسجلة في هذه الفترة';
 
-        $leavees = new Leave();
-        $leavees->leave_code = $new_LeaveCode;
-        $leavees->employee_id = $employeeId;
-        $leavees->start_date = $startDate;
-        $leavees->end_date = $endDate;
-        $leavees->days_taken = $daysTaken;
-        $leavees->leave_type = $request->leave_type;
-        $leavees->leave_status = LeaveStatusEnum::Pending;
-        $leavees->description = $request->description;
-        $leavees->created_by  = $employeeId;
+            if ($existingLeave) {
+                $message .= ' من ' . $existingLeave->start_date->format('Y-m-d') .
+                    ' إلى ' . $existingLeave->end_date->format('Y-m-d');
+            }
 
-        $leavees->save();
-        session()->flash('success', 'تم أضافة الأجازه بنجاح');
+            return redirect()->back()
+                ->withErrors(['error' => $message])
+                ->withInput();
+        }
 
-        return redirect()->route('leaves.create');
+        // حساب الأيام بدون الجمعة
+        $daysTaken = $this->calculateWorkingDays($startDate, $endDate);
+
+        // إنشاء الإجازة
+        try {
+            $leave = Leave::create([
+                'leave_code' => $newLeaveCode,
+                'employee_id' => $employeeId,
+                'start_date' => $startDate,
+                'end_date' => $endDate,
+                'days_taken' => $daysTaken,
+                'leave_type' => $request->leave_type,
+                'leave_status' => LeaveStatusEnum::Pending,
+                'description' => $request->description,
+                'created_by' => $employeeId,
+            ]);
+
+            session()->flash('success', 'تمت إضافة الإجازة بنجاح');
+            return redirect()->route('leaves.create');
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->withErrors(['error' => 'حدث خطأ أثناء حفظ الإجازة: ' . $e->getMessage()])
+                ->withInput();
+        }
     }
 
     /**
@@ -157,5 +156,54 @@ class LeaveController extends Controller
                 return response()->json(['leave_balance' => null]);
             }
         }
+    }
+
+    private function hasOverlappingLeaves($employeeId, $startDate, $endDate): bool
+    {
+        return Leave::where('employee_id', $employeeId)
+            ->where('leave_status', '<>', LeaveStatusEnum::Refused)
+            ->where(function ($query) use ($startDate, $endDate) {
+                $query->where(function ($q) use ($startDate, $endDate) {
+                    $q->where('start_date', '<=', $endDate)
+                        ->where('end_date', '>=', $startDate);
+                });
+            })
+            ->exists();
+    }
+
+    private function getOverlappingLeave($employeeId, $startDate, $endDate)
+    {
+        $leave = Leave::where('employee_id', $employeeId)
+            ->where('leave_status', '<>', LeaveStatusEnum::Refused)
+            ->where(function ($query) use ($startDate, $endDate) {
+                $query->where(function ($q) use ($startDate, $endDate) {
+                    $q->where('start_date', '<=', $endDate)
+                        ->where('end_date', '>=', $startDate);
+                });
+            })
+            ->first();
+
+        // تحويل التواريخ إلى كائن Carbon إذا كانت نصوصاً
+        if ($leave) {
+            $leave->start_date = Carbon::parse($leave->start_date);
+            $leave->end_date = Carbon::parse($leave->end_date);
+        }
+
+        return $leave;
+    }
+
+    private function calculateWorkingDays($startDate, $endDate): int
+    {
+        $days = 0;
+        $start = Carbon::parse($startDate);
+        $end = Carbon::parse($endDate);
+
+        for ($date = $start; $date->lte($end); $date->addDay()) {
+            if ($date->dayOfWeek !== Carbon::FRIDAY) {
+                $days++;
+            }
+        }
+
+        return $days;
     }
 }
