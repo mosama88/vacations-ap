@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\Front\EmployeePanel;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\Dashboard\LeaveController;
@@ -66,6 +67,17 @@ Route::middleware(['auth:admin', 'role:super-admin,admin'])
             Route::get('/{role}/edit', 'edit')->name('permission.edit');
             Route::put('/{role}', 'update')->name('permission.update');
             Route::delete('/{role}', 'destroy')->name('permission.destroy');
+        });
+
+
+
+        Route::prefix('users')->controller(UserController::class)->group(function () {
+            Route::get('/', 'index')->name('users.index');
+            Route::get('/create', 'create')->name('users.create');
+            Route::post('/', 'store')->name('users.store');
+            Route::get('/{role}/edit', 'edit')->name('users.edit');
+            Route::put('/{role}', 'update')->name('users.update');
+            Route::delete('/{role}', 'destroy')->name('users.destroy');
         });
 
 

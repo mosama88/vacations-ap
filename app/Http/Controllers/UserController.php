@@ -2,30 +2,32 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Models\Employee;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->middleware('permission:view user', ['only' => ['index']]);
-    //     $this->middleware('permission:create user', ['only' => ['create','store']]);
-    //     $this->middleware('permission:update user', ['only' => ['update','edit']]);
-    //     $this->middleware('permission:delete user', ['only' => ['destroy']]);
-    // }
+
+
+    protected array $middleware = [
+        'permission:view user' => ['only' => ['index']],
+        'permission:create user' => ['only' => ['create', 'store']],
+        'permission:update user' => ['only' => ['update', 'edit']],
+        'permission:delete user' => ['only' => ['destroy']]
+    ];
+
 
     public function index()
     {
-        $users = User::get();
-        return view('front.role-permission.user.index', ['users' => $users]);
+        $employees = Employee::paginate(10);
+        return view('front.role-permission.user.index', ['employees' => $employees]);
     }
 
     public function create()
     {
-        $roles = Role::pluck('name','name')->all();
+        $roles = Role::pluck('name', 'name')->all();
         return view('front.role-permission.user.create', ['roles' => $roles]);
     }
 
@@ -33,66 +35,66 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:users,email',
+            'username' => 'required|max:255|unique:employees,username',
             'password' => 'required|string|min:8|max:20',
             'roles' => 'required',
-            'status' => 'nullable|in:active,inactive',
+            'status' => 'nullable|in:0,1',
         ]);
 
-        $user = User::create([
+        $employee = Employee::create([
             'name' => $request->name,
-            'email' => $request->email,
+            'username' => $request->username,
             'password' => Hash::make($request->password),
         ]);
 
-        $user->syncRoles($request->roles);
+        $employee->syncRoles($request->roles);
 
-        return redirect('/users')->with('status','تم إنشاء المستخدم بالصلاحيات بنجاح');
+        return redirect('/users')->with('status', 'تم إنشاء المستخدم بالصلاحيات بنجاح');
     }
 
-    public function edit(User $user)
+    public function edit(Employee $employee)
     {
-        $roles = Role::pluck('name','name')->all();
-        $userRoles = $user->roles->pluck('name','name')->all();
+        $roles = Role::pluck('name', 'name')->all();
+        $employeeRoles = $employee->roles->pluck('name', 'name')->all();
         return view('front.role-permission.user.edit', [
-            'user' => $user,
+            'user' => $employee,
             'roles' => $roles,
-            'userRoles' => $userRoles
+            'userRoles' => $employeeRoles
         ]);
     }
 
-    public function update(Request $request, User $user)
+    public function update(Request $request, Employee $employee)
     {
         $request->validate([
             'name' => 'required|string|max:255',
             'password' => 'nullable|string|min:8|max:20',
             'roles' => 'required',
-            'status' => 'nullable|in:active,inactive',
+            'status' => 'nullable|in:0,1',
         ]);
 
         $data = [
             'name' => $request->name,
-            'email' => $request->email,
+            'username' => $request->username,
             'status' => $request->status,
         ];
 
-        if(!empty($request->password)){
+        if (!empty($request->password)) {
             $data += [
                 'password' => Hash::make($request->password),
             ];
         }
 
-        $user->update($data);
-        $user->syncRoles($request->roles);
+        $employee->update($data);
+        $employee->syncRoles($request->roles);
 
-        return redirect('/users')->with('status','تم تعديل المستخدم بالصلاحيات بنجاح');
+        return redirect('/users')->with('status', 'تم تعديل المستخدم بالصلاحيات بنجاح');
     }
 
-    public function destroy($userId)
+    public function destroy($employeeId)
     {
-        $user = User::findOrFail($userId);
-        $user->delete();
+        $employee = Employee::findOrFail($employeeId);
+        $employee->delete();
 
-        return redirect('/users')->with('status','حذف المستخدم بنجاح');
+        return redirect('/users')->with('status', 'حذف المستخدم بنجاح');
     }
 }
