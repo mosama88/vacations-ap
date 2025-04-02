@@ -80,6 +80,4 @@ Route::middleware(['auth:admin', 'role:super-admin,admin'])
             Route::delete('/{role}', 'destroy')->name('users.destroy');
         });
 
-
-        // Other routes...
     });

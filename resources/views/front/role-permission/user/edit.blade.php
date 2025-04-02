@@ -1,3 +1,6 @@
+@php
+    use App\Enum\EmployeeStatus;
+@endphp
 @extends('dashboard.layouts.master')
 @section('active-users', 'active')
 @section('title', 'تعديل بيانات المستخدم')
@@ -25,13 +28,14 @@
                         <!-- /.card-header -->
                         <!-- form start -->
                         <div class="card-body">
-                            <form action="{{ url('users/' . $user->id) }}" method="POST">
+                            <form action="{{ url('users/' . $employee->id) }}" method="POST">
                                 @csrf
                                 @method('PUT')
 
                                 <div class="mb-3">
                                     <label for="">الأسم</label>
-                                    <input type="text" name="name" value="{{ $user->name }}" class="form-control" />
+                                    <input type="text" name="name" value="{{ $employee->name }}"
+                                        class="form-control" />
                                     @error('name')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -39,7 +43,7 @@
 
                                 <div class="mb-3">
                                     <label for="">البريد الالكترونى</label>
-                                    <input type="text" name="username" readonly value="{{ $user->username }}"
+                                    <input type="text" name="username" readonly value="{{ $employee->username }}"
                                         class="form-control" />
                                 </div>
 
@@ -57,7 +61,7 @@
                                         <option value="">حدد الصلاحية</option>
                                         @foreach ($roles as $role)
                                             <option value="{{ $role }}"
-                                                {{ in_array($role, $userRoles) ? 'selected' : '' }}>
+                                                {{ in_array($role, $employeeRoles) ? 'selected' : '' }}>
                                                 {{ $role }}
                                             </option>
                                         @endforeach
@@ -70,11 +74,15 @@
                                 <div class="mb-3">
                                     <label for="status">حالة الحساب</label>
                                     <select name="status" class="form-control select">
-                                        <option disabled {{ is_null($user->status) ? 'selected' : '' }}>افتح قائمة التحديد
+                                        <option disabled {{ is_null($employee->status) ? 'selected' : '' }}>افتح قائمة
+                                            التحديد
                                         </option>
-                                        <option value="active" {{ $user->status == 'active' ? 'selected' : '' }}>نشط
+                                        <option value="{{ EmployeeStatus::Active }}"
+                                            {{ $employee->status == EmployeeStatus::Active ? 'selected' : '' }}>نشط
                                         </option>
-                                        <option value="inactive" {{ $user->status == 'inactive' ? 'selected' : '' }}>غير
+                                        <option value="{{ EmployeeStatus::Inactive }}"
+                                            {{ $employee->status == EmployeeStatus::Inactive ? 'selected' : '' }}>
+                                            غير
                                             نشط
                                         </option>
                                     </select>

@@ -57,9 +57,9 @@ class UserController extends Controller
         $roles = Role::pluck('name', 'name')->all();
         $employeeRoles = $employee->roles->pluck('name', 'name')->all();
         return view('front.role-permission.user.edit', [
-            'user' => $employee,
+            'employee' => $employee,
             'roles' => $roles,
-            'userRoles' => $employeeRoles
+            'employeeRoles' => $employeeRoles
         ]);
     }
 
