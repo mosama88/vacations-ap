@@ -39,7 +39,7 @@ class UserRolePermissionSeeder extends Seeder
             ['name' => 'update user', 'category' => 'Users', 'guard_name' => $guardAdmin],
             ['name' => 'delete user', 'category' => 'Users', 'guard_name' => $guardAdmin],
 
-            
+
 
             // السنوات المالية
             ['name' => 'السنوات المالية', 'category' => 'financeCalendars', 'guard_name' => $guardAdmin],
@@ -56,19 +56,20 @@ class UserRolePermissionSeeder extends Seeder
             ['name' => 'تعديل الفروع', 'category' => 'branches', 'guard_name' => $guardAdmin],
             ['name' => 'حذف الفروع', 'category' => 'branches', 'guard_name' => $guardAdmin],
 
-         
+
             // الدرجات الوظيفية
             ['name' => 'الدرجات الوظيفية', 'category' => 'jobsGrades', 'guard_name' => $guardAdmin],
             ['name' => 'اضافة الدرجات الوظيفية', 'category' => 'jobsGrades', 'guard_name' => $guardAdmin],
             ['name' => 'تعديل الدرجات الوظيفية', 'category' => 'jobsGrades', 'guard_name' => $guardAdmin],
             ['name' => 'حذف الدرجات الوظيفية', 'category' => 'jobsGrades', 'guard_name' => $guardAdmin],
 
-        
+
             //    أنواع الأجازات
             ['name' => 'الأجازات', 'category' => 'leaves', 'guard_name' => $guardAdmin],
             ['name' => 'اضافة الأجازات', 'category' => 'leaves', 'guard_name' => $guardAdmin],
             ['name' => 'تعديل الأجازات', 'category' => 'leaves', 'guard_name' => $guardAdmin],
             ['name' => 'حذف الأجازات', 'category' => 'leaves', 'guard_name' => $guardAdmin],
+            ['name' => 'اخذ اجراء الأجازات', 'category' => 'leaves', 'guard_name' => $guardAdmin],
 
 
             //    المحافظات
@@ -77,7 +78,7 @@ class UserRolePermissionSeeder extends Seeder
             ['name' => 'تعديل المحافظات', 'category' => 'governorates', 'guard_name' => $guardAdmin],
             ['name' => 'حذف المحافظات', 'category' => 'governorates', 'guard_name' => $guardAdmin],
 
-         
+
             // ###################################################################################################################
 
             // قائمة بيانات شئون الموظفين
@@ -98,7 +99,7 @@ class UserRolePermissionSeeder extends Seeder
             ['name' => 'تحميل من جدول ملفات شخصية', 'category' => 'Employees', 'guard_name' => $guardAdmin],
             ['name' => 'حذف من جدول ملفات شخصية', 'category' => 'Employees', 'guard_name' => $guardAdmin],
 
-       
+
 
             //    قائمة المستخدمين
             ['name' => 'قائمة المستخدمين', 'category' => 'UserList', 'guard_name' => $guardAdmin],
