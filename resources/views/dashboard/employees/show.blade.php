@@ -32,7 +32,7 @@
                             <div class="row">
                                 <div class="form-group col-6">
                                     <label for="exampleInputName">اسم الموظف</label>
-                                    <input type="text" name="name" value="{{ old('name', $employee->name) }}"
+                                    <input disabled type="text" name="name" value="{{ old('name', $employee->name) }}"
                                         class="form-control @error('name') is-invalid @enderror" id="exampleInputName"
                                         placeholder="أدخل موظف جديد">
                                     @error('name')
@@ -44,7 +44,8 @@
 
                                 <div class="form-group col-6">
                                     <label for="exampleInputmobile">موبايل الموظف</label>
-                                    <input type="text" name="mobile" value="{{ old('mobile', $employee->mobile) }}"
+                                    <input disabled type="text" name="mobile"
+                                        value="{{ old('mobile', $employee->mobile) }}"
                                         class="form-control @error('mobile') is-invalid @enderror" id="exampleInputmobile"
                                         placeholder="أدخل موبايل موظف ">
                                     @error('mobile')
@@ -57,7 +58,8 @@
                             <div class="row">
                                 <div class="form-group col-6">
                                     <label for="exampleInputusername">اسم المستخدم</label>
-                                    <input type="text" name="username" value="{{ old('username', $employee->username) }}"
+                                    <input disabled type="text" name="username"
+                                        value="{{ old('username', $employee->username) }}"
                                         class="form-control @error('username') is-invalid @enderror"
                                         id="exampleInputusername" placeholder="أدخل أسم الموظف">
                                     @error('username')
@@ -72,7 +74,7 @@
                             <div class="row">
                                 <div class="form-group col-6">
                                     <label for="exampleSelectBorder">بيانات الموظف التابع له <code>الموظف</code></label>
-                                    <select name="branch_id"
+                                    <select disabled name="branch_id"
                                         class="custom-select form-control-border @error('branch_id') is-invalid @enderror"
                                         id="exampleSelectBorder">
                                         <option value="">-- أختر بيانات الموظف --</option>
@@ -91,7 +93,7 @@
                                 </div>
                                 <div class="form-group col-6">
                                     <label for="exampleSelectBorder">المحافظة التابع لها <code>الموظف</code></label>
-                                    <select name="governorate_id"
+                                    <select disabled name="governorate_id"
                                         class="custom-select form-control-border @error('governorate_id') is-invalid @enderror"
                                         id="exampleSelectBorder">
                                         <option value="">-- أختر المحافظة --</option>
@@ -114,7 +116,7 @@
                             <div class="row">
                                 <div class="form-group col-6">
                                     <label for="exampleSelectBorder">الدرجه الوظيفية</code></label>
-                                    <select name="job_grade_id"
+                                    <select disabled name="job_grade_id"
                                         class="custom-select form-control-border @error('job_grade_id') is-invalid @enderror"
                                         id="exampleSelectBorder">
                                         <option value="">-- أختر الدرجه الوظيفية --</option>
@@ -133,7 +135,7 @@
                                 </div>
                                 <div class="form-group col-6">
                                     <label for="exampleSelectBorder">الراحه الاسبوعية</code></label>
-                                    <select name="week_id"
+                                    <select disabled name="week_id"
                                         class="custom-select form-control-border @error('week_id') is-invalid @enderror"
                                         id="exampleSelectBorder">
                                         <option value="">-- أختر الراحه الاسبوعية --</option>
@@ -154,7 +156,7 @@
                             <div class="row">
                                 <div class="form-group col-6">
                                     <label for="exampleSelectBorder">نوع الجنس</code></label>
-                                    <select name="gender"
+                                    <select disabled name="gender"
                                         class="custom-select form-control-border @error('gender') is-invalid @enderror"
                                         id="exampleSelectBorder">
                                         <option value="">-- أختر النوع --</option>
@@ -171,7 +173,7 @@
                                 </div>
                                 <div class="form-group col-6">
                                     <label for="exampleSelectBorder">نوع حساب الموظف</code></label>
-                                    <select name="type"
+                                    <select disabled name="type"
                                         class="custom-select form-control-border @error('type') is-invalid @enderror"
                                         id="exampleSelectBorder">
                                         <option value="">-- أختر نوع الحساب --</option>
@@ -186,6 +188,30 @@
                                         </span>
                                     @enderror
                                 </div>
+
+                                <div class="form-group col-6">
+                                    <label for="exampleSelectBorder">حالة حساب الموظف</code></label>
+                                    <select disabled name="status" class="form-control select">
+                                        <option disabled {{ is_null($employee->status) ? 'selected' : '' }}>افتح قائمة
+                                            التحديد
+                                        </option>
+                                        <option value="{{ App\Enum\EmployeeStatus::Active }}"
+                                            {{ $employee->status == App\Enum\EmployeeStatus::Active ? 'selected' : '' }}>
+                                            نشط
+                                        </option>
+                                        <option value="{{ App\Enum\EmployeeStatus::Inactive }}"
+                                            {{ $employee->status == App\Enum\EmployeeStatus::Inactive ? 'selected' : '' }}>
+                                            غير
+                                            نشط
+                                        </option>
+                                    </select>
+                                    @error('type')
+                                        <span class="invalid-feedback text-right" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+
 
                                 <div class="form-group col-6">
                                     <label>الصلاحيات</label>
