@@ -20,6 +20,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class Employee extends Authenticatable implements HasMedia
 {
     use HasFactory, HasSlug, Notifiable, InteractsWithMedia, HasRoles;
+    protected $guard_name = 'employee'; // or whatever guard you want 
 
     protected $table = 'employees';
 
@@ -112,10 +113,8 @@ class Employee extends Authenticatable implements HasMedia
     }
 
     protected $casts = [
-        'gender' => EmployeeGender::class,
-        'type' => EmployeeType::class,
+        // 'gender' => EmployeeGender::class,
+        // 'type' => EmployeeType::class,
         'status' => EmployeeStatus::class,
     ];
-
-    protected $guard_name = 'employee'; // or whatever guard you want 
 }

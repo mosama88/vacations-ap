@@ -9,9 +9,10 @@ use App\Models\JobGrade;
 use App\Models\Governorate;
 use App\Enum\EmployeeStatus;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Dashboard\EmployeeRequest;
 use Spatie\Permission\Models\Role;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\Dashboard\EmployeeRequest;
 
 class EmployeeController extends Controller
 {
@@ -67,7 +68,9 @@ class EmployeeController extends Controller
         $other['weeks'] = Week::get();
         $other['job_grades'] = JobGrade::get();
         $other['branches'] = Branch::get();
-        return view('dashboard.employees.show', compact('employee', 'other'));
+        $roles = Role::pluck('name', 'name')->all();
+        $employeeRoles = $employee->roles->pluck('name', 'name')->all();
+        return view('dashboard.employees.show', compact('employee', 'other', 'roles', 'employeeRoles'));
     }
     /**
      * Show the form for editing the specified resource.
@@ -78,15 +81,33 @@ class EmployeeController extends Controller
         $other['weeks'] = Week::get();
         $other['job_grades'] = JobGrade::get();
         $other['branches'] = Branch::get();
-        return view('dashboard.employees.edit', compact('employee', 'other'));
+        $roles = Role::pluck('name', 'name')->all();
+        $employeeRoles = $employee->roles->pluck('name', 'name')->all();
+        return view('dashboard.employees.edit', compact('employee', 'other', 'roles', 'employeeRoles'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(EmployeeRequest $request, Employee $employee)
     {
-        //
+        $employees = $request->validated();
+        $data = array_merge($employees, [
+            'status' => $request->status,
+            'updated_by' => auth()->guard('admin')->user()->id,
+        ]);
+        if (!empty($request->password)) {
+            $data += [
+                'password' => Hash::make($request->password),
+            ];
+        }
+        $employee->update($data);
+
+        $employee->syncRoles($request->roles);
+
+        session()->flash('success', 'تم تعديل الموظف بنجاح');
+
+        return redirect()->route('dashboard.employees.index');
     }
 
     /**

@@ -1,12 +1,17 @@
 @extends('dashboard.layouts.master')
 @section('active-branches', 'active')
 @section('title', 'عرض بيانات الموظف')
+@push('css')
+    <!-- Select2 -->
+    <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+@endpush
 @section('content')
 
     @include('dashboard.layouts.breadcrumb', [
         'pageTitle' => 'عرض بيانات الموظف',
         'previousPage' => 'جدول الموظفين',
-        'urlPreviousPage' => 'branches.index',
+        'urlPreviousPage' => 'employees.index',
         'currentPage' => 'عرض بيانات الموظف',
     ])
 
@@ -18,7 +23,7 @@
                     <!-- general form elements -->
                     <div class="card card-secondary">
                         <div class="card-header">
-                            <h3 class="card-title">عرض بيانات الموظف {{$employee->employee_code}}</h3>
+                            <h3 class="card-title">عرض بيانات الموظف {{ $employee->employee_code }}</h3>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
@@ -181,6 +186,20 @@
                                         </span>
                                     @enderror
                                 </div>
+
+                                <div class="form-group col-6">
+                                    <label>الصلاحيات</label>
+                                    <select disabled class="select2bs4" name="roles[]" multiple="multiple"
+                                        data-placeholder="-- حدد الصلاحية --" style="width: 100%;">
+                                        @foreach ($roles as $role)
+                                            <option value="{{ $role }}"
+                                                {{ in_array($role, $employeeRoles) ? 'selected' : '' }}>
+                                                {{ $role }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <!-- /.form-group -->
+                                </div>
                             </div>
 
                         </div>
@@ -200,3 +219,19 @@
         </div><!-- /.container-fluid -->
     </section>
 @endsection
+@push('js')
+    <!-- Select2 -->
+    <script src="{{ asset('dashboard') }}/assets/plugins/select2/js/select2.full.min.js"></script>
+
+    <script>
+        $(function() {
+            //Initialize Select2 Elements
+            $('.select2').select2()
+
+            //Initialize Select2 Elements
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+        })
+    </script>
+@endpush

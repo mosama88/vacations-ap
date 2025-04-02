@@ -1,3 +1,8 @@
+@php
+use App\Enum\EmployeeStatus;
+    use App\Enum\EmployeeType;
+    use App\Enum\EmployeeGender;
+@endphp
 @extends('dashboard.layouts.master')
 @section('active-employees', 'active')
 @section('title', 'تعديل بيانات الموظف')
@@ -172,9 +177,9 @@
                                             id="exampleSelectBorder">
                                             <option value="">-- أختر النوع --</option>
                                             <option @if (old('gender', $employee->gender) == 0) selected @endif
-                                                value="{{ App\Enum\EmployeeGender::Male }}">ذكر</option>
+                                                value="{{ EmployeeGender::Male }}">ذكر</option>
                                             <option @if (old('gender', $employee->gender) == 1) selected @endif
-                                                value="{{ App\Enum\EmployeeGender::Female }}">انثى</option>
+                                                value="{{ EmployeeGender::Female }}">انثى</option>
                                         </select>
                                         @error('gender')
                                             <span class="invalid-feedback text-right" role="alert">
@@ -198,6 +203,42 @@
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
+                                    </div>
+
+                                    <div class="form-group col-6">
+                                        <label for="exampleSelectBorder">حالة حساب الموظف</code></label>
+                                        <select name="status" class="form-control select">
+                                            <option disabled {{ is_null($employee->status) ? 'selected' : '' }}>افتح قائمة
+                                                التحديد
+                                            </option>
+                                            <option value="{{ EmployeeStatus::Active }}"
+                                                {{ $employee->status == EmployeeStatus::Active ? 'selected' : '' }}>نشط
+                                            </option>
+                                            <option value="{{ EmployeeStatus::Inactive }}"
+                                                {{ $employee->status == EmployeeStatus::Inactive ? 'selected' : '' }}>
+                                                غير
+                                                نشط
+                                            </option>
+                                        </select>
+                                        @error('type')
+                                            <span class="invalid-feedback text-right" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="form-group col-6">
+                                        <label>الصلاحيات</label>
+                                        <select class="select2bs4" name="roles[]" multiple="multiple"
+                                            data-placeholder="-- حدد الصلاحية --" style="width: 100%;">
+                                            @foreach ($roles as $role)
+                                                <option value="{{ $role }}"
+                                                    {{ in_array($role, $employeeRoles) ? 'selected' : '' }}>
+                                                    {{ $role }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        <!-- /.form-group -->
                                     </div>
                                 </div>
                             </div>

@@ -39,7 +39,7 @@ Route::middleware('auth:employee')->group(function () {
         ->name('employees.logout');
 });
 
-Route::middleware(['auth:admin', 'role:super-admin,admin'])
+Route::middleware(['auth:employee', 'role:super-admin,employee'])
     ->name('dashboard.')
     ->group(function () {
 
@@ -79,5 +79,4 @@ Route::middleware(['auth:admin', 'role:super-admin,admin'])
             Route::put('/{role}', 'update')->name('users.update');
             Route::delete('/{role}', 'destroy')->name('users.destroy');
         });
-
     });
