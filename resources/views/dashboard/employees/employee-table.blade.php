@@ -121,11 +121,9 @@
             </tbody>
         </table>
 
-        <div class="row mx-auto">
-            <div class="col-12">
+            <div class="col-md-12">
                 {{ $data->links() }}
 
-            </div>
         </div>
     </div>
 </div>
