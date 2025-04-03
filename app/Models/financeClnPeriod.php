@@ -22,21 +22,11 @@ class financeClnPeriod extends Model
         'end_date_month',
         'number_of_days',
         'status',
-        'created_by',
-        'updated_by',
     ];
 
 
 
-    public function createdBy()
-    {
-        return $this->belongsTo(Admin::class, 'created_by');
-    }
 
-    public function updatedBy()
-    {
-        return $this->belongsTo(Admin::class, 'updated_by');
-    }
 
     public function finance_calendar()
     {

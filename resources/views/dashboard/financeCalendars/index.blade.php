@@ -8,7 +8,7 @@
     @include('dashboard.layouts.breadcrumb', [
         'pageTitle' => 'السنوات المالية',
         'previousPage' => 'لوحة التحكم',
-        'urlPreviousPage' => 'index',
+        'urlPreviousPage' => 'employee-panel.index',
         'currentPage' => 'جدول السنوات المالية',
     ])
 
@@ -50,8 +50,7 @@
                                         <th>بداية السنه</th>
                                         <th>نهاية السنه</th>
                                         <th>الحالة</th>
-                                        <th>أنشاء بواسطة</th>
-                                        <th>تحديث بواسطة</th>
+
                                         <th>العمليات</th>
                                     </tr>
                                 </thead>
@@ -70,14 +69,7 @@
                                                     مغلقه
                                                 @endif
                                             </td>
-                                            <td>{{ $info->createdBy->name }}</td>
-                                            <td>
-                                                @if ($info->updated_by > 0)
-                                                    {{ $info->UpdatedBy->name }}
-                                                @else
-                                                    لا يوجد تحديث
-                                                @endif
-                                            </td>
+                                            
 
                                             <td>
                                                 <div class="btn-group">

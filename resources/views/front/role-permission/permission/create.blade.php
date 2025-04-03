@@ -11,7 +11,7 @@
     @include('dashboard.layouts.breadcrumb-front', [
         'pageTitle' => 'أنشاء طلب أجازه',
         'previousPage' => 'جدول الأجازات',
-        'urlPreviousPage' => 'employee-panel.user',
+        'urlPreviousPage' => 'employee-panel.index',
         'currentPage' => 'أنشاء طلب أجازه',
     ])
 
@@ -61,4 +61,4 @@
             </div>
         </div>
     </div>
-    @endsection
+@endsection

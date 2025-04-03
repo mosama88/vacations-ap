@@ -34,8 +34,7 @@
                                         <th>تاريخ النهاية</th>
                                         <th>عدد الأيام</th>
                                         <th>حالة الشهر</th>
-                                        <th>الإضافة بواسطة</th>
-                                        <th>التحديث بواسطة</th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -61,14 +60,7 @@
                                                             class="fas fa-edit ml-1"></i></a>
                                                 @endif
                                             </td>
-                                            <td>{{ $info->createdBy->name ?? 'غير معروف' }}</td>
-                                            <td>
-                                                @if ($info->updated_by > 0 && $info->updatedBy)
-                                                    {{ $info->updatedBy->name }}
-                                                @else
-                                                    <span class="text">لا يوجد</span>
-                                                @endif
-                                            </td>
+                                           
                                             @include('dashboard.financeCalendars.editIsOpen')
                                         </tr>
                                         {{-- @include('dashboard.settings.financeCalendars.editISOpen') --}}

@@ -15,14 +15,16 @@ class EmployeeTable extends Component
 
     use WithPagination;
 
-    public $other, $emp_search, $week_search, $mohafza_search, $fara_search;
+    public $other, $emp_search, $week_search, $mohafza_search, $fara_search, $gender_search;
 
-    protected $queryString = [
-        'emp_search' => ['sa' => 'اسم الموظف'],
-        'fara_search' => ['sa' => 'الفرع'],
-        'mohafza_search' => ['sa' => 'المحافظة'],
-        'week_search' => ['sa' => 'الراحه'],
-    ];
+    // protected $queryString = [
+    //     'emp_search' => ['as' => 'اسم الموظف'],
+    //     'fara_search' => ['as' => 'الفرع'],
+    //     'mohafza_search' => ['as' => 'المحافظة'],
+    //     'week_search' => ['as' => 'الراحه'],
+    //     'gender_search' => ['as' => 'الجنس'],
+    // ];
+
 
     public function updatingSearch()
     {
@@ -31,12 +33,13 @@ class EmployeeTable extends Component
 
     public function clear()
     {
-        $this->reset(
-            'emp_search',
-            'fara_search',
-            'mohafza_search',
-            'week_search',
-        );
+        $this->emp_search = null;
+        $this->fara_search = null;
+        $this->mohafza_search = null;
+        $this->week_search = null;
+        $this->gender_search = null;
+
+        $this->resetPage();
     }
 
 
@@ -69,6 +72,10 @@ class EmployeeTable extends Component
 
         if ($this->mohafza_search) {
             $query->where('governorate_id', $this->mohafza_search);
+        }
+
+        if ($this->gender_search) {
+            $query->where('gender', $this->gender_search);
         }
 
 

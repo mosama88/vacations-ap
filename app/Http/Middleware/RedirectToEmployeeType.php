@@ -17,12 +17,12 @@ class RedirectToEmployeeType
             $user = Auth::guard('employee')->user();
 
             // إذا كان المدير يحاول الوصول إلى صفحة موظف عادي
-            if ($user->type == EmployeeType::Manager && $request->routeIs('employee-panel.user')) {
+            if ($user->type == EmployeeType::Manager && $request->routeIs('dashboard.employee-panel.index')) {
                 return redirect()->route('employee-panel.manager');
             }
             // إذا كان موظف عادي يحاول الوصول إلى صفحة المدير
             elseif ($user->type != EmployeeType::Manager && $request->routeIs('employee-panel.manager')) {
-                return redirect()->route('employee-panel.user');
+                return redirect()->route('dashboard.employee-panel.index');
             }
         }
 

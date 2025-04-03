@@ -11,7 +11,7 @@
     @include('dashboard.layouts.breadcrumb', [
         'pageTitle' => 'الموظفين',
         'previousPage' => 'لوحة التحكم',
-        'urlPreviousPage' => 'index',
+        'urlPreviousPage' => 'employee-panel.index',
         'currentPage' => 'جدول الموظفين',
     ])
 
@@ -69,4 +69,5 @@
             });
         })
     </script>
+
 @endpush

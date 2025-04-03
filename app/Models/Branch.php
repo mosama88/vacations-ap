@@ -18,8 +18,6 @@ class Branch extends Model
         'name',
         'slug',
         'governorate_id',
-        'created_by',
-        'updated_by',
     ];
 
     public function getSlugOptions(): SlugOptions
@@ -34,15 +32,6 @@ class Branch extends Model
         return 'slug';
     }
 
-    public function createdBy()
-    {
-        return $this->belongsTo(Admin::class, 'created_by');
-    }
-
-    public function updatedBy()
-    {
-        return $this->belongsTo(Admin::class, 'updated_by');
-    }
 
     public function governorate()
     {

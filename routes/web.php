@@ -11,7 +11,6 @@ use App\Http\Controllers\Dashboard\BranchController;
 use App\Http\Controllers\Auth\EmployeeLoginController;
 use App\Http\Controllers\Dashboard\EmployeeController;
 use App\Http\Controllers\Dashboard\JobGradeController;
-use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\LeaveBalanceController;
 use App\Http\Controllers\Dashboard\FinanceCalendarController;
 
@@ -21,16 +20,10 @@ Route::get('/', function () {
 
 
 
-Route::middleware('auth:employee')->group(function () {
-    Route::get('employee-panel/user', [EmployeePanel::class, 'index'])->name('employee-panel.user');
-    Route::get('leaves/pending', [EmployeePanel::class, 'getLeavepending'])->name('leaves.getLeavespending');
-    Route::get('leaves/all', [EmployeePanel::class, 'allLeaves'])->name('leaves.all');
-
-    // بداية تكويد الأجازات
-    Route::resource('/leaves', LeaveController::class);
-    Route::post('leaves/balance', [LeaveController::class, 'getLeaveBalance'])->name('leaves.getLeavesBalances');
-});
 Route::middleware('auth:employee')->name('dashboard.')->group(function () {
+    //------------------------ Logout
+    Route::post('logout', [EmployeeLoginController::class, 'destroy'])
+        ->name('employees.logout');
 
     // ---------------------------------------------------- بداية تكويد السنوات المالية
     Route::resource('/financeCalendars', FinanceCalendarController::class);
@@ -46,20 +39,23 @@ Route::middleware('auth:employee')->name('dashboard.')->group(function () {
     // --------------------------------------------- بداية تكويد الدرجات الوظيفية
     Route::resource('/jobGrades', JobGradeController::class);
 
-    // ---------------------------------------------- بداية تكويد الموظف
+    // ---------------------------------------------- بداية تكويد الموظفين
     Route::resource('/employees', EmployeeController::class);
 
     // --------------------------------------------- بداية رصيد الأجازات
     Route::resource('/leaveBalances', LeaveBalanceController::class);
 
+    // ---------------------------------------------------- بداية تكويد الأجازات
+    Route::resource('/leaves', LeaveController::class);
+    Route::post('leaves/balance', [LeaveController::class, 'getLeaveBalance'])->name('leaves.getLeavesBalances');
 
-
-    //------------------------ Logout
-    Route::post('logout', [EmployeeLoginController::class, 'destroy'])
-        ->name('employees.logout');
+    // ---------------------------------------------------- بداية تكويد الصفحه الامامين للمستخدمين
+    Route::get('leaves/all', [EmployeePanel::class, 'allLeaves'])->name('leaves.all');
+    Route::get('employee-panel/user', [EmployeePanel::class, 'index'])->name('employee-panel.index');
+    Route::get('leaves/pending', [EmployeePanel::class, 'getLeavepending'])->name('leaves.getLeavespending');
 });
 
-//------------------------ Login
+//----------------------------------------------------------- Login
 Route::middleware('redirect.employee')->group(function () {
     Route::get('/login', [EmployeeLoginController::class, 'create'])->name('employees.login');
     Route::post('/login', [EmployeeLoginController::class, 'store']);

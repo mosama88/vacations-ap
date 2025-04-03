@@ -39,24 +39,13 @@
                     </a>
                 </li>
                 <li class="user-footer">
-                    @if (Auth::guard('admin')->check())
-                        <!-- Profile-->
-                        <form action="{{ route('dashboard.logout') }}" method="POST">
-                            @csrf
-                            <a class="btn btn-default btn-flat float-right btn-block" data-toggle="dropdown"
-                                href="" onclick="event.preventDefault(); this.closest('form').submit();">
-                                <i class="fas fa-sign-out-alt mx-1"></i> تسجيل الخروج
-                            </a>
-                        </form>
-                    @else
-                        <form action="{{ route('employees.logout') }}" method="POST">
-                            @csrf
-                            <a class="btn btn-default btn-flat float-right btn-block" data-toggle="dropdown"
-                                href="" onclick="event.preventDefault(); this.closest('form').submit();">
-                                <i class="fas fa-sign-out-alt mx-1"></i> تسجيل الخروج
-                            </a>
-                        </form>
-                    @endif
+                    <form action="{{ route('dashboard.employees.logout') }}" method="POST">
+                        @csrf
+                        <a class="btn btn-default btn-flat float-right btn-block" data-toggle="dropdown" href=""
+                            onclick="event.preventDefault(); this.closest('form').submit();">
+                            <i class="fas fa-sign-out-alt mx-1"></i> تسجيل الخروج
+                        </a>
+                    </form>
                 </li>
 
             </ul>
@@ -75,7 +64,7 @@
 
 
 
-   
+
 
 
 

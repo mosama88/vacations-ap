@@ -8,7 +8,7 @@
     @include('dashboard.layouts.breadcrumb', [
         'pageTitle' => 'الفروع',
         'previousPage' => 'لوحة التحكم',
-        'urlPreviousPage' => 'index',
+        'urlPreviousPage' => 'employee-panel.index',
         'currentPage' => 'جدول الفروع',
     ])
 
@@ -47,8 +47,7 @@
                                         <th>#</th>
                                         <th>أسم الفرع</th>
                                         <th>المحافظة</th>
-                                        <th>أنشاء بواسطة</th>
-                                        <th>تحديث بواسطة</th>
+
                                         <th>العمليات</th>
                                     </tr>
                                 </thead>
@@ -58,14 +57,7 @@
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $info->name }}</td>
                                             <td>{{ $info->governorate->name }}</td>
-                                            <td>{{ $info->createdBy->name }}</td>
-                                            <td>
-                                                @if ($info->updated_by > 0)
-                                                    {{ $info->UpdatedBy->name }}
-                                                @else
-                                                    لا يوجد تحديث
-                                                @endif
-                                            </td>
+                                           
                                             <td class="project-actions">
                                                 @include('dashboard.partials.action', [
                                                     'name' => 'branches',

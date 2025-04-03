@@ -19,20 +19,11 @@ class FinanceCalendar extends Model
         'start_date',
         'end_date',
         'status',
-        'created_by',
-        'updated_by',
     ];
 
 
 
-    public function createdBy()
-    {
-        return $this->belongsTo(Admin::class, 'created_by');
-    }
-    public function updatedBy()
-    {
-        return $this->belongsTo(Admin::class, 'updated_by');
-    }
+
 
     public function financeClnPeriods()
     {

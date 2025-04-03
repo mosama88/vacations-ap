@@ -36,8 +36,6 @@ class Employee extends Authenticatable implements HasMedia
         'job_grade_id',
         'branch_id',
         'governorate_id',
-        'created_by',
-        'updated_by',
     ];
 
 
@@ -63,15 +61,6 @@ class Employee extends Authenticatable implements HasMedia
         return 'slug';
     }
 
-    public function createdBy()
-    {
-        return $this->belongsTo(Admin::class, 'created_by');
-    }
-
-    public function updatedBy()
-    {
-        return $this->belongsTo(Admin::class, 'updated_by');
-    }
 
     public function week()
     {

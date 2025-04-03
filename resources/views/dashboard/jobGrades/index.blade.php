@@ -46,8 +46,7 @@
                                     <tr>
                                         <th>#</th>
                                         <th>أسم الدرجه الوظيفية</th>
-                                        <th>أنشاء بواسطة</th>
-                                        <th>تحديث بواسطة</th>
+
                                         <th>العمليات</th>
                                     </tr>
                                 </thead>
@@ -56,14 +55,7 @@
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $info->name }}</td>
-                                            <td>{{ $info->createdBy->name }}</td>
-                                            <td>
-                                                @if ($info->updated_by > 0)
-                                                    {{ $info->UpdatedBy->name }}
-                                                @else
-                                                    لا يوجد تحديث
-                                                @endif
-                                            </td>
+                                            
                                             <td class="project-actions">
                                                 @include('dashboard.partials.action', [
                                                     'name' => 'jobGrades',

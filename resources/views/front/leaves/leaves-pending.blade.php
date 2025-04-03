@@ -11,7 +11,7 @@
     @include('dashboard.layouts.breadcrumb-front', [
         'pageTitle' => 'الاجازات المعلقه',
         'previousPage' => 'لوحة التحكم',
-        'urlPreviousPage' => 'employee-panel.user',
+        'urlPreviousPage' => 'employee-panel.index',
         'currentPage' => 'الاجازات المعلقه',
     ])
     @include('dashboard.layouts.message')

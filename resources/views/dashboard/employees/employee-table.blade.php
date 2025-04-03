@@ -60,7 +60,7 @@
         <div class="form-group col-3">
             <label></label>
             <div class="mg-t-10">
-                @if (empty($emp_search) && empty($fara_search) && empty($mohafza_search) && empty($week_search))
+                @if (empty($emp_search) && empty($fara_search) && empty($gender_search) && empty($mohafza_search) && empty($week_search))
                     <div class="mg-t-10">
                         <button class="btn  btn-light btn-block" disabled>أمسح</button>
                     </div>
@@ -82,8 +82,7 @@
                     <th>الموبايل</th>
                     <th>الراحه</th>
                     <th>المحافظة</th>
-                    <th>أنشاء بواسطة</th>
-                    <th>تحديث بواسطة</th>
+
                     <th>العمليات</th>
                 </tr>
             </thead>
@@ -96,14 +95,7 @@
                         <td>{{ $info->mobile }}</td>
                         <td>{{ $info->week->name }}</td>
                         <td>{{ $info->governorate->name }}</td>
-                        <td>{{ $info->createdBy->username }}</td>
-                        <td>
-                            @if ($info->updated_by > 0)
-                                {{ $info->UpdatedBy->username }}
-                            @else
-                                لا يوجد تحديث
-                            @endif
-                        </td>
+                     
                         <td class="project-actions">
                             @include('dashboard.partials.action', [
                                 'name' => 'employees',

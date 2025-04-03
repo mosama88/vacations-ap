@@ -27,7 +27,7 @@
        with font-awesome or any other icon font library -->
 
                 <li class="nav-item">
-                    <a href="{{ route('employee-panel.user') }}" class="nav-link @yield('active-employeePanel')">
+                    <a href="{{ route('dashboard.employee-panel.index') }}" class="nav-link @yield('active-employeePanel')">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
                             الصفحة الرئيسية
@@ -113,7 +113,7 @@
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             @can('طلب الأجازات')
-                                <a href="{{ route('leaves.create') }}" class="nav-link @yield('active-leaves')">
+                                <a href="{{ route('dashboard.leaves.create') }}" class="nav-link @yield('active-leaves')">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>طلب أجازه</p>
                                 </a>
@@ -122,7 +122,7 @@
 
                         @can('الموظفين الأجازات')
                             <li class="nav-item">
-                                <a href="{{ route('leaves.all') }}" class="nav-link @yield('active-all')">
+                                <a href="{{ route('dashboard.leaves.all') }}" class="nav-link @yield('active-all')">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p> أجازات الموظفين</p>
                                 </a>
@@ -131,7 +131,8 @@
 
                         @can('المعلقه الأجازات')
                             <li class="nav-item">
-                                <a href="{{ route('leaves.getLeavespending') }}" class="nav-link @yield('active-pending')">
+                                <a href="{{ route('dashboard.leaves.getLeavespending') }}"
+                                    class="nav-link @yield('active-pending')">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p> الأجازات المعلقه</p>
                                 </a>

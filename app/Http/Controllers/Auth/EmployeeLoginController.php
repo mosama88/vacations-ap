@@ -28,7 +28,7 @@ class EmployeeLoginController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('employee-panel.user', absolute: false));
+        return redirect()->intended(route('dashboard.employee-panel.index', absolute: false));
     }
 
     /**
