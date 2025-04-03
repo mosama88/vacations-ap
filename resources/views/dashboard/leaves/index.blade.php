@@ -8,7 +8,7 @@
     @include('dashboard.layouts.breadcrumb', [
         'pageTitle' => 'الفروع',
         'previousPage' => 'لوحة التحكم',
-        'urlPreviousPage' => 'index',
+        'urlPreviousPage' => 'employee-panel.index',
         'currentPage' => 'جدول الفروع',
     ])
 
@@ -21,8 +21,8 @@
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">
-                                <a href="{{ route('leaves.create') }}"
-                                    class="btn btn-block text-white btn-success"> <i class="fas fa-plus-circle mx-1"></i>
+                                <a href="{{ route('leaves.create') }}" class="btn btn-block text-white btn-success"> <i
+                                        class="fas fa-plus-circle mx-1"></i>
                                     أنشاء</a>
                             </h3>
 
@@ -47,7 +47,7 @@
                                         <th>#</th>
                                         <th>أسم الفرع</th>
                                         <th>المحافظة</th>
-                                    
+
                                         <th>العمليات</th>
                                     </tr>
                                 </thead>
@@ -57,7 +57,7 @@
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $info->name }}</td>
                                             <td>{{ $info->governorate->name }}</td>
-                                            
+
                                             <td class="project-actions">
                                                 @include('dashboard.partials.action', [
                                                     'name' => 'leaves',

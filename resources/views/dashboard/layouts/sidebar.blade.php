@@ -36,7 +36,7 @@
 
                 </li>
                 <li
-                    class="nav-item has-treeview {{ request()->is('dashboard/financeCalendars*') || request()->is('dashboard/branches*') || request()->is('dashboard/jobGrades*') ? 'menu-open' : '' }} ">
+                    class="nav-item has-treeview {{ request()->is('financeCalendars*') || request()->is('branches*') || request()->is('jobGrades*') ? 'menu-open' : '' }} ">
                     <a href="#"
                         class="nav-link {{ request()->is('financeCalendars*') || request()->is('branches*') || request()->is('jobGrades*') ? 'active' : '' }} ">
                         <i class="nav-icon fas fa-cog"></i>

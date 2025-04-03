@@ -8,7 +8,7 @@
     @include('dashboard.layouts.breadcrumb', [
         'pageTitle' => 'الدرجات الوظيفية',
         'previousPage' => 'لوحة التحكم',
-        'urlPreviousPage' => 'index',
+        'urlPreviousPage' => 'employee-panel.index',
         'currentPage' => 'جدول الدرجات الوظيفية',
     ])
 
@@ -55,7 +55,7 @@
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $info->name }}</td>
-                                            
+
                                             <td class="project-actions">
                                                 @include('dashboard.partials.action', [
                                                     'name' => 'jobGrades',

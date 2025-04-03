@@ -8,7 +8,7 @@
     @include('dashboard.layouts.breadcrumb', [
         'pageTitle' => 'رصيد الأجازات',
         'previousPage' => 'لوحة التحكم',
-        'urlPreviousPage' => 'index',
+        'urlPreviousPage' => 'employee-panel.index',
         'currentPage' => 'جدول رصيد الأجازات',
     ])
 
