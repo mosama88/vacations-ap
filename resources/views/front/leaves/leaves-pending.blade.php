@@ -8,7 +8,7 @@
 @section('content')
 
 
-    @include('dashboard.layouts.breadcrumb-front', [
+    @include('dashboard.layouts.breadcrumb', [
         'pageTitle' => 'الاجازات المعلقه',
         'previousPage' => 'لوحة التحكم',
         'urlPreviousPage' => 'employee-panel.index',
@@ -87,7 +87,7 @@
                                                 @endif
                                             </td>
 
-                                            @include('front.leaves.edit')
+                                            @include('front.dashboard.leaves.edit')
                                             <td>{{ $info->description }}</td>
                                             <td>{{ $info->updated_by ? $info->updatedBy->name : 'لا يوجد تحديث' }}</td>
                                         @empty
@@ -96,7 +96,7 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            {{-- @include('front.leaves.edit') --}}
+                            {{-- @include('front.dashboard.leaves.edit') --}}
                         </div>
                         <!-- /.card-body -->
 

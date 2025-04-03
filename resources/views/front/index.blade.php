@@ -98,16 +98,16 @@
                         <div class="card-body">
                             <div class=" my-2">
                                 @can('طلب الأجازات')
-                                    <a href="{{ route('leaves.create') }}" class="btn btn-primary mx-1"><i
+                                    <a href="{{ route('dashboard.leaves.create') }}" class="btn btn-primary mx-1"><i
                                             class="fas fa-hand-paper mx-1"></i> طلب أجازه</a>
                                 @endcan
 
                                 @can('المعلقه الأجازات')
-                                    <a href="{{ route('leaves.getLeavespending') }}" class="btn btn-warning mx-1"> <i
+                                    <a href="{{ route('dashboard.leaves.getLeavespending') }}" class="btn btn-warning mx-1"> <i
                                             class="fas fa-hourglass-half mx-1"></i> الأجازات المعلقه </a>
                                 @endcan
                                 @can('الموظفين الأجازات')
-                                    <a href="{{ route('leaves.all') }}" class="btn btn-success mx-1"><i
+                                    <a href="{{ route('dashboard.leaves.all') }}" class="btn btn-success mx-1"><i
                                             class="fas fa-clipboard-list mx-1"></i> الاجازاه التى أخذت أجراء</a>
                                 @endcan
                             </div>
@@ -155,7 +155,7 @@
                                                 @endif
                                             </td>
 
-                                            @include('front.leaves.edit')
+                                            @include('front.dashboard.leaves.edit')
                                             <td>{{ $info->description }}</td>
                                             <td>{{ $info->created_by ? $info->createdBy->name : 'لا يوجد' }}</td>
                                             <td>{{ $info->updated_by ? $info->updatedBy->name : 'لا يوجد تحديث' }}</td>
@@ -167,7 +167,7 @@
                                     @endforelse
                                 </tbody>
                             </table>
-                            {{-- @include('front.leaves.edit') --}}
+                            {{-- @include('front.dashboard.leaves.edit') --}}
                         </div>
                         <!-- /.card-body -->
 

@@ -8,7 +8,7 @@
 @endpush
 @section('content')
 
-    @include('dashboard.layouts.breadcrumb-front', [
+    @include('dashboard.layouts.breadcrumb', [
         'pageTitle' => 'أنشاء طلب أجازه',
         'previousPage' => 'جدول الأجازات',
         'urlPreviousPage' => 'employee-panel.index',
@@ -30,7 +30,7 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="{{ route('leaves.store') }}" method="POST">
+                        <form action="{{ route('dashboard.leaves.store') }}" method="POST">
                             @csrf
                             <div class="card-body">
                                 <div class="row">
@@ -211,7 +211,7 @@
         function getLeaveBalance() {
             var employee_id = $("#employee_id").val();
             jQuery.ajax({
-                url: '{{ route('leaves.getLeavesBalances') }}',
+                url: '{{ route('dashboard.leaves.getLeavesBalances') }}',
                 type: 'POST',
                 dataType: 'json', // التأكد من أنك ترجع البيانات بتنسيق JSON
                 cache: false,

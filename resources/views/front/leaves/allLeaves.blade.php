@@ -8,7 +8,7 @@
 @section('content')
 
 
-    @include('dashboard.layouts.breadcrumb-front', [
+    @include('dashboard.layouts.breadcrumb', [
         'pageTitle' => 'الاجازات الموظفين',
         'previousPage' => 'لوحة التحكم',
         'urlPreviousPage' => 'employee-panel.index',
@@ -83,7 +83,7 @@
 
                                             </td>
 
-                                            @include('front.leaves.edit')
+                                            @include('front.dashboard.leaves.edit')
                                             <td>{{ $info->description }}</td>
                                             <td>{{ $info->created_by ? $info->createdBy->name : 'لا يوجد' }}</td>
                                             <td>{{ $info->updated_by ? $info->updatedBy->name : 'لا يوجد تحديث' }}</td>
@@ -93,7 +93,7 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            {{-- @include('front.leaves.edit') --}}
+                            {{-- @include('front.dashboard.leaves.edit') --}}
                         </div>
                         <!-- /.card-body -->
 

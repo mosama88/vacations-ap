@@ -7,7 +7,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{ route('leaves.update', $info->id) }}" method="POST">
+            <form action="{{ route('dashboard.leaves.update', $info->id) }}" method="POST">
                 @csrf
                 @method('PUT')
                 <div class="modal-body">

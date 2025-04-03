@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Front;
 
 use App\Models\Leave;
-use Illuminate\Http\Request;
 use App\Enum\LeaveStatusEnum;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;

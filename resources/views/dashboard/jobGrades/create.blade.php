@@ -24,7 +24,7 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="{{ route('dashboard.job_grades.store') }}" method="POST">
+                        <form action="{{ route('dashboard.jobGrades.store') }}" method="POST">
                             @csrf
                             <div class="card-body">
                                 <div class="form-group">

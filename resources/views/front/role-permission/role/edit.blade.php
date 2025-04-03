@@ -8,7 +8,7 @@
 @endpush
 @section('content')
 
-    @include('dashboard.layouts.breadcrumb-front', [
+    @include('dashboard.layouts.breadcrumb', [
         'pageTitle' => 'أنشاء طلب أجازه',
         'previousPage' => 'جدول الأجازات',
         'urlPreviousPage' => 'employee-panel.index',

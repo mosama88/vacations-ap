@@ -28,7 +28,7 @@ class LeaveBalanceController extends Controller
      */
     public function create()
     {
-        $other['employees'] = Employee::get();
+        $other['employees'] = Employee::whereDoesntHave('leaveBalance')->get();
         return view('dashboard.leaveBalances.create', compact('other'));
     }
 

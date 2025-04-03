@@ -9,7 +9,7 @@
 @section('content')
     @include('dashboard.layouts.message')
 
-    @include('dashboard.layouts.breadcrumb-front', [
+    @include('dashboard.layouts.breadcrumb', [
         'pageTitle' => 'تعديل منح الأذونات',
         'previousPage' => 'جدول الأذونات',
         'urlPreviousPage' => 'dashboard.roles.index',

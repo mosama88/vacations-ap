@@ -86,7 +86,6 @@ class LeaveController extends Controller
                 'leave_type' => $request->leave_type,
                 'leave_status' => LeaveStatusEnum::Pending,
                 'description' => $request->description,
-                'created_by' => $employeeId,
             ]);
 
             session()->flash('success', 'تمت إضافة الإجازة بنجاح');
@@ -124,7 +123,6 @@ class LeaveController extends Controller
     {
         $leave = Leave::findOrFail($id);
         $leave->leave_status = $request->leave_status;
-        $leave->updated_by = auth()->guard()->user()->id;
         $leave->update();
         session()->flash('success', 'تم تعديل الأجازه بنجاح');
         return redirect()->back();
