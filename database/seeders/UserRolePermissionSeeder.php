@@ -173,7 +173,6 @@ class UserRolePermissionSeeder extends Seeder
             'job_grade_id' => 9,
             'branch_id' => 10,
             'governorate_id' => 24,
-            'created_by' => 5,
         ]);
         $superAdminUser->assignRole($superAdminRole);
 
@@ -192,7 +191,6 @@ class UserRolePermissionSeeder extends Seeder
             'job_grade_id' => 9,
             'branch_id' => 10,
             'governorate_id' => 24,
-            'created_by' => 5,
         ]);
 
         $superAdminUser2 = Employee::firstOrCreate([
@@ -210,7 +208,6 @@ class UserRolePermissionSeeder extends Seeder
             'job_grade_id' => 9,
             'branch_id' => 10,
             'governorate_id' => 24,
-            'created_by' => 5,
         ]);
         $superAdminUser2->assignRole($superAdminRole);
 
@@ -229,7 +226,6 @@ class UserRolePermissionSeeder extends Seeder
             'job_grade_id' => 9,
             'branch_id' => 10,
             'governorate_id' => 24,
-            'created_by' => 5,
         ]);
         $adminUser->assignRole($adminRole);
 
@@ -248,7 +244,6 @@ class UserRolePermissionSeeder extends Seeder
             'job_grade_id' => 9,
             'branch_id' => 10,
             'governorate_id' => 24,
-            'created_by' => 5,
         ]);
         $staffUser->assignRole($staffRole);
 
@@ -267,7 +262,6 @@ class UserRolePermissionSeeder extends Seeder
             'job_grade_id' => 9,
             'branch_id' => 10,
             'governorate_id' => 24,
-            'created_by' => 5,
         ]);
         $staffUser2->assignRole($staffRole);
     }
