@@ -47,7 +47,6 @@ class FinanceCalendarController extends Controller
 
         $dataValidated = $request->validated();
         $data = array_merge($dataValidated, [
-            'created_by' => auth()->guard('employee')->user()->id,
             'status' => StatusActive::Inactive,
         ]);
         $financeClnPeriod = FinanceCalendar::create($data);
@@ -76,8 +75,7 @@ class FinanceCalendarController extends Controller
                 $dataMonth['number_of_days'] = round($CalcnumOfDays / (60 * 60 * 24)) + 1;
                 $dataMonth['updated_at'] = now();
                 $dataMonth['created_at'] = now();
-                $dataMonth['created_by'] = auth()->guard('employee')->user()->id;
-                $dataMonth['updated_by'] = auth()->guard('employee')->user()->id;
+
 
                 financeClnPeriod::insert($dataMonth);
             }
@@ -132,7 +130,6 @@ class FinanceCalendarController extends Controller
         $FinanceCalendar['finance_yr_desc'] = $request->finance_yr_desc;
         $FinanceCalendar['start_date'] = $request->start_date;
         $FinanceCalendar['end_date'] = $request->end_date;
-        $FinanceCalendar['updated_by'] = auth()->guard('employee')->user()->id;
         $UpdateData = FinanceCalendar::where(['id' => $id])->update($FinanceCalendar);
         if ($UpdateData) {
             if ($data['start_date'] != $request->start_date or $data['end_date'] != $request->end_date) {
@@ -155,8 +152,6 @@ class FinanceCalendarController extends Controller
                         $dataMonth['number_of_days'] = round($datediff / (60 * 60 * 24)) + 1;
                         $dataMonth['updated_at'] = now();
                         $dataMonth['created_at'] = now();
-                        $dataMonth['created_by'] = auth()->guard('employee')->user()->id;
-                        $dataMonth['updated_by'] = auth()->guard('employee')->user()->id;
                         $dataMonth['start_date_fp'] = date('Y-m-01', strtotime($date->format('Y-m-d')));
                         $dataMonth['end_date_fp'] = date('Y-m-t', strtotime($date->format('Y-m-d')));
                         FinanceClnPeriod::create($dataMonth);
