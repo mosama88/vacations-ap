@@ -123,19 +123,31 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="{{ route('leaves.create') }}" class="nav-link @yield('active-leaves')">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>طلب أجازه</p>
-                                </a>
+                                @can('طلب الأجازات')
+                                    <a href="{{ route('leaves.create') }}" class="nav-link @yield('active-leaves')">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>طلب أجازه</p>
+                                    </a>
+                                @endcan
                             </li>
 
-                            <li class="nav-item">
-                                <a href="{{ route('leaves.all') }}" class="nav-link @yield('active-all')">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p> أجازات الموظف</p>
-                                </a>
-                            </li>
+                            @can('الموظفين الأجازات')
+                                <li class="nav-item">
+                                    <a href="{{ route('leaves.all') }}" class="nav-link @yield('active-all')">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p> أجازات الموظفين</p>
+                                    </a>
+                                </li>
+                            @endcan
 
+                            @can('المعلقه الأجازات')
+                                <li class="nav-item">
+                                    <a href="{{ route('leaves.getLeavespending') }}" class="nav-link @yield('active-pending')">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p> الأجازات المعلقه</p>
+                                    </a>
+                                </li>
+                            @endcan
                         </ul>
                     </li>
                 @endauth

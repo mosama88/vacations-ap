@@ -3,16 +3,16 @@
     use App\Enum\LeaveTypeEnum;
 @endphp
 @extends('dashboard.layouts.master')
-@section('active-all', 'active')
-@section('title', 'أجازات الموظفين')
+@section('active-pending', 'active')
+@section('title', 'الاجازات المعلقه')
 @section('content')
 
 
     @include('dashboard.layouts.breadcrumb-front', [
-        'pageTitle' => 'الاجازات الموظفين',
+        'pageTitle' => 'الاجازات المعلقه',
         'previousPage' => 'لوحة التحكم',
         'urlPreviousPage' => 'employee-panel.user',
-        'currentPage' => 'الاجازات الموظفين',
+        'currentPage' => 'الاجازات المعلقه',
     ])
     @include('dashboard.layouts.message')
 
@@ -31,7 +31,7 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="col-12 float-right">جدول أجازات <span class="text-secondary"> الموظفين</span>
+                            <h3 class="col-12 float-right">جدول أجازات <span class="text-secondary">الموظفين المعلقه</span>
                             </h3>
                         </div>
                         <!-- /.card-header -->
@@ -48,8 +48,8 @@
                                         <th>عدد الأيام</th>
                                         <th>حالة الاجازه</th>
                                         <th>ملاحظات</th>
-                                        <th>انشاء بواسطة</th>
                                         <th>تحديث بواسطة</th>
+                                        <th>عرض البيانات</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -77,15 +77,18 @@
                                                     <span class="badge bg-primary">موافق</span>
                                                 @elseif ($info->leave_status == LeaveStatusEnum::Pending)
                                                     <span class="badge bg-warning">معلقه</span>
+                                                    <a class="modal-effect btn btn-info btn-sm" data-toggle="modal"
+                                                        href="#editLeaveModal{{ $info->id }}"
+                                                        data-id="{{ $info->id }}">
+                                                        أخذ إجراء
+                                                    </a>
                                                 @else
                                                     <span class="badge bg-danger">مرفوض</span>
                                                 @endif
-
                                             </td>
 
                                             @include('front.leaves.edit')
                                             <td>{{ $info->description }}</td>
-                                            <td>{{ $info->created_by ? $info->createdBy->name : 'لا يوجد' }}</td>
                                             <td>{{ $info->updated_by ? $info->updatedBy->name : 'لا يوجد تحديث' }}</td>
                                         @empty
                                             لا توجد أجازات

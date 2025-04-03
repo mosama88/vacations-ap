@@ -11,9 +11,11 @@
     @csrf
     @method('DELETE')
 </form>
-<button id="delete_one" data-id="{{ $name_id }}" class="btn btn-danger btn-sm delete-btn">
-    <i class="fas fa-trash-alt mx-1"></i>
-</button>
+@can('حذف الموظف')
+    <button id="delete_one" data-id="{{ $name_id }}" class="btn btn-danger btn-sm delete-btn">
+        <i class="fas fa-trash-alt mx-1"></i>
+    </button>
+@endcan
 
 
 @push('js')

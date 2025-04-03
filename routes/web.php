@@ -17,12 +17,16 @@ Route::get('/', function () {
 
 Route::middleware('auth:employee')->group(function () {
 
-    Route::get('employee-panel/user/leaves/all', [EmployeePanel::class, 'allLeaves'])->name('leaves.all');
     Route::get('employee-panel/user', [EmployeePanel::class, 'index'])->name('employee-panel.user');
+    Route::get('leaves/pending', [EmployeePanel::class, 'getLeavepending'])->name('leaves.getLeavespending');
+    Route::get('leaves/all', [EmployeePanel::class, 'allLeaves'])->name('leaves.all');
+
+
 
     // بداية تكويد الأجازات
     Route::resource('/leaves', LeaveController::class);
-    Route::post('leaves/leaves/balance', [LeaveController::class, 'getLeaveBalance'])->name('leaves.getLeavesBalances');
+    Route::post('leaves/balance', [LeaveController::class, 'getLeaveBalance'])->name('leaves.getLeavesBalances');
+    // Route::post('leaves/leaves/action', [LeaveController::class, 'getLeaveaction'])->name('leaves.getLeavesaction');
 });
 
 

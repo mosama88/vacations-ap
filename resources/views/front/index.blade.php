@@ -17,8 +17,6 @@
     @include('dashboard.layouts.message')
 
 
-
-
     <section class="content">
         <div class="container-fluid">
             <!-- Small boxes (Stat box) -->
@@ -84,6 +82,7 @@
                 </div>
                 <!-- ./col -->
             </div>
+
             <!-- /.row -->
             <!-- Main row -->
 
@@ -97,6 +96,21 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
+                            <div class=" my-2">
+                                @can('طلب الأجازات')
+                                    <a href="{{ route('leaves.create') }}" class="btn btn-primary mx-1"><i
+                                            class="fas fa-hand-paper mx-1"></i> طلب أجازه</a>
+                                @endcan
+
+                                @can('المعلقه الأجازات')
+                                    <a href="{{ route('leaves.getLeavespending') }}" class="btn btn-warning mx-1"> <i
+                                            class="fas fa-hourglass-half mx-1"></i> الأجازات المعلقه </a>
+                                @endcan
+                                @can('الموظفين الأجازات')
+                                    <a href="{{ route('leaves.all') }}" class="btn btn-success mx-1"><i
+                                            class="fas fa-clipboard-list mx-1"></i> الاجازاه التى أخذت أجراء</a>
+                                @endcan
+                            </div>
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
@@ -132,32 +146,25 @@
                                             <td>{{ $info->end_date }}</td>
                                             <td>{{ $info->days_taken * 1 }}</td>
                                             <td>
-
                                                 @if ($info->leave_status == LeaveStatusEnum::Approved)
-                                                    موافق
+                                                    <span class="badge bg-primary">موافق</span>
                                                 @elseif ($info->leave_status == LeaveStatusEnum::Pending)
-                                                    معلقه
-                                                    <a class="modal-effect btn btn-info btn-sm" data-toggle="modal"
-                                                        href="#editLeaveModal{{ $info->id }}"
-                                                        data-id="{{ $info->id }}">
-                                                        أخذ إجراء
-                                                    </a>
+                                                    <span class="badge bg-warning">معلقه</span>
                                                 @else
-                                                    مرفوض
+                                                    <span class="badge bg-danger">مرفوض</span>
                                                 @endif
-
-
-
                                             </td>
 
                                             @include('front.leaves.edit')
                                             <td>{{ $info->description }}</td>
                                             <td>{{ $info->created_by ? $info->createdBy->name : 'لا يوجد' }}</td>
                                             <td>{{ $info->updated_by ? $info->updatedBy->name : 'لا يوجد تحديث' }}</td>
-                                        @empty
-                                            لا توجد أجازات
+                                        </tr>
+                                    @empty
+                                        <div class="alert alert-info" role="alert">
+                                            !!لا توجد أجازات
+                                        </div>
                                     @endforelse
-                                    </tr>
                                 </tbody>
                             </table>
                             {{-- @include('front.leaves.edit') --}}
@@ -173,10 +180,6 @@
             <!-- /.row (main row) -->
         </div><!-- /.container-fluid -->
     </section>
-
-
-
-
 @endsection
 @push('js')
 @endpush

@@ -2,99 +2,123 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Week;
+use App\Models\Branch;
 use App\Models\Employee;
+use App\Models\JobGrade;
+use App\Models\Governorate;
+use App\Enum\EmployeeStatus;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\Dashboard\EmployeeRequest;
 
 class UserController extends Controller
 {
 
 
-    protected array $middleware = [
-        'permission:view user' => ['only' => ['index']],
-        'permission:create user' => ['only' => ['create', 'store']],
-        'permission:update user' => ['only' => ['update', 'edit']],
-        'permission:delete user' => ['only' => ['destroy']]
-    ];
-
 
     public function index()
     {
-        $employees = Employee::paginate(10);
-        return view('front.role-permission.user.index', ['employees' => $employees]);
+        return view('front.employees.index');
     }
 
+    /**
+     * Show the form for creating a new resource.
+     */
     public function create()
     {
+        $other['governorates'] = Governorate::get();
+        $other['weeks'] = Week::get();
+        $other['job_grades'] = JobGrade::get();
+        $other['branches'] = Branch::get();
         $roles = Role::pluck('name', 'name')->all();
-        return view('front.role-permission.user.create', ['roles' => $roles]);
+
+        return view('front.employees.create', compact('other', 'roles'));
     }
 
-    public function store(Request $request)
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(EmployeeRequest $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'username' => 'required|max:255|unique:employees,username',
-            'password' => 'required|string|min:8|max:20',
-            'roles' => 'required',
-            'status' => 'nullable|in:0,1',
+        $lastEmployees = Employee::orderByDesc('employee_code')->value('employee_code');
+        $new_employeeCode = $lastEmployees ? $lastEmployees + 1 : 1000;
+        $employees = $request->validated();
+        $data = array_merge($employees, [
+            'employee_code' => $new_employeeCode,
+            'status' => EmployeeStatus::Active,
+            'created_by' => auth()->guard('admin')->user()->id,
         ]);
-
-        $employee = Employee::create([
-            'name' => $request->name,
-            'username' => $request->username,
-            'password' => Hash::make($request->password),
-        ]);
-
+        $employee = Employee::create($data);
         $employee->syncRoles($request->roles);
 
-        return redirect('/users')->with('status', 'تم إنشاء المستخدم بالصلاحيات بنجاح');
+        session()->flash('success', 'تم أضافة الموظف بنجاح');
+
+        return redirect()->route('dashboard.employees.index');
     }
 
-    public function edit(Employee $employee)
+    /**
+     * Display the specified resource.
+     */
+    public function show(Employee $employee)
     {
+        $other['governorates'] = Governorate::get();
+        $other['weeks'] = Week::get();
+        $other['job_grades'] = JobGrade::get();
+        $other['branches'] = Branch::get();
         $roles = Role::pluck('name', 'name')->all();
         $employeeRoles = $employee->roles->pluck('name', 'name')->all();
-        return view('front.role-permission.user.edit', [
-            'employee' => $employee,
-            'roles' => $roles,
-            'employeeRoles' => $employeeRoles
-        ]);
+        return view('front.employees.show', compact('employee', 'other', 'roles', 'employeeRoles'));
+    }
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Employee $employee)
+    {
+        $other['governorates'] = Governorate::get();
+        $other['weeks'] = Week::get();
+        $other['job_grades'] = JobGrade::get();
+        $other['branches'] = Branch::get();
+        $roles = Role::pluck('name', 'name')->all();
+        $employeeRoles = $employee->roles->pluck('name', 'name')->all();
+        return view('front.employees.edit', compact('employee', 'other', 'roles', 'employeeRoles'));
     }
 
-    public function update(Request $request, Employee $employee)
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(EmployeeRequest $request, Employee $employee)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'password' => 'nullable|string|min:8|max:20',
-            'roles' => 'required',
-            'status' => 'nullable|in:0,1',
-        ]);
-
-        $data = [
-            'name' => $request->name,
-            'username' => $request->username,
+        $employees = $request->validated();
+        $data = array_merge($employees, [
             'status' => $request->status,
-        ];
-
+            'updated_by' => auth()->guard('admin')->user()->id,
+        ]);
         if (!empty($request->password)) {
             $data += [
                 'password' => Hash::make($request->password),
             ];
         }
-
         $employee->update($data);
+
         $employee->syncRoles($request->roles);
 
-        return redirect('/users')->with('status', 'تم تعديل المستخدم بالصلاحيات بنجاح');
+        session()->flash('success', 'تم تعديل الموظف بنجاح');
+
+        return redirect()->route('dashboard.employees.index');
     }
 
-    public function destroy($employeeId)
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Employee $employee)
     {
-        $employee = Employee::findOrFail($employeeId);
         $employee->delete();
-
-        return redirect('/users')->with('status', 'حذف المستخدم بنجاح');
+        return response()->json([
+            'success' => true,
+            'message' => 'تم حذف الموظف بنجاح!'
+        ]);
     }
 }

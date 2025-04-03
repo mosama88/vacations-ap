@@ -64,15 +64,6 @@ class UserRolePermissionSeeder extends Seeder
             ['name' => 'تعديل الدرجات الوظيفية', 'category' => 'jobsGrades', 'guard_name' => $guardAdmin],
             ['name' => 'حذف الدرجات الوظيفية', 'category' => 'jobsGrades', 'guard_name' => $guardAdmin],
 
-
-            //    أنواع الأجازات
-            ['name' => 'الأجازات', 'category' => 'leaves', 'guard_name' => $guardAdmin],
-            ['name' => 'اضافة الأجازات', 'category' => 'leaves', 'guard_name' => $guardAdmin],
-            ['name' => 'تعديل الأجازات', 'category' => 'leaves', 'guard_name' => $guardAdmin],
-            ['name' => 'حذف الأجازات', 'category' => 'leaves', 'guard_name' => $guardAdmin],
-            ['name' => 'اخذ اجراء الأجازات', 'category' => 'leaves', 'guard_name' => $guardAdmin],
-
-
             //    المحافظات
             ['name' => 'المحافظات', 'category' => 'governorates', 'guard_name' => $guardAdmin],
             ['name' => 'اضافة المحافظات', 'category' => 'governorates', 'guard_name' => $guardAdmin],
@@ -99,6 +90,18 @@ class UserRolePermissionSeeder extends Seeder
             ['name' => 'اضافة ملفات شخصية', 'category' => 'Employees', 'guard_name' => $guardAdmin],
             ['name' => 'تحميل من جدول ملفات شخصية', 'category' => 'Employees', 'guard_name' => $guardAdmin],
             ['name' => 'حذف من جدول ملفات شخصية', 'category' => 'Employees', 'guard_name' => $guardAdmin],
+
+
+            //    أنواع الأجازات
+            ['name' => 'الأجازات', 'category' => 'leaves', 'guard_name' => $guardAdmin],
+            ['name' => 'اضافة الأجازات', 'category' => 'leaves', 'guard_name' => $guardAdmin],
+            ['name' => 'تعديل الأجازات', 'category' => 'leaves', 'guard_name' => $guardAdmin],
+            ['name' => 'حذف الأجازات', 'category' => 'leaves', 'guard_name' => $guardAdmin],
+            ['name' => 'اخذ اجراء الأجازات', 'category' => 'leaves', 'guard_name' => $guardAdmin],
+            ['name' => 'المعلقه الأجازات', 'category' => 'leaves', 'guard_name' => $guardAdmin],
+            ['name' => 'اخذت اجراء الأجازات', 'category' => 'leaves', 'guard_name' => $guardAdmin],
+            ['name' => 'الموظفين الأجازات', 'category' => 'leaves', 'guard_name' => $guardAdmin],
+            ['name' => 'طلب الأجازات', 'category' => 'leaves', 'guard_name' => $guardAdmin],
 
 
 
