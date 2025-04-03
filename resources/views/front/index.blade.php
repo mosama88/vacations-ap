@@ -155,7 +155,7 @@
                                                 @endif
                                             </td>
 
-                                            @include('front.dashboard.leaves.edit')
+                                            @include('front.leaves.edit')
                                             <td>{{ $info->description }}</td>
                                             <td>{{ $info->created_by ? $info->createdBy->name : 'لا يوجد' }}</td>
                                             <td>{{ $info->updated_by ? $info->updatedBy->name : 'لا يوجد تحديث' }}</td>
@@ -167,7 +167,7 @@
                                     @endforelse
                                 </tbody>
                             </table>
-                            {{-- @include('front.dashboard.leaves.edit') --}}
+                            {{-- @include('front.leaves.edit') --}}
                         </div>
                         <!-- /.card-body -->
 

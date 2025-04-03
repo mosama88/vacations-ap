@@ -25,10 +25,20 @@ class Leave extends Model
         'days_taken',
         'leave_status',
         'description',
+        'created_by',
+        'updated_by',
     ];
 
 
+    public function createdBy()
+    {
+        return $this->belongsTo(Employee::class, 'created_by');
+    }
 
+    public function updatedBy()
+    {
+        return $this->belongsTo(Employee::class, 'updated_by');
+    }
 
     public function employee()
     {

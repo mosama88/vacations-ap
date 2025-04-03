@@ -87,7 +87,7 @@
                                                 @endif
                                             </td>
 
-                                            @include('front.dashboard.leaves.edit')
+                                            @include('front.leaves.edit')
                                             <td>{{ $info->description }}</td>
                                             <td>{{ $info->updated_by ? $info->updatedBy->name : 'لا يوجد تحديث' }}</td>
                                         @empty
@@ -96,7 +96,7 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            {{-- @include('front.dashboard.leaves.edit') --}}
+                            {{-- @include('front.leaves.edit') --}}
                         </div>
                         <!-- /.card-body -->
 

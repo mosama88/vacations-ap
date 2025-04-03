@@ -86,10 +86,11 @@ class LeaveController extends Controller
                 'leave_type' => $request->leave_type,
                 'leave_status' => LeaveStatusEnum::Pending,
                 'description' => $request->description,
+                'created_by' => Auth::id(),
             ]);
 
             session()->flash('success', 'تمت إضافة الإجازة بنجاح');
-            return redirect()->route('leaves.create');
+            return redirect()->route('dashboard.leaves.create');
         } catch (\Exception $e) {
             return redirect()->back()
                 ->withErrors(['error' => 'حدث خطأ أثناء حفظ الإجازة: ' . $e->getMessage()])
@@ -123,6 +124,7 @@ class LeaveController extends Controller
     {
         $leave = Leave::findOrFail($id);
         $leave->leave_status = $request->leave_status;
+        $leave->updated_by = Auth::id();
         $leave->update();
         session()->flash('success', 'تم تعديل الأجازه بنجاح');
         return redirect()->back();
@@ -151,7 +153,7 @@ class LeaveController extends Controller
                     'leave_balance' => $leave_balance
                 ]);
             } else {
-                return response()->json(['leave_balance' => null]);
+                return response()->json(['dashboard.leave_balance' => null]);
             }
         }
     }

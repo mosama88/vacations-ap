@@ -21,7 +21,7 @@
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">
-                                <a href="{{ route('leaves.create') }}" class="btn btn-block text-white btn-success"> <i
+                                <a href="{{ route('dashboard.leaves.create') }}" class="btn btn-block text-white btn-success"> <i
                                         class="fas fa-plus-circle mx-1"></i>
                                     أنشاء</a>
                             </h3>
