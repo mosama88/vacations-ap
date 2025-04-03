@@ -18,8 +18,6 @@ return new class extends Migration
             $table->date('start_date');
             $table->date('end_date');
             $table->enum('status',[0,1,2])->default(0); //غير مفعله او مفعله
-            $table->foreignId('created_by')->references('id')->on('admins')->onUpdate('cascade');
-            $table->foreignId('updated_by')->nullable()->references('id')->on('admins')->onUpdate('cascade');
             $table->timestamps();
         });
     }

@@ -23,8 +23,6 @@ return new class extends Migration
             $table->date('end_date_month');
             $table->integer('number_of_days')->comment('عدد الايام فى الشهر');
             $table->enum('status', [0, 1, 2])->default(0); //غير مفعله او مفعله
-            $table->foreignId('created_by')->references('id')->on('employees')->onUpdate('cascade');
-            $table->foreignId('updated_by')->nullable()->references('id')->on('employees')->onUpdate('cascade');
             $table->timestamps();
         });
     }

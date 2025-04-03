@@ -17,8 +17,6 @@ return new class extends Migration
             $table->string('name', 255);
             $table->string('slug', 255)->nullable();
             $table->foreignIdFor(Governorate::class)->nullable()->constrained()->nullOnDelete();
-            $table->foreignId('created_by')->references('id')->on('admins')->onUpdate('cascade');
-            $table->foreignId('updated_by')->nullable()->references('id')->on('admins')->onUpdate('cascade');
             $table->timestamps();
         });
     }
