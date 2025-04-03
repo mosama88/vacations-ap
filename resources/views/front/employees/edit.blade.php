@@ -33,7 +33,7 @@ use App\Enum\EmployeeStatus;
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="{{ route('dashboard.employees.update', $employee->slug) }}" method="POST">
+                        <form action="{{ route('dashboard.users.update', $employee->slug) }}" method="POST">
                             @csrf
                             @method('PUT')
                             <div class="card-body">

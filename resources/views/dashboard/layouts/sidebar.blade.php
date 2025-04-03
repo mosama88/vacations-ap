@@ -166,20 +166,25 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="{{ route('dashboard.users.index') }}" class="nav-link @yield('active-users')">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>جدول المستخدمين</p>
-                                </a>
+                                @can('المستخدمين')
+                                    <a href="{{ route('dashboard.users.index') }}" class="nav-link @yield('active-users')">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>جدول المستخدمين</p>
+                                    </a>
+                                @endcan
+                                @can('الصلاحيات')
+                                    <a href="{{ route('dashboard.roles.index') }}" class="nav-link @yield('active-roles')">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>الصلاحيات</p>
+                                    </a>
+                                @endcan
+                                @can('الأذونات')
+                                    <a href="{{ route('dashboard.permission.index') }}" class="nav-link @yield('active-permission')">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>الأذونات</p>
+                                    </a>
+                                @endcan
 
-                                <a href="{{ route('dashboard.roles.index') }}" class="nav-link @yield('active-roles')">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>الصلاحيات</p>
-                                </a>
-
-                                <a href="{{ route('dashboard.permission.index') }}" class="nav-link @yield('active-permission')">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>الأذونات</p>
-                                </a>
                             </li>
 
                         </ul>

@@ -80,6 +80,7 @@ Route::middleware(['auth:employee', 'role:super-admin,employee'])
             Route::get('/create', 'create')->name('users.create');
             Route::post('/', 'store')->name('users.store');
             Route::get('/{role}/edit', 'edit')->name('users.edit');
+            Route::get('/{role}/show', 'show')->name('users.show');
             Route::put('/{role}', 'update')->name('users.update');
             Route::delete('/{role}', 'destroy')->name('users.destroy');
         });

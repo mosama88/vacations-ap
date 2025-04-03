@@ -29,7 +29,7 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="{{ route('dashboard.employees.store') }}" method="POST">
+                        <form action="{{ route('dashboard.users.store') }}" method="POST">
                             @csrf
                             <div class="card-body">
                                 <div class="row">

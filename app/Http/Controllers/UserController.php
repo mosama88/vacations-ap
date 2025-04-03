@@ -56,7 +56,7 @@ class UserController extends Controller
 
         session()->flash('success', 'تم أضافة الموظف بنجاح');
 
-        return redirect()->route('dashboard.employees.index');
+        return redirect()->route('dashboard.users.index');
     }
 
     /**
@@ -107,7 +107,7 @@ class UserController extends Controller
 
         session()->flash('success', 'تم تعديل الموظف بنجاح');
 
-        return redirect()->route('dashboard.employees.index');
+        return redirect()->route('dashboard.users.index');
     }
 
     /**

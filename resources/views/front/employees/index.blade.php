@@ -43,7 +43,7 @@
                             </div>
                         </div>
                         <!-- /.card-header -->
-                        @livewire('dashboard.employees.employee-table')
+                        @livewire('front.employees.employee-table-front')
                         <!-- /.card-body -->
                     </div>
                     <!-- /.card -->

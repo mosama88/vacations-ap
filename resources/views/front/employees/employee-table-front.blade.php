@@ -2,7 +2,7 @@
 
     <div class="row col-12 my-2">
         <div class="form-group col-4">
-            <label for="exampleInputName">بحث باسم الموظف أو أسم المستخدم أو الهاتف</label>
+            <label for="exampleInputName">بحث باسم اxxxxxxxxxxلموظف أو أسم المستخدم أو الهاتف</label>
             <input type="text" wire:model.live="emp_search" class="form-control" id="exampleInputName"
                 placeholder="أدخل موظف جديد">
         </div>
@@ -105,8 +105,8 @@
                             @endif
                         </td>
                         <td class="project-actions">
-                            @include('dashboard.partials.action', [
-                                'name' => 'employees',
+                            @include('front.partials.action', [
+                                'name' => 'users',
                                 'name_id' => $info,
                             ])
 
@@ -121,8 +121,8 @@
             </tbody>
         </table>
 
-            <div class="col-md-12">
-                {{ $data->links() }}
+        <div class="col-md-12">
+            {{ $data->links() }}
 
         </div>
     </div>
