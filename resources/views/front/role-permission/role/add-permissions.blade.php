@@ -12,7 +12,7 @@
     @include('dashboard.layouts.breadcrumb', [
         'pageTitle' => 'تعديل منح الأذونات',
         'previousPage' => 'جدول الأذونات',
-        'urlPreviousPage' => 'dashboard.roles.index',
+        'urlPreviousPage' => 'roles.index',
         'currentPage' => 'تعديل منح الأذونات',
     ])
 
