@@ -14,48 +14,48 @@ use App\Http\Controllers\Dashboard\LeaveBalanceController;
 use App\Http\Controllers\Dashboard\FinanceCalendarController;
 
 
-Route::middleware('auth:admin')->group(function () {
-    Route::get('/', [DashboardController::class, 'index'])->name('index');
-    //--------------------------------------- Finance Calendars
+// Route::middleware('auth:admin')->group(function () {
+//     Route::get('/', [DashboardController::class, 'index'])->name('index');
+//     //--------------------------------------- Finance Calendars
 
 
-    // بداية تكويد السنوات المالية
-    Route::resource('/financeCalendars', FinanceCalendarController::class);
-    Route::controller(FinanceCalendarController::class)->name('financeCalendars.')->prefix('financeCalendars')->group(function () {
-        Route::get('open/{id}', 'open')->name('open');
-        Route::get('close/{id}', 'close')->name('close');
-    });
+//     // بداية تكويد السنوات المالية
+//     Route::resource('/financeCalendars', FinanceCalendarController::class);
+//     Route::controller(FinanceCalendarController::class)->name('financeCalendars.')->prefix('financeCalendars')->group(function () {
+//         Route::get('open/{id}', 'open')->name('open');
+//         Route::get('close/{id}', 'close')->name('close');
+//     });
 
 
-    // بداية تكويد الفروع
-    Route::resource('/branches', BranchController::class);
+//     // بداية تكويد الفروع
+//     Route::resource('/branches', BranchController::class);
 
-    // بداية تكويد الدرجات الوظيفية
-    Route::resource('/jobGrades', JobGradeController::class);
+//     // بداية تكويد الدرجات الوظيفية
+//     Route::resource('/jobGrades', JobGradeController::class);
 
-    // بداية تكويد الموظف
-    Route::resource('/employees', EmployeeController::class);
+//     // بداية تكويد الموظف
+//     Route::resource('/employees', EmployeeController::class);
 
-    // بداية رصيد الأجازات
-    Route::resource('/leaveBalances', LeaveBalanceController::class);
+//     // بداية رصيد الأجازات
+//     Route::resource('/leaveBalances', LeaveBalanceController::class);
     
-});
+// });
 
 
-//------------------------ Login
-Route::middleware('guest:admin')->group(function () {
-    Route::get('login', [AdminLoginController::class, 'create'])
-        ->name('login');
+// //------------------------ Login
+// Route::middleware('guest:admin')->group(function () {
+//     Route::get('login', [AdminLoginController::class, 'create'])
+//         ->name('login');
 
-    Route::post('login', [AdminLoginController::class, 'store']);
-});
+//     Route::post('login', [AdminLoginController::class, 'store']);
+// });
 
 
-//------------------------ Logout
-Route::middleware('auth:admin')->group(function () {
-    Route::post('logout', [AdminLoginController::class, 'destroy'])
-        ->name('logout');
-});
+// //------------------------ Logout
+// Route::middleware('auth:admin')->group(function () {
+//     Route::post('logout', [AdminLoginController::class, 'destroy'])
+//         ->name('logout');
+// });
 
 
 

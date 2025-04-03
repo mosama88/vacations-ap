@@ -49,7 +49,7 @@ class EmployeeController extends Controller
         $data = array_merge($employees, [
             'employee_code' => $new_employeeCode,
             'status' => EmployeeStatus::Active,
-            'created_by' => auth()->guard('admin')->user()->id,
+            'created_by' => auth()->guard('employee')->user()->id,
         ]);
         $employee = Employee::create($data);
         $employee->syncRoles($request->roles);
@@ -94,7 +94,7 @@ class EmployeeController extends Controller
         $employees = $request->validated();
         $data = array_merge($employees, [
             'status' => $request->status,
-            'updated_by' => auth()->guard('admin')->user()->id,
+            'updated_by' => auth()->guard('employee')->user()->id,
         ]);
         if (!empty($request->password)) {
             $data += [

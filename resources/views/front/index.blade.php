@@ -8,12 +8,12 @@
 @section('content')
 
 
-    @include('dashboard.layouts.breadcrumb', [
+    {{-- @include('dashboard.layouts.breadcrumb', [
         'pageTitle' => 'بروفايل الموظف',
         'previousPage' => '',
         'urlPreviousPage' => '',
         'currentPage' => 'الصفحه الرئيسية',
-    ])
+    ]) --}}
     @include('dashboard.layouts.message')
 
 

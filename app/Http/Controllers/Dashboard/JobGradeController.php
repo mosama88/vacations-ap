@@ -33,7 +33,7 @@ class JobGradeController extends Controller
     {
         $branches = $request->validated();
         $data = array_merge($branches, [
-            'created_by' => auth()->guard('admin')->user()->id,
+            'created_by' => auth()->guard('employee')->user()->id,
         ]);
         JobGrade::create($data);
         session()->flash('success', 'تم أضافة الدرجه الوظيفية بنجاح');
@@ -65,7 +65,7 @@ class JobGradeController extends Controller
     public function update(JobGradeRequest $request, JobGrade $jobGrade)
     {
         $jobGrade->fill($request->validated());
-        $jobGrade->updated_by = auth()->guard('admin')->user()->id;
+        $jobGrade->updated_by = auth()->guard('employee')->user()->id;
 
         $jobGrade->update();
         session()->flash('success', 'تم تعديل الدرجه الوظيفية بنجاح');

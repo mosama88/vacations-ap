@@ -7,7 +7,13 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\Front\EmployeePanel;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\Dashboard\LeaveController;
+use App\Http\Controllers\Dashboard\BranchController;
 use App\Http\Controllers\Auth\EmployeeLoginController;
+use App\Http\Controllers\Dashboard\EmployeeController;
+use App\Http\Controllers\Dashboard\JobGradeController;
+use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Dashboard\LeaveBalanceController;
+use App\Http\Controllers\Dashboard\FinanceCalendarController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -16,19 +22,42 @@ Route::get('/', function () {
 
 
 Route::middleware('auth:employee')->group(function () {
-
     Route::get('employee-panel/user', [EmployeePanel::class, 'index'])->name('employee-panel.user');
     Route::get('leaves/pending', [EmployeePanel::class, 'getLeavepending'])->name('leaves.getLeavespending');
     Route::get('leaves/all', [EmployeePanel::class, 'allLeaves'])->name('leaves.all');
 
-
-
     // بداية تكويد الأجازات
     Route::resource('/leaves', LeaveController::class);
     Route::post('leaves/balance', [LeaveController::class, 'getLeaveBalance'])->name('leaves.getLeavesBalances');
-    // Route::post('leaves/leaves/action', [LeaveController::class, 'getLeaveaction'])->name('leaves.getLeavesaction');
 });
+Route::middleware('auth:employee')->name('dashboard.')->group(function () {
 
+    // ---------------------------------------------------- بداية تكويد السنوات المالية
+    Route::resource('/financeCalendars', FinanceCalendarController::class);
+    Route::controller(FinanceCalendarController::class)->name('financeCalendars.')->prefix('financeCalendars')->group(function () {
+        Route::get('open/{id}', 'open')->name('open');
+        Route::get('close/{id}', 'close')->name('close');
+    });
+
+
+    // ---------------------------------------------- بداية تكويد الفروع
+    Route::resource('/branches', BranchController::class);
+
+    // --------------------------------------------- بداية تكويد الدرجات الوظيفية
+    Route::resource('/jobGrades', JobGradeController::class);
+
+    // ---------------------------------------------- بداية تكويد الموظف
+    Route::resource('/employees', EmployeeController::class);
+
+    // --------------------------------------------- بداية رصيد الأجازات
+    Route::resource('/leaveBalances', LeaveBalanceController::class);
+
+
+
+    //------------------------ Logout
+    Route::post('logout', [EmployeeLoginController::class, 'destroy'])
+        ->name('employees.logout');
+});
 
 //------------------------ Login
 Route::middleware('redirect.employee')->group(function () {
@@ -37,17 +66,12 @@ Route::middleware('redirect.employee')->group(function () {
 });
 
 
-//------------------------ Logout
-Route::middleware('auth:employee')->group(function () {
-    Route::post('logout', [EmployeeLoginController::class, 'destroy'])
-        ->name('employees.logout');
-});
+
 
 Route::middleware(['auth:employee', 'role:super-admin,employee'])
     ->name('dashboard.')
     ->group(function () {
-
-        // Role Routes
+        // ---------------------------------------------- بداية تكويد الصلاحيات
         Route::prefix('roles')->controller(RoleController::class)->group(function () {
             Route::get('/', 'index')->name('roles.index');
             Route::get('/create', 'create')->name('roles.create');
@@ -62,8 +86,7 @@ Route::middleware(['auth:employee', 'role:super-admin,employee'])
         });
 
 
-
-
+        // ---------------------------------------------- بداية تكويد الأذونات
         Route::prefix('permissions')->controller(PermissionController::class)->group(function () {
             Route::get('/', 'index')->name('permission.index');
             Route::get('/create', 'create')->name('permission.create');
@@ -71,17 +94,5 @@ Route::middleware(['auth:employee', 'role:super-admin,employee'])
             Route::get('/{role}/edit', 'edit')->name('permission.edit');
             Route::put('/{role}', 'update')->name('permission.update');
             Route::delete('/{role}', 'destroy')->name('permission.destroy');
-        });
-
-
-
-        Route::prefix('users')->controller(UserController::class)->group(function () {
-            Route::get('/', 'index')->name('users.index');
-            Route::get('/create', 'create')->name('users.create');
-            Route::post('/', 'store')->name('users.store');
-            Route::get('/{role}/edit', 'edit')->name('users.edit');
-            Route::get('/{role}/show', 'show')->name('users.show');
-            Route::put('/{role}', 'update')->name('users.update');
-            Route::delete('/{role}', 'destroy')->name('users.destroy');
         });
     });

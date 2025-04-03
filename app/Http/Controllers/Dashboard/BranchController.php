@@ -35,7 +35,7 @@ class BranchController extends Controller
     {
         $branches = $request->validated();
         $data = array_merge($branches, [
-            'created_by' => auth()->guard('admin')->user()->id,
+            'created_by' => auth()->guard('employee')->user()->id,
         ]);
         Branch::create($data);
         session()->flash('success', 'تم أضافة الفرع بنجاح');
@@ -69,7 +69,7 @@ class BranchController extends Controller
     public function update(BranchRequest $request, Branch $branch)
     {
         $branch->fill($request->validated());
-        $branch->updated_by = auth()->guard('admin')->user()->id;
+        $branch->updated_by = auth()->guard('employee')->user()->id;
 
         $branch->update();
         session()->flash('success', 'تم تعديل الفرع بنجاح');
