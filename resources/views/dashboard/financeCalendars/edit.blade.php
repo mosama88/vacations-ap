@@ -26,6 +26,8 @@
                         <form action="{{ route('dashboard.financeCalendars.update', $financeCalendar->id) }}" method="POST">
                             @csrf
                             @method('PUT')
+                            <input type="hidden" name="financeCalendar_id" value="{{ $financeCalendar->id }}">
+
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="exampleInputName">اسم السنه المالية</label>

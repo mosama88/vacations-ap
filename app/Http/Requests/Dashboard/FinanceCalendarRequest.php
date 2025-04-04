@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\Dashboard;
 
+use App\Models\FinanceCalendar;
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class FinanceCalendarRequest extends FormRequest
@@ -22,7 +24,7 @@ class FinanceCalendarRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'finance_yr' => 'required|string|unique:finance_calendars',
+            'finance_yr' => ['required', 'string', Rule::unique(FinanceCalendar::class)->ignore(request()->financeCalendar_id)],
             'finance_yr_desc' => 'required',
             'start_date' => 'required|date',
             'end_date' => 'required|date|after:start_date',

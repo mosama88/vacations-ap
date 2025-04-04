@@ -69,7 +69,6 @@
                                                     مغلقه
                                                 @endif
                                             </td>
-                                            
 
                                             <td>
                                                 <div class="btn-group">
@@ -79,34 +78,31 @@
                                                     </button>
                                                     <ul class="dropdown-menu">
 
-                                                        <li>
-                                                            @include('dashboard.partials.action-dropDown', [
-                                                                'name' => 'financeCalendars',
-                                                                'name_id' => $info,
-                                                            ])
-                                                        </li>
-                                                        <li>
-                                                            <hr class="dropdown-divider">
-                                                        </li>
-                                                        @if ($info->status === App\Enum\StatusActive::Inactive)
-                                                            <li>
-                                                                <a class="dropdown-item text-success"
-                                                                    href="{{ route('dashboard.financeCalendars.open', $info->id) }}">
-                                                                    <i class="mx-1 fas fa-lock-open"></i> فتح
-                                                                    السنه</a>
-                                                            </li>
-                                                        @elseif ($info->status === App\Enum\StatusActive::Active)
-                                                            <li>
-                                                                <a class="dropdown-item text-secondary"
-                                                                    href="{{ route('dashboard.financeCalendars.close', $info->id) }}">
-                                                                    <i class="mx-1 fas fa-lock"></i> غلق
-                                                                    السنه</a>
-                                                            </li>
-                                                        @else
-                                                            السنه مؤرشفه
-                                                        @endif
+
+                                                        @include('dashboard.partials.action-dropDown', [
+                                                            'name' => 'financeCalendars',
+                                                            'name_id' => $info,
+                                                        ])
+
+
                                                     </ul>
                                                 </div>
+                                            </td>
+                                            <td>
+                                                @if ($info->status === App\Enum\StatusActive::Inactive)
+                                                    <a class="dropdown-item text-success"
+                                                        href="{{ route('dashboard.financeCalendars.open', $info->id) }}">
+                                                        <i class="mx-1 fas fa-lock-open"></i> فتح
+                                                        السنه</a>
+                                                @elseif ($info->status === App\Enum\StatusActive::Active)
+                                                    <a class="dropdown-item text-secondary"
+                                                        href="{{ route('dashboard.financeCalendars.close', $info->id) }}">
+                                                        <i class="mx-1 fas fa-lock"></i> غلق
+                                                        السنه</a>
+                                                @else
+                                                    <button class="btn btn-md btn-success"> السنه مؤرشفه
+                                                    </button>
+                                                @endif
                                             </td>
                                         </tr>
                                     @empty
