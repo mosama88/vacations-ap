@@ -36,7 +36,7 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table class="table table-bordered">
+                            <table class="table table-bordered table-responsive">
                                 <thead>
                                     <tr>
                                         <th style="width: 10px">#</th>
@@ -77,11 +77,6 @@
                                                     <span class="badge bg-primary">موافق</span>
                                                 @elseif ($info->leave_status == LeaveStatusEnum::Pending)
                                                     <span class="badge bg-warning">معلقه</span>
-                                                    <a class="modal-effect btn btn-info btn-sm" data-toggle="modal"
-                                                        href="#editLeaveModal{{ $info->id }}"
-                                                        data-id="{{ $info->id }}">
-                                                        أخذ إجراء
-                                                    </a>
                                                 @else
                                                     <span class="badge bg-danger">مرفوض</span>
                                                 @endif
@@ -94,6 +89,10 @@
                                                 <a class=" btn btn-outline-info btn-sm mx-2" data-toggle="modal"
                                                     data-toggle="modal" href="#show{{ $info->id }}"><i
                                                         data-id="{{ $info->id }}" class="fas fa-edit ml-1"></i></a>
+
+                                                <a class=" btn btn-outline-success btn-sm mx-2"
+                                                    href="{{ route('dashboard.leaves.print', $info->id) }}"><i
+                                                        class="fas fa-print ml-1"></i></a>
                                             </td>
                                             @include('front.leaves.show-leave')
                                         @empty
@@ -102,7 +101,6 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            {{-- @include('front.leaves.edit') --}}
                         </div>
                         <!-- /.card-body -->
 

@@ -55,6 +55,7 @@ Route::middleware('auth:employee')->name('dashboard.')->group(function () {
         Route::get('employee-panel/user', 'index')->name('employee-panel.index');
         Route::get('/pending',  'getLeavepending')->name('leaves.getLeavespending');
         Route::get('/data/{id}',  'showLeave')->name('leaves.showLeavesall');
+        Route::get('/print/{id}',  'printLeave')->name('leaves.print');
     });
 });
 

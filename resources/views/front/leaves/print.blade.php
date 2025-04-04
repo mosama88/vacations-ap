@@ -7,6 +7,20 @@
     <title>إجازة عارضة</title>
     <!-- إضافة رابط Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        @media print {
+            body {
+                font-size: 16px;
+                text-align: right;
+                direction: rtl;
+            }
+
+            /* إخفاء بعض العناصر التي لا نريد طباعتها */
+            .no-print {
+                display: none;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -19,22 +33,22 @@
 
                     <div class="mb-3">
                         <label class="form-label">الاسم:</label>
-                        <input type="text" class="form-control" value=".................." readonly>
+                        <input type="text" class="form-control" value="{{ $employees->name }}" readonly>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">الوظيفة:</label>
-                        <input type="text" class="form-control" value=".................." readonly>
+                        <input type="text" class="form-control" value="{{ $employees->jobGrade->name }}" readonly>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">جهة العمل:</label>
-                        <input type="text" class="form-control" value=".................." readonly>
+                        <input type="text" class="form-control" value="{{ $employees->branch->name }}" readonly>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">مدة الإجازة:</label>
-                        <input type="text" class="form-control" value=".................." readonly>
+                        <input type="text" class="form-control" value="{{ $leave->days_taken }}" readonly>
                     </div>
 
                     <div class="mb-3">
@@ -91,6 +105,9 @@
 
     <!-- إضافة رابط JavaScript الخاص بـ Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript">
+        window.print(); // هذا سيبدأ عملية الطباعة مباشرة
+    </script>
 </body>
 
 </html>

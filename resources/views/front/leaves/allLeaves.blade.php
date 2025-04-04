@@ -100,7 +100,6 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            {{-- @include('front.leaves.edit') --}}
                         </div>
                         <!-- /.card-body -->
 
