@@ -90,7 +90,7 @@
                                                     data-toggle="modal" href="#show{{ $info->id }}"><i
                                                         data-id="{{ $info->id }}" class="fas fa-edit ml-1"></i></a>
 
-                                                <a class=" btn btn-outline-success btn-sm mx-2"
+                                                <a class=" btn btn-outline-success btn-sm mx-2" target="_blank"
                                                     href="{{ route('dashboard.leaves.print', $info->id) }}"><i
                                                         class="fas fa-print ml-1"></i></a>
                                             </td>

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إجازة عارضة</title>
+    <title></title>
     <!-- إضافة رابط Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
@@ -15,7 +15,9 @@
                 direction: rtl;
             }
 
-            /* إخفاء بعض العناصر التي لا نريد طباعتها */
+            /* إخفاء العناصر غير المرغوب فيها */
+            header,
+            footer,
             .no-print {
                 display: none;
             }
