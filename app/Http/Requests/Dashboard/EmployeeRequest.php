@@ -27,7 +27,7 @@ class EmployeeRequest extends FormRequest
             'name' => 'required|string|max:255',
             'username' => 'required|string|min:3|max:100|unique:employees,username,' . $employeeId,
 
-            'password' => 'required|string|min:8', // تأكيد كلمة المرور
+            'password' => 'nullable|string|min:8', // تأكيد كلمة المرور
             'mobile' => 'required|string|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:15', // يجب أن يكون رقم موبايل صحيح
             'week_id' => 'required|exists:weeks,id', // تأكد من أن week_id موجود في جدول weeks
             'job_grade_id' => 'required|exists:job_grades,id', // تأكد من أن job_grade_id موجود في جدول job_grades

@@ -84,12 +84,7 @@ class UserRolePermissionSeeder extends Seeder
             ['name' => 'حذف الموظف', 'category' => 'Employees', 'guard_name' => $guardAdmin],
             ['name' => 'عرض حساب الأجازات', 'category' => 'Employees', 'guard_name' => $guardAdmin],
             ['name' => 'بحث الموظفين', 'category' => 'Employees', 'guard_name' => $guardAdmin],
-            ['name' => 'اضافة بدل ثابت', 'category' => 'Employees', 'guard_name' => $guardAdmin],
-            ['name' => 'الراتب المؤرشف', 'category' => 'Employees', 'guard_name' => $guardAdmin],
-            ['name' => 'جدول الملفات الشخصية', 'category' => 'Employees', 'guard_name' => $guardAdmin],
-            ['name' => 'اضافة ملفات شخصية', 'category' => 'Employees', 'guard_name' => $guardAdmin],
-            ['name' => 'تحميل من جدول ملفات شخصية', 'category' => 'Employees', 'guard_name' => $guardAdmin],
-            ['name' => 'حذف من جدول ملفات شخصية', 'category' => 'Employees', 'guard_name' => $guardAdmin],
+           
 
 
             //    أنواع الأجازات

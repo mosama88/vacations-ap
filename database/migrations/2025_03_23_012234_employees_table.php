@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('name', 255);
             $table->string('slug', 255)->nullable();
             $table->string('username', 20)->unique();
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->enum('gender', [0, 1]);
             $table->enum('type', [0, 1]);
             $table->string('mobile');

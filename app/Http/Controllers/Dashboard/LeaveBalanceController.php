@@ -42,11 +42,15 @@ class LeaveBalanceController extends Controller
         if ($checkExists) {
             return redirect()->back()->withErrors(['error' => 'الموظف مسجل من قبل'])->withInput();
         }
+        $total_days_emergency = 7;
         $leaveBalancees = $request->validated();
         $data = array_merge($leaveBalancees, [
             'finance_calendar_id' => $financial_year['id'],
             'remainig_days' => $remainig_days = $request->total_days,
             'used_days' => parse($remainig_days - $request->total_days),
+            'total_days_emergency' => $total_days_emergency,
+            'remainig_days_emergency' => $remainig_days_emergency = $total_days_emergency,
+            'used_days_emergency' => parse($remainig_days_emergency - $total_days_emergency),
         ]);
 
         LeaveBalance::create($data);

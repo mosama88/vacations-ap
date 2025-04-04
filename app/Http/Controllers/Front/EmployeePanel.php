@@ -32,8 +32,12 @@ class EmployeePanel extends Controller
 
     public function getLeavepending()
     {
+
+        $emplyeeId = Auth::user()->id;
+        $other['weeks'] = Week::where('id', $emplyeeId)->get();
+        $employees = Employee::with('leaveBalance')->where('id', $emplyeeId)->first();
         $data = Leave::orderByDesc('id')->where('leave_status', LeaveStatusEnum::Pending)->paginate(10);
-        return view('front.leaves.leaves-pending', compact('data'));
+        return view('front.leaves.leaves-pending', compact('data', 'employees', 'other'));
     }
 
 

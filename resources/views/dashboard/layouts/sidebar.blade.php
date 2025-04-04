@@ -73,7 +73,7 @@
 
 
                 <li
-                    class="nav-item has-treeview {{ request()->is('dashboard/employees*') || request()->is('dashboard/leaveBalances*') ? 'menu-open' : '' }} ">
+                    class="nav-item has-treeview {{ request()->is('employees*') || request()->is('leaveBalances*') ? 'menu-open' : '' }} ">
                     <a href="#"
                         class="nav-link {{ request()->is('employees*') || request()->is('employees*') ? 'active' : '' }} ">
                         <i class="nav-icon fas fa-users"></i>

@@ -69,18 +69,16 @@
                                             </span>
                                         @enderror
                                     </div>
-
                                     <div class="form-group col-6">
-                                        <label for="exampleInputpassword">كلمة المرور</label>
-                                        <input type="password" name="password" value="{{ old('password') }}"
-                                            class="form-control @error('password') is-invalid @enderror"
-                                            id="exampleInputpassword" placeholder="أدخل *************">
-                                        @error('password')
-                                            <span class="invalid-feedback text-right" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
+                                        <label>الصلاحيات</label>
+                                        <select class="select2bs4" name="roles[]" multiple="multiple"
+                                            data-placeholder="-- حدد الصلاحية --" style="width: 100%;">
+                                            @foreach ($roles as $role)
+                                                <option value="{{ $role }}">{{ $role }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
+
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-6">
@@ -200,29 +198,21 @@
 
 
 
-                                    <div class="form-group col-6">
-                                        <label>الصلاحيات</label>
-                                        <select class="select2bs4" name="roles[]" multiple="multiple"
-                                            data-placeholder="-- حدد الصلاحية --" style="width: 100%;">
-                                            @foreach ($roles as $role)
-                                                <option value="{{ $role }}">{{ $role }}</option>
-                                            @endforeach
-                                        </select>
-                                        <!-- /.form-group -->
-                                    </div>
+
 
 
                                 </div>
 
                             </div>
 
+                            <div class="card-footer text-center ">
+                                <button type="submit" class="btn btn-primary">حفظ البيانات <i
+                                        class="fas fa-save mx-1"></i>
+                                </button>
+                            </div>
                     </div>
                     <!-- /.card-body -->
 
-                    <div class="card-footer text-center ">
-                        <button type="submit" class="btn btn-primary">حفظ البيانات <i class="fas fa-save mx-1"></i>
-                        </button>
-                    </div>
                     </form>
                 </div>
                 <!-- /.card -->

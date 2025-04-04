@@ -1,5 +1,5 @@
 <div class="modal fade" id="show{{ $info->id }}">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">تفاصيل الاجازه</h4>
@@ -83,7 +83,7 @@
                 <div class="row">
                     <div class="form-group col-6">
                         <label>بداية الأجازه</label>
-                        <input type="date" name="start_date"
+                        <input disabled type="date" name="start_date"
                             class="form-control @error('start_date') is-invalid @enderror"
                             value="{{ old('start_date', $info->start_date) }}" placeholder="أدخل السنه المالية">
                         @error('start_date')
@@ -94,7 +94,7 @@
                     </div>
                     <div class="form-group col-6">
                         <label>نهاية الأجازه</label>
-                        <input type="date" name="end_date"
+                        <input disabled type="date" name="end_date"
                             class="form-control @error('end_date') is-invalid @enderror"
                             value="{{ old('end_date', $info->end_date) }}" placeholder="أدخل السنه المالية">
                         @error('end_date')
@@ -106,17 +106,17 @@
 
                     <div class="form-group col-6">
                         <label for="exampleSelectBorder">نوع الأجازه</code></label>
-                        <select name="leave_type"
+                        <select disabled name="leave_type"
                             class="custom-select form-control-border @error('leave_type') is-invalid @enderror"
                             id="exampleSelectBorder">
                             <option value="">-- أختر نوع الأجازه --</option>
-                            <option @if (old('leave_type') == 1) selected @endif
+                            <option @if (old('leave_type', $info->leave_type) == App\Enum\LeaveTypeEnum::Emergency) selected @endif
                                 value="{{ App\Enum\LeaveTypeEnum::Emergency }}">عارضه</option>
-                            <option @if (old('leave_type') == 2) selected @endif
+                            <option @if (old('leave_type', $info->leave_type) == App\Enum\LeaveTypeEnum::Regular) selected @endif
                                 value="{{ App\Enum\LeaveTypeEnum::Regular }}">إعتيادى</option>
-                            <option @if (old('leave_type') == 3) selected @endif
+                            <option @if (old('leave_type', $info->leave_type) == App\Enum\LeaveTypeEnum::Annual) selected @endif
                                 value="{{ App\Enum\LeaveTypeEnum::Annual }}">سنوى</option>
-                            <option @if (old('leave_type') == 4) selected @endif
+                            <option @if (old('leave_type', $info->leave_type) == App\Enum\LeaveTypeEnum::Sick) selected @endif
                                 value="{{ App\Enum\LeaveTypeEnum::Sick }}">مرضى</option>
                         </select>
                         @error('leave_type')
@@ -129,24 +129,51 @@
                     <div class="form-group col-12">
                         <label for="exampleSelectBorder">سبب الأجازه</code></label>
                         <textarea class="form-control @error('description') is-invalid @enderror" name="description" rows="3"
-                            placeholder="أدخل السبب ...">{{ old('description') }}</textarea>
+                            placeholder="أدخل السبب ...">{{ old('description', $info->description) }}</textarea>
                         @error('description')
                             <span class="invalid-feedback text-right" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
                     </div>
+                    <form action="{{ route('dashboard.leaves.update', $info->id) }}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="leave_status">حالة الإجازة</label>
+                                <select name="leave_status" class="form-control" id="leave_status">
+                                    <option value="">-- أختر حالة الأجازه --</option>
+                                    <option @if (old('leave_status', $info->leave_status) == App\Enum\LeaveStatusEnum::Approved) selected @endif
+                                        value="{{ App\Enum\LeaveStatusEnum::Approved }}">
+                                        موافق</option>
+                                    <option @if (old('leave_status', $info->leave_status) == App\Enum\LeaveStatusEnum::Pending) selected @endif
+                                        value="{{ App\Enum\LeaveStatusEnum::Pending }}">
+                                        معلق</option>
+                                    <option @if (old('leave_status', $info->leave_status) == App\Enum\LeaveStatusEnum::Refused) selected @endif
+                                        value="{{ App\Enum\LeaveStatusEnum::Refused }}">
+                                        مرفوض</option>
+                                </select>
+                                @error('leave_status')
+                                    <span class="invalid-feedback text-right" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
 
                 </div>
             </div>
 
-        </div>
+     
         <!-- /.card-body -->
 
         <div class="modal-footer justify-content-between">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">إغلاق</button>
+            <button type="submit" class="btn btn-primary">حفظ التغييرات</button>
         </div>
 
+        </form>
     </div>
     <!-- /.modal-content -->
 </div>

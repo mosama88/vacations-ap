@@ -91,7 +91,7 @@
                                             <td>
                                                 <a class=" btn btn-outline-info btn-sm mx-2" data-toggle="modal"
                                                     data-toggle="modal" href="#show{{ $info->id }}"><i
-                                                       data-id="{{ $info->id }} class="fas fa-edit ml-1"></i></a>
+                                                       data-id="{{ $info->id }}" class="fas fa-edit ml-1"></i></a>
                                             </td>
                                             @include('front.leaves.show-leave')
                                         @empty

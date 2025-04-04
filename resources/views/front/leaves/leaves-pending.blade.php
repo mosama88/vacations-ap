@@ -49,7 +49,7 @@
                                         <th>حالة الاجازه</th>
                                         <th>ملاحظات</th>
                                         <th>تحديث بواسطة</th>
-                                        <th>عرض البيانات</th>
+                                        <th>الأجراءات</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -90,6 +90,12 @@
                                             @include('front.leaves.edit')
                                             <td>{{ $info->description }}</td>
                                             <td>{{ $info->updated_by ? $info->updatedBy->name : 'لا يوجد تحديث' }}</td>
+                                            <td>
+                                                <a class=" btn btn-outline-info btn-sm mx-2" data-toggle="modal"
+                                                    data-toggle="modal" href="#show{{ $info->id }}"><i
+                                                        data-id="{{ $info->id }}" class="fas fa-edit ml-1"></i></a>
+                                            </td>
+                                            @include('front.leaves.show-leave')
                                         @empty
                                             لا توجد أجازات
                                     @endforelse

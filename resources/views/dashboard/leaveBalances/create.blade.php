@@ -40,7 +40,7 @@
                                         <select name="employee_id"
                                             class="form-control select2 vh-100 @error('employee_id') is-invalid @enderror"
                                             id="exampleSelectBorder">
-                                            <option value="">-- أختر المحافظة --</option>
+                                            <option value="">-- أختر الموظف --</option>
                                             @forelse ($other['employees'] as $employee)
                                                 <option @if (old('employee_id') == $employee->id) selected @endif
                                                     value="{{ $employee->id }}">{{ $employee->name }}</option>

@@ -48,6 +48,7 @@ class EmployeeController extends Controller
         $employees = $request->validated();
         $data = array_merge($employees, [
             'employee_code' => $new_employeeCode,
+            'password' => Hash::make('P@ssw0rd'),
             'status' => EmployeeStatus::Active,
         ]);
         $employee = Employee::create($data);
@@ -94,10 +95,10 @@ class EmployeeController extends Controller
         $data = array_merge($employees, [
             'status' => $request->status,
         ]);
+
         if (!empty($request->password)) {
-            $data += [
-                'password' => Hash::make($request->password),
-            ];
+            // إذا كانت كلمة المرور موجودة، يتم تشفيرها وتحديث البيانات
+            $employee['password'] = Hash::make($request->password);
         }
         $employee->update($data);
 
