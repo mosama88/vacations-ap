@@ -203,11 +203,11 @@ class LeaveController extends Controller
         $weekendDays = [Carbon::FRIDAY];
         
         // إذا كان للموظف يوم عطلة أسبوعية مختلف
-        if ($employee->week) {
-            // تحويل اسم اليوم إلى رقم اليوم في الأسبوع
-            $dayName = $employee->week->name;
-            $weekendDays[] = $this->convertArabicDayToNumber($dayName);
-        }
+        // if ($employee->week) {
+        //     // تحويل اسم اليوم إلى رقم اليوم في الأسبوع
+        //     $dayName = $employee->week->name;
+        //     $weekendDays[] = $this->convertArabicDayToNumber($dayName);
+        // }
     
         $days = 0;
         $start = Carbon::parse($startDate);

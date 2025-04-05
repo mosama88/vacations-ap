@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Models\FinanceCalendar;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Dashboard\LeaveBalanceRequest;
 
 class LeaveBalanceController extends Controller
@@ -51,6 +52,8 @@ class LeaveBalanceController extends Controller
             'total_days_emergency' => $total_days_emergency,
             'remainig_days_emergency' => $remainig_days_emergency = $total_days_emergency,
             'used_days_emergency' => parse($remainig_days_emergency - $total_days_emergency),
+            'status' => 1,
+            'created_by' => Auth::user()->id,
         ]);
 
         LeaveBalance::create($data);

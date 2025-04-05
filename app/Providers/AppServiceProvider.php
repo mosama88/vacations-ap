@@ -3,10 +3,12 @@
 namespace App\Providers;
 
 use App\Models\Leave;
+use App\Models\LeaveBalance;
 use App\Observers\LeavesObserver;
 use Illuminate\Pagination\Paginator;
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Gate;
+use App\Observers\LeaveBalanceObserver;
+use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {

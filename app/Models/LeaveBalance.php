@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use App\Enum\LeaveBalanceStatus;
+use App\Observers\LeaveBalanceObserver;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 
+#[ObservedBy([LeaveBalanceObserver::class])]
 class LeaveBalance extends Model
 {
     use HasFactory;
