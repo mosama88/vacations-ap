@@ -100,8 +100,7 @@
                                                         <i class="mx-1 fas fa-lock"></i> غلق
                                                         السنه</a>
                                                 @else
-                                                    <button class="btn btn-md btn-success"> السنه مؤرشفه
-                                                    </button>
+                                                    <span class="badge bg-danger">السنه مؤرشفه</span>
                                                 @endif
                                             </td>
                                         </tr>

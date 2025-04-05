@@ -106,7 +106,7 @@ class FinanceCalendarController extends Controller
         if ($financeCalendar->status === StatusActive::Active) {
             return response()->json([
                 'error' => true,
-                'message' => 'عفوآ، سنة مالية مفتوحة لا يمكن تعديلها.'
+                'message' => 'عفوآ، سنة مالية مفتوحة لا يمكن حذفها.'
             ]);
         }
 
@@ -134,7 +134,7 @@ class FinanceCalendarController extends Controller
 
         $CheckDataOpenCounter = FinanceCalendar::where(['status' => StatusActive::Active])->count();
         if ($CheckDataOpenCounter > 0) {
-            return redirect()->back()->with(['error' => '   عفوا هناك بالفعل سنة مالية مازالت مفتوحة ']);
+            return redirect()->back()->withErrors(['error' => ' عفوا هناك بالفعل سنة مالية مازالت مفتوحة']);
         }
         $dataToUpdate['status'] = StatusActive::Active;
         FinanceCalendar::where(['id' => $id])->update($dataToUpdate);

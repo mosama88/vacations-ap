@@ -24,6 +24,9 @@ return new class extends Migration
             $table->integer('total_days')->nullable();
             $table->integer('used_days')->nullable();
             $table->integer('remainig_days')->nullable();
+            $table->enum('status', [0, 1])->default(1);
+            $table->foreignId('created_by')->references('id')->on('employees')->onUpdate('cascade');
+            $table->foreignId('updated_by')->nullable()->references('id')->on('employees')->onUpdate('cascade');
             $table->timestamps();
         });
     }

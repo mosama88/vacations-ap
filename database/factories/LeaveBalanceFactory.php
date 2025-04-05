@@ -3,9 +3,10 @@
 namespace Database\Factories;
 
 use App\Models\Employee;
-use Illuminate\Database\Eloquent\Factories\Factory;
-
 use function Termwind\parse;
+
+use App\Enum\LeaveBalanceStatus;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\LeaveBalance>
@@ -39,6 +40,8 @@ class LeaveBalanceFactory extends Factory
             'total_days' => $total_days,
             'remainig_days' => $remainig_days,
             'used_days' => $used_days, // لا نحتاج إلى دالة parse() هنا
+            'status' => LeaveBalanceStatus::Open, // لا نحتاج إلى دالة parse() هنا
+            'created_by' => 1, // لا نحتاج إلى دالة parse() هنا
         ];
     }
 }

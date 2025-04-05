@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enum\LeaveBalanceStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -20,9 +21,20 @@ class LeaveBalance extends Model
         'total_days',
         'used_days',
         'remainig_days',
+        'status',
+        'created_by',
+        'updated_by',
     ];
 
+    public function createdBy()
+    {
+        return $this->belongsTo(Employee::class, 'created_by');
+    }
 
+    public function updatedBy()
+    {
+        return $this->belongsTo(Employee::class, 'updated_by');
+    }
 
     public function employee()
     {
@@ -33,4 +45,9 @@ class LeaveBalance extends Model
     {
         return $this->belongsTo(FinanceCalendar::class, 'finance_calendar_id');
     }
+
+
+    protected $casts = [
+        'status' => LeaveBalanceStatus::class,
+    ];
 }

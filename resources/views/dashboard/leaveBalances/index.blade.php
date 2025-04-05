@@ -1,3 +1,6 @@
+@php
+    use App\Enum\LeaveBalanceStatus;
+@endphp
 @extends('dashboard.layouts.master')
 @section('active-leaveBalances', 'active')
 @section('title', 'الصفحة الرئيسية')
@@ -50,6 +53,7 @@
                                         <th>رصيد</th>
                                         <th>الرصيد المستخدم</th>
                                         <th>الرصيد المتبقى</th>
+                                        <th>الحالة</th>
                                         <th>العمليات</th>
                                     </tr>
                                 </thead>
@@ -62,6 +66,13 @@
                                             <td>{{ $info->total_days }}</td>
                                             <td>{{ $info->used_days }}</td>
                                             <td>{{ $info->remainig_days }}</td>
+                                            <td>
+                                                @if ($info->status == LeaveBalanceStatus::Open)
+                                                    <span class="badge bg-success">مفعل</span>
+                                                @else
+                                                    <span class="badge bg-danger">مؤرشف</span>
+                                                @endif
+                                            </td>
 
                                             <td class="project-actions">
                                                 @include('dashboard.partials.action', [
@@ -79,6 +90,7 @@
                                     @endforelse
                                 </tbody>
                             </table>
+                            {{ $data->links() }}
                         </div>
                         <!-- /.card-body -->
                     </div>
