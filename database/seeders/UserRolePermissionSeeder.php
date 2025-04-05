@@ -41,6 +41,11 @@ class UserRolePermissionSeeder extends Seeder
             ['name' => 'delete user', 'category' => 'Users', 'guard_name' => $guardAdmin],
 
 
+            ['name' => 'الأعدادت', 'category' => 'settings', 'guard_name' => $guardAdmin],
+            ['name' => 'إدارة شئون الموظفين', 'category' => 'settings', 'guard_name' => $guardAdmin],
+            ['name' => 'إدارة شئون الأجازات', 'category' => 'settings', 'guard_name' => $guardAdmin],
+            ['name' => 'إدارة شئون المستخدمين', 'category' => 'settings', 'guard_name' => $guardAdmin],
+
 
             // السنوات المالية
             ['name' => 'السنوات المالية', 'category' => 'financeCalendars', 'guard_name' => $guardAdmin],
@@ -73,8 +78,7 @@ class UserRolePermissionSeeder extends Seeder
 
             // ###################################################################################################################
 
-            // قائمة بيانات شئون الموظفين
-            ['name' => 'قائمة بيانات شئون الموظفين', 'category' => 'affairsEmployees', 'guard_name' => $guardAdmin],
+
 
             // بيانات الموظفين
             ['name' => 'بيانات الموظفين', 'category' => 'Employees', 'guard_name' => $guardAdmin],
@@ -84,7 +88,14 @@ class UserRolePermissionSeeder extends Seeder
             ['name' => 'حذف الموظف', 'category' => 'Employees', 'guard_name' => $guardAdmin],
             ['name' => 'عرض حساب الأجازات', 'category' => 'Employees', 'guard_name' => $guardAdmin],
             ['name' => 'بحث الموظفين', 'category' => 'Employees', 'guard_name' => $guardAdmin],
-           
+
+
+            //    رصيد الموظف
+            ['name' => 'رصيد الموظف', 'category' => 'leaveBalances', 'guard_name' => $guardAdmin],
+            ['name' => 'اضافة رصيد الموظف', 'category' => 'leaveBalances', 'guard_name' => $guardAdmin],
+            ['name' => 'تعديل رصيد الموظف', 'category' => 'leaveBalances', 'guard_name' => $guardAdmin],
+            ['name' => 'حذف رصيد الموظف', 'category' => 'leaveBalances', 'guard_name' => $guardAdmin],
+
 
 
             //    أنواع الأجازات
@@ -97,17 +108,16 @@ class UserRolePermissionSeeder extends Seeder
             ['name' => 'اخذت اجراء الأجازات', 'category' => 'leaves', 'guard_name' => $guardAdmin],
             ['name' => 'الموظفين الأجازات', 'category' => 'leaves', 'guard_name' => $guardAdmin],
             ['name' => 'طلب الأجازات', 'category' => 'leaves', 'guard_name' => $guardAdmin],
+            ['name' => 'طباعة الأجازات', 'category' => 'leaves', 'guard_name' => $guardAdmin],
 
 
 
-            //    قائمة المستخدمين
-            ['name' => 'قائمة المستخدمين', 'category' => 'UserList', 'guard_name' => $guardAdmin],
 
-            // المستخدمين
-            ['name' => 'المستخدمين', 'category' => 'users', 'guard_name' => $guardAdmin],
-            ['name' => 'اضافة المستخدمين', 'category' => 'users', 'guard_name' => $guardAdmin],
-            ['name' => 'تعديل المستخدمين', 'category' => 'users', 'guard_name' => $guardAdmin],
-            ['name' => 'حذف المستخدمين', 'category' => 'users', 'guard_name' => $guardAdmin],
+            // // المستخدمين
+            // ['name' => 'المستخدمين', 'category' => 'users', 'guard_name' => $guardAdmin],
+            // ['name' => 'اضافة المستخدمين', 'category' => 'users', 'guard_name' => $guardAdmin],
+            // ['name' => 'تعديل المستخدمين', 'category' => 'users', 'guard_name' => $guardAdmin],
+            // ['name' => 'حذف المستخدمين', 'category' => 'users', 'guard_name' => $guardAdmin],
 
             // الصلاحيات
             ['name' => 'الصلاحيات', 'category' => 'roles', 'guard_name' => $guardAdmin],

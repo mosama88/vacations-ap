@@ -47,7 +47,7 @@
                                 <div class="custom-control custom-checkbox">
                                     <div class="row mb-3">
                                         <!-- Permissions Category -->
-                                        <div class="col-3">
+                                        <div class="col-4">
                                             @foreach ($permissions->where('category', 'Permissions') as $permission)
                                                 <div class="col-md-12">
                                                     <label>
@@ -61,12 +61,12 @@
                                         </div>
 
                                         <!-- Users Category -->
-                                        <div class="col-3">
+                                        <div class="col-4">
                                             @foreach ($permissions->where('category', 'Users') as $permission)
                                                 <div class="col-md-12">
                                                     <label>
-                                                        <input type="checkbox" class="permissionsCheckbox" name="permission[]"
-                                                            value="{{ $permission->name }}"
+                                                        <input type="checkbox" class="permissionsCheckbox"
+                                                            name="permission[]" value="{{ $permission->name }}"
                                                             {{ in_array($permission->id, $rolePermissions) ? 'checked' : '' }} />
                                                         {{ $permission->name }}
                                                     </label>
@@ -75,7 +75,7 @@
                                         </div>
 
                                         <!-- jobsGrades Category -->
-                                        <div class="col-3">
+                                        <div class="col-4">
                                             @foreach ($permissions->where('category', 'jobsGrades') as $permission)
                                                 <div class="col-md-12">
                                                     <label>
@@ -89,12 +89,12 @@
                                         </div>
 
                                         <!-- leaves Category -->
-                                        <div class="col-3">
+                                        <div class="col-4">
                                             @foreach ($permissions->where('category', 'leaves') as $permission)
                                                 <div class="col-md-12">
                                                     <label>
-                                                        <input type="checkbox" class="permissionsCheckbox" name="permission[]"
-                                                            value="{{ $permission->name }}"
+                                                        <input type="checkbox" class="permissionsCheckbox"
+                                                            name="permission[]" value="{{ $permission->name }}"
                                                             {{ in_array($permission->id, $rolePermissions) ? 'checked' : '' }} />
                                                         {{ $permission->name }}
                                                     </label>
@@ -105,7 +105,7 @@
 
                                     <!-- Additional Categories -->
                                     <div class="row mb-3">
-                                        <div class="col-3">
+                                        <div class="col-4">
                                             @foreach ($permissions->where('category', 'governorates') as $permission)
                                                 <div class="col-md-12">
                                                     <label>
@@ -118,12 +118,12 @@
                                             @endforeach
                                         </div>
 
-                                        <div class="col-3">
+                                        <div class="col-4">
                                             @foreach ($permissions->where('category', 'branches') as $permission)
                                                 <div class="col-md-12">
                                                     <label>
-                                                        <input type="checkbox" class="permissionsCheckbox" name="permission[]"
-                                                            value="{{ $permission->name }}"
+                                                        <input type="checkbox" class="permissionsCheckbox"
+                                                            name="permission[]" value="{{ $permission->name }}"
                                                             {{ in_array($permission->id, $rolePermissions) ? 'checked' : '' }} />
                                                         {{ $permission->name }}
                                                     </label>
@@ -131,12 +131,23 @@
                                             @endforeach
                                         </div>
 
-                                        <div class="col-3">
+                                        <div class="col-4">
                                             @foreach ($permissions->where('category', 'UserList') as $permission)
                                                 <div class="col-md-12">
                                                     <label>
-                                                        <input type="checkbox" class="permissionsCheckbox" name="permission[]"
-                                                            value="{{ $permission->name }}"
+                                                        <input type="checkbox" class="permissionsCheckbox"
+                                                            name="permission[]" value="{{ $permission->name }}"
+                                                            {{ in_array($permission->id, $rolePermissions) ? 'checked' : '' }} />
+                                                        {{ $permission->name }}
+                                                    </label>
+                                                </div>
+                                            @endforeach
+
+                                            @foreach ($permissions->where('category', 'settings') as $permission)
+                                                <div class="col-md-12">
+                                                    <label>
+                                                        <input type="checkbox" class="permissionsCheckbox"
+                                                            name="permission[]" value="{{ $permission->name }}"
                                                             {{ in_array($permission->id, $rolePermissions) ? 'checked' : '' }} />
                                                         {{ $permission->name }}
                                                     </label>
@@ -145,9 +156,10 @@
                                         </div>
                                     </div>
 
+
                                     <!-- Finance Calendars -->
                                     <div class="row mb-3">
-                                        <div class="col-3">
+                                        <div class="col-4">
                                             @foreach ($permissions->where('category', 'financeCalendars') as $permission)
                                                 <div class="col-md-12">
                                                     <label>
@@ -160,31 +172,46 @@
                                             @endforeach
                                         </div>
 
-                                        <div class="col-3">
-                                            @foreach ($permissions->where('category', 'Employees') as $permission)
-                                                <div class="col-md-12">
-                                                    <label>
-                                                        <input type="checkbox" class="permissionsCheckbox" name="permission[]"
-                                                            value="{{ $permission->name }}"
-                                                            {{ in_array($permission->id, $rolePermissions) ? 'checked' : '' }} />
-                                                        {{ $permission->name }}
-                                                    </label>
-                                                </div>
-                                            @endforeach
-                                        </div>
-                                    </div>
+                                
 
+                                    </div>
+                                            <div class="row mb-3">
+                                            <div class="col-4">
+                                                @foreach ($permissions->where('category', 'leaveBalances') as $permission)
+                                                    <div class="col-md-12">
+                                                        <label>
+                                                            <input type="checkbox" class="permissionsCheckbox"
+                                                                name="permission[]" value="{{ $permission->name }}"
+                                                                {{ in_array($permission->id, $rolePermissions) ? 'checked' : '' }} />
+                                                            {{ $permission->name }}
+                                                        </label>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+
+                                            <div class="col-4">
+                                                @foreach ($permissions->where('category', 'Employees') as $permission)
+                                                    <div class="col-md-12">
+                                                        <label>
+                                                            <input type="checkbox" class="permissionsCheckbox"
+                                                                name="permission[]" value="{{ $permission->name }}"
+                                                                {{ in_array($permission->id, $rolePermissions) ? 'checked' : '' }} />
+                                                            {{ $permission->name }}
+                                                        </label>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+
+                            <div class="row row-xs wd-xl-80p">
+                                <div class="col-sm-6 col-md-3 mg-t-10 mg-md-t-0">
+                                    <button type="submit" class="btn btn-success btn-with-icon btn-block"><i
+                                            class="typcn typcn-edit"></i> تأكيد البيانات</button>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="row row-xs wd-xl-80p">
-                            <div class="col-sm-6 col-md-3 mg-t-10 mg-md-t-0">
-                                <button type="submit" class="btn btn-success btn-with-icon btn-block"><i
-                                        class="typcn typcn-edit"></i> تأكيد البيانات</button>
-                            </div>
-                        </div>
-                    </div>
 
                 </form>
     </section>

@@ -90,7 +90,7 @@ class LeaveController extends Controller
             ]);
 
             session()->flash('success', 'تمت إضافة الإجازة بنجاح');
-            return redirect()->route('dashboard.leaves.create');
+            return redirect()->route('dashboard.employee-panel.index');
         } catch (\Exception $e) {
             return redirect()->back()
                 ->withErrors(['error' => 'حدث خطأ أثناء حفظ الإجازة: ' . $e->getMessage()])
@@ -194,34 +194,34 @@ class LeaveController extends Controller
     private function calculateWorkingDays($startDate, $endDate, $employeeId): int
     {
         $employee = Employee::with('week')->find($employeeId);
-        
+
         if (!$employee) {
             throw new \Exception("Employee not found");
         }
-    
+
         // أيام العطلة الافتراضية (الجمعة)
         $weekendDays = [Carbon::FRIDAY];
-        
+
         // إذا كان للموظف يوم عطلة أسبوعية مختلف
         // if ($employee->week) {
         //     // تحويل اسم اليوم إلى رقم اليوم في الأسبوع
         //     $dayName = $employee->week->name;
         //     $weekendDays[] = $this->convertArabicDayToNumber($dayName);
         // }
-    
+
         $days = 0;
         $start = Carbon::parse($startDate);
         $end = Carbon::parse($endDate);
-    
+
         for ($date = $start; $date->lte($end); $date->addDay()) {
             if (!in_array($date->dayOfWeek, $weekendDays)) {
                 $days++;
             }
         }
-    
+
         return $days;
     }
-    
+
     private function convertArabicDayToNumber($arabicDayName): int
     {
         $daysMap = [
@@ -233,7 +233,7 @@ class LeaveController extends Controller
             'الخميس' => Carbon::THURSDAY,
             'الجمعه' => Carbon::FRIDAY,
         ];
-    
+
         return $daysMap[$arabicDayName] ?? Carbon::FRIDAY;
     }
 }
