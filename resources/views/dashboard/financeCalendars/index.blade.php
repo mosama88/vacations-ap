@@ -1,3 +1,6 @@
+@php
+    use App\Enum\StatusActive;
+@endphp
 @extends('dashboard.layouts.master')
 @section('active-financeCalendars', 'active')
 @section('title', 'الصفحة الرئيسية')
@@ -63,10 +66,12 @@
                                             <td>{{ $info->start_date }}</td>
                                             <td>{{ $info->end_date }}</td>
                                             <td>
-                                                @if ($info->status === App\Enum\StatusActive::Active)
-                                                    مفتوحة
+                                                @if ($info->status === StatusActive::Active)
+                                                    <span class="badge bg-success">السنه مفتوحة</span>
+                                                @elseif($info->status === StatusActive::Inactive)
+                                                    <span class="badge bg-warning">السنه غير مفعله</span>
                                                 @else
-                                                    مغلقه
+                                                    <span class="badge bg-danger">السنه مؤرشفه</span>
                                                 @endif
                                             </td>
 
@@ -100,7 +105,6 @@
                                                         <i class="mx-1 fas fa-lock"></i> غلق
                                                         السنه</a>
                                                 @else
-                                                    <span class="badge bg-danger">السنه مؤرشفه</span>
                                                 @endif
                                             </td>
                                         </tr>

@@ -102,7 +102,8 @@
                     <li class="nav-item has-treeview {{ request()->is('leaves*') ? 'menu-open' : '' }}">
 
                         <a href="#" class="nav-link {{ request()->is('leaves*') ? 'active' : '' }} ">
-                            <i class="nav-icon fas fa-users"></i>
+
+                            <i class="nav-icon fab fa-creative-commons-share"></i>
                             <p>
                                 إدارة شئون الأجازات
                                 <i class="right fas fa-angle-left"></i>
@@ -147,7 +148,7 @@
                         <a href="#"
                             class="nav-link {{ request()->is('users*') || request()->is('roles*') || request()->is('permission*') ? 'active' : '' }}">
 
-                            <i class="fas fa-user-tag mx-1"></i>
+                            <i class="nav-icon fas fa-key"></i>
                             <p>
                                 إدارة شئون المستخدمين
                                 <i class="right fas fa-angle-left"></i>
