@@ -27,7 +27,6 @@ class DatabaseSeeder extends Seeder
             WeekSeeder::class,
             MonthSeeder::class,
             FinanceCalendarSeeder::class,
-            FinanceClnPeriodSeeder::class,
             GovernorateSeeder::class,
             BranchSeeder::class,
             JobGradeSeeder::class,
