@@ -32,6 +32,7 @@ class Employee extends Authenticatable implements HasMedia
         'username',
         'password',
         'mobile',
+        'total_days_balance',
         'week_id',
         'job_grade_id',
         'branch_id',

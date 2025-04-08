@@ -28,6 +28,7 @@ class EmployeeRequest extends FormRequest
             'username' => 'required|string|min:3|max:100|unique:employees,username,' . $employeeId,
 
             'password' => 'nullable|string|min:8', // تأكيد كلمة المرور
+            'total_days_balance' => 'required|integer|min:21|max:45',
             'mobile' => 'required|string|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:15', // يجب أن يكون رقم موبايل صحيح
             'week_id' => 'required|exists:weeks,id', // تأكد من أن week_id موجود في جدول weeks
             'job_grade_id' => 'required|exists:job_grades,id', // تأكد من أن job_grade_id موجود في جدول job_grades
@@ -55,6 +56,12 @@ class EmployeeRequest extends FormRequest
             'password.string' => 'كلمة المرور يجب أن تكون نصًا.',
             'password.min' => 'كلمة المرور يجب أن تكون على الأقل 8 أحرف.',
             'password.confirmed' => 'كلمة المرور غير متطابقة مع تأكيد كلمة المرور.',
+
+            'total_days_balance.required' => 'حقل رصيد الإجازات مطلوب',
+            'total_days_balance.integer' => 'يجب أن يكون رصيد الإجازات رقمًا صحيحًا',
+            'total_days_balance.min' => 'لا يمكن أن يكون رصيد الإجازات أقل من :min يوم',
+            'total_days_balance.max' => 'لا يمكن أن يتجاوز رصيد الإجازات :max يوم',
+
 
             'mobile.required' => 'رقم الهاتف مطلوب.',
             'mobile.string' => 'رقم الهاتف يجب أن يكون نصًا.',

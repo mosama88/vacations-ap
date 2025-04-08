@@ -9,6 +9,7 @@ use App\Models\LeaveBalance;
 use function Termwind\parse;
 use Illuminate\Http\Request;
 use App\Models\FinanceCalendar;
+use App\Enum\LeaveBalanceStatus;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Dashboard\LeaveBalanceRequest;
@@ -20,7 +21,7 @@ class LeaveBalanceController extends Controller
      */
     public function index()
     {
-        $data = LeaveBalance::orderByDesc('id')->paginate(10);
+        $data = LeaveBalance::where('status', LeaveBalanceStatus::Open)->orderByDesc('id')->paginate(10);
         return view('dashboard.leaveBalances.index', compact('data'));
     }
 
@@ -55,7 +56,7 @@ class LeaveBalanceController extends Controller
             'total_days_emergency' => $total_days_emergency,
             'remainig_days_emergency' => $remainig_days_emergency = $total_days_emergency,
             'used_days_emergency' => parse($remainig_days_emergency - $total_days_emergency),
-            'status' => 1,
+            'status' => LeaveBalanceStatus::Open,
             'created_by' => Auth::user()->id,
         ]);
 

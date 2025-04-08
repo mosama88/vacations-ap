@@ -161,7 +161,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="form-group col-6">
+                                    <div class="form-group col-4">
                                         <label for="exampleSelectBorder">نوع الجنس</code></label>
                                         <select name="gender"
                                             class="custom-select form-control-border @error('gender') is-invalid @enderror"
@@ -178,7 +178,7 @@
                                             </span>
                                         @enderror
                                     </div>
-                                    <div class="form-group col-6">
+                                    <div class="form-group col-4">
                                         <label for="exampleSelectBorder">نوع حساب الموظف</code></label>
                                         <select name="type"
                                             class="custom-select form-control-border @error('type') is-invalid @enderror"
@@ -197,6 +197,18 @@
                                     </div>
 
 
+                                    <div class="form-group col-4">
+                                        <label for="exampleSelectBorder">رصيد أجازات الموظف</code></label>
+                                        <input type="text" name="total_days_balance"
+                                            value="{{ old('total_days_balance') }}"
+                                            class="form-control @error('total_days_balance') is-invalid @enderror"
+                                            id="exampleInputtotal_days_balance" placeholder="أدخل الرصيد الموظف">
+                                        @error('total_days_balance')
+                                            <span class="invalid-feedback text-right" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
 
 
 

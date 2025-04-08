@@ -179,7 +179,6 @@ class FinanceCalendarController extends Controller
     // دالة لإنشاء أرصدة الإجازات لجميع الموظفين بناءً على السنة المالية
     protected function createLeaveBalancesForAllEmployees(FinanceCalendar $financeCalendar)
     {
-        $total_days = 30;
         $total_days_emergency = 7;
 
         // احضار الموظفين النشطين فقط
@@ -194,9 +193,9 @@ class FinanceCalendarController extends Controller
             if (!$exists) {
                 LeaveBalance::create([
                     'employee_id' => $employee->id,
-                    'total_days' => $total_days,
+                    'total_days' => $employee->total_days_balance,
                     'finance_calendar_id' => $financeCalendar->id,
-                    'remainig_days' => $total_days,
+                    'remainig_days' => $employee->total_days_balance,
                     'used_days' => 0,
                     'total_days_emergency' => $total_days_emergency,
                     'remainig_days_emergency' => $total_days_emergency,
