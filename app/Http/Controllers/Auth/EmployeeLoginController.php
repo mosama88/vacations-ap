@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\EmployeeLoginRequest;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Employee;
 use Illuminate\View\View;
+use App\Enum\EmployeeStatus;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
+use App\Http\Requests\Auth\EmployeeLoginRequest;
 
 class EmployeeLoginController extends Controller
 {
@@ -24,6 +26,17 @@ class EmployeeLoginController extends Controller
      */
     public function store(EmployeeLoginRequest $request)
     {
+        $employee = Employee::where('username', $request->username)->first();
+
+        if (!$employee) {
+            return redirect()->back()->withErrors(['error' => 'يوجد خطأ فى أسم المستخدم او كلمة المرور']);
+        }
+
+        if ($employee->status != EmployeeStatus::Active) {
+            return redirect()->back()->withErrors(['error' => 'حالة الحساب غير نشطة']);
+        }
+
+
         $request->authenticate();
 
         $request->session()->regenerate();

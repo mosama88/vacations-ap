@@ -1,6 +1,15 @@
 @extends('dashboard.auth.layouts.master')
 @section('title', 'صفحة تسجيل الدخول')
 @section('content')
+    @include('dashboard.layouts.message')
+
+    @if ($errors->any())
+        @foreach ($errors->all() as $error)
+            <div class="alert alert-danger text-center">
+                {{ $error }}
+            </div>
+        @endforeach
+    @endif
     <form action="{{ route('employees.login') }}" method="POST">
         @csrf
         <div class="input-group mb-3">

@@ -1,3 +1,6 @@
+@php
+    use App\Enum\EmployeeStatus;
+@endphp
 <div class="card-body p-0">
 
     <div class="row col-12 my-2">
@@ -82,7 +85,7 @@
                     <th>الموبايل</th>
                     <th>الراحه</th>
                     <th>المحافظة</th>
-
+                    <th>الحالة</th>
                     <th>العمليات</th>
                 </tr>
             </thead>
@@ -95,7 +98,15 @@
                         <td>{{ $info->mobile }}</td>
                         <td>{{ $info->week->name }}</td>
                         <td>{{ $info->governorate->name }}</td>
-                     
+                        <td>{{ $info->status }}</td>
+                        <td>
+                            @if ($info->status == EmployeeStatus::Active)
+                                <span class="badge bg-success">نشط</span>
+                            @else
+                                <span class="badge bg-danger">غير نشط</span>
+                            @endif
+                        </td>
+
                         <td class="project-actions">
                             @include('dashboard.partials.action', [
                                 'name' => 'employees',
@@ -113,8 +124,8 @@
             </tbody>
         </table>
 
-            <div class="col-md-12">
-                {{ $data->links() }}
+        <div class="col-md-12">
+            {{ $data->links() }}
 
         </div>
     </div>
