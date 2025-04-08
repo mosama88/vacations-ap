@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Models\Employee;
 use App\Enum\StatusActive;
+use App\Enum\EmployeeStatus;
 use App\Models\LeaveBalance;
 use function Termwind\parse;
 use App\Models\FinanceCalendar;
@@ -18,7 +19,7 @@ class FinanceCalendarObserver
     public function created(FinanceCalendar $financeCalendar): void
     {
 
-       //
+        //
     }
 
     /**
@@ -34,6 +35,7 @@ class FinanceCalendarObserver
                 $leaveBalance->update(['status' => LeaveBalanceStatus::Archived]);
             }
         }
+
     }
 
     /**
@@ -59,4 +61,7 @@ class FinanceCalendarObserver
     {
         //
     }
+
+
+  
 }

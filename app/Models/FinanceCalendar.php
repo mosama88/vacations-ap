@@ -27,13 +27,6 @@ class FinanceCalendar extends Model
 
 
 
-
-
-    public function financeClnPeriods()
-    {
-        return $this->hasMany(FinanceClnPeriod::class, 'finance_calendar_id');
-    }
-
     protected $casts = [
         'status' => StatusActive::class,
     ];

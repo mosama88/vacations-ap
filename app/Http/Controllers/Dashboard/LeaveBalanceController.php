@@ -39,6 +39,9 @@ class LeaveBalanceController extends Controller
     public function store(LeaveBalanceRequest $request)
     {
         $financial_year = FinanceCalendar::select('id', 'finance_yr')->where('status', StatusActive::Active)->first();
+        if (!$financial_year) {
+            return redirect()->back()->withErrors(['error' => 'عفوآ لا يوجد سنه مالية مفتوحة!!'])->withInput();
+        }
         $checkExists = LeaveBalance::where('employee_id', $request->employee_id)->exists();
         if ($checkExists) {
             return redirect()->back()->withErrors(['error' => 'الموظف مسجل من قبل'])->withInput();
