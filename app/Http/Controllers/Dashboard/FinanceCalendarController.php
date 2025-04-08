@@ -2,18 +2,11 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use DateTime;
-use DatePeriod;
-use DateInterval;
-use App\Models\Month;
-use App\Enum\StatusOpen;
+
 use App\Enum\StatusActive;
 use Illuminate\Http\Request;
 use App\Models\FinanceCalendar;
-use Illuminate\Validation\Rule;
-use App\Models\financeClnPeriod;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\Dashboard\FinanceCalendarRequest;
 
 
@@ -110,11 +103,9 @@ class FinanceCalendarController extends Controller
             ]);
         }
 
-        $flagDelete = $financeCalendar->delete();
+        $financeCalendar->delete();
 
-        if ($flagDelete) {
-            FinanceClnPeriod::where('finance_calendar_id', $id)->delete();
-        }
+
 
         return response()->json([
             'success' => true,
@@ -150,7 +141,7 @@ class FinanceCalendarController extends Controller
     public function close($id)
     {
         // البحث عن بيانات السنة المالية باستخدام المعرف المقدم
-        $data = FinanceCalendar::select('*')->where('id', $id)->first();
+        $data = FinanceCalendar::find($id);
 
         // التحقق من وجود البيانات
         if (empty($data)) {
@@ -158,11 +149,10 @@ class FinanceCalendarController extends Controller
         }
 
 
-        $dataToUpdate = [
-            'status' =>  StatusOpen::Archive,
-        ];
+        $data->update([
+            'status' => StatusActive::Archive,
+        ]);
 
-        FinanceCalendar::where('id', $id)->update($dataToUpdate);
 
         session()->flash('success', 'تم تحديث البيانات بنجاح!');
         return redirect()->route('dashboard.financeCalendars.index');

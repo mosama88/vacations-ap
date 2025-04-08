@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 
 
-// #[ObservedBy([FinanceCalendarObserver::class])]
+#[ObservedBy([FinanceCalendarObserver::class])]
 class FinanceCalendar extends Model
 {
 

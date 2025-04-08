@@ -2,9 +2,13 @@
 
 namespace App\Observers;
 
+use App\Models\Employee;
+use App\Enum\StatusActive;
 use App\Models\LeaveBalance;
+use function Termwind\parse;
 use App\Models\FinanceCalendar;
 use App\Enum\LeaveBalanceStatus;
+use Illuminate\Support\Facades\Auth;
 
 class FinanceCalendarObserver
 {
@@ -13,7 +17,8 @@ class FinanceCalendarObserver
      */
     public function created(FinanceCalendar $financeCalendar): void
     {
-        //
+
+       //
     }
 
     /**
@@ -21,13 +26,13 @@ class FinanceCalendarObserver
      */
     public function updated(FinanceCalendar $financeCalendar): void
     {
+        if ($financeCalendar->status == StatusActive::Archive) {
 
-        $leaveBalance = LeaveBalance::where('finance_calendar_id', $financeCalendar->id)->where('status', LeaveBalanceStatus::Open)->first();
-        //السنه تم مؤرشفه
-        if ($leaveBalance->status !== LeaveBalanceStatus::Archived) {
+            $leaveBalances  = LeaveBalance::where('finance_calendar_id', $financeCalendar->id)->where('status', LeaveBalanceStatus::Open)->get();
 
-            dd($leaveBalance);
-            $leaveBalance->update(['status' => LeaveBalanceStatus::Archived]);
+            foreach ($leaveBalances as $leaveBalance) {
+                $leaveBalance->update(['status' => LeaveBalanceStatus::Archived]);
+            }
         }
     }
 

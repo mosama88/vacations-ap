@@ -4,11 +4,11 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Enum\StatusOpen;
 use App\Models\Employee;
+use App\Enum\StatusActive;
 use App\Models\LeaveBalance;
 use function Termwind\parse;
 use Illuminate\Http\Request;
 use App\Models\FinanceCalendar;
-
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Dashboard\LeaveBalanceRequest;
@@ -38,7 +38,7 @@ class LeaveBalanceController extends Controller
      */
     public function store(LeaveBalanceRequest $request)
     {
-        $financial_year = FinanceCalendar::select('id', 'finance_yr')->where('status', StatusOpen::Open)->first();
+        $financial_year = FinanceCalendar::select('id', 'finance_yr')->where('status', StatusActive::Active)->first();
         $checkExists = LeaveBalance::where('employee_id', $request->employee_id)->exists();
         if ($checkExists) {
             return redirect()->back()->withErrors(['error' => 'الموظف مسجل من قبل'])->withInput();
@@ -85,7 +85,7 @@ class LeaveBalanceController extends Controller
      */
     public function update(LeaveBalanceRequest $request, LeaveBalance $leaveBalance)
     {
-        $financial_year = FinanceCalendar::select('id', 'finance_yr')->where('status', StatusOpen::Open)->first();
+        $financial_year = FinanceCalendar::select('id', 'finance_yr')->where('status', StatusActive::Active)->first();
         if (!$financial_year) {
             return redirect()->back()->withErrors(['error' => 'السنه المالية غير مفعله'])->withInput();
         }
