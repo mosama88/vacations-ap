@@ -1,3 +1,8 @@
+@php
+    use App\Enum\LeaveStatusEnum;
+    use App\Enum\LeaveTypeEnum;
+@endphp
+
 <div class="modal fade" id="show{{ $info->id }}">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
@@ -110,14 +115,14 @@
                             class="custom-select form-control-border @error('leave_type') is-invalid @enderror"
                             id="exampleSelectBorder">
                             <option value="">-- أختر نوع الأجازه --</option>
-                            <option @if (old('leave_type', $info->leave_type) == App\Enum\LeaveTypeEnum::Emergency) selected @endif
-                                value="{{ App\Enum\LeaveTypeEnum::Emergency }}">عارضه</option>
-                            <option @if (old('leave_type', $info->leave_type) == App\Enum\LeaveTypeEnum::Regular) selected @endif
-                                value="{{ App\Enum\LeaveTypeEnum::Regular }}">إعتيادى</option>
-                            <option @if (old('leave_type', $info->leave_type) == App\Enum\LeaveTypeEnum::Annual) selected @endif
-                                value="{{ App\Enum\LeaveTypeEnum::Annual }}">سنوى</option>
-                            <option @if (old('leave_type', $info->leave_type) == App\Enum\LeaveTypeEnum::Sick) selected @endif
-                                value="{{ App\Enum\LeaveTypeEnum::Sick }}">مرضى</option>
+                            <option @if (old('leave_type', $info->leave_type) == LeaveTypeEnum::Emergency) selected @endif
+                                value="{{ LeaveTypeEnum::Emergency }}">عارضه</option>
+                            <option @if (old('leave_type', $info->leave_type) == LeaveTypeEnum::Regular) selected @endif
+                                value="{{ LeaveTypeEnum::Regular }}">إعتيادى</option>
+                            <option @if (old('leave_type', $info->leave_type) == LeaveTypeEnum::Annual) selected @endif
+                                value="{{ LeaveTypeEnum::Annual }}">سنوى</option>
+                            <option @if (old('leave_type', $info->leave_type) == LeaveTypeEnum::Sick) selected @endif
+                                value="{{ LeaveTypeEnum::Sick }}">مرضى</option>
                         </select>
                         @error('leave_type')
                             <span class="invalid-feedback text-right" role="alert">
@@ -142,18 +147,43 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 <label for="leave_status">حالة الإجازة</label>
-                                <select name="leave_status" class="form-control" id="leave_status">
+
+                                <div class="custom-control custom-radio">
+                                    <input class="custom-control-input" type="radio" id="customPending"
+                                        name="leave_status" value="{{ LeaveStatusEnum::Pending }}"
+                                        @if (old('leave_status', $info->leave_status) == LeaveStatusEnum::Pending) checked @endif>
+                                    <label for="customPending" class="custom-control-label"> <i
+                                            class="fas fa-hourglass-half text-warning mx-1"></i>معلقة</label>
+                                </div>
+
+                                <div class="custom-control custom-radio">
+                                    <input class="custom-control-input" type="radio" id="customApproved"
+                                        name="leave_status" value="{{ LeaveStatusEnum::Approved }}"
+                                        @if (old('leave_status', $info->leave_status) == LeaveStatusEnum::Approved) checked @endif>
+                                    <label for="customApproved" class="custom-control-label"> <i
+                                            class="fas fa-thumbs-up mx-1 text-success"></i> موافق</label>
+                                </div>
+
+                                <div class="custom-control custom-radio">
+                                    <input class="custom-control-input" type="radio" id="customRefused"
+                                        name="leave_status" value="{{ LeaveStatusEnum::Refused }}"
+                                        @if (old('leave_status', $info->leave_status) == LeaveStatusEnum::Refused) checked @endif>
+                                    <label for="customRefused" class="custom-control-label"> <i
+                                            class="fas fa-times-circle mx-1 text-danger"></i> مرفوض </label>
+                                </div>
+
+                                {{-- <select name="leave_status" class="form-control" id="leave_status">
                                     <option value="">-- أختر حالة الأجازه --</option>
-                                    <option @if (old('leave_status', $info->leave_status) == App\Enum\LeaveStatusEnum::Approved) selected @endif
-                                        value="{{ App\Enum\LeaveStatusEnum::Approved }}">
+                                    <option @if (old('leave_status', $info->leave_status) == LeaveStatusEnum::Approved) selected @endif
+                                        value="{{ LeaveStatusEnum::Approved }}">
                                         موافق</option>
-                                    <option @if (old('leave_status', $info->leave_status) == App\Enum\LeaveStatusEnum::Pending) selected @endif
-                                        value="{{ App\Enum\LeaveStatusEnum::Pending }}">
+                                    <option @if (old('leave_status', $info->leave_status) == LeaveStatusEnum::Pending) selected @endif
+                                        value="{{ LeaveStatusEnum::Pending }}">
                                         معلق</option>
-                                    <option @if (old('leave_status', $info->leave_status) == App\Enum\LeaveStatusEnum::Refused) selected @endif
-                                        value="{{ App\Enum\LeaveStatusEnum::Refused }}">
+                                    <option @if (old('leave_status', $info->leave_status) == LeaveStatusEnum::Refused) selected @endif
+                                        value="{{ LeaveStatusEnum::Refused }}">
                                         مرفوض</option>
-                                </select>
+                                </select> --}}
                                 @error('leave_status')
                                     <span class="invalid-feedback text-right" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -165,15 +195,15 @@
                 </div>
             </div>
 
-     
-        <!-- /.card-body -->
 
-        <div class="modal-footer justify-content-between">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">إغلاق</button>
-            <button type="submit" class="btn btn-primary">حفظ التغييرات</button>
+            <!-- /.card-body -->
+
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">إغلاق</button>
+                <button type="submit" class="btn btn-primary">حفظ التغييرات</button>
+            </div>
+
+            </form>
         </div>
-
-        </form>
+        <!-- /.modal-content -->
     </div>
-    <!-- /.modal-content -->
-</div>
