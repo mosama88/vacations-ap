@@ -169,7 +169,6 @@
                                                     href="{{ route('dashboard.leaves.show', $info->id) }}"><i
                                                         class="fas fa-eye ml-1"></i></a>
                                             </td>
-                                            {{-- @include('front.leaves.show-leave') --}}
                                         </tr>
                                     @empty
                                         <div class="alert alert-info" role="alert">
