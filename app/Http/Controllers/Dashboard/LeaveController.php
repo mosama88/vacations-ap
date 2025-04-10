@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use Carbon\Carbon;
+use App\Models\Week;
 use App\Models\Leave;
 use App\Models\Employee;
+use App\Enum\StatusActive;
 use App\Models\LeaveBalance;
 use Illuminate\Http\Request;
 use App\Enum\LeaveStatusEnum;
+use App\Models\FinanceCalendar;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Dashboard\LeaveRequest;
-use App\Models\Week;
-use Carbon\Carbon;
 
 class LeaveController extends Controller
 {
@@ -45,6 +47,12 @@ class LeaveController extends Controller
      */
     public function store(LeaveRequest $request)
     {
+
+        $financial_year = FinanceCalendar::select('id', 'finance_yr')->where('status', StatusActive::Active)->first();
+        if (!$financial_year) {
+            return redirect()->back()->withErrors(['error' => 'عفوآ لا يوجد سنه مالية مفتوحة!!'])->withInput();
+        }
+
         $employeeId = Auth::id();
         $lastLeaveCode = Leave::orderByDesc('leave_code')->value('leave_code');
         $newnEwLeaveCode = $lastLeaveCode ? $lastLeaveCode + 1 : 100;
@@ -80,7 +88,8 @@ class LeaveController extends Controller
 
         // إنشاء الإجازة
         try {
-            $leave = Leave::create([
+            Leave::create([
+                'finance_calendar_id' => $financial_year['id'],
                 'leave_code' => $newnEwLeaveCode,
                 'employee_id' => $employeeId,
                 'start_date' => $startDate,
@@ -126,6 +135,11 @@ class LeaveController extends Controller
 
     public function update(LeaveRequest $request, $id)
     {
+        $financial_year = FinanceCalendar::select('id', 'finance_yr')->where('status', StatusActive::Active)->first();
+        if (!$financial_year) {
+            return redirect()->back()->withErrors(['error' => 'السنه المالية غير مفعله'])->withInput();
+        }
+
         $leave = Leave::findOrFail($id);
         $employeeId = Auth::id();
 
@@ -159,6 +173,7 @@ class LeaveController extends Controller
             // dd($request->all());
 
             $leave->update([
+                'finance_calendar_id' => $financial_year['id'],
                 'employee_id' => $employeeId,
                 'start_date' => $startDate,
                 'end_date' => $endDate,

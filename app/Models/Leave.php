@@ -18,6 +18,7 @@ class Leave extends Model
 
     protected $fillable = [
         'leave_code',
+        'finance_calendar_id',
         'employee_id',
         'start_date',
         'end_date',
@@ -38,6 +39,11 @@ class Leave extends Model
     public function updatedBy()
     {
         return $this->belongsTo(Employee::class, 'updated_by');
+    }
+
+    public function financeCalendar()
+    {
+        return $this->belongsTo(FinanceCalendar::class, 'finance_calendar_id');
     }
 
     public function employee()

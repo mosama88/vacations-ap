@@ -2,6 +2,7 @@
 
 use App\Models\Employee;
 use App\Models\LeaveBalance;
+use App\Models\FinanceCalendar;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -17,6 +18,7 @@ return new class extends Migration
             $table->id();
             $table->integer('leave_code')->unique();
             $table->foreignIdFor(Employee::class)->nullable()->constrained()->nullOnDelete();
+            $table->foreignIdFor(FinanceCalendar::class)->nullable()->constrained()->nullOnDelete();
             $table->date('start_date');
             $table->date('end_date');
             $table->integer('days_taken')->nullable();
