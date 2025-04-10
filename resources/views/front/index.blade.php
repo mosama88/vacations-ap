@@ -92,6 +92,8 @@
                         <div class="card-header">
                             <h3 class="col-12 float-right">جدول أجازات <span
                                     class="text-secondary">{{ Auth::user()->name }}</span>
+                                لسنة
+                                <span class="text-secondary"> {{ $financial_year->finance_yr }}</span>
                             </h3>
                         </div>
                         <!-- /.card-header -->

@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Front;
 use App\Models\Week;
 use App\Models\Leave;
 use App\Models\Employee;
+use App\Enum\StatusActive;
 use App\Enum\LeaveStatusEnum;
+use App\Models\FinanceCalendar;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
@@ -13,10 +15,13 @@ class EmployeePanel extends Controller
 {
     public function index()
     {
+        $financial_year = FinanceCalendar::select('id', 'finance_yr')->where('status', StatusActive::Active)->first();
         $employee = Auth::user()->id;
-        $data = Leave::where('employee_id', $employee)->orderByDesc('id')->paginate(10);
-        return view('front.index', compact('data'));
+        $other['weeks'] = Week::where('id', $employee)->get();
+        $data = Leave::where('employee_id', $employee)->where('finance_calendar_id', $financial_year->id)->orderByDesc('id')->paginate(10);
+        return view('front.index', compact('data'), compact('data', 'other', 'financial_year'));
     }
+
 
     public function showLeave($id)
     {

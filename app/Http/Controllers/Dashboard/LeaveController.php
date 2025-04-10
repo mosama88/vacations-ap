@@ -26,9 +26,8 @@ class LeaveController extends Controller
 
         $emplyeeId = Auth::user()->id;
         $other['weeks'] = Week::where('id', $emplyeeId)->get();
-        $employees = Employee::with('leaveBalance')->where('id', $emplyeeId)->first();
         $data = Leave::orderByDesc('id')->where('finance_calendar_id', $financial_year->id)->where('leave_status', "!=", LeaveStatusEnum::Pending)->paginate(10);
-        return view('dashboard.leaves.index', compact('data', 'employees', 'other'));
+        return view('dashboard.leaves.index', compact('data', 'other', 'financial_year'));
     }
 
 
