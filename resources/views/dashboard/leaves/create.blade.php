@@ -1,3 +1,6 @@
+@php
+    use App\Enum\LeaveTypeEnum;
+@endphp
 @extends('dashboard.layouts.master')
 @section('active-leaves-create', 'active')
 @section('title', 'أنشاء طلب أجازه')
@@ -40,18 +43,19 @@
                                         <label for="exampleInputName">كود الموظف</label>
                                         <input disabled type="text" id="employee_code"
                                             value="{{ $employees->employee_code }}" name="employee_code"
-                                            class="form-control" id="exampleInputemployee_id" placeholder="">
+                                            class="form-control bg-white" id="exampleInputemployee_id" placeholder="">
                                     </div>
                                     <div class="form-group col-4" id="employee_div">
                                         <label for="exampleInputName">أسم الموظف</label>
                                         <input disabled type="text" id="employee_id" value="{{ $employees->name }}"
-                                            name="employee_id" class="form-control" id="exampleInputemployee_id"
+                                            name="employee_id" class="form-control bg-white" id="exampleInputemployee_id"
                                             placeholder="">
                                     </div>
                                     <div class="form-group col-4">
                                         <label for="exampleSelectBorder">الراحه الاسبوعية</code></label>
                                         <input disabled type="text" id="week_id" value="{{ $employees->week->name }}"
-                                            name="week_id" class="form-control" id="exampleInputweek_id" placeholder="">
+                                            name="week_id" class="form-control bg-white" id="exampleInputweek_id"
+                                            placeholder="">
                                     </div>
                                 </div>
                                 <div class="row">
@@ -60,7 +64,7 @@
                                             <span class="text-info">(الأعتيادى)</span> </label>
                                         <input disabled type="text" name="total_days"
                                             value="{{ $employees->leaveBalance->total_days ?? 'لا يوجد رصيد' }}"
-                                            class="form-control" id="exampleInputtotal_days" placeholder="">
+                                            class="form-control bg-white" id="exampleInputtotal_days" placeholder="">
                                     </div>
 
 
@@ -69,7 +73,8 @@
                                                 class="text-info">(الأعتيادى)</span> </label>
                                         <input disabled type="text" name="used_days"
                                             value="{{ $employees->leaveBalance->used_days ?? 'لا يوجد رصيد' }}"
-                                            name="used_days" class="form-control" id="exampleInputused_days" placeholder="">
+                                            name="used_days" class="form-control bg-white" id="exampleInputused_days"
+                                            placeholder="">
                                     </div>
 
                                     <div class="form-group col-4">
@@ -77,8 +82,8 @@
                                                 class="text-info">(الأعتيادى)</span> </label>
                                         <input disabled type="text"
                                             value="{{ $employees->leaveBalance->remainig_days ?? 'لا يوجد رصيد' }}"
-                                            name="remainig_days" class="form-control" id="exampleInputremainig_days"
-                                            placeholder="">
+                                            name="remainig_days" class="form-control bg-white"
+                                            id="exampleInputremainig_days" placeholder="">
                                     </div>
                                 </div>
                                 <div class="row">
@@ -87,7 +92,8 @@
                                             الأجازات <span class="text-danger">(العارضه)</span> </label>
                                         <input disabled type="text" name="total_days_emergency"
                                             value="{{ $employees->leaveBalance->total_days_emergency ?? 'لا يوجد رصيد' }}"
-                                            class="form-control" id="exampleInputtotal_days_emergency" placeholder="">
+                                            class="form-control bg-white" id="exampleInputtotal_days_emergency"
+                                            placeholder="">
                                     </div>
 
 
@@ -96,7 +102,7 @@
                                                 class="text-danger">(العارضه)</span> </label>
                                         <input disabled type="text" name="used_days_emergency"
                                             value="{{ $employees->leaveBalance->used_days_emergency ?? 'لا يوجد رصيد' }}"
-                                            name="used_days_emergency" class="form-control"
+                                            name="used_days_emergency" class="form-control bg-white"
                                             id="exampleInputused_days_emergency" placeholder="">
                                     </div>
 
@@ -105,7 +111,7 @@
                                                 class="text-danger">(العارضه)</span> </label>
                                         <input disabled type="text"
                                             value="{{ $employees->leaveBalance->remainig_days_emergency ?? 'لا يوجد رصيد' }}"
-                                            name="remainig_days_emergency" class="form-control"
+                                            name="remainig_days_emergency" class="form-control bg-white"
                                             id="exampleInputremainig_days_emergency" placeholder="">
                                     </div>
                                 </div>
@@ -116,7 +122,7 @@
                                         <div class="input-group">
                                             <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
                                             <input type="text" id="start_date" name="start_date"
-                                                class="form-control @error('start_date') is-invalid @enderror"
+                                                class="form-control bg-white  @error('start_date') is-invalid @enderror"
                                                 value="{{ old('start_date') }}" placeholder="اختر تاريخ البداية">
                                             @error('start_date')
                                                 <span class="invalid-feedback text-right" role="alert">
@@ -133,7 +139,7 @@
                                         <div class="input-group">
                                             <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
                                             <input type="text" id="end_date" name="end_date"
-                                                class="form-control @error('end_date') is-invalid @enderror"
+                                                class="form-control bg-white  @error('end_date') is-invalid @enderror"
                                                 value="{{ old('end_date') }}" placeholder="اختر تاريخ النهاية">
                                             @error('end_date')
                                                 <span class="invalid-feedback text-right" role="alert">
@@ -152,7 +158,7 @@
                                     <div class="form-group col-4">
                                         <label for="exampleInputName">عدد الأيام </label>
                                         <input disabled type="text" value="{{ old('days_taken') }}" name="days_taken"
-                                            class="form-control" id="days_taken" placeholder="">
+                                            class="form-control bg-white" id="days_taken" placeholder="">
                                     </div>
 
 
@@ -163,13 +169,13 @@
                                             id="exampleSelectBorder">
                                             <option value="">-- أختر نوع الأجازه --</option>
                                             <option @if (old('leave_type') == 1) selected @endif
-                                                value="{{ App\Enum\LeaveTypeEnum::Emergency }}">عارضه</option>
+                                                value="{{ LeaveTypeEnum::Emergency }}">عارضه</option>
                                             <option @if (old('leave_type') == 2) selected @endif
-                                                value="{{ App\Enum\LeaveTypeEnum::Regular }}">إعتيادى</option>
+                                                value="{{ LeaveTypeEnum::Regular }}">إعتيادى</option>
                                             <option @if (old('leave_type') == 3) selected @endif
-                                                value="{{ App\Enum\LeaveTypeEnum::Annual }}">سنوى</option>
+                                                value="{{ LeaveTypeEnum::Annual }}">سنوى</option>
                                             <option @if (old('leave_type') == 4) selected @endif
-                                                value="{{ App\Enum\LeaveTypeEnum::Sick }}">مرضى</option>
+                                                value="{{ LeaveTypeEnum::Sick }}">مرضى</option>
                                         </select>
                                         @error('leave_type')
                                             <span class="invalid-feedback text-right" role="alert">
@@ -180,7 +186,7 @@
 
                                     <div class="form-group col-12">
                                         <label for="exampleSelectBorder">سبب الأجازه</code></label>
-                                        <textarea class="form-control @error('description') is-invalid @enderror" name="description" rows="3"
+                                        <textarea class="form-control bg-white @error('description') is-invalid @enderror" name="description" rows="3"
                                             placeholder="أدخل السبب ...">{{ old('description') }}</textarea>
                                         @error('description')
                                             <span class="invalid-feedback text-right" role="alert">

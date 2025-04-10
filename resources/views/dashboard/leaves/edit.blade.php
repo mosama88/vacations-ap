@@ -35,10 +35,16 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="{{ route('dashboard.leaves.store') }}" method="POST">
+                        <form action="{{ route('dashboard.leaves.update', $leave->id) }}" method="POST">
                             @csrf
+                            @method('PUT')
+
+
+
                             <div class="card-body">
                                 <div class="row">
+                                    <input class="custom-control" type="hidden" name="leave_status"
+                                        value="{{ $leave->leave_status }}">
                                     <div class="form-group col-4" id="employee_div">
                                         <label for="exampleInputName">كود الموظف</label>
                                         <input disabled type="text" id="employee_code"
@@ -120,7 +126,7 @@
                                         <div class="input-group">
                                             <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
                                             <input type="text" id="start_date" name="start_date"
-                                                class="form-control @error('start_date') is-invalid @enderror"
+                                                class="form-control bg-white @error('start_date') is-invalid @enderror"
                                                 value="{{ old('start_date', $leave->start_date) }}"
                                                 placeholder="اختر تاريخ البداية">
                                             @error('start_date')
@@ -138,7 +144,7 @@
                                         <div class="input-group">
                                             <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
                                             <input type="text" id="end_date" name="end_date"
-                                                class="form-control @error('end_date') is-invalid @enderror"
+                                                class="form-control bg-white @error('end_date') is-invalid @enderror"
                                                 value="{{ old('end_date', $leave->end_date) }}"
                                                 placeholder="اختر تاريخ النهاية">
                                             @error('end_date')
@@ -169,13 +175,13 @@
                                             class="custom-select form-control-border @error('leave_type') is-invalid @enderror"
                                             id="exampleSelectBorder">
                                             <option value="">-- أختر نوع الأجازه --</option>
-                                            <option @if (old('leave_type', $leave->leave_type) == 1) selected @endif
+                                            <option @if (old('leave_type', $leave->leave_type) == LeaveTypeEnum::Emergency) selected @endif
                                                 value="{{ LeaveTypeEnum::Emergency }}">عارضه</option>
-                                            <option @if (old('leave_type', $leave->leave_type) == 2) selected @endif
+                                            <option @if (old('leave_type', $leave->leave_type) == LeaveTypeEnum::Regular) selected @endif
                                                 value="{{ LeaveTypeEnum::Regular }}">إعتيادى</option>
-                                            <option @if (old('leave_type', $leave->leave_type) == 3) selected @endif
+                                            <option @if (old('leave_type', $leave->leave_type) == LeaveTypeEnum::Annual) selected @endif
                                                 value="{{ LeaveTypeEnum::Annual }}">سنوى</option>
-                                            <option @if (old('leave_type', $leave->leave_type) == 4) selected @endif
+                                            <option @if (old('leave_type', $leave->leave_type) == LeaveTypeEnum::Sick) selected @endif
                                                 value="{{ LeaveTypeEnum::Sick }}">مرضى</option>
                                         </select>
                                         @error('leave_type')
@@ -195,40 +201,40 @@
                                             </span>
                                         @enderror
                                     </div>
+                                    @can('اخذ اجراء الأجازات')
+                                        <div class="form-group col-12">
+                                            <label for="leave_status">حالة الإجازة</label>
 
-                                    <div class="form-group col-12">
-                                        <label for="leave_status">حالة الإجازة</label>
+                                            <div class="custom-control custom-radio">
+                                                <input class="custom-control-input" type="radio" id="customPending"
+                                                    name="leave_status" value="{{ LeaveStatusEnum::Pending }}"
+                                                    @if (old('leave_status', $leave->leave_status) == LeaveStatusEnum::Pending) checked @endif>
+                                                <label for="customPending" class="custom-control-label"> <i
+                                                        class="fas fa-hourglass-half text-warning mx-1"></i>معلقة</label>
+                                            </div>
 
-                                        <div class="custom-control custom-radio">
-                                            <input class="custom-control-input" type="radio" id="customPending"
-                                                name="leave_status" value="{{ LeaveStatusEnum::Pending }}"
-                                                @if (old('leave_status', $leave->leave_status) == LeaveStatusEnum::Pending) checked @endif>
-                                            <label for="customPending" class="custom-control-label"> <i
-                                                    class="fas fa-hourglass-half text-warning mx-1"></i>معلقة</label>
+                                            <div class="custom-control custom-radio">
+                                                <input class="custom-control-input" type="radio" id="customApproved"
+                                                    name="leave_status" value="{{ LeaveStatusEnum::Approved }}"
+                                                    @if (old('leave_status', $leave->leave_status) == LeaveStatusEnum::Approved) checked @endif>
+                                                <label for="customApproved" class="custom-control-label"> <i
+                                                        class="fas fa-thumbs-up mx-1 text-success"></i> موافق</label>
+                                            </div>
+
+                                            <div class="custom-control custom-radio">
+                                                <input class="custom-control-input" type="radio" id="customRefused"
+                                                    name="leave_status" value="{{ LeaveStatusEnum::Refused }}"
+                                                    @if (old('leave_status', $leave->leave_status) == LeaveStatusEnum::Refused) checked @endif>
+                                                <label for="customRefused" class="custom-control-label"> <i
+                                                        class="fas fa-times-circle mx-1 text-danger"></i> مرفوض </label>
+                                            </div>
+                                            @error('leave_status')
+                                                <span class="invalid-feedback text-right" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
                                         </div>
-
-                                        <div class="custom-control custom-radio">
-                                            <input class="custom-control-input" type="radio" id="customApproved"
-                                                name="leave_status" value="{{ LeaveStatusEnum::Approved }}"
-                                                @if (old('leave_status', $leave->leave_status) == LeaveStatusEnum::Approved) checked @endif>
-                                            <label for="customApproved" class="custom-control-label"> <i
-                                                    class="fas fa-thumbs-up mx-1 text-success"></i> موافق</label>
-                                        </div>
-
-                                        <div class="custom-control custom-radio">
-                                            <input class="custom-control-input" type="radio" id="customRefused"
-                                                name="leave_status" value="{{ LeaveStatusEnum::Refused }}"
-                                                @if (old('leave_status', $leave->leave_status) == LeaveStatusEnum::Refused) checked @endif>
-                                            <label for="customRefused" class="custom-control-label"> <i
-                                                    class="fas fa-times-circle mx-1 text-danger"></i> مرفوض </label>
-                                        </div>
-                                        @error('leave_status')
-                                            <span class="invalid-feedback text-right" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-
+                                    @endcan
 
                                 </div>
                             </div>

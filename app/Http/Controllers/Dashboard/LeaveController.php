@@ -46,6 +46,87 @@ class LeaveController extends Controller
     public function store(LeaveRequest $request)
     {
         $employeeId = Auth::id();
+        $lastLeaveCode = Leave::orderByDesc('leave_code')->value('leave_code');
+        $newnEwLeaveCode = $lastLeaveCode ? $lastLeaveCode + 1 : 100;
+
+        // التحقق من صحة التواريخ
+        $startDate = Carbon::parse($request->start_date);
+        $endDate = Carbon::parse($request->end_date);
+
+        if ($startDate->gt($endDate)) {
+            return redirect()->back()
+                ->withErrors(['error' => 'تاريخ البداية يجب أن يكون قبل تاريخ النهاية'])
+                ->withInput();
+        }
+
+
+        // التحقق من وجود إجازات متداخلة
+        if ($this->hasOverlappingLeaves($employeeId, $startDate, $endDate)) {
+            $existingLeave = $this->getOverlappingLeave($employeeId, $startDate, $endDate);
+            $message = 'عفواً يوجد إجازة مسجلة في هذه الفترة';
+
+            if ($existingLeave) {
+                $message .= ' من ' . $existingLeave->start_date->format('Y-m-d') .
+                    ' إلى ' . $existingLeave->end_date->format('Y-m-d');
+            }
+
+            return redirect()->back()
+                ->withErrors(['error' => $message])
+                ->withInput();
+        }
+
+        // حساب الأيام بدون الجمعة و اجازه الموظف
+        $daysTaken = $this->calculateWorkingDays($startDate, $endDate, $employeeId);
+
+        // إنشاء الإجازة
+        try {
+            $leave = Leave::create([
+                'leave_code' => $newnEwLeaveCode,
+                'employee_id' => $employeeId,
+                'start_date' => $startDate,
+                'end_date' => $endDate,
+                'days_taken' => $daysTaken,
+                'leave_type' => $request->leave_type,
+                'leave_status' => LeaveStatusEnum::Pending,
+                'description' => $request->description,
+                'created_by' => Auth::id(),
+            ]);
+
+            session()->flash('success', 'تمت إضافة الإجازة بنجاح');
+            return redirect()->route('dashboard.employee-panel.index');
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->withErrors(['error' => 'حدث خطأ أثناء حفظ الإجازة: ' . $e->getMessage()])
+                ->withInput();
+        }
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show($id)
+    {
+        $leave = Leave::with('employee')->findOrFail($id);
+        return view('dashboard.leaves.show', compact('leave'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit($id)
+    {
+        $leave = Leave::with('employee')->findOrFail($id);
+        return view('dashboard.leaves.edit', compact('leave'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+
+
+    public function update(LeaveRequest $request, Leave $leave)
+    {
+        $employeeId = Auth::id();
 
         // التحقق من صحة التواريخ
         $startDate = Carbon::parse($request->start_date);
@@ -80,14 +161,14 @@ class LeaveController extends Controller
 
         // إنشاء الإجازة
         try {
-            $leave = Leave::create([
+            $leave->update([
                 'leave_code' => $newLeaveCode,
                 'employee_id' => $employeeId,
                 'start_date' => $startDate,
                 'end_date' => $endDate,
                 'days_taken' => $daysTaken,
                 'leave_type' => $request->leave_type,
-                'leave_status' => LeaveStatusEnum::Pending,
+                'leave_status' => $request->leave_status,
                 'description' => $request->description,
                 'created_by' => Auth::id(),
             ]);
@@ -101,36 +182,6 @@ class LeaveController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Leave $leave)
-    {
-
-        // 
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit($id)
-    {
-        $leave = Leave::findOrFail($id)->with('employee')->first();
-        return view('dashboard.leaves.edit', compact('leave'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, $id)
-    {
-        $leave = Leave::findOrFail($id);
-        $leave->leave_status = $request->leave_status;
-        $leave->updated_by = Auth::id();
-        $leave->update();
-        session()->flash('success', 'تم تعديل الأجازه بنجاح');
-        return redirect()->back();
-    }
 
     /**
      * Remove the specified resource from storage.

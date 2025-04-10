@@ -164,6 +164,10 @@
                                                 <a class="btn btn-outline-info btn-sm mx-2"
                                                     href="{{ route('dashboard.leaves.edit', $info->id) }}"><i
                                                         class="fas fa-edit ml-1"></i></a>
+
+                                                <a class="btn btn-outline-success btn-sm mx-2"
+                                                    href="{{ route('dashboard.leaves.show', $info->id) }}"><i
+                                                        class="fas fa-eye ml-1"></i></a>
                                             </td>
                                             {{-- @include('front.leaves.show-leave') --}}
                                         </tr>
