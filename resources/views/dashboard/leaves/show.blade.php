@@ -146,19 +146,19 @@
                                 </div>
 
 
-                                <div class="form-group col-6">
+                                <div class="form-group col-4">
                                     <label for="exampleSelectBorder">نوع الأجازه</code></label>
                                     <select disabled name="leave_type"
                                         class="custom-select form-control-border bg-white @error('leave_type') is-invalid @enderror"
                                         id="exampleSelectBorder">
                                         <option value="">-- أختر نوع الأجازه --</option>
-                                        <option @if (old('leave_type', $leave->leave_type) == 1) selected @endif
+                                        <option @if (old('leave_type', $leave->leave_type) == LeaveTypeEnum::Emergency) selected @endif
                                             value="{{ LeaveTypeEnum::Emergency }}">عارضه</option>
-                                        <option @if (old('leave_type', $leave->leave_type) == 2) selected @endif
+                                        <option @if (old('leave_type', $leave->leave_type) == LeaveTypeEnum::Regular) selected @endif
                                             value="{{ LeaveTypeEnum::Regular }}">إعتيادى</option>
-                                        <option @if (old('leave_type', $leave->leave_type) == 3) selected @endif
+                                        <option @if (old('leave_type', $leave->leave_type) == LeaveTypeEnum::Annual) selected @endif
                                             value="{{ LeaveTypeEnum::Annual }}">سنوى</option>
-                                        <option @if (old('leave_type', $leave->leave_type) == 4) selected @endif
+                                        <option @if (old('leave_type', $leave->leave_type) == LeaveTypeEnum::Sick) selected @endif
                                             value="{{ LeaveTypeEnum::Sick }}">مرضى</option>
                                     </select>
                                 </div>

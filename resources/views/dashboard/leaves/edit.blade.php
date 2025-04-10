@@ -38,25 +38,25 @@
                         <form action="{{ route('dashboard.leaves.update', $leave->id) }}" method="POST">
                             @csrf
                             @method('PUT')
-
-
-
                             <div class="card-body">
                                 <div class="row">
                                     <input class="custom-control" type="hidden" name="leave_status"
                                         value="{{ $leave->leave_status }}">
+                                    <!-- كود الموظف -->
                                     <div class="form-group col-4" id="employee_div">
                                         <label for="exampleInputName">كود الموظف</label>
                                         <input disabled type="text" id="employee_code"
                                             value="{{ $leave->employee->employee_code }}" name="employee_code"
                                             class="form-control" id="exampleInputemployee_id" placeholder="">
                                     </div>
+                                    <!-- أسم الموظف -->
                                     <div class="form-group col-4" id="employee_div">
                                         <label for="exampleInputName">أسم الموظف</label>
                                         <input disabled type="text" id="employee_id" value="{{ $leave->employee->name }}"
                                             name="employee_id" class="form-control" id="exampleInputemployee_id"
                                             placeholder="">
                                     </div>
+                                    <!-- الراحه الاسبوعية  -->
                                     <div class="form-group col-4">
                                         <label for="exampleSelectBorder">الراحه الاسبوعية</code></label>
                                         <input disabled type="text" id="week_id"
@@ -65,6 +65,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
+                                    <!-- رصيد الأجازات  -->
                                     <div class="form-group col-4">
                                         <label for="exampleInputName">رصيد الأجازات
                                             <span class="text-info">(الأعتيادى)</span> </label>
@@ -74,6 +75,7 @@
                                     </div>
 
 
+                                    <!-- الرصيد المستخدم  -->
                                     <div class="form-group col-4">
                                         <label for="exampleInputName">الرصيد المستخدم <span
                                                 class="text-info">(الأعتيادى)</span> </label>
@@ -92,6 +94,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
+                                    <!-- رصيد الأجازات  -->
                                     <div class="form-group col-4">
                                         <label for="exampleInputName"> رصيد
                                             الأجازات <span class="text-danger">(العارضه)</span> </label>
@@ -100,7 +103,7 @@
                                             class="form-control" id="exampleInputtotal_days_emergency" placeholder="">
                                     </div>
 
-
+                                    <!-- الرصيد المستخدم  -->
                                     <div class="form-group col-4">
                                         <label for="exampleInputName">الرصيد المستخدم <span
                                                 class="text-danger">(العارضه)</span> </label>
@@ -110,6 +113,7 @@
                                             id="exampleInputused_days_emergency" placeholder="">
                                     </div>
 
+                                    <!-- الرصيد المتبقى  -->
                                     <div class="form-group col-4">
                                         <label for="exampleInputName">الرصيد المتبقى <span
                                                 class="text-danger">(العارضه)</span> </label>
@@ -120,6 +124,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
+                                    <!-- بداية الأجازة  -->
                                     <div class="form-group col-4">
                                         <label class="visually-hidden" for="specificSizeInputGroupUsername">بداية
                                             الأجازة</label>
@@ -138,6 +143,7 @@
 
                                     </div>
 
+                                    <!-- نهاية الأجازة  -->
                                     <div class="form-group col-4">
                                         <label class="visually-hidden" for="specificSizeInputGroupUsername">نهاية
                                             الأجازة</label>
@@ -156,11 +162,7 @@
 
                                     </div>
 
-
-
-
-
-
+                                    <!-- عدد الأيام  -->
                                     <div class="form-group col-4">
                                         <label for="exampleInputName">عدد الأيام </label>
                                         <input disabled type="text"
@@ -175,13 +177,13 @@
                                             class="custom-select form-control-border @error('leave_type') is-invalid @enderror"
                                             id="exampleSelectBorder">
                                             <option value="">-- أختر نوع الأجازه --</option>
-                                            <option @if (old('leave_type', $leave->leave_type) == LeaveTypeEnum::Emergency) selected @endif
+                                            <option @if (old('leave_type', $leave->leave_type == LeaveTypeEnum::Emergency)) selected @endif
                                                 value="{{ LeaveTypeEnum::Emergency }}">عارضه</option>
-                                            <option @if (old('leave_type', $leave->leave_type) == LeaveTypeEnum::Regular) selected @endif
+                                            <option @if (old('leave_type', $leave->leave_type == LeaveTypeEnum::Regular)) selected @endif
                                                 value="{{ LeaveTypeEnum::Regular }}">إعتيادى</option>
-                                            <option @if (old('leave_type', $leave->leave_type) == LeaveTypeEnum::Annual) selected @endif
+                                            <option @if (old('leave_type', $leave->leave_type == LeaveTypeEnum::Annual)) selected @endif
                                                 value="{{ LeaveTypeEnum::Annual }}">سنوى</option>
-                                            <option @if (old('leave_type', $leave->leave_type) == LeaveTypeEnum::Sick) selected @endif
+                                            <option @if (old('leave_type', $leave->leave_type == LeaveTypeEnum::Sick)) selected @endif
                                                 value="{{ LeaveTypeEnum::Sick }}">مرضى</option>
                                         </select>
                                         @error('leave_type')
@@ -239,24 +241,25 @@
                                 </div>
                             </div>
 
-                    </div>
-                    <!-- /.card-body -->
 
-                    <div class="card-footer text-center ">
-                        <button type="submit" class="btn btn-primary">حفظ البيانات <i class="fas fa-save mx-1"></i>
-                        </button>
+                            <!-- /.card-body -->
+
+                            <div class="card-footer text-center ">
+                                <button type="submit" class="btn btn-primary">حفظ البيانات <i
+                                        class="fas fa-save mx-1"></i>
+                                </button>
+                            </div>
+
+                        </form>
+                        <!-- /.card -->
+
+                        <!-- general form elements -->
+
+                        <!-- /.card -->
                     </div>
-                    </form>
                 </div>
-                <!-- /.card -->
-
-                <!-- general form elements -->
-
-                <!-- /.card -->
-            </div>
-        </div>
-        <!-- /.row (main row) -->
-        </div><!-- /.container-fluid -->
+                <!-- /.row (main row) -->
+            </div><!-- /.container-fluid -->
     </section>
 @endsection
 @push('js')

@@ -124,8 +124,9 @@ class LeaveController extends Controller
      */
 
 
-    public function update(LeaveRequest $request, Leave $leave)
+    public function update(LeaveRequest $request, $id)
     {
+        $leave = Leave::findOrFail($id);
         $employeeId = Auth::id();
 
         // التحقق من صحة التواريخ
@@ -138,22 +139,15 @@ class LeaveController extends Controller
                 ->withInput();
         }
 
-        // توليد كود الإجازة
-        $newLeaveCode = Leave::max('leave_code') + 1 ?? 5000;
 
-        // التحقق من وجود إجازات متداخلة
-        if ($this->hasOverlappingLeaves($employeeId, $startDate, $endDate)) {
-            $existingLeave = $this->getOverlappingLeave($employeeId, $startDate, $endDate);
+        if ($this->hasOverlappingLeaves($employeeId, $startDate, $endDate, $leave->id)) {
+            $existingLeave = $this->getOverlappingLeave($employeeId, $startDate, $endDate, $leave->id);
             $message = 'عفواً يوجد إجازة مسجلة في هذه الفترة';
 
             if ($existingLeave) {
                 $message .= ' من ' . $existingLeave->start_date->format('Y-m-d') .
                     ' إلى ' . $existingLeave->end_date->format('Y-m-d');
             }
-
-            return redirect()->back()
-                ->withErrors(['error' => $message])
-                ->withInput();
         }
 
         // حساب الأيام بدون الجمعة و اجازه الموظف
@@ -161,8 +155,10 @@ class LeaveController extends Controller
 
         // إنشاء الإجازة
         try {
+
+            // dd($request->all());
+
             $leave->update([
-                'leave_code' => $newLeaveCode,
                 'employee_id' => $employeeId,
                 'start_date' => $startDate,
                 'end_date' => $endDate,
@@ -170,10 +166,9 @@ class LeaveController extends Controller
                 'leave_type' => $request->leave_type,
                 'leave_status' => $request->leave_status,
                 'description' => $request->description,
-                'created_by' => Auth::id(),
             ]);
 
-            session()->flash('success', 'تمت إضافة الإجازة بنجاح');
+            session()->flash('success', 'تم تعديل الإجازة بنجاح');
             return redirect()->route('dashboard.employee-panel.index');
         } catch (\Exception $e) {
             return redirect()->back()
@@ -222,32 +217,43 @@ class LeaveController extends Controller
         }
     }
 
-    private function hasOverlappingLeaves($employeeId, $startDate, $endDate): bool
+
+
+    private function hasOverlappingLeaves($employeeId, $startDate, $endDate, $excludeLeaveId = null): bool
     {
-        return Leave::where('employee_id', $employeeId)
+        $query = Leave::where('employee_id', $employeeId)
             ->where('leave_status', '<>', LeaveStatusEnum::Refused)
             ->where(function ($query) use ($startDate, $endDate) {
                 $query->where(function ($q) use ($startDate, $endDate) {
                     $q->where('start_date', '<=', $endDate)
                         ->where('end_date', '>=', $startDate);
                 });
-            })
-            ->exists();
+            });
+
+        if ($excludeLeaveId) {
+            $query->where('id', '!=', $excludeLeaveId);
+        }
+
+        return $query->exists(); // تغيير first() إلى exists()
     }
 
-    private function getOverlappingLeave($employeeId, $startDate, $endDate)
+    private function getOverlappingLeave($employeeId, $startDate, $endDate, $excludeLeaveId = null): ?Leave
     {
-        $leave = Leave::where('employee_id', $employeeId)
+        $query = Leave::where('employee_id', $employeeId)
             ->where('leave_status', '<>', LeaveStatusEnum::Refused)
             ->where(function ($query) use ($startDate, $endDate) {
                 $query->where(function ($q) use ($startDate, $endDate) {
                     $q->where('start_date', '<=', $endDate)
                         ->where('end_date', '>=', $startDate);
                 });
-            })
-            ->first();
+            });
 
-        // تحويل التواريخ إلى كائن Carbon إذا كانت نصوصاً
+        if ($excludeLeaveId) {
+            $query->where('id', '!=', $excludeLeaveId);
+        }
+
+        $leave = $query->first();
+
         if ($leave) {
             $leave->start_date = Carbon::parse($leave->start_date);
             $leave->end_date = Carbon::parse($leave->end_date);
@@ -255,6 +261,8 @@ class LeaveController extends Controller
 
         return $leave;
     }
+
+
     private function calculateWorkingDays($startDate, $endDate, $employeeId): int
     {
         $employee = Employee::with('week')->find($employeeId);
