@@ -5,6 +5,8 @@
     <!-- Select2 -->
     <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/plugins/select2/css/select2.min.css">
     <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+    <!-- flatpickr -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 @endpush
 @section('content')
 
@@ -108,28 +110,36 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="form-group col-6">
-                                        <label>بداية الأجازه</label>
-                                        <input type="date" name="start_date"
+                                    <div class="form-group col-4">
+                                        <label>بداية الأجازة</label>
+                                        <input type="text" id="start_date" name="start_date"
                                             class="form-control @error('start_date') is-invalid @enderror"
-                                            value="{{ old('start_date') }}" placeholder="أدخل السنه المالية">
+                                            value="{{ old('start_date') }}" placeholder="اختر تاريخ البداية">
                                         @error('start_date')
                                             <span class="invalid-feedback text-right" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
                                     </div>
-                                    <div class="form-group col-6">
-                                        <label>نهاية الأجازه</label>
-                                        <input type="date" name="end_date"
+
+                                    <div class="form-group col-4">
+                                        <label>نهاية الأجازة</label>
+                                        <input type="text" id="end_date" name="end_date"
                                             class="form-control @error('end_date') is-invalid @enderror"
-                                            value="{{ old('end_date') }}" placeholder="أدخل السنه المالية">
+                                            value="{{ old('end_date') }}" placeholder="اختر تاريخ النهاية">
                                         @error('end_date')
                                             <span class="invalid-feedback text-right" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
                                     </div>
+
+                                    <div class="form-group col-4">
+                                        <label for="exampleInputName">عدد الأيام </label>
+                                        <input disabled type="text" value="{{ old('days_taken') }}" name="days_taken"
+                                            class="form-control" id="days_taken" placeholder="">
+                                    </div>
+
 
                                     <div class="form-group col-6">
                                         <label for="exampleSelectBorder">نوع الأجازه</code></label>
@@ -190,6 +200,9 @@
 @push('js')
     <!-- Select2 -->
     <script src="{{ asset('dashboard') }}/assets/plugins/select2/js/select2.full.min.js"></script>
+    <!-- flatpickr -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ar.js"></script>
 
     <script>
         $(function() {
@@ -234,6 +247,63 @@
                     alert("عفوا، لقد حدث خطأ.");
                 }
             });
+        }
+    </script>
+    <script>
+        flatpickr("#start_date", {
+            dateFormat: "Y-m-d",
+            locale: "ar"
+        });
+
+        flatpickr("#end_date", {
+            dateFormat: "Y-m-d",
+            locale: "ar"
+        });
+    </script>
+
+    <script>
+        // تفعيل Flatpickr مع اللغة العربية
+        flatpickr("#start_date", {
+            dateFormat: "Y-m-d",
+            locale: "ar",
+            onChange: calculateDays
+        });
+
+        flatpickr("#end_date", {
+            dateFormat: "Y-m-d",
+            locale: "ar",
+            onChange: calculateDays
+        });
+
+        // دالة حساب عدد الأيام مع استثناء يوم الجمعة
+        function calculateDays() {
+            const startDate = document.getElementById('start_date').value;
+            const endDate = document.getElementById('end_date').value;
+
+            if (startDate && endDate) {
+                const start = new Date(startDate);
+                const end = new Date(endDate);
+
+                let totalDays = 0;
+                let currentDate = new Date(start);
+
+                // التأكد من أن تاريخ البداية قبل تاريخ النهاية
+                if (start > end) {
+                    document.getElementById('days_taken').value = 0;
+                    return;
+                }
+
+                // حساب الأيام مع استثناء الجمعة
+                while (currentDate <= end) {
+                    // إذا كان اليوم ليس جمعة (5 في نظام الأيام حيث الأحد = 0)
+                    if (currentDate.getDay() !== 5) {
+                        totalDays++;
+                    }
+                    currentDate.setDate(currentDate.getDate() + 1);
+                }
+
+                document.getElementById('days_taken').value = totalDays;
+            }
         }
     </script>
 @endpush
