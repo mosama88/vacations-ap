@@ -47,6 +47,6 @@ class Leave extends Model
 
     protected $casts = [
         'leave_status' => LeaveStatusEnum::class,
-        'leave_type' => LeaveTypeEnum::class,
+        // 'leave_type' => LeaveTypeEnum::class,
     ];
 }

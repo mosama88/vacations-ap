@@ -47,13 +47,15 @@ Route::middleware('auth:employee')->name('dashboard.')->group(function () {
 
     // ---------------------------------------------------- بداية تكويد الأجازات
     Route::resource('/leaves', LeaveController::class);
-    Route::post('leaves/balance', [LeaveController::class, 'getLeaveBalance'])->name('leaves.getLeavesBalances');
+
+    Route::controller(LeaveController::class)->name('leaves.')->prefix('leaves')->group(function () {
+        Route::get('/pending/employee', 'getLeavepending')->name('getLeavespending');
+        Route::post('/balance', 'getLeaveBalance')->name('getLeavesBalances');
+    });
 
     // ---------------------------------------------------- بداية تكويد الصفحه الامامين للمستخدمين
     Route::controller(EmployeePanel::class)->prefix('leave')->group(function () {
-        Route::get('/all', 'allLeaves')->name('leaves.all');
         Route::get('employee-panel/user', 'index')->name('employee-panel.index');
-        Route::get('/pending',  'getLeavepending')->name('leaves.getLeavespending');
         Route::get('/data/{id}',  'showLeave')->name('leaves.showLeavesall');
         Route::get('/print/{id}',  'printLeave')->name('leaves.print');
     });

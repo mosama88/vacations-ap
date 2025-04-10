@@ -97,17 +97,18 @@
                         <!-- /.card-header -->
                         <div class="card-body">
                             <div class=" my-2">
+                                @can('المعلقه الأجازات')
+                                    <a href="{{ route('dashboard.leaves.getLeavespending') }}" class="btn btn-warning mx-1"> <i
+                                            class="fas fa-hourglass-half mx-1"></i> الأجازات المعلقه </a>
+                                @endcan
+
                                 @can('طلب الأجازات')
                                     <a href="{{ route('dashboard.leaves.create') }}" class="btn btn-primary mx-1"><i
                                             class="fas fa-hand-paper mx-1"></i> طلب أجازه</a>
                                 @endcan
 
-                                @can('المعلقه الأجازات')
-                                    <a href="{{ route('dashboard.leaves.getLeavespending') }}" class="btn btn-warning mx-1"> <i
-                                            class="fas fa-hourglass-half mx-1"></i> الأجازات المعلقه </a>
-                                @endcan
                                 @can('الموظفين الأجازات')
-                                    <a href="{{ route('dashboard.leaves.all') }}" class="btn btn-success mx-1"><i
+                                    <a href="{{ route('dashboard.leaves.index') }}" class="btn btn-success mx-1"><i
                                             class="fas fa-clipboard-list mx-1"></i> الاجازاه التى أخذت أجراء</a>
                                 @endcan
                             </div>
@@ -124,6 +125,7 @@
                                         <th>ملاحظات</th>
                                         <th>انشاء بواسطة</th>
                                         <th>تحديث بواسطة</th>
+                                        <th>الأجراءات</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -155,10 +157,15 @@
                                                 @endif
                                             </td>
 
-                                            @include('front.leaves.edit')
                                             <td>{{ $info->description }}</td>
                                             <td>{{ $info->created_by ? $info->createdBy->name : 'لا يوجد' }}</td>
                                             <td>{{ $info->updated_by ? $info->updatedBy->name : 'لا يوجد تحديث' }}</td>
+                                            <td>
+                                                <a class="btn btn-outline-info btn-sm mx-2"
+                                                    href="{{ route('dashboard.leaves.edit', $info->id) }}"><i
+                                                        class="fas fa-edit ml-1"></i></a>
+                                            </td>
+                                            {{-- @include('front.leaves.show-leave') --}}
                                         </tr>
                                     @empty
                                         <div class="alert alert-info" role="alert">
@@ -167,7 +174,6 @@
                                     @endforelse
                                 </tbody>
                             </table>
-                            {{-- @include('front.leaves.edit') --}}
                         </div>
                         <!-- /.card-body -->
 

@@ -1,18 +1,20 @@
 @extends('dashboard.layouts.master')
-@section('active-leaves', 'active')
-@section('title', 'أنشاء فرع جديد')
+@section('active-leaves-create', 'active')
+@section('title', 'أنشاء طلب أجازه')
 @push('css')
     <!-- Select2 -->
     <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/plugins/select2/css/select2.min.css">
     <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+    <!-- flatpickr -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 @endpush
 @section('content')
 
-    @include('dashboard.layouts.breadcrumb-front', [
-        'pageTitle' => 'أنشاء فرع جديد',
-        'previousPage' => 'جدول الفروع',
-        'urlPreviousPage' => 'leaves.index',
-        'currentPage' => 'أنشاء فرع جديد',
+    @include('dashboard.layouts.breadcrumb', [
+        'pageTitle' => 'أنشاء طلب أجازه',
+        'previousPage' => 'جدول الأجازات',
+        'urlPreviousPage' => 'employee-panel.index',
+        'currentPage' => 'أنشاء طلب أجازه',
     ])
 
     @include('dashboard.layouts.message')
@@ -20,81 +22,139 @@
     <section class="content">
         <div class="container-fluid">
 
+
             <div class="row">
                 <div class="col-12">
                     <!-- general form elements -->
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">أنشاء فرع جديد</h3>
+                            <h3 class="card-title">أنشاء طلب أجازه</h3>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="{{ route('leaves.store') }}" method="POST">
+                        <form action="{{ route('dashboard.leaves.store') }}" method="POST">
                             @csrf
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="form-group col-6" id="employee_div">
-                                        <label for="exampleSelectBorder">أسم الموظف </label>
-                                        <select name="employee_id" id="employee_id"
-                                            class="form-control select2 vh-100 @error('employee_id') is-invalid @enderror"
-                                            id="exampleSelectBorder">
-                                            <option value="">-- أختر المحافظة --</option>
-                                            @forelse ($other['employees'] as $employee)
-                                                <option @if (old('employee_id') == $employee->id) selected @endif
-                                                    value="{{ $employee->id }}">{{ $employee->name }}</option>
-                                            @empty
-                                                عفوآ لا توجد بيانات!
-                                            @endforelse
-                                        </select>
-                                        @error('employee_id')
-                                            <span class="invalid-feedback text-right" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
+                                    <div class="form-group col-4" id="employee_div">
+                                        <label for="exampleInputName">كود الموظف</label>
+                                        <input disabled type="text" id="employee_code"
+                                            value="{{ $employees->employee_code }}" name="employee_code"
+                                            class="form-control" id="exampleInputemployee_id" placeholder="">
+                                    </div>
+                                    <div class="form-group col-4" id="employee_div">
+                                        <label for="exampleInputName">أسم الموظف</label>
+                                        <input disabled type="text" id="employee_id" value="{{ $employees->name }}"
+                                            name="employee_id" class="form-control" id="exampleInputemployee_id"
+                                            placeholder="">
+                                    </div>
+                                    <div class="form-group col-4">
+                                        <label for="exampleSelectBorder">الراحه الاسبوعية</code></label>
+                                        <input disabled type="text" id="week_id" value="{{ $employees->week->name }}"
+                                            name="week_id" class="form-control" id="exampleInputweek_id" placeholder="">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-4">
-                                        <label for="exampleInputName">رصيد الأجازات</label>
-                                        <input disabled type="text" name="total_days" class="form-control"
-                                            id="exampleInputtotal_days" placeholder="">
+                                        <label for="exampleInputName">رصيد الأجازات
+                                            <span class="text-info">(الأعتيادى)</span> </label>
+                                        <input disabled type="text" name="total_days"
+                                            value="{{ $employees->leaveBalance->total_days ?? 'لا يوجد رصيد' }}"
+                                            class="form-control" id="exampleInputtotal_days" placeholder="">
+                                    </div>
+
+
+                                    <div class="form-group col-4">
+                                        <label for="exampleInputName">الرصيد المستخدم <span
+                                                class="text-info">(الأعتيادى)</span> </label>
+                                        <input disabled type="text" name="used_days"
+                                            value="{{ $employees->leaveBalance->used_days ?? 'لا يوجد رصيد' }}"
+                                            name="used_days" class="form-control" id="exampleInputused_days" placeholder="">
                                     </div>
 
                                     <div class="form-group col-4">
-                                        <label for="exampleInputName">الرصيد المستخدم</label>
-                                        <input disabled type="text" name="used_days" class="form-control"
-                                            id="exampleInputused_days" placeholder="">
-                                    </div>
-
-                                    <div class="form-group col-4">
-                                        <label for="exampleInputName">الرصيد المتبقى</label>
-                                        <input disabled type="text" name="remainig_days" class="form-control"
-                                            id="exampleInputremainig_days" placeholder="">
+                                        <label for="exampleInputName">الرصيد المتبقى <span
+                                                class="text-info">(الأعتيادى)</span> </label>
+                                        <input disabled type="text"
+                                            value="{{ $employees->leaveBalance->remainig_days ?? 'لا يوجد رصيد' }}"
+                                            name="remainig_days" class="form-control" id="exampleInputremainig_days"
+                                            placeholder="">
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="form-group col-6">
-                                        <label>بداية الأجازه</label>
-                                        <input type="date" name="start_date"
-                                            class="form-control @error('start_date') is-invalid @enderror"
-                                            value="{{ old('start_date') }}" placeholder="أدخل السنه المالية">
-                                        @error('start_date')
-                                            <span class="invalid-feedback text-right" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
+                                    <div class="form-group col-4">
+                                        <label for="exampleInputName"> رصيد
+                                            الأجازات <span class="text-danger">(العارضه)</span> </label>
+                                        <input disabled type="text" name="total_days_emergency"
+                                            value="{{ $employees->leaveBalance->total_days_emergency ?? 'لا يوجد رصيد' }}"
+                                            class="form-control" id="exampleInputtotal_days_emergency" placeholder="">
                                     </div>
-                                    <div class="form-group col-6">
-                                        <label>نهاية الأجازه</label>
-                                        <input type="date" name="end_date"
-                                            class="form-control @error('end_date') is-invalid @enderror"
-                                            value="{{ old('end_date') }}" placeholder="أدخل السنه المالية">
-                                        @error('end_date')
-                                            <span class="invalid-feedback text-right" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
+
+
+                                    <div class="form-group col-4">
+                                        <label for="exampleInputName">الرصيد المستخدم <span
+                                                class="text-danger">(العارضه)</span> </label>
+                                        <input disabled type="text" name="used_days_emergency"
+                                            value="{{ $employees->leaveBalance->used_days_emergency ?? 'لا يوجد رصيد' }}"
+                                            name="used_days_emergency" class="form-control"
+                                            id="exampleInputused_days_emergency" placeholder="">
                                     </div>
+
+                                    <div class="form-group col-4">
+                                        <label for="exampleInputName">الرصيد المتبقى <span
+                                                class="text-danger">(العارضه)</span> </label>
+                                        <input disabled type="text"
+                                            value="{{ $employees->leaveBalance->remainig_days_emergency ?? 'لا يوجد رصيد' }}"
+                                            name="remainig_days_emergency" class="form-control"
+                                            id="exampleInputremainig_days_emergency" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-4">
+                                        <label class="visually-hidden" for="specificSizeInputGroupUsername">بداية
+                                            الأجازة</label>
+                                        <div class="input-group">
+                                            <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
+                                            <input type="text" id="start_date" name="start_date"
+                                                class="form-control @error('start_date') is-invalid @enderror"
+                                                value="{{ old('start_date') }}" placeholder="اختر تاريخ البداية">
+                                            @error('start_date')
+                                                <span class="invalid-feedback text-right" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-group col-4">
+                                        <label class="visually-hidden" for="specificSizeInputGroupUsername">نهاية
+                                            الأجازة</label>
+                                        <div class="input-group">
+                                            <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
+                                            <input type="text" id="end_date" name="end_date"
+                                                class="form-control @error('end_date') is-invalid @enderror"
+                                                value="{{ old('end_date') }}" placeholder="اختر تاريخ النهاية">
+                                            @error('end_date')
+                                                <span class="invalid-feedback text-right" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+
+                                    </div>
+
+
+
+
+
+
+                                    <div class="form-group col-4">
+                                        <label for="exampleInputName">عدد الأيام </label>
+                                        <input disabled type="text" value="{{ old('days_taken') }}" name="days_taken"
+                                            class="form-control" id="days_taken" placeholder="">
+                                    </div>
+
 
                                     <div class="form-group col-6">
                                         <label for="exampleSelectBorder">نوع الأجازه</code></label>
@@ -155,6 +215,9 @@
 @push('js')
     <!-- Select2 -->
     <script src="{{ asset('dashboard') }}/assets/plugins/select2/js/select2.full.min.js"></script>
+    <!-- flatpickr -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ar.js"></script>
 
     <script>
         $(function() {
@@ -176,7 +239,7 @@
         function getLeaveBalance() {
             var employee_id = $("#employee_id").val();
             jQuery.ajax({
-                url: '{{ route('leaves.getLeavesBalances') }}',
+                url: '{{ route('dashboard.leaves.getLeavesBalances') }}',
                 type: 'POST',
                 dataType: 'json', // التأكد من أنك ترجع البيانات بتنسيق JSON
                 cache: false,
@@ -199,6 +262,63 @@
                     alert("عفوا، لقد حدث خطأ.");
                 }
             });
+        }
+    </script>
+    <script>
+        flatpickr("#start_date", {
+            dateFormat: "Y-m-d",
+            locale: "ar"
+        });
+
+        flatpickr("#end_date", {
+            dateFormat: "Y-m-d",
+            locale: "ar"
+        });
+    </script>
+
+    <script>
+        // تفعيل Flatpickr مع اللغة العربية
+        flatpickr("#start_date", {
+            dateFormat: "Y-m-d",
+            locale: "ar",
+            onChange: calculateDays
+        });
+
+        flatpickr("#end_date", {
+            dateFormat: "Y-m-d",
+            locale: "ar",
+            onChange: calculateDays
+        });
+
+        // دالة حساب عدد الأيام مع استثناء يوم الجمعة
+        function calculateDays() {
+            const startDate = document.getElementById('start_date').value;
+            const endDate = document.getElementById('end_date').value;
+
+            if (startDate && endDate) {
+                const start = new Date(startDate);
+                const end = new Date(endDate);
+
+                let totalDays = 0;
+                let currentDate = new Date(start);
+
+                // التأكد من أن تاريخ البداية قبل تاريخ النهاية
+                if (start > end) {
+                    document.getElementById('days_taken').value = 0;
+                    return;
+                }
+
+                // حساب الأيام مع استثناء الجمعة
+                while (currentDate <= end) {
+                    // إذا كان اليوم ليس جمعة (5 في نظام الأيام حيث الأحد = 0)
+                    if (currentDate.getDay() !== 5) {
+                        totalDays++;
+                    }
+                    currentDate.setDate(currentDate.getDate() + 1);
+                }
+
+                document.getElementById('days_taken').value = totalDays;
+            }
         }
     </script>
 @endpush

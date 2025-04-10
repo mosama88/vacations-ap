@@ -82,7 +82,6 @@
                                                 @endif
                                             </td>
 
-                                            @include('front.leaves.edit')
                                             <td>{{ $info->description }}</td>
                                             <td>{{ $info->updated_by ? $info->updatedBy->name : 'لا يوجد تحديث' }}</td>
                                             <td>

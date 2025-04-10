@@ -111,22 +111,24 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                @can('طلب الأجازات')
-                                    <a href="{{ route('dashboard.leaves.create') }}" class="nav-link @yield('active-leaves')">
+                                @can('الموظفين الأجازات')
+                                <li class="nav-item">
+                                    <a href="{{ route('dashboard.leaves.index') }}" class="nav-link @yield('active-all')">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p> أجازات الموظفين</p>
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('طلب الأجازات')
+                                <li class="nav-item">
+                                    <a href="{{ route('dashboard.leaves.create') }}" class="nav-link @yield('active-leaves-create')">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>طلب أجازه</p>
                                     </a>
                                 @endcan
                             </li>
 
-                            @can('الموظفين الأجازات')
-                                <li class="nav-item">
-                                    <a href="{{ route('dashboard.leaves.all') }}" class="nav-link @yield('active-all')">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p> أجازات الموظفين</p>
-                                    </a>
-                                </li>
-                            @endcan
+
 
                             @can('المعلقه الأجازات')
                                 <li class="nav-item">

@@ -20,8 +20,11 @@ class LeaveController extends Controller
      */
     public function index()
     {
-        $data = Leave::orderByDesc('id')->paginate(10);
-        return view('dashboard.leaves.index', compact('data'));
+        $emplyeeId = Auth::user()->id;
+        $other['weeks'] = Week::where('id', $emplyeeId)->get();
+        $employees = Employee::with('leaveBalance')->where('id', $emplyeeId)->first();
+        $data = Leave::orderByDesc('id')->where('leave_status', "!=", LeaveStatusEnum::Pending)->paginate(10);
+        return view('dashboard.leaves.index', compact('data', 'employees', 'other'));
     }
 
 
@@ -34,7 +37,7 @@ class LeaveController extends Controller
         $emplyeeId = Auth::user()->id;
         $other['weeks'] = Week::where('id', $emplyeeId)->get();
         $employees = Employee::with('leaveBalance')->where('id', $emplyeeId)->first();
-        return view('front.leaves.create', compact('employees', 'other'));
+        return view('dashboard.leaves.create', compact('employees', 'other'));
     }
 
     /**
@@ -112,9 +115,8 @@ class LeaveController extends Controller
      */
     public function edit($id)
     {
-        $leaves = Leave::findOrFail($id);
-
-        return view('front.leaves.edit', compact('leaves'));
+        $leave = Leave::findOrFail($id)->with('employee')->first();
+        return view('dashboard.leaves.edit', compact('leave'));
     }
 
     /**
@@ -136,6 +138,17 @@ class LeaveController extends Controller
     public function destroy(Leave $leave)
     {
         //
+    }
+
+
+    public function getLeavepending()
+    {
+
+        $emplyeeId = Auth::user()->id;
+        $other['weeks'] = Week::where('id', $emplyeeId)->get();
+        $employees = Employee::with('leaveBalance')->where('id', $emplyeeId)->first();
+        $data = Leave::orderByDesc('id')->where('leave_status', LeaveStatusEnum::Pending)->paginate(10);
+        return view('front.leaves.leaves-pending', compact('data', 'employees', 'other'));
     }
 
     public function getLeaveBalance(Request $request)
