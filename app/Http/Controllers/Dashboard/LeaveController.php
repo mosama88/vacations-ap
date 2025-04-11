@@ -146,14 +146,12 @@ class LeaveController extends Controller
 
     public function update(LeaveRequest $request, $id)
     {
+        $leave = Leave::findOrFail($id);
+        $employeeId = Employee::where('id', $leave->employee->id)->first();
 
-        $authEmployeeAuth = Auth::user()->id;
-
-        $employeeId = Employee::where('id', $authEmployeeAuth)->first();
         if (!$employeeId) {
             return redirect()->back()->withErrors(['error' => 'عفواً لا يوجد موظف بهذا ID'])->withInput();
         }
-
 
 
         $financial_year = FinanceCalendar::select('id', 'finance_yr')->where('status', StatusActive::Active)->first();
@@ -161,7 +159,7 @@ class LeaveController extends Controller
             return redirect()->back()->withErrors(['error' => 'السنه المالية غير مفعله'])->withInput();
         }
 
-        $leave = Leave::findOrFail($id);
+
 
         // التحقق من صحة التواريخ
         $startDate = Carbon::parse($request->start_date);
@@ -201,8 +199,8 @@ class LeaveController extends Controller
                 'leave_type' => $request->leave_type,
                 'leave_status' => $request->leave_status,
                 'description' => $request->description,
+                'updated_by' => Auth::id(),
             ]);
-
             session()->flash('success', 'تم تعديل الإجازة بنجاح');
             return redirect()->route('dashboard.employee-panel.index');
         } catch (\Exception $e) {
