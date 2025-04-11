@@ -48,13 +48,23 @@ class LeaveController extends Controller
      */
     public function store(LeaveRequest $request)
     {
+        $authEmployeeAuth = Auth::user()->id;
+
+        $employeeId = Employee::where('id', $authEmployeeAuth)->first();
+        if (!$employeeId) {
+            return redirect()->back()->withErrors(['error' => 'عفواً لا يوجد موظف بهذا ID'])->withInput();
+        }
 
         $financial_year = FinanceCalendar::select('id', 'finance_yr')->where('status', StatusActive::Active)->first();
         if (!$financial_year) {
             return redirect()->back()->withErrors(['error' => 'عفوآ لا يوجد سنه مالية مفتوحة!!'])->withInput();
         }
 
-        $employeeId = Auth::id();
+        if (!$employeeId) {
+            return redirect()->back()->withErrors(['error' => 'عفواً لا يوجد موظف بهذا ID'])->withInput();
+        }
+
+
         $lastLeaveCode = Leave::orderByDesc('leave_code')->value('leave_code');
         $newnEwLeaveCode = $lastLeaveCode ? $lastLeaveCode + 1 : 100;
 
@@ -92,7 +102,7 @@ class LeaveController extends Controller
             Leave::create([
                 'finance_calendar_id' => $financial_year['id'],
                 'leave_code' => $newnEwLeaveCode,
-                'employee_id' => $employeeId,
+                'employee_id' => $employeeId->id,
                 'start_date' => $startDate,
                 'end_date' => $endDate,
                 'days_taken' => $daysTaken,
@@ -136,13 +146,22 @@ class LeaveController extends Controller
 
     public function update(LeaveRequest $request, $id)
     {
+
+        $authEmployeeAuth = Auth::user()->id;
+
+        $employeeId = Employee::where('id', $authEmployeeAuth)->first();
+        if (!$employeeId) {
+            return redirect()->back()->withErrors(['error' => 'عفواً لا يوجد موظف بهذا ID'])->withInput();
+        }
+
+
+
         $financial_year = FinanceCalendar::select('id', 'finance_yr')->where('status', StatusActive::Active)->first();
         if (!$financial_year) {
             return redirect()->back()->withErrors(['error' => 'السنه المالية غير مفعله'])->withInput();
         }
 
         $leave = Leave::findOrFail($id);
-        $employeeId = Auth::id();
 
         // التحقق من صحة التواريخ
         $startDate = Carbon::parse($request->start_date);
@@ -175,7 +194,7 @@ class LeaveController extends Controller
 
             $leave->update([
                 'finance_calendar_id' => $financial_year['id'],
-                'employee_id' => $employeeId,
+                'employee_id' => $employeeId->id,
                 'start_date' => $startDate,
                 'end_date' => $endDate,
                 'days_taken' => $daysTaken,
