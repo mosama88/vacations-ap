@@ -52,7 +52,6 @@ class UserRolePermissionSeeder extends Seeder
             ['name' => 'اضافة السنوات المالية', 'category' => 'financeCalendars', 'guard_name' => $guardAdmin],
             ['name' => 'تعديل السنوات المالية', 'category' => 'financeCalendars', 'guard_name' => $guardAdmin],
             ['name' => 'حذف السنوات المالية', 'category' => 'financeCalendars', 'guard_name' => $guardAdmin],
-            ['name' => 'عرض شهور السنه السنوات مالية', 'category' => 'financeCalendars', 'guard_name' => $guardAdmin],
             ['name' => 'فتح السنوات المالية', 'category' => 'financeCalendars', 'guard_name' => $guardAdmin],
             ['name' => 'غلق السنوات المالية', 'category' => 'financeCalendars', 'guard_name' => $guardAdmin],
 
@@ -100,7 +99,6 @@ class UserRolePermissionSeeder extends Seeder
 
             //    أنواع الأجازات
             ['name' => 'الأجازات', 'category' => 'leaves', 'guard_name' => $guardAdmin],
-            ['name' => 'اضافة الأجازات', 'category' => 'leaves', 'guard_name' => $guardAdmin],
             ['name' => 'تعديل الأجازات', 'category' => 'leaves', 'guard_name' => $guardAdmin],
             ['name' => 'حذف الأجازات', 'category' => 'leaves', 'guard_name' => $guardAdmin],
             ['name' => 'اخذ اجراء الأجازات', 'category' => 'leaves', 'guard_name' => $guardAdmin],
