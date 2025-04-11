@@ -204,6 +204,7 @@
                                         @enderror
                                     </div>
                                     @can('اخذ اجراء الأجازات')
+                                        <!-- /.card-body -->
                                         <div class="form-group col-12">
                                             <label for="leave_status">حالة الإجازة</label>
 
@@ -243,12 +244,13 @@
 
 
                             <!-- /.card-body -->
-
-                            <div class="card-footer text-center ">
-                                <button type="submit" class="btn btn-primary">حفظ البيانات <i
-                                        class="fas fa-save mx-1"></i>
-                                </button>
-                            </div>
+                            @if ($leave->leave_status != LeaveStatusEnum::Approved)
+                                <div class="card-footer text-center ">
+                                    <button type="submit" class="btn btn-primary">تعديل الأجازه <i
+                                            class="fas fa-save mx-1"></i>
+                                    </button>
+                                </div>
+                            @endif
 
                         </form>
                         <!-- /.card -->

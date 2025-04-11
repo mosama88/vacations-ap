@@ -1,5 +1,5 @@
 @php
-use App\Enum\StatusActive;
+    use App\Enum\StatusActive;
     use App\Enum\LeaveStatusEnum;
     use App\Enum\LeaveTypeEnum;
 @endphp
@@ -183,6 +183,7 @@ use App\Enum\StatusActive;
                                     @endforelse
                                 </tbody>
                             </table>
+                            {{ $data->links() }}
                         </div>
                         <!-- /.card-body -->
 
