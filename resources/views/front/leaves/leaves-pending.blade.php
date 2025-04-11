@@ -85,15 +85,14 @@
                                             <td>{{ $info->description }}</td>
                                             <td>{{ $info->updated_by ? $info->updatedBy->name : 'لا يوجد تحديث' }}</td>
                                             <td>
-                                                <a class=" btn btn-outline-info btn-sm mx-2" data-toggle="modal"
-                                                    data-toggle="modal" href="#show{{ $info->id }}"><i
-                                                        data-id="{{ $info->id }}" class="fas fa-edit ml-1"></i></a>
+                                                <a class="btn btn-outline-info btn-sm mx-2"
+                                                    href="{{ route('dashboard.leaves.edit', $info->id) }}"><i
+                                                        class="fas fa-edit ml-1"></i></a>
 
-                                                <a class=" btn btn-outline-success btn-sm mx-2" target="_blank"
-                                                    href="{{ route('dashboard.leaves.print', $info->id) }}"><i
-                                                        class="fas fa-print ml-1"></i></a>
+                                                <a class="btn btn-outline-success btn-sm mx-2"
+                                                    href="{{ route('dashboard.leaves.show', $info->id) }}"><i
+                                                        class="fas fa-eye ml-1"></i></a>
                                             </td>
-                                            @include('front.leaves.show-leave')
                                         @empty
                                             لا توجد أجازات
                                     @endforelse

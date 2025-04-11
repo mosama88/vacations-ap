@@ -1,4 +1,5 @@
 @php
+use App\Enum\StatusActive;
     use App\Enum\LeaveStatusEnum;
     use App\Enum\LeaveTypeEnum;
 @endphp
@@ -93,7 +94,7 @@
                             <h3 class="col-12 float-right">جدول أجازات <span
                                     class="text-secondary">{{ Auth::user()->name }}</span>
                                 لسنة
-                                <span class="text-secondary"> {{ $financial_year->finance_yr }}</span>
+                                <span class="text-secondary"> {{ $financial_year->finance_yr ?? null }}</span>
                             </h3>
                         </div>
                         <!-- /.card-header -->
@@ -103,11 +104,14 @@
                                     <a href="{{ route('dashboard.leaves.getLeavespending') }}" class="btn btn-warning mx-1"> <i
                                             class="fas fa-hourglass-half mx-1"></i> الأجازات المعلقه </a>
                                 @endcan
-
-                                @can('طلب الأجازات')
-                                    <a href="{{ route('dashboard.leaves.create') }}" class="btn btn-primary mx-1"><i
-                                            class="fas fa-hand-paper mx-1"></i> طلب أجازه</a>
-                                @endcan
+                                @if ($financial_year?->status == StatusActive::Active)
+                                    @can('طلب الأجازات')
+                                        <a href="{{ route('dashboard.leaves.create') }}" class="btn btn-primary mx-1"><i
+                                                class="fas fa-hand-paper mx-1"></i> طلب أجازه</a>
+                                    @endcan
+                                @else
+                                    لا توجد سنه مالية مفتوحة
+                                @endif
 
                                 @can('الموظفين الأجازات')
                                     <a href="{{ route('dashboard.leaves.index') }}" class="btn btn-success mx-1"><i

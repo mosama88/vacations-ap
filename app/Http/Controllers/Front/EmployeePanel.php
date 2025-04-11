@@ -15,10 +15,10 @@ class EmployeePanel extends Controller
 {
     public function index()
     {
-        $financial_year = FinanceCalendar::select('id', 'finance_yr')->where('status', StatusActive::Active)->first();
+        $financial_year = FinanceCalendar::select('id', 'finance_yr', 'status')->where('status', StatusActive::Active)->first();
         $employee = Auth::user()->id;
         $other['weeks'] = Week::where('id', $employee)->get();
-        $data = Leave::where('employee_id', $employee)->where('finance_calendar_id', $financial_year->id)->orderByDesc('id')->paginate(10);
+        $data = Leave::where('employee_id', $employee)->orderByDesc('id')->paginate(10);
         return view('front.index', compact('data'), compact('data', 'other', 'financial_year'));
     }
 
