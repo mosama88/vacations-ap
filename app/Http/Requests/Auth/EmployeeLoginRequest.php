@@ -58,7 +58,7 @@ class EmployeeLoginRequest extends FormRequest
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
-                'username' => 'أسم المستخدم غير مسجل.',
+                'username' => 'خطأ فى أسم المستخدم أو كلمة المرور.',
             ]);
         }
 

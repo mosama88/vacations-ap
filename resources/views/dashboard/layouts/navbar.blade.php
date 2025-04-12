@@ -26,80 +26,30 @@
 
     <!-- Right navbar links -->
     <ul class="navbar-nav mr-auto-navbav">
-        <li class="nav-item dropdown user-menu">
-            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-                <span>
-                    {{ Auth::user()->name }}
-                </span>
-            </a>
+        <div class="dropdown">
+            <!-- Dropdown Trigger Button -->
+            <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                <i class="fas fa-user"></i> {{ Auth::user()->name }}
+            </button>
+
+            <!-- Dropdown Menu -->
             <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                 <li>
-                    <a class="btn btn-default btn-flat float-right btn-block" data-toggle="dropdown" href="">
+                    <a class="dropdown-item" href="{{ route('dashboard.profile') }}">
                         <i class="fas fa-user mx-1"></i> الملف الشخصى
                     </a>
                 </li>
-                <li class="user-footer">
+                <li class="dropdown-divider"></li> <!-- Optional separator -->
+                <li>
                     <form action="{{ route('dashboard.employees.logout') }}" method="POST">
                         @csrf
-                        <a class="btn btn-default btn-flat float-right btn-block" data-toggle="dropdown" href=""
-                            onclick="event.preventDefault(); this.closest('form').submit();">
+                        <button type="submit" class="dropdown-item">
                             <i class="fas fa-sign-out-alt mx-1"></i> تسجيل الخروج
-                        </a>
+                        </button>
                     </form>
                 </li>
-
             </ul>
-
-        </li>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        </div>
 
 
 

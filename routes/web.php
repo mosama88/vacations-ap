@@ -21,6 +21,13 @@ Route::get('/', function () {
 
 
 Route::middleware('auth:employee')->name('dashboard.')->group(function () {
+
+
+    //------------------------ Profile
+    Route::get('profile', [EmployeeController::class, 'profile'])
+        ->name('profile');
+    Route::post('profile', [EmployeeController::class, 'changePassword']);
+
     //------------------------ Logout
     Route::post('logout', [EmployeeLoginController::class, 'destroy'])
         ->name('employees.logout');
@@ -61,6 +68,9 @@ Route::middleware('auth:employee')->name('dashboard.')->group(function () {
     });
 });
 
+
+
+
 //----------------------------------------------------------- Login
 Route::middleware('redirect.employee')->group(function () {
     Route::get('/login', [EmployeeLoginController::class, 'create'])->name('employees.login');
@@ -70,10 +80,10 @@ Route::middleware('redirect.employee')->group(function () {
 
 
 
+// ---------------------------------------------- بداية تكويد الصلاحيات
 Route::middleware(['auth:employee', 'role:super-admin,employee'])
     ->name('dashboard.')
     ->group(function () {
-        // ---------------------------------------------- بداية تكويد الصلاحيات
         Route::prefix('roles')->controller(RoleController::class)->group(function () {
             Route::get('/', 'index')->name('roles.index');
             Route::get('/create', 'create')->name('roles.create');

@@ -50,7 +50,7 @@ class EmployeeRequest extends FormRequest
             'username.required' => 'اسم المستخدم مطلوب.',
             'username.string' => 'اسم المستخدم يجب أن يكون نصًا.',
             'username.max' => 'اسم المستخدم لا يمكن أن يتجاوز 255 حرفًا.',
-            'username.unique' => 'اسم المستخدم يجب أن يكون فريدًا.',
+            'username.unique' => 'اسم المستخدم موجود بالفعل.',
 
             'password.required' => 'كلمة المرور مطلوبة.',
             'password.string' => 'كلمة المرور يجب أن تكون نصًا.',

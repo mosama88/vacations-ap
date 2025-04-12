@@ -11,6 +11,7 @@ use App\Enum\EmployeeStatus;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\Dashboard\EmployeeRequest;
 
@@ -119,5 +120,34 @@ class EmployeeController extends Controller
             'success' => true,
             'message' => 'تم حذف الموظف بنجاح!'
         ]);
+    }
+
+    public function profile()
+    {
+        return view('dashboard.auth.profile');
+    }
+
+
+    public function changePassword(Request $request)
+    {
+        $request->validate([
+            'password' => 'required|min:5|max:30|confirmed',
+            'password_confirmation' => 'required'
+        ], [
+            'password.required' => 'حقل كلمة المرور مطلوب',
+            'password.min' => 'يجب أن تتكون كلمة المرور من 5 أحرف على الأقل',
+            'password.max' => 'يجب ألا تزيد كلمة المرور عن 30 حرفاً',
+            'password.confirmed' => 'كلمتا المرور غير متطابقتين',
+            'password_confirmation.required' => 'حقل تأكيد كلمة المرور مطلوب'
+        ]);
+        $user = Auth::user()->id;
+        $employee = Employee::findOrFail($user);
+        $employee->password = $request->password;
+
+        $employee->save();
+
+        session()->flash('success', 'تم تغيير كلمة المرور بنجاح');
+
+        return redirect()->back();
     }
 }
