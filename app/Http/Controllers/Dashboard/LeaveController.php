@@ -39,11 +39,14 @@ class LeaveController extends Controller
      */
     public function create()
     {
+        $financial_year = FinanceCalendar::select('id', 'finance_yr')->where('status', StatusActive::Active)->first();
         $emplyeeId = Auth::user()->id;
         $other['weeks'] = Week::where('id', $emplyeeId)->get();
         $employees = Employee::with('leaveBalance')->where('id', $emplyeeId)->first();
-        return view('dashboard.leaves.create', compact('employees', 'other'));
+        $leaveBalances = LeaveBalance::where('finance_calendar_id', $financial_year->id)->where('employee_id', $emplyeeId)->first();
+        return view('dashboard.leaves.create', compact('employees', 'other', 'leaveBalances'));
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -125,8 +128,18 @@ class LeaveController extends Controller
     public function edit($id)
     {
         $leave = Leave::with('employee')->findOrFail($id);
-        return view('dashboard.leaves.edit', compact('leave'));
+
+        $financial_year = FinanceCalendar::select('id', 'finance_yr')
+            ->where('status', StatusActive::Active)
+            ->first();
+
+        $leaveBalances = LeaveBalance::where('finance_calendar_id', $financial_year->id)
+            ->where('employee_id', $leave->employee_id)
+            ->first();
+
+        return view('dashboard.leaves.edit', compact('leave', 'leaveBalances'));
     }
+
 
     /**
      * Update the specified resource in storage.

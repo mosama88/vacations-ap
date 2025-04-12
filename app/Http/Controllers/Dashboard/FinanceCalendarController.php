@@ -192,9 +192,9 @@ class FinanceCalendarController extends Controller
 
             if (!$exists) {
                 LeaveBalance::create([
+                    'finance_calendar_id' => $financeCalendar->id,
                     'employee_id' => $employee->id,
                     'total_days' => $employee->total_days_balance,
-                    'finance_calendar_id' => $financeCalendar->id,
                     'remainig_days' => $employee->total_days_balance,
                     'used_days' => 0,
                     'total_days_emergency' => $total_days_emergency,
