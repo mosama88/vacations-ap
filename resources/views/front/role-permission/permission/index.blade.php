@@ -17,7 +17,6 @@
     <div class="container mt-5">
         <a href="{{ url('roles') }}" class="btn btn-primary mx-1">الصلاحيات</a>
         <a href="{{ url('permissions') }}" class="btn btn-info mx-1">الأذونات</a>
-        <a href="{{ url('users') }}" class="btn btn-warning mx-1">المستخدمين</a>
     </div>
     @include('dashboard.layouts.message')
 

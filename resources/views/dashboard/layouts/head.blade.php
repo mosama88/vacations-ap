@@ -14,6 +14,11 @@
 <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
 <!-- JQVMap -->
 <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/plugins/jqvmap/jqvmap.min.css">
+
+<!-- Font Arabic -->
+<link rel="stylesheet" href="{{ asset('fonts') }}/stylesheet.css">
+
+
 <!-- Theme style -->
 <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/adminlte.min.css">
 <!-- overlayScrollbars -->

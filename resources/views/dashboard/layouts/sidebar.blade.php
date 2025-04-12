@@ -1,3 +1,6 @@
+@php
+    use App\Enum\EmployeeGender;
+@endphp
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
@@ -11,11 +14,20 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="{{ asset('dashboard') }}/assets/dist/img/user2-160x160.jpg" class="img-circle elevation-2"
-                    alt="User Image">
+                @if (Auth::user()->gender == EmployeeGender::Male)
+                    <img src="{{ asset('dashboard') }}/assets/dist/img/employees-default.png"
+                        class="img-circle elevation-2" alt="User Image">
+                @elseif (Auth::user()->gender == EmployeeGender::Female)
+                    <img src="{{ asset('dashboard') }}/assets/dist/img/employees-female-default.png"
+                        class="img-circle elevation-2" alt="User Image">
+                @else
+                    <img src="{{ asset('dashboard') }}/assets/dist/img/avatar5.png" class="img-circle elevation-2"
+                        alt="User Image">
+                @endif
+
             </div>
             <div class="info">
-                <a href="#" class="d-block">{{ Auth::user()->name }}</a>
+                <a href="#" class="d-block">{{ Auth::user()->username }}</a>
             </div>
         </div>
 
