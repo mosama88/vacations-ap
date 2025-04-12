@@ -25,6 +25,7 @@ return new class extends Migration
             $table->enum('leave_type', [1, 2, 3, 4])->default(1);
             $table->enum('leave_status', [1, 2, 3])->default(1);
             $table->text('description')->nullable();
+            $table->text('reason_for_rejection')->nullable();
             $table->foreignId('created_by')->references('id')->on('employees')->onUpdate('cascade');
             $table->foreignId('updated_by')->nullable()->references('id')->on('employees')->onUpdate('cascade');
             $table->timestamps();

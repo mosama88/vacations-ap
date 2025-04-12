@@ -139,7 +139,7 @@ class LeaveController extends Controller
             return redirect()->back()->withErrors(['error' => 'لا يمكن تعديل الإجازة بعد الموافقة عليها'])->withInput();
         }
 
-        
+
         $employee = Employee::find($leave->employee->id);
 
         if (!$employee) {
@@ -182,6 +182,7 @@ class LeaveController extends Controller
                 'leave_type' => $request->leave_type,
                 'leave_status' => $request->leave_status,
                 'description' => $request->description,
+                'reason_for_rejection' => $request->reason_for_rejection,
                 'updated_by' => Auth::id(),
             ]);
 

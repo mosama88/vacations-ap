@@ -203,6 +203,10 @@
                                             </span>
                                         @enderror
                                     </div>
+
+
+
+
                                     @can('اخذ اجراء الأجازات')
                                         <!-- /.card-body -->
                                         <div class="form-group col-12">
@@ -239,6 +243,19 @@
                                         </div>
                                     @endcan
 
+                                    <div class="form-group col-12" id="rejectionReasonContainer"
+                                        style="@if (old('leave_status', $leave->leave_status) != LeaveStatusEnum::Refused) display: none; @endif">
+                                        <label for="exampleSelectBorder">سبب الرفض</label>
+                                        <textarea class="form-control @error('reason_for_rejection') is-invalid @enderror" name="reason_for_rejection"
+                                            rows="3" placeholder="أدخل السبب ...">{{ old('reason_for_rejection', $leave->reason_for_rejection) }}</textarea>
+                                        @error('reason_for_rejection')
+                                            <span class="invalid-feedback text-right" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+
+                                 
                                 </div>
                             </div>
 
@@ -372,5 +389,22 @@
                 document.getElementById('days_taken').value = totalDays;
             }
         }
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const rejectionReasonContainer = document.getElementById('rejectionReasonContainer');
+            const radioButtons = document.querySelectorAll('input[name="leave_status"]');
+
+            radioButtons.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    if (this.value === '{{ LeaveStatusEnum::Refused }}') {
+                        rejectionReasonContainer.style.display = 'block';
+                    } else {
+                        rejectionReasonContainer.style.display = 'none';
+                        document.querySelector('textarea[name="reason_for_rejection"]').value = '';
+                    }
+                });
+            });
+        });
     </script>
 @endpush

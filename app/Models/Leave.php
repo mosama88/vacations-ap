@@ -26,6 +26,7 @@ class Leave extends Model
         'days_taken',
         'leave_status',
         'description',
+        'reason_for_rejection',
         'created_by',
         'updated_by',
     ];

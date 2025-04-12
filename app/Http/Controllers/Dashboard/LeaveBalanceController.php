@@ -21,7 +21,7 @@ class LeaveBalanceController extends Controller
      */
     public function index()
     {
-        $data = LeaveBalance::where('status', LeaveBalanceStatus::Open)->orderByDesc('id')->paginate(10);
+        $data = LeaveBalance::where('employee_id', '!=', null)->where('status', LeaveBalanceStatus::Open)->orderByDesc('id')->paginate(10);
         return view('dashboard.leaveBalances.index', compact('data'));
     }
 
