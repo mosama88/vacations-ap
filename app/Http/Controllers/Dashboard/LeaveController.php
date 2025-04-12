@@ -206,7 +206,7 @@ class LeaveController extends Controller
             ]);
 
             session()->flash('success', 'تم تعديل الإجازة بنجاح');
-            if ($employee->type == EmployeeType::Manager) {
+            if (Auth::check() && Auth::user()->type == EmployeeType::Manager) {
                 return redirect()->route('dashboard.leaves.getLeavespending');
             } else {
                 return redirect()->route('dashboard.employee-panel.index');
