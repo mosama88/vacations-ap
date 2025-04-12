@@ -96,7 +96,6 @@ class EmployeeController extends Controller
         $data = array_merge($employees, [
             'status' => $request->status,
         ]);
-
         if (!empty($request->password)) {
             // إذا كانت كلمة المرور موجودة، يتم تشفيرها وتحديث البيانات
             $employee['password'] = Hash::make($request->password);

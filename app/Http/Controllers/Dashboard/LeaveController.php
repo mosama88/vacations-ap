@@ -6,15 +6,16 @@ use Carbon\Carbon;
 use App\Models\Week;
 use App\Models\Leave;
 use App\Models\Employee;
+use App\Enum\EmployeeType;
 use App\Enum\StatusActive;
 use App\Models\LeaveBalance;
 use Illuminate\Http\Request;
 use App\Enum\LeaveStatusEnum;
+use App\Services\LeaveService;
 use App\Models\FinanceCalendar;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Dashboard\LeaveRequest;
-use App\Services\LeaveService;
 
 class LeaveController extends Controller
 {
@@ -187,7 +188,12 @@ class LeaveController extends Controller
             ]);
 
             session()->flash('success', 'تم تعديل الإجازة بنجاح');
-            return redirect()->route('dashboard.employee-panel.index');
+
+            if ($employee->type == EmployeeType::Manager) {
+                return redirect()->route('dashboard.leaves.getLeavespending');
+            } else {
+                return redirect()->route('dashboard.employee-panel.index');
+            }
         } catch (\Exception $e) {
             return redirect()->back()
                 ->withErrors(['error' => 'حدث خطأ أثناء حفظ الإجازة: ' . $e->getMessage()])

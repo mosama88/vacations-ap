@@ -23,6 +23,13 @@
 
     <section class="content">
         <div class="container-fluid">
+            @if ($errors->any())
+                @foreach ($errors->all() as $error)
+                    <div class="alert alert-danger text-center">
+                        {{ $error }}
+                    </div>
+                @endforeach
+            @endif
 
             <div class="row">
                 <div class="col-12">
@@ -176,9 +183,9 @@
                                             class="custom-select form-control-border @error('gender') is-invalid @enderror"
                                             id="exampleSelectBorder">
                                             <option value="">-- أختر النوع --</option>
-                                            <option @if (old('gender', $employee->gender) == 0) selected @endif
+                                            <option @if (old('gender', $employee->gender == EmployeeGender::Male)) selected @endif
                                                 value="{{ EmployeeGender::Male }}">ذكر</option>
-                                            <option @if (old('gender', $employee->gender) == 1) selected @endif
+                                            <option @if (old('gender', $employee->gender == EmployeeGender::Female)) selected @endif
                                                 value="{{ EmployeeGender::Female }}">انثى</option>
                                         </select>
                                         @error('gender')
@@ -193,10 +200,10 @@
                                             class="custom-select form-control-border @error('type') is-invalid @enderror"
                                             id="exampleSelectBorder">
                                             <option value="">-- أختر نوع الحساب --</option>
-                                            <option @if (old('type', $employee->type) == 0) selected @endif
-                                                value="{{ App\Enum\EmployeeType::User }}">موظف</option>
-                                            <option @if (old('type', $employee->type) == 1) selected @endif
-                                                value="{{ App\Enum\EmployeeType::Manager }}">مدير</option>
+                                            <option @if (old('type', $employee->type == EmployeeType::User)) selected @endif
+                                                value="{{ EmployeeType::User }}">موظف</option>
+                                            <option @if (old('type', $employee->type == EmployeeType::Manager)) selected @endif
+                                                value="{{ EmployeeType::Manager }}">مدير</option>
                                         </select>
                                         @error('type')
                                             <span class="invalid-feedback text-right" role="alert">
@@ -221,7 +228,8 @@
 
                                     <div class="form-group col-6">
                                         <label for="exampleSelectBorder">حالة حساب الموظف</code></label>
-                                        <select name="status" class="form-control select">
+                                        <select name="status"
+                                            class="form-control select @error('status') is-invalid @enderror">
                                             <option disabled {{ is_null($employee->status) ? 'selected' : '' }}>افتح قائمة
                                                 التحديد
                                             </option>
@@ -234,7 +242,7 @@
                                                 نشط
                                             </option>
                                         </select>
-                                        @error('type')
+                                        @error('status')
                                             <span class="invalid-feedback text-right" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -243,8 +251,9 @@
 
                                     <div class="form-group col-6">
                                         <label>الصلاحيات</label>
-                                        <select class="select2bs4" name="roles[]" multiple="multiple"
-                                            data-placeholder="-- حدد الصلاحية --" style="width: 100%;">
+                                        <select class="select2bs4 @error('roles') is-invalid @enderror" name="roles[]"
+                                            multiple="multiple" data-placeholder="-- حدد الصلاحية --"
+                                            style="width: 100%;">
                                             @foreach ($roles as $role)
                                                 <option value="{{ $role }}"
                                                     {{ in_array($role, $employeeRoles) ? 'selected' : '' }}>
@@ -253,6 +262,11 @@
                                             @endforeach
                                         </select>
                                         <!-- /.form-group -->
+                                        @error('roles')
+                                            <span class="invalid-feedback text-right" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>

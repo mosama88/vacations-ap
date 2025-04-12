@@ -1,3 +1,7 @@
+@php
+    use App\Enum\EmployeeType;
+    use App\Enum\EmployeeGender;
+@endphp
 @extends('dashboard.layouts.master')
 @section('active-branches', 'active')
 @section('title', 'عرض بيانات الموظف')
@@ -31,42 +35,31 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="form-group col-6">
+                                    <label for="exampleInputName">كود الموظف الموظف</label>
+                                    <input disabled type="text" name="employee_code"
+                                        value="{{ old('employee_code', $employee->employee_code) }}"
+                                        class="form-control bg-white" id="exampleInputName" placeholder="أدخل موظف جديد">
+                                </div>
+                                <div class="form-group col-6">
                                     <label for="exampleInputName">اسم الموظف</label>
                                     <input disabled type="text" name="name" value="{{ old('name', $employee->name) }}"
-                                        class="form-control @error('name') is-invalid @enderror" id="exampleInputName"
-                                        placeholder="أدخل موظف جديد">
-                                    @error('name')
-                                        <span class="invalid-feedback text-right" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
+                                        class="form-control bg-white" id="exampleInputName" placeholder="أدخل موظف جديد">
                                 </div>
 
-                                <div class="form-group col-6">
-                                    <label for="exampleInputmobile">موبايل الموظف</label>
-                                    <input disabled type="text" name="mobile"
-                                        value="{{ old('mobile', $employee->mobile) }}"
-                                        class="form-control @error('mobile') is-invalid @enderror" id="exampleInputmobile"
-                                        placeholder="أدخل موبايل موظف ">
-                                    @error('mobile')
-                                        <span class="invalid-feedback text-right" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
+
                             </div>
                             <div class="row">
                                 <div class="form-group col-6">
+                                    <label for="exampleInputmobile">موبايل الموظف</label>
+                                    <input disabled type="text" name="mobile"
+                                        value="{{ old('mobile', $employee->mobile) }}" class="form-control bg-white"
+                                        id="exampleInputmobile" placeholder="أدخل موبايل موظف ">
+                                </div>
+                                <div class="form-group col-6">
                                     <label for="exampleInputusername">اسم المستخدم</label>
                                     <input disabled type="text" name="username"
-                                        value="{{ old('username', $employee->username) }}"
-                                        class="form-control @error('username') is-invalid @enderror"
+                                        value="{{ old('username', $employee->username) }}" class="form-control bg-white"
                                         id="exampleInputusername" placeholder="أدخل أسم الموظف">
-                                    @error('username')
-                                        <span class="invalid-feedback text-right" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
                                 </div>
 
 
@@ -74,8 +67,7 @@
                             <div class="row">
                                 <div class="form-group col-6">
                                     <label for="exampleSelectBorder">بيانات الموظف التابع له <code>الموظف</code></label>
-                                    <select disabled name="branch_id"
-                                        class="custom-select form-control-border @error('branch_id') is-invalid @enderror"
+                                    <select disabled name="branch_id" class="custom-select bg-white form-control-border"
                                         id="exampleSelectBorder">
                                         <option value="">-- أختر بيانات الموظف --</option>
                                         @forelse ($other['branches'] as $branche)
@@ -85,17 +77,11 @@
                                             عفوآ لا توجد بيانات!
                                         @endforelse
                                     </select>
-                                    @error('branch_id')
-                                        <span class="invalid-feedback text-right" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
                                 </div>
                                 <div class="form-group col-6">
                                     <label for="exampleSelectBorder">المحافظة التابع لها <code>الموظف</code></label>
                                     <select disabled name="governorate_id"
-                                        class="custom-select form-control-border @error('governorate_id') is-invalid @enderror"
-                                        id="exampleSelectBorder">
+                                        class="custom-select bg-white form-control-border" id="exampleSelectBorder">
                                         <option value="">-- أختر المحافظة --</option>
                                         @forelse ($other['governorates'] as $governorate)
                                             <option @if (old('governorate_id', $employee->governorate_id) == $governorate->id) selected @endif
@@ -104,11 +90,6 @@
                                             عفوآ لا توجد بيانات!
                                         @endforelse
                                     </select>
-                                    @error('governorate_id')
-                                        <span class="invalid-feedback text-right" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
                                 </div>
                             </div>
 
@@ -116,8 +97,7 @@
                             <div class="row">
                                 <div class="form-group col-6">
                                     <label for="exampleSelectBorder">الدرجه الوظيفية</code></label>
-                                    <select disabled name="job_grade_id"
-                                        class="custom-select form-control-border @error('job_grade_id') is-invalid @enderror"
+                                    <select disabled name="job_grade_id" class="custom-select bg-white form-control-border"
                                         id="exampleSelectBorder">
                                         <option value="">-- أختر الدرجه الوظيفية --</option>
                                         @forelse ($other['job_grades'] as $job_grade)
@@ -127,16 +107,10 @@
                                             عفوآ لا توجد بيانات!
                                         @endforelse
                                     </select>
-                                    @error('job_grade_id')
-                                        <span class="invalid-feedback text-right" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
                                 </div>
                                 <div class="form-group col-6">
                                     <label for="exampleSelectBorder">الراحه الاسبوعية</code></label>
-                                    <select disabled name="week_id"
-                                        class="custom-select form-control-border @error('week_id') is-invalid @enderror"
+                                    <select disabled name="week_id" class="custom-select bg-white form-control-border"
                                         id="exampleSelectBorder">
                                         <option value="">-- أختر الراحه الاسبوعية --</option>
                                         @forelse ($other['weeks'] as $week)
@@ -146,52 +120,42 @@
                                             عفوآ لا توجد بيانات!
                                         @endforelse
                                     </select>
-                                    @error('week_id')
-                                        <span class="invalid-feedback text-right" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="form-group col-6">
+                                <div class="form-group col-4">
                                     <label for="exampleSelectBorder">نوع الجنس</code></label>
-                                    <select disabled name="gender"
-                                        class="custom-select form-control-border @error('gender') is-invalid @enderror"
+                                    <select disabled name="gender" class="custom-select bg-white form-control-border"
                                         id="exampleSelectBorder">
                                         <option value="">-- أختر النوع --</option>
-                                        <option @if (old('gender', $employee->gender) == 0) selected @endif
-                                            value="{{ App\Enum\EmployeeGender::Male }}">ذكر</option>
-                                        <option @if (old('gender', $employee->gender) == 1) selected @endif
-                                            value="{{ App\Enum\EmployeeGender::Female }}">انثى</option>
+                                        <option @if (old('gender', $employee->gender) == EmployeeGender::Male) selected @endif
+                                            value="{{ EmployeeGender::Male }}">ذكر</option>
+                                        <option @if (old('gender', $employee->gender) == EmployeeGender::Female) selected @endif
+                                            value="{{ EmployeeGender::Female }}">انثى</option>
                                     </select>
-                                    @error('gender')
-                                        <span class="invalid-feedback text-right" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
                                 </div>
-                                <div class="form-group col-6">
+                                <div class="form-group col-4">
                                     <label for="exampleSelectBorder">نوع حساب الموظف</code></label>
-                                    <select disabled name="type"
-                                        class="custom-select form-control-border @error('type') is-invalid @enderror"
+                                    <select disabled name="type" class="custom-select bg-white form-control-border"
                                         id="exampleSelectBorder">
                                         <option value="">-- أختر نوع الحساب --</option>
-                                        <option @if (old('type', $employee->type) == 0) selected @endif
-                                            value="{{ App\Enum\EmployeeType::User }}">موظف</option>
-                                        <option @if (old('type', $employee->type) == 1) selected @endif
-                                            value="{{ App\Enum\EmployeeType::Manager }}">مدير</option>
+                                        <option @if (old('type', $employee->type) == EmployeeType::User) selected @endif
+                                            value="{{ EmployeeType::User }}">موظف</option>
+                                        <option @if (old('type', $employee->type) == EmployeeType::Manager) selected @endif
+                                            value="{{ EmployeeType::Manager }}">مدير</option>
                                     </select>
-                                    @error('type')
-                                        <span class="invalid-feedback text-right" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
+                                </div>
+                                <div class="form-group col-4">
+                                    <label for="exampleSelectBorder">رصيد أجازات الموظف</code></label>
+                                    <input disabled type="text" name="total_days_balance"
+                                        value="{{ old('total_days_balance', $employee->total_days_balance) }}"
+                                        class="form-control bg-white" id="exampleInputtotal_days_balance"
+                                        placeholder="أدخل الرصيد الموظف">
                                 </div>
 
                                 <div class="form-group col-6">
                                     <label for="exampleSelectBorder">حالة حساب الموظف</code></label>
-                                    <select disabled name="status" class="form-control select">
+                                    <select disabled name="status" class="form-control bg-white select">
                                         <option disabled {{ is_null($employee->status) ? 'selected' : '' }}>افتح قائمة
                                             التحديد
                                         </option>
@@ -205,17 +169,12 @@
                                             نشط
                                         </option>
                                     </select>
-                                    @error('type')
-                                        <span class="invalid-feedback text-right" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
                                 </div>
 
 
                                 <div class="form-group col-6">
                                     <label>الصلاحيات</label>
-                                    <select disabled class="select2bs4" name="roles[]" multiple="multiple"
+                                    <select disabled class="select2bs4 bg-white" name="roles[]" multiple="multiple"
                                         data-placeholder="-- حدد الصلاحية --" style="width: 100%;">
                                         @foreach ($roles as $role)
                                             <option value="{{ $role }}"

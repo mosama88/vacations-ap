@@ -29,6 +29,8 @@ class Employee extends Authenticatable implements HasMedia
         'name',
         'slug',
         'status',
+        'type',
+        'gender',
         'username',
         'password',
         'mobile',
@@ -103,8 +105,8 @@ class Employee extends Authenticatable implements HasMedia
     }
 
     protected $casts = [
-        // 'gender' => EmployeeGender::class,
-        // 'type' => EmployeeType::class,
+        'gender' => EmployeeGender::class,
+        'type' => EmployeeType::class,
         'status' => EmployeeStatus::class,
     ];
 }

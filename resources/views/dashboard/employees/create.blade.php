@@ -71,12 +71,18 @@
                                     </div>
                                     <div class="form-group col-6">
                                         <label>الصلاحيات</label>
-                                        <select class="select2bs4" name="roles[]" multiple="multiple"
+                                        <select class="select2bs4 @error('roles') is-invalid @enderror" name="roles[]"
+                                            multiple="multiple"
                                             data-placeholder="-- حدد الصلاحية --" style="width: 100%;">
                                             @foreach ($roles as $role)
                                                 <option value="{{ $role }}">{{ $role }}</option>
                                             @endforeach
                                         </select>
+                                        @error('roles')
+                                            <span class="invalid-feedback text-right" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
 
                                 </div>
