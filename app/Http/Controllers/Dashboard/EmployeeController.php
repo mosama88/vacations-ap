@@ -124,7 +124,15 @@ class EmployeeController extends Controller
 
     public function profile()
     {
-        return view('dashboard.auth.profile');
+        $user = Auth::user()->id;
+        $employee = Employee::findOrFail($user);
+        $other['governorates'] = Governorate::get();
+        $other['weeks'] = Week::get();
+        $other['job_grades'] = JobGrade::get();
+        $other['branches'] = Branch::get();
+        $roles = Role::pluck('name', 'name')->all();
+        $employeeRoles = $employee->roles->pluck('name', 'name')->all();
+        return view('dashboard.auth.profile', compact('employee', 'other', 'roles', 'employeeRoles'));
     }
 
 
