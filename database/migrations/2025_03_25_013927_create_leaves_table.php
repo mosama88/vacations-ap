@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('leave_code')->unique();
             $table->foreignIdFor(Employee::class)->nullable()->constrained()->nullOnDelete();
             $table->foreignIdFor(FinanceCalendar::class)->nullable()->constrained()->nullOnDelete();
+            $table->foreignIdFor(LeaveBalance::class)->nullable()->constrained()->nullOnDelete();
             $table->date('start_date');
             $table->date('end_date');
             $table->integer('days_taken')->nullable();

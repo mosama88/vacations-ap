@@ -20,6 +20,7 @@ class Leave extends Model
         'leave_code',
         'finance_calendar_id',
         'employee_id',
+        'leave_balance_id',
         'start_date',
         'end_date',
         'leave_type',
@@ -50,6 +51,12 @@ class Leave extends Model
     public function employee()
     {
         return $this->belongsTo(Employee::class, 'employee_id');
+    }
+
+
+    public function leaveBalance()
+    {
+        return $this->belongsTo(LeaveBalance::class, 'leave_balance_id');
     }
 
     protected $casts = [

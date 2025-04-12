@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use App\Enum\LeaveStatusEnum;
 use App\Services\LeaveService;
 use App\Models\FinanceCalendar;
+use App\Enum\LeaveBalanceStatus;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Dashboard\LeaveRequest;
@@ -39,14 +40,11 @@ class LeaveController extends Controller
      */
     public function create()
     {
-        $financial_year = FinanceCalendar::select('id', 'finance_yr')->where('status', StatusActive::Active)->first();
         $emplyeeId = Auth::user()->id;
         $other['weeks'] = Week::where('id', $emplyeeId)->get();
         $employees = Employee::with('leaveBalance')->where('id', $emplyeeId)->first();
-        $leaveBalances = LeaveBalance::where('finance_calendar_id', $financial_year->id)->where('employee_id', $emplyeeId)->first();
-        return view('dashboard.leaves.create', compact('employees', 'other', 'leaveBalances'));
+        return view('dashboard.leaves.create', compact('employees', 'other'));
     }
-
 
     /**
      * Store a newly created resource in storage.
@@ -54,6 +52,9 @@ class LeaveController extends Controller
     public function store(LeaveRequest $request, LeaveService $leaveService)
     {
         $authEmployeeAuth = Auth::user()->id;
+
+
+
 
         $employee = Employee::find($authEmployeeAuth);
         if (!$employee) {
@@ -64,6 +65,14 @@ class LeaveController extends Controller
         if ($financial_year instanceof \Illuminate\Http\RedirectResponse) {
             return $financial_year;
         }
+
+        $leave_balance = LeaveBalance::where('status', LeaveBalanceStatus::Open)->where('employee_id', $employee->id)->first();
+
+        if (!$leave_balance) {
+            return redirect()->back()->withErrors(['error' => 'عفوآ لا يوجد رصيد اجازات'])->withInput();
+        }
+
+
 
         $lastLeaveCode = Leave::orderByDesc('leave_code')->value('leave_code');
         $newLeaveCode = $lastLeaveCode ? $lastLeaveCode + 1 : 100;
@@ -128,18 +137,8 @@ class LeaveController extends Controller
     public function edit($id)
     {
         $leave = Leave::with('employee')->findOrFail($id);
-
-        $financial_year = FinanceCalendar::select('id', 'finance_yr')
-            ->where('status', StatusActive::Active)
-            ->first();
-
-        $leaveBalances = LeaveBalance::where('finance_calendar_id', $financial_year->id)
-            ->where('employee_id', $leave->employee_id)
-            ->first();
-
-        return view('dashboard.leaves.edit', compact('leave', 'leaveBalances'));
+        return view('dashboard.leaves.edit', compact('leave'));
     }
-
 
     /**
      * Update the specified resource in storage.
@@ -154,6 +153,11 @@ class LeaveController extends Controller
         }
 
 
+        $leave_balance = LeaveBalance::find($leave->id)->where('status', LeaveBalanceStatus::Open)->first();
+
+        if (!$leave_balance) {
+            return redirect()->back()->withErrors(['error' => 'عفوآ لا يوجد رصيد اجازات'])->withInput();
+        }
         $employee = Employee::find($leave->employee->id);
 
         if (!$employee) {
@@ -190,6 +194,7 @@ class LeaveController extends Controller
             $leave->update([
                 'finance_calendar_id' => $financial_year['id'],
                 'employee_id' => $employee->id,
+                'leave_balance_id' => $leave_balance->id,
                 'start_date' => $startDate,
                 'end_date' => $endDate,
                 'days_taken' => $daysTaken,
@@ -201,7 +206,6 @@ class LeaveController extends Controller
             ]);
 
             session()->flash('success', 'تم تعديل الإجازة بنجاح');
-
             if ($employee->type == EmployeeType::Manager) {
                 return redirect()->route('dashboard.leaves.getLeavespending');
             } else {

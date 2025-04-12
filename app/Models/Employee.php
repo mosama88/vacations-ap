@@ -85,16 +85,16 @@ class Employee extends Authenticatable implements HasMedia
         return $this->belongsTo(Governorate::class, 'governorate_id');
     }
 
-    // public function leaveBalance()
-    // {
-    //     return $this->hasOne(LeaveBalance::class);
-    // }
-
-
     public function leaveBalance()
     {
-        return $this->hasMany(LeaveBalance::class, 'employee_id', 'id');
+        return $this->hasOne(LeaveBalance::class);
     }
+
+
+    // public function leaveBalance()
+    // {
+    //     return $this->hasMany(LeaveBalance::class, 'employee_id', 'id');
+    // }
     
 
     protected $hidden = [

@@ -49,6 +49,11 @@ class LeaveBalance extends Model
         return $this->belongsTo(FinanceCalendar::class, 'finance_calendar_id');
     }
 
+    public function leaves()
+    {
+        return $this->hasMany(Leave::class);
+    }
+
 
     protected $casts = [
         'status' => LeaveBalanceStatus::class,
