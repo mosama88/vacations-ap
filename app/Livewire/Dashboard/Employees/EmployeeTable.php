@@ -58,7 +58,7 @@ class EmployeeTable extends Component
         if ($this->emp_search) {
             $query->where('name', 'LIKE', '%' . $this->emp_search . '%')
                 ->orWhere('username', 'LIKE', '%' . $this->emp_search . '%')
-                ->orWhere('mobile', 'LIKE', '%' . $this->emp_search . '%');
+                ->orWhere('employee_code', 'LIKE', '%' . $this->emp_search . '%');
         }
 
         if ($this->week_search) {

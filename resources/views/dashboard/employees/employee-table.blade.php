@@ -5,7 +5,7 @@
 
     <div class="row col-12 my-2">
         <div class="form-group col-4">
-            <label for="exampleInputName">بحث باسم الموظف أو أسم المستخدم أو الهاتف</label>
+            <label for="exampleInputName">بحث باسم الموظف أو أسم المستخدم أو كود الموظف</label>
             <input type="text" wire:model.live="emp_search" class="form-control" id="exampleInputName"
                 placeholder="أدخل موظف جديد">
         </div>
