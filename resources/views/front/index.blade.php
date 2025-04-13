@@ -167,10 +167,11 @@
                                             <td>{{ $info->created_by ? $info->createdBy->name : 'لا يوجد' }}</td>
                                             <td>{{ $info->updated_by ? $info->updatedBy->name : 'لا يوجد تحديث' }}</td>
                                             <td>
-                                                <a class="btn btn-outline-info btn-sm mx-2"
-                                                    href="{{ route('dashboard.leaves.edit', $info->id) }}"><i
-                                                        class="fas fa-edit ml-1"></i></a>
-
+                                                @if ($info->leave_status != LeaveStatusEnum::Approved)
+                                                    <a class="btn btn-outline-info btn-sm mx-2"
+                                                        href="{{ route('dashboard.leaves.edit', $info->id) }}"><i
+                                                            class="fas fa-edit ml-1"></i></a>
+                                                @endif
                                                 <a class="btn btn-outline-success btn-sm mx-2"
                                                     href="{{ route('dashboard.leaves.show', $info->id) }}"><i
                                                         class="fas fa-eye ml-1"></i></a>

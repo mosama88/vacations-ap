@@ -22,6 +22,7 @@ class LeaveRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'leave_code' => 'nullable|integer|unique:leaves,leave_code',
             'start_date' => 'required|date|after_or_equal:today',
             'end_date' => 'required|date',
             'leave_type' => 'required|in:1,2,3,4',
