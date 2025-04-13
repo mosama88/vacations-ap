@@ -48,6 +48,7 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
+                                        <th>كود الموظف</th>
                                         <th>أسم الموظف</th>
                                         <th>السنه</th>
                                         <th>رصيد</th>
@@ -61,6 +62,7 @@
                                     @forelse ($data as $info)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $info->employee->employee_code }}</td>
                                             <td>{{ $info->employee->name }}</td>
                                             <td>{{ $info->financeCalendar->finance_yr }}</td>
                                             <td>{{ $info->total_days }}</td>

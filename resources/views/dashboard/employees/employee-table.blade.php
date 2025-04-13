@@ -80,6 +80,7 @@
             <thead>
                 <tr>
                     <th>#</th>
+                    <th>كود الموظف</th>
                     <th>أسم الموظف</th>
                     <th>أسم المستخدم</th>
                     <th>الموبايل</th>
@@ -93,6 +94,7 @@
                 @forelse ($data as $info)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
+                        <td>{{ $info->employee_code }}</td>
                         <td>{{ $info->name }}</td>
                         <td>{{ $info->username }}</td>
                         <td>{{ $info->mobile }}</td>
