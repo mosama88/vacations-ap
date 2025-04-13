@@ -42,7 +42,10 @@ class LeaveController extends Controller
     {
         $emplyeeId = Auth::user()->id;
         $other['weeks'] = Week::where('id', $emplyeeId)->get();
-        $employees = Employee::with('leaveBalance')->where('id', $emplyeeId)->first();
+
+        $employees = Employee::with(['leaveBalance' => function ($query) {
+            $query->where('status', LeaveBalanceStatus::Open);
+        }])->where('id', $emplyeeId)->first();
         return view('dashboard.leaves.create', compact('employees', 'other'));
     }
 
@@ -99,9 +102,8 @@ class LeaveController extends Controller
         }
 
         $daysTaken = $leaveService->calculateWorkingDays($startDate, $endDate, $employee->id);
-
         try {
-            Leave::create([
+            $leaveInsert =  Leave::create([
                 'finance_calendar_id' => $financial_year['id'],
                 'leave_code' => $newLeaveCode,
                 'employee_id' => $employee->id,
@@ -128,7 +130,11 @@ class LeaveController extends Controller
     public function show($id)
     {
         $leave = Leave::with('employee')->findOrFail($id);
-        return view('dashboard.leaves.show', compact('leave'));
+        $employees = Employee::with(['leaveBalance' => function ($query) {
+            $query->where('status', LeaveBalanceStatus::Open);
+        }])->where('id', $leave->employee_id)->first();
+
+        return view('dashboard.leaves.show', compact('leave', 'employees'));
     }
 
     /**
@@ -137,7 +143,13 @@ class LeaveController extends Controller
     public function edit($id)
     {
         $leave = Leave::with('employee')->findOrFail($id);
-        return view('dashboard.leaves.edit', compact('leave'));
+
+        $leave = Leave::with('employee')->findOrFail($id);
+        $employees = Employee::with(['leaveBalance' => function ($query) {
+            $query->where('status', LeaveBalanceStatus::Open);
+        }])->where('id', $leave->employee_id)->first();
+
+        return view('dashboard.leaves.edit', compact('leave', 'employees'));
     }
 
     /**

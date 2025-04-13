@@ -70,7 +70,7 @@
                                         <label for="exampleInputName">رصيد الأجازات
                                             <span class="text-info">(الأعتيادى)</span> </label>
                                         <input disabled type="text" name="total_days"
-                                            value="{{ $leave->employee->leaveBalance->total_days ?? 'لا يوجد رصيد' }}"
+                                            value="{{ $employees->leaveBalance->total_days ?? 'لا يوجد رصيد' }}"
                                             class="form-control" id="exampleInputtotal_days" placeholder="">
                                     </div>
 
@@ -80,7 +80,7 @@
                                         <label for="exampleInputName">الرصيد المستخدم <span
                                                 class="text-info">(الأعتيادى)</span> </label>
                                         <input disabled type="text" name="used_days"
-                                            value="{{ $leave->employee->leaveBalance->used_days ?? 'لا يوجد رصيد' }}"
+                                            value="{{ $employees->leaveBalance->used_days ?? 'لا يوجد رصيد' }}"
                                             name="used_days" class="form-control" id="exampleInputused_days" placeholder="">
                                     </div>
 
@@ -88,7 +88,7 @@
                                         <label for="exampleInputName">الرصيد المتبقى <span
                                                 class="text-info">(الأعتيادى)</span> </label>
                                         <input disabled type="text"
-                                            value="{{ $leave->employee->leaveBalance->remainig_days ?? 'لا يوجد رصيد' }}"
+                                            value="{{ $employees->leaveBalance->remainig_days ?? 'لا يوجد رصيد' }}"
                                             name="remainig_days" class="form-control" id="exampleInputremainig_days"
                                             placeholder="">
                                     </div>
@@ -99,7 +99,7 @@
                                         <label for="exampleInputName"> رصيد
                                             الأجازات <span class="text-danger">(العارضه)</span> </label>
                                         <input disabled type="text" name="total_days_emergency"
-                                            value="{{ $leave->employee->leaveBalance->total_days_emergency ?? 'لا يوجد رصيد' }}"
+                                            value="{{ $employees->leaveBalance->total_days_emergency ?? 'لا يوجد رصيد' }}"
                                             class="form-control" id="exampleInputtotal_days_emergency" placeholder="">
                                     </div>
 
@@ -108,7 +108,7 @@
                                         <label for="exampleInputName">الرصيد المستخدم <span
                                                 class="text-danger">(العارضه)</span> </label>
                                         <input disabled type="text" name="used_days_emergency"
-                                            value="{{ $leave->employee->leaveBalance->used_days_emergency ?? 'لا يوجد رصيد' }}"
+                                            value="{{ $employees->leaveBalance->used_days_emergency ?? 'لا يوجد رصيد' }}"
                                             name="used_days_emergency" class="form-control"
                                             id="exampleInputused_days_emergency" placeholder="">
                                     </div>
@@ -118,7 +118,7 @@
                                         <label for="exampleInputName">الرصيد المتبقى <span
                                                 class="text-danger">(العارضه)</span> </label>
                                         <input disabled type="text"
-                                            value="{{ $leave->employee->leaveBalance->remainig_days_emergency ?? 'لا يوجد رصيد' }}"
+                                            value="{{ $employees->leaveBalance->remainig_days_emergency ?? 'لا يوجد رصيد' }}"
                                             name="remainig_days_emergency" class="form-control"
                                             id="exampleInputremainig_days_emergency" placeholder="">
                                     </div>
@@ -255,7 +255,7 @@
                                         @enderror
                                     </div>
 
-                                 
+
                                 </div>
                             </div>
 
