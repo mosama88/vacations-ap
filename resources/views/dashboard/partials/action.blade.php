@@ -1,5 +1,5 @@
 <div class="flex align-items-center list-user-action">
-    <a class="text-success pe-2" data-bs-toggle="tooltip" data-placement="top" title="" data-original-title="Add"
+    <a class="text-success pe-2 mx-1" data-bs-toggle="tooltip" data-placement="top" title="" data-original-title="Add"
         href="{{ route('dashboard.' . $name . '.show', $name_id) }}">
         <span class="btn-inner">
 
@@ -15,8 +15,8 @@
 
         </span>
     </a>
-    <a class="text-warning pe-2" data-bs-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"
-        href="{{ route('dashboard.' . $name . '.edit', $name_id) }}">
+    <a class="text-warning pe-2 mx-1" data-bs-toggle="tooltip" data-placement="top" title=""
+        data-original-title="Edit" href="{{ route('dashboard.' . $name . '.edit', $name_id) }}">
         <span class="btn-inner">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M9.31055 14.3321H14.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"

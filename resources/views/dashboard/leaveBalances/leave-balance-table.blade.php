@@ -1,27 +1,14 @@
 @php
-
     use App\Enum\LeaveBalanceStatus;
-
 @endphp
+
 <div>
     <div>
         <div class="form-group col-6">
-            <label for="exampleSelectBorder">أسم الموظف </label>
-            <select wire:model.live="emp_search" class="form-control select2 vh-100 @error('employee_id') is-invalid @enderror"
-                id="exampleSelectBorder">
-                <option value="">-- أختر الموظف --</option>
-                @forelse ($other['employees'] as $employee)
-                    <option @if (old('employee_id') == $employee->id) selected @endif value="{{ $employee->id }}">
-                        {{ $employee->name }}</option>
-                @empty
-                    عفوآ لا توجد بيانات!
-                @endforelse
+            <label for="exampleSelectBorder">بحث أسم الموظف أو كود الموظف </label>
+            <input type="text" wire:model.live="emp_search" value="" class="form-control" id="exampleInputusername"
+                placeholder="أدخل أسم الموظف">
             </select>
-            @error('employee_id')
-                <span class="invalid-feedback text-right" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-            @enderror
         </div>
     </div>
     <!-- /.card-header -->

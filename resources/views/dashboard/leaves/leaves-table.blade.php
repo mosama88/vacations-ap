@@ -53,7 +53,7 @@
 
         <div class="form-group col-6">
             <label for="leave_status">حالة الإجازة</label>
-            <select wire:model.live="leave_type_search" class="custom-select form-control-border"
+            <select wire:model.live="leave_status_search" class="custom-select form-control-border"
                 id="exampleSelectBorder">
                 <option value="">-- أختر حالة الأجازه --</option>
                 <option value="{{ LeaveStatusEnum::Pending }}">

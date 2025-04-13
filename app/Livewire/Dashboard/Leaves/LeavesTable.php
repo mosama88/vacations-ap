@@ -17,14 +17,6 @@ class LeavesTable extends Component
 
     public $other, $emp_search, $start_date_search, $end_date_search, $leave_type_search, $leave_status_search;
 
-    // protected $queryString = [
-    //     'emp_search' => ['as' => 'اسم الموظف'],
-    //     'fara_search' => ['as' => 'الفرع'],
-    //     'mohafza_search' => ['as' => 'المحافظة'],
-    //     'week_search' => ['as' => 'الراحه'],
-    //     'gender_search' => ['as' => 'الجنس'],
-    // ];
-
 
     public function updatingSearch()
     {

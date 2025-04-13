@@ -20,13 +20,7 @@ class LeaveBalanceTable extends Component
         $this->resetPage();
     }
 
-    public function clear()
-    {
-        $this->emp_search = null;
 
-
-        $this->resetPage();
-    }
 
     public function mount()
     {
@@ -38,10 +32,14 @@ class LeaveBalanceTable extends Component
         $query = LeaveBalance::query();
 
         if ($this->emp_search) {
-            $query->where('employee_id', $this->emp_search);
+            $query->whereHas('employee', function ($query) {
+                // البحث باستخدام الاسم
+                $query->where('name', 'like', '%' . $this->emp_search . '%')
+                ->orWhere('employee_code', 'like', '%' . $this->emp_search . '%');
+            });
         }
 
-
+     
         $data = $query->select('*')->where('employee_id', '!=', null)->where('status', LeaveBalanceStatus::Open)->orderByDesc('id')->paginate(10);
 
         return view('dashboard.leaveBalances.leave-balance-table', compact('data'));
