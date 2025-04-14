@@ -47,21 +47,21 @@
                                         <label for="exampleInputName">كود الموظف</label>
                                         <input disabled type="text" id="employee_code"
                                             value="{{ $leave->employee->employee_code }}" name="employee_code"
-                                            class="form-control" id="exampleInputemployee_id" placeholder="">
+                                            class="form-control bg-white" id="exampleInputemployee_id" placeholder="">
                                     </div>
                                     <!-- أسم الموظف -->
                                     <div class="form-group col-4" id="employee_div">
                                         <label for="exampleInputName">أسم الموظف</label>
                                         <input disabled type="text" id="employee_id" value="{{ $leave->employee->name }}"
-                                            name="employee_id" class="form-control" id="exampleInputemployee_id"
+                                            name="employee_id" class="form-control bg-white" id="exampleInputemployee_id"
                                             placeholder="">
                                     </div>
                                     <!-- الراحه الاسبوعية  -->
                                     <div class="form-group col-4">
                                         <label for="exampleSelectBorder">الراحه الاسبوعية</code></label>
                                         <input disabled type="text" id="week_id"
-                                            value="{{ $leave->employee->week->name }}" name="week_id" class="form-control"
-                                            id="exampleInputweek_id" placeholder="">
+                                            value="{{ $leave->employee->week->name }}" name="week_id"
+                                            class="form-control bg-white" id="exampleInputweek_id" placeholder="">
                                     </div>
                                 </div>
                                 <div class="row">
@@ -71,7 +71,7 @@
                                             <span class="text-info">(الأعتيادى)</span> </label>
                                         <input disabled type="text" name="total_days"
                                             value="{{ $employees->leaveBalance->total_days ?? 'لا يوجد رصيد' }}"
-                                            class="form-control" id="exampleInputtotal_days" placeholder="">
+                                            class="form-control bg-white" id="exampleInputtotal_days" placeholder="">
                                     </div>
 
 
@@ -81,7 +81,8 @@
                                                 class="text-info">(الأعتيادى)</span> </label>
                                         <input disabled type="text" name="used_days"
                                             value="{{ $employees->leaveBalance->used_days ?? 'لا يوجد رصيد' }}"
-                                            name="used_days" class="form-control" id="exampleInputused_days" placeholder="">
+                                            name="used_days" class="form-control bg-white" id="exampleInputused_days"
+                                            placeholder="">
                                     </div>
 
                                     <div class="form-group col-4">
@@ -89,8 +90,8 @@
                                                 class="text-info">(الأعتيادى)</span> </label>
                                         <input disabled type="text"
                                             value="{{ $employees->leaveBalance->remainig_days ?? 'لا يوجد رصيد' }}"
-                                            name="remainig_days" class="form-control" id="exampleInputremainig_days"
-                                            placeholder="">
+                                            name="remainig_days" class="form-control bg-white"
+                                            id="exampleInputremainig_days" placeholder="">
                                     </div>
                                 </div>
                                 <div class="row">
@@ -100,7 +101,8 @@
                                             الأجازات <span class="text-success">(العارضه)</span> </label>
                                         <input disabled type="text" name="total_days_emergency"
                                             value="{{ $employees->leaveBalance->total_days_emergency ?? 'لا يوجد رصيد' }}"
-                                            class="form-control" id="exampleInputtotal_days_emergency" placeholder="">
+                                            class="form-control bg-white" id="exampleInputtotal_days_emergency"
+                                            placeholder="">
                                     </div>
 
                                     <!-- الرصيد المستخدم  -->
@@ -109,7 +111,7 @@
                                                 class="text-success">(العارضه)</span> </label>
                                         <input disabled type="text" name="used_days_emergency"
                                             value="{{ $employees->leaveBalance->used_days_emergency ?? 'لا يوجد رصيد' }}"
-                                            name="used_days_emergency" class="form-control"
+                                            name="used_days_emergency" class="form-control bg-white"
                                             id="exampleInputused_days_emergency" placeholder="">
                                     </div>
 
@@ -179,7 +181,7 @@
                                         <label for="exampleInputName">عدد الأيام </label>
                                         <input disabled type="text"
                                             value="{{ old('days_taken', $leave->days_taken) }}" name="days_taken"
-                                            class="form-control" id="days_taken" placeholder="">
+                                            class="form-control bg-white" id="days_taken" placeholder="">
                                     </div>
 
 
