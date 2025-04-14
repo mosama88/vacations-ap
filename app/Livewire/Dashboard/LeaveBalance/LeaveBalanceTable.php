@@ -35,11 +35,12 @@ class LeaveBalanceTable extends Component
             $query->whereHas('employee', function ($query) {
                 // البحث باستخدام الاسم
                 $query->where('name', 'like', '%' . $this->emp_search . '%')
-                ->orWhere('employee_code', 'like', '%' . $this->emp_search . '%');
+                    ->orWhere('employee_code', 'like', '%' . $this->emp_search . '%')
+                    ->orWhere('username', 'like', '%' . $this->emp_search . '%');
             });
         }
 
-     
+
         $data = $query->select('*')->where('employee_id', '!=', null)->where('status', LeaveBalanceStatus::Open)->orderByDesc('id')->paginate(10);
 
         return view('dashboard.leaveBalances.leave-balance-table', compact('data'));

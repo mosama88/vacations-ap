@@ -145,13 +145,13 @@
                                             value="{{ EmployeeType::Manager }}">مدير</option>
                                     </select>
                                 </div>
-                                {{-- <div class="form-group col-4">
+                                <div class="form-group col-4">
                                     <label for="exampleSelectBorder">رصيد أجازات الموظف</code></label>
                                     <input disabled type="text" name="total_days_balance"
                                         value="{{ old('total_days_balance', $employee->total_days_balance) }}"
                                         class="form-control bg-white" id="exampleInputtotal_days_balance"
                                         placeholder="أدخل الرصيد الموظف">
-                                </div> --}}
+                                </div>
 
                                 <div class="form-group col-6">
                                     <label for="exampleSelectBorder">حالة حساب الموظف</code></label>

@@ -45,7 +45,20 @@
                             @method('PUT')
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="form-group col-6">
+                                    <div class="form-group col-4">
+                                        <label for="exampleInputemployee_code">كود الموظف</label>
+                                        <input disabled type="text" name=""
+                                            value="{{ old('employee_code', $employee->employee_code) }}"
+                                            class="form-control bg-white @error('employee_code') is-invalid @enderror"
+                                            id="exampleInputemployee_code" placeholder="">
+                                        @error('employee_code')
+                                            <span class="invalid-feedback text-right" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="form-group col-4">
                                         <label for="exampleInputName">اسم الموظف</label>
                                         <input type="text" name="name" value="{{ old('name', $employee->name) }}"
                                             class="form-control @error('name') is-invalid @enderror" id="exampleInputName"
@@ -57,7 +70,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="form-group col-6">
+                                    <div class="form-group col-4">
                                         <label for="exampleInputmobile">موبايل الموظف</label>
                                         <input type="text" name="mobile" value="{{ old('mobile', $employee->mobile) }}"
                                             class="form-control @error('mobile') is-invalid @enderror"
@@ -212,7 +225,7 @@
                                         @enderror
                                     </div>
 
-                                    {{-- <div class="form-group col-4">
+                                    <div class="form-group col-4">
                                         <label for="exampleSelectBorder">رصيد أجازات الموظف</code></label>
                                         <input type="text" name="total_days_balance"
                                             value="{{ old('total_days_balance', $employee->total_days_balance) }}"
@@ -223,7 +236,7 @@
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
-                                    </div> --}}
+                                    </div>
 
 
                                     <div class="form-group col-6">
@@ -270,14 +283,14 @@
                                     </div>
                                 </div>
                             </div>
-
+                            <div class="card-footer text-center ">
+                                <button type="submit" class="btn btn-info">حفظ البيانات <i class="fas fa-save mx-1"></i>
+                                </button>
+                            </div>
                     </div>
                     <!-- /.card-body -->
 
-                    <div class="card-footer text-center ">
-                        <button type="submit" class="btn btn-info">حفظ البيانات <i class="fas fa-save mx-1"></i>
-                        </button>
-                    </div>
+
                     </form>
                 </div>
                 <!-- /.card -->
