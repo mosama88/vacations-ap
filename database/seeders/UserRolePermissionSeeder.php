@@ -42,6 +42,7 @@ class UserRolePermissionSeeder extends Seeder
 
 
             ['name' => 'الأعدادت', 'category' => 'settings', 'guard_name' => $guardAdmin],
+            ['name' => 'الصفحه الرئيسية', 'category' => 'settings', 'guard_name' => $guardAdmin],
             ['name' => 'إدارة شئون الموظفين', 'category' => 'settings', 'guard_name' => $guardAdmin],
             ['name' => 'إدارة شئون الأجازات', 'category' => 'settings', 'guard_name' => $guardAdmin],
             ['name' => 'إدارة شئون المستخدمين', 'category' => 'settings', 'guard_name' => $guardAdmin],
