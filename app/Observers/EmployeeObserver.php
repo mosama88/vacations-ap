@@ -2,10 +2,12 @@
 
 namespace App\Observers;
 
-use Illuminate\Http\Request;
 use App\Models\Employee;
+use App\Enum\StatusActive;
 use App\Models\LeaveBalance;
 use function Termwind\parse;
+use Illuminate\Http\Request;
+use App\Enum\LeaveBalanceStatus;
 
 class EmployeeObserver
 {
@@ -25,7 +27,7 @@ class EmployeeObserver
         $totalDaysBalance = request()->input('total_days_balance');
 
         if ($employee->isDirty('total_days_balance')) {
-            $leaveBalance = LeaveBalance::where('employee_id', $employee->id)
+            $leaveBalance = LeaveBalance::where('employee_id', $employee->id)->where('finance_calendar_id', StatusActive::Active)->where('status', LeaveBalanceStatus::Open)
                 ->latest('id')
                 ->first();
 

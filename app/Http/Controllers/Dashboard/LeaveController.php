@@ -56,9 +56,6 @@ class LeaveController extends Controller
     {
         $authEmployeeAuth = Auth::user()->id;
 
-
-
-
         $employee = Employee::find($authEmployeeAuth);
         if (!$employee) {
             return redirect()->back()->withErrors(['error' => 'عفواً لا يوجد موظف بهذا ID'])->withInput();
@@ -74,7 +71,6 @@ class LeaveController extends Controller
         if (!$leave_balance) {
             return redirect()->back()->withErrors(['error' => 'عفوآ لا يوجد رصيد اجازات'])->withInput();
         }
-
 
 
         $lastLeaveCode = Leave::orderByDesc('leave_code')->value('leave_code');
@@ -133,7 +129,6 @@ class LeaveController extends Controller
         $employees = Employee::with(['leaveBalance' => function ($query) {
             $query->where('status', LeaveBalanceStatus::Open);
         }])->where('id', $leave->employee_id)->first();
-
         return view('dashboard.leaves.show', compact('leave', 'employees'));
     }
 
@@ -142,8 +137,6 @@ class LeaveController extends Controller
      */
     public function edit($id)
     {
-        $leave = Leave::with('employee')->findOrFail($id);
-
         $leave = Leave::with('employee')->findOrFail($id);
         $employees = Employee::with(['leaveBalance' => function ($query) {
             $query->where('status', LeaveBalanceStatus::Open);
