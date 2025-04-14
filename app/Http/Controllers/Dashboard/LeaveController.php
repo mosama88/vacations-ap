@@ -72,6 +72,7 @@ class LeaveController extends Controller
             return redirect()->back()->withErrors(['error' => 'عفوآ لا يوجد رصيد اجازات'])->withInput();
         }
 
+
         // في دالة store
         try {
             $leaveService->validateLeaveBalance(
@@ -79,7 +80,6 @@ class LeaveController extends Controller
                 (int)$request->days_taken,
                 $leave_balance
             );
-
             // باقي الكود في حالة نجاح التحقق
         } catch (\Exception $e) {
             return redirect()->back()
@@ -177,6 +177,23 @@ class LeaveController extends Controller
         if (!$leave_balance) {
             return redirect()->back()->withErrors(['error' => 'عفوآ لا يوجد رصيد اجازات'])->withInput();
         }
+
+
+        // في دالة store
+        try {
+            $leaveService->validateLeaveBalance(
+                $request->leave_type,
+                (int)$request->days_taken,
+                $leave_balance
+            );
+            // باقي الكود في حالة نجاح التحقق
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->withErrors(['error' => $e->getMessage()])
+                ->withInput();
+        }
+
+
         $employee = Employee::find($leave->employee->id);
 
         if (!$employee) {

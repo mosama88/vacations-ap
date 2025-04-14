@@ -131,30 +131,20 @@ class LeaveService
         if (!$leaveBalance) {
             throw new \Exception('لا يوجد رصيد إجازات متاح');
         }
+        $balances = [
+            LeaveTypeEnum::Annual->value => ['field' => 'remainig_days', 'name' => 'الإجازة السنوية'],
+            LeaveTypeEnum::Sick->value => ['field' => 'remainig_days_sick', 'name' => 'الإجازة المرضية'],
+            LeaveTypeEnum::Emergency->value => ['field' => 'remainig_days_emergency', 'name' => 'الإجازة العارضة'],
+        ];
 
-        switch ($leaveType) {
-            case LeaveTypeEnum::Annual:
-                if ($leaveBalance->remainig_days <= 0 || $requestedDays > $leaveBalance->remainig_days) {
-                    throw new \Exception('لا يوجد رصيد كافي من الإجازة السنوية. الرصيد المتبقي: ' . $leaveBalance->remainig_days);
-                }
-                break;
 
-            case LeaveTypeEnum::Sick:
-                if ($leaveBalance->remainig_days_sick <= 0 || $requestedDays > $leaveBalance->remainig_days_sick) {
-                    throw new \Exception('لا يوجد رصيد كافي من الإجازة المرضية. الرصيد المتبقي: ' . $leaveBalance->remainig_days_sick);
-                }
-                break;
+        $field = $balances[$leaveType]['field'] ?? 'remainig_days';
+        $name = $balances[$leaveType]['name'] ?? 'الإجازة';
 
-            case LeaveTypeEnum::Emergency:
-                if ($leaveBalance->remainig_days_emergency <= 0 || $requestedDays > $leaveBalance->remainig_days_emergency) {
-                    throw new \Exception('لا يوجد رصيد كافي من الإجازة العارضة. الرصيد المتبقي: ' . $leaveBalance->remainig_days_emergency);
-                }
-                break;
+        $remaining = $leaveBalance->$field;
 
-            default:
-                if ($leaveBalance->remainig_days <= 0 || $requestedDays > $leaveBalance->remainig_days) {
-                    throw new \Exception('لا يوجد رصيد كافي من الإجازة. الرصيد المتبقي: ' . $leaveBalance->remainig_days);
-                }
+        if ($remaining <= 0 || $requestedDays > $remaining) {
+            throw new \Exception("لا يوجد رصيد كافي من $name. الرصيد المتبقي: $remaining");
         }
 
         return true;
