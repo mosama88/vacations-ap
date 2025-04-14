@@ -212,7 +212,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="form-group col-4">
+                                    {{-- <div class="form-group col-4">
                                         <label for="exampleSelectBorder">رصيد أجازات الموظف</code></label>
                                         <input type="text" name="total_days_balance"
                                             value="{{ old('total_days_balance', $employee->total_days_balance) }}"
@@ -223,7 +223,7 @@
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
-                                    </div>
+                                    </div> --}}
 
 
                                     <div class="form-group col-6">

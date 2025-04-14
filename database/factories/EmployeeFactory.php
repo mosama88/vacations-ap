@@ -826,13 +826,13 @@ class EmployeeFactory extends Factory
         }
 
         // تحديد الأيام الإجمالية
-        $total_days = fake()->randomElement([21, 30, 45]);
+        // $total_days = fake()->randomElement([21, 30, 45]);
         return [
             'employee_code' => fake()->unique()->numberBetween(1000, 9999),
             'gender' => $gender,
             'name' => $name,
             'username' => $username,
-            'total_days_balance' => $total_days,
+            // 'total_days_balance' => $total_days,
             'password' => Hash::make('password'),
             'mobile' => fake()->regexify('/^(012|015|010|011)[0-9]{8}$/'),
             'type' => fake()->randomElement([EmployeeType::User, EmployeeType::Manager]),
