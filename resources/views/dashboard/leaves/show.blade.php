@@ -82,7 +82,7 @@
                             <div class="row">
                                 <div class="form-group col-4">
                                     <label for="exampleInputName"> رصيد
-                                        الأجازات <span class="text-danger">(العارضه)</span> </label>
+                                        الأجازات <span class="text-success">(العارضه)</span> </label>
                                     <input disabled type="text" name="total_days_emergency"
                                         value="{{ $employees->leaveBalance->total_days_emergency ?? 'لا يوجد رصيد' }}"
                                         class="form-control bg-white" id="exampleInputtotal_days_emergency" placeholder="">
@@ -90,7 +90,7 @@
 
 
                                 <div class="form-group col-4">
-                                    <label for="exampleInputName">الرصيد المستخدم <span class="text-danger">(العارضه)</span>
+                                    <label for="exampleInputName">الرصيد المستخدم <span class="text-success">(العارضه)</span>
                                     </label>
                                     <input disabled type="text" name="used_days_emergency"
                                         value="{{ $employees->leaveBalance->used_days_emergency ?? 'لا يوجد رصيد' }}"
@@ -99,7 +99,7 @@
                                 </div>
 
                                 <div class="form-group col-4">
-                                    <label for="exampleInputName">الرصيد المتبقى <span class="text-danger">(العارضه)</span>
+                                    <label for="exampleInputName">الرصيد المتبقى <span class="text-success">(العارضه)</span>
                                     </label>
                                     <input disabled type="text"
                                         value="{{ $employees->leaveBalance->remainig_days_emergency ?? 'لا يوجد رصيد' }}"

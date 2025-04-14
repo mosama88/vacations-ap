@@ -89,7 +89,7 @@
                                 <div class="row">
                                     <div class="form-group col-4">
                                         <label for="exampleInputName"> رصيد
-                                            الأجازات <span class="text-danger">(العارضه)</span> </label>
+                                            الأجازات <span class="text-success">(العارضه)</span> </label>
                                         <input disabled type="text" name="total_days_emergency"
                                             value="{{ $employees->leaveBalance->total_days_emergency ?? 'لا يوجد رصيد' }}"
                                             class="form-control bg-white" id="exampleInputtotal_days_emergency"
@@ -99,7 +99,7 @@
 
                                     <div class="form-group col-4">
                                         <label for="exampleInputName">الرصيد المستخدم <span
-                                                class="text-danger">(العارضه)</span> </label>
+                                                class="text-success">(العارضه)</span> </label>
                                         <input disabled type="text" name="used_days_emergency"
                                             value="{{ $employees->leaveBalance->used_days_emergency ?? 'لا يوجد رصيد' }}"
                                             name="used_days_emergency" class="form-control bg-white"
@@ -107,13 +107,24 @@
                                     </div>
 
                                     <div class="form-group col-4">
-                                        <label for="exampleInputName">الرصيد المتبقى <span
-                                                class="text-danger">(العارضه)</span> </label>
-                                        <input disabled type="text"
-                                            value="{{ $employees->leaveBalance->remainig_days_emergency ?? 'لا يوجد رصيد' }}"
-                                            name="remainig_days_emergency" class="form-control bg-white"
+                                        <label for="exampleInputName">
+                                            الرصيد المتبقى <span class="text-success">(العارضة)</span>
+                                        </label>
+
+                                        @php
+                                            $remaining = $employees->leaveBalance->remainig_days_emergency ?? null;
+                                            $class = 'form-control bg-white';
+
+                                            if (!is_null($remaining) && $remaining <= 2) {
+                                                $class = 'form-control bg-danger';
+                                            }
+                                        @endphp
+
+                                        <input disabled type="text" value="{{ $remaining ?? 'لا يوجد رصيد' }}"
+                                            name="remainig_days_emergency" class="{{ $class }}"
                                             id="exampleInputremainig_days_emergency" placeholder="">
                                     </div>
+
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-4">
