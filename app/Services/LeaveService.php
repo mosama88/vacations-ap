@@ -14,7 +14,7 @@ use Illuminate\Http\Request;
 class LeaveService
 {
 
-    
+
     public function hasOverlappingLeaves($employeeId, $startDate, $endDate, $excludeLeaveId = null): bool
     {
         $query = Leave::where('employee_id', $employeeId)
@@ -122,5 +122,41 @@ class LeaveService
         }
 
         return $financial_year; // يرجّع السنة المالية لو كل حاجة تمام
+    }
+
+
+
+    public function validateLeaveBalance($leaveType, $requestedDays, $leaveBalance)
+    {
+        if (!$leaveBalance) {
+            throw new \Exception('لا يوجد رصيد إجازات متاح');
+        }
+
+        switch ($leaveType) {
+            case LeaveTypeEnum::Annual:
+                if ($leaveBalance->remainig_days <= 0 || $requestedDays > $leaveBalance->remainig_days) {
+                    throw new \Exception('لا يوجد رصيد كافي من الإجازة السنوية. الرصيد المتبقي: ' . $leaveBalance->remainig_days);
+                }
+                break;
+
+            case LeaveTypeEnum::Sick:
+                if ($leaveBalance->remainig_days_sick <= 0 || $requestedDays > $leaveBalance->remainig_days_sick) {
+                    throw new \Exception('لا يوجد رصيد كافي من الإجازة المرضية. الرصيد المتبقي: ' . $leaveBalance->remainig_days_sick);
+                }
+                break;
+
+            case LeaveTypeEnum::Emergency:
+                if ($leaveBalance->remainig_days_emergency <= 0 || $requestedDays > $leaveBalance->remainig_days_emergency) {
+                    throw new \Exception('لا يوجد رصيد كافي من الإجازة العارضة. الرصيد المتبقي: ' . $leaveBalance->remainig_days_emergency);
+                }
+                break;
+
+            default:
+                if ($leaveBalance->remainig_days <= 0 || $requestedDays > $leaveBalance->remainig_days) {
+                    throw new \Exception('لا يوجد رصيد كافي من الإجازة. الرصيد المتبقي: ' . $leaveBalance->remainig_days);
+                }
+        }
+
+        return true;
     }
 }
