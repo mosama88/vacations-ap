@@ -281,7 +281,7 @@
             });
         }
     </script>
-    <script>
+    {{-- <script>
         flatpickr("#start_date", {
             dateFormat: "Y-m-d",
             locale: "ar"
@@ -333,6 +333,44 @@
                     }
                     currentDate.setDate(currentDate.getDate() + 1);
                 }
+
+                document.getElementById('days_taken').value = totalDays;
+            }
+        }
+    </script> --}}
+
+    <script>
+        // تفعيل Flatpickr مع اللغة العربية
+        flatpickr("#start_date", {
+            dateFormat: "Y-m-d",
+            locale: "ar",
+            onChange: calculateDays
+        });
+
+        flatpickr("#end_date", {
+            dateFormat: "Y-m-d",
+            locale: "ar",
+            onChange: calculateDays
+        });
+
+        // دالة حساب عدد الأيام (الآن تشمل جميع الأيام بما فيها الجمعة)
+        function calculateDays() {
+            const startDate = document.getElementById('start_date').value;
+            const endDate = document.getElementById('end_date').value;
+
+            if (startDate && endDate) {
+                const start = new Date(startDate);
+                const end = new Date(endDate);
+
+                // التأكد من أن تاريخ البداية قبل تاريخ النهاية
+                if (start > end) {
+                    document.getElementById('days_taken').value = 0;
+                    return;
+                }
+
+                // حساب الفرق بين التاريخين بالأيام (بما فيها الجمعة)
+                const diffTime = Math.abs(end - start);
+                const totalDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
 
                 document.getElementById('days_taken').value = totalDays;
             }
