@@ -9,13 +9,14 @@ use App\Enum\StatusActive;
 use Livewire\WithPagination;
 use App\Enum\LeaveStatusEnum;
 use App\Models\FinanceCalendar;
+use App\Models\Governorate;
 use Illuminate\Support\Facades\Auth;
 
 class LeavesTable extends Component
 {
     use WithPagination;
 
-    public $other, $emp_search, $start_date_search, $end_date_search, $leave_type_search, $leave_status_search;
+    public $other, $emp_search, $start_date_search, $end_date_search, $leave_type_search, $leave_status_search, $governrate_search;
 
 
     public function updatingSearch()
@@ -30,6 +31,7 @@ class LeavesTable extends Component
         $this->start_date_search = null;
         $this->leave_type_search = null;
         $this->leave_status_search = null;
+        $this->governrate_search = null;
 
         $this->resetPage();
     }
@@ -38,6 +40,7 @@ class LeavesTable extends Component
     public function mount()
     {
         $this->other['weeks'] = Week::get();
+        $this->other['governorates'] = Governorate::get();
     }
 
     public function render()
@@ -45,7 +48,12 @@ class LeavesTable extends Component
         $query = Leave::query();
 
         if ($this->emp_search) {
-            $query->where('employee_id', $this->emp_search);
+            $query->whereHas('employee', function ($query) {
+                // البحث باستخدام الاسم
+                $query->where('name', 'like', '%' . $this->emp_search . '%')
+                    ->orWhere('employee_code', 'like', '%' . $this->emp_search . '%')
+                    ->orWhere('username', 'like', '%' . $this->emp_search . '%');
+            });
         }
 
         if ($this->start_date_search) {
@@ -63,6 +71,13 @@ class LeavesTable extends Component
 
         if ($this->leave_status_search) {
             $query->where('leave_status', $this->leave_status_search);
+        }
+
+        if ($this->governrate_search) {
+            $query->whereHas('employee', function ($query) {
+                // البحث باستخدام الاسم
+                $query->where('governorate_id',  $this->governrate_search );
+            });
         }
 
 

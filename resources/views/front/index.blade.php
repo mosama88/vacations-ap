@@ -145,7 +145,7 @@
                                                 @elseif ($info->leave_type == LeaveTypeEnum::Regular)
                                                     إعتيادى
                                                 @elseif ($info->leave_type == LeaveTypeEnum::Annual)
-                                                    سنوى
+                                                    اجازه سنوية
                                                 @else
                                                     مرضى
                                                 @endif

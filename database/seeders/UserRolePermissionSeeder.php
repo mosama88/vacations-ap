@@ -108,15 +108,6 @@ class UserRolePermissionSeeder extends Seeder
             ['name' => 'طلب الأجازات', 'category' => 'leaves', 'guard_name' => $guardAdmin],
             ['name' => 'طباعة الأجازات', 'category' => 'leaves', 'guard_name' => $guardAdmin],
 
-
-
-
-            // // المستخدمين
-            // ['name' => 'المستخدمين', 'category' => 'users', 'guard_name' => $guardAdmin],
-            // ['name' => 'اضافة المستخدمين', 'category' => 'users', 'guard_name' => $guardAdmin],
-            // ['name' => 'تعديل المستخدمين', 'category' => 'users', 'guard_name' => $guardAdmin],
-            // ['name' => 'حذف المستخدمين', 'category' => 'users', 'guard_name' => $guardAdmin],
-
             // الصلاحيات
             ['name' => 'الصلاحيات', 'category' => 'roles', 'guard_name' => $guardAdmin],
             ['name' => 'اضافة الصلاحيات', 'category' => 'roles', 'guard_name' => $guardAdmin],
@@ -140,7 +131,7 @@ class UserRolePermissionSeeder extends Seeder
         $superAdminRole = Role::create(['name' => 'super-admin', 'guard_name' => $guardAdmin]); //as super-admin
         $adminRole = Role::create(['name' => 'admin', 'guard_name' => $guardAdmin]);
         $staffRole = Role::create(['name' => 'staff', 'guard_name' => $guardAdmin]);
-        $userRole = Role::create(['name' => 'user', 'guard_name' => $guardAdmin]);
+        $userRole = Role::create(['name' => 'employee', 'guard_name' => $guardAdmin]);
 
         // Lets give all permission to super-admin role.
         $allPermissionNames = Permission::where('guard_name', $guardAdmin)->pluck('name')->toArray();
@@ -200,7 +191,7 @@ class UserRolePermissionSeeder extends Seeder
             'username' => 'Mohamed Osama',
         ], [
             'employee_code' => 502,
-            'name' => 'محمد أسامه',
+            'name' => 'Admin',
             'username' => 'admin',
             'password' => Hash::make('password'),
             'gender' => '1',
@@ -267,5 +258,24 @@ class UserRolePermissionSeeder extends Seeder
             'governorate_id' => 24,
         ]);
         $staffUser2->assignRole($staffRole);
+
+
+        $userRole = Employee::firstOrCreate([
+            'username' => 'mosama',
+        ], [
+            'employee_code' => 505,
+            'name' => 'heba',
+            'username' => 'heba',
+            'password' => Hash::make('password'),
+            'gender' => '1',
+            'type' => EmployeeType::Manager,
+            'mobile' => '01150559683',
+            'status' => EmployeeStatus::Active,
+            'week_id' => 7,
+            'job_grade_id' => 9,
+            'branch_id' => 10,
+            'governorate_id' => 24,
+        ]);
+        $userRole->assignRole($staffRole);
     }
 }

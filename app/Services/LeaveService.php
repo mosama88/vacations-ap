@@ -68,7 +68,7 @@ class LeaveService
         }
 
         // أيام العطلة الافتراضية (الجمعة)
-        $weekendDays = [Carbon::FRIDAY];
+        // $weekendDays = [Carbon::FRIDAY];
 
         // إذا كان للموظف يوم عطلة أسبوعية مختلف
         // if ($employee->week) {
@@ -82,7 +82,7 @@ class LeaveService
         $end = Carbon::parse($endDate);
 
         for ($date = $start; $date->lte($end); $date->addDay()) {
-            if (!in_array($date->dayOfWeek, $weekendDays)) {
+            if ($date->dayOfWeek) {
                 $days++;
             }
         }
@@ -105,7 +105,7 @@ class LeaveService
         return $daysMap[$arabicDayName] ?? Carbon::FRIDAY;
     }
 
-    // تعديل الفنكشن:
+    // تعديل function:
     public function checkFinanceCalendar(Request $request)
     {
         $financial_year = FinanceCalendar::where('status', StatusActive::Active)->first();

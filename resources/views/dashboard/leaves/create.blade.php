@@ -184,7 +184,7 @@
                                             <option @if (old('leave_type') == 2) selected @endif
                                                 value="{{ LeaveTypeEnum::Regular }}">إعتيادى</option>
                                             <option @if (old('leave_type') == 3) selected @endif
-                                                value="{{ LeaveTypeEnum::Annual }}">سنوى</option>
+                                                value="{{ LeaveTypeEnum::Annual }}">اجازه سنوية</option>
                                             <option @if (old('leave_type') == 4) selected @endif
                                                 value="{{ LeaveTypeEnum::Sick }}">مرضى</option>
                                         </select>

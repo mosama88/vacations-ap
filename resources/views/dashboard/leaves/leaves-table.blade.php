@@ -22,7 +22,7 @@
                 <option value="{{ LeaveTypeEnum::Regular }}">
                     إعتيادى</option>
                 <option value="{{ LeaveTypeEnum::Annual }}">
-                    سنوى
+                    اجازه سنوية
                 </option>
                 <option value="{{ LeaveTypeEnum::Sick }}">مرضى
                 </option>
@@ -66,6 +66,18 @@
             </select>
         </div>
 
+        <div class="form-group col-6">
+            <label for="exampleSelectBorder">المحافظة التابع لها <code>الموظف</code></label>
+            <select wire:model.live="governrate_search" class="form-control select">
+                <option value="">-- أختر المحافظة --</option>
+                @forelse ($other['governorates'] as $governorate)
+                    <option @if (old('governorate_id') == $governorate->id) selected @endif value="{{ $governorate->id }}">
+                        {{ $governorate->name }}</option>
+                @empty
+                    عفوآ لا توجد بيانات!
+                @endforelse
+            </select>
+        </div>
         <div class="form-group col-3">
             <label></label>
             <div class="mg-t-10">
@@ -73,7 +85,8 @@
                         empty($start_date_search) &&
                         empty($end_date_search) &&
                         empty($leave_type_search) &&
-                        empty($leave_status_search))
+                        empty($leave_type_search) &&
+                        empty($governrate_search))
                     <div class="mg-t-10">
                         <button class="btn  btn-light btn-block" disabled>أمسح</button>
                     </div>
@@ -98,7 +111,7 @@
                     <th>عدد الأيام</th>
                     <th>حالة الاجازه</th>
                     <th>ملاحظات</th>
-                    <th>انشاء بواسطة</th>
+                    <th>الفرع</th>
                     <th>تحديث بواسطة</th>
                     <th>عرض الرصيد</th>
                 </tr>
@@ -115,7 +128,7 @@
                             @elseif ($info->leave_type == LeaveTypeEnum::Regular)
                                 إعتيادى
                             @elseif ($info->leave_type == LeaveTypeEnum::Annual)
-                                سنوى
+                                اجازه سنوية
                             @else
                                 مرضى
                             @endif
@@ -134,12 +147,14 @@
 
                         </td>
                         <td>{{ $info->description }}</td>
-                        <td>{{ $info->created_by ? $info->createdBy->name : 'لا يوجد' }}</td>
+                        <td>{{ $info->employee->governorate->name }}</td>
                         <td>{{ $info->updated_by ? $info->updatedBy->name : 'لا يوجد تحديث' }}</td>
                         <td>
-                            <a class="btn btn-outline-info btn-sm mx-2"
-                                href="{{ route('dashboard.leaves.edit', $info->id) }}"><i
-                                    class="fas fa-edit ml-1"></i></a>
+                            {{-- @if ($info->leave_status != LeaveStatusEnum::Pending)
+                                <a class="btn btn-outline-info btn-sm mx-2"
+                                    href="{{ route('dashboard.leaves.edit', $info->id) }}"><i
+                                        class="fas fa-edit ml-1"></i></a>
+                            @endif --}}
 
                             <a class="btn btn-outline-success btn-sm mx-2"
                                 href="{{ route('dashboard.leaves.show', $info->id) }}"><i
