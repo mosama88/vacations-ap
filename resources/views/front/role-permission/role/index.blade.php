@@ -1,6 +1,6 @@
 @extends('dashboard.layouts.master')
 @section('active-roles', 'active')
-@section('title', 'أنشاء طلب أجازه')
+@section('title', 'جدول صلاحيات المستخدمين')
 @push('css')
     <!-- Select2 -->
     <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/plugins/select2/css/select2.min.css">
@@ -9,10 +9,10 @@
 @section('content')
 
     @include('dashboard.layouts.breadcrumb', [
-        'pageTitle' => 'أنشاء طلب أجازه',
-        'previousPage' => 'جدول الأجازات',
+        'pageTitle' => 'جدول صلاحيات المستخدمين',
+        'previousPage' => 'لوحة التحكم',
         'urlPreviousPage' => 'employee-panel.index',
-        'currentPage' => 'أنشاء طلب أجازه',
+        'currentPage' => 'جدول صلاحيات المستخدمين',
     ])
 
     @include('dashboard.layouts.message')

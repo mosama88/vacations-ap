@@ -50,13 +50,16 @@ class PermissionController extends Controller
     }
 
 
-    public function edit(Permission $permission)
+    public function edit($id)
     {
+        $permission = Permission::find($id);
         return view('front.role-permission.permission.edit', ['permission' => $permission]);
     }
 
-    public function update(Request $request, Permission $permission)
+    public function update(Request $request, $id)
     {
+        $permission = Permission::find($id);
+
         $request->validate([
             'name' => [
                 'required',

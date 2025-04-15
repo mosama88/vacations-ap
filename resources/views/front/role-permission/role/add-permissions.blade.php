@@ -29,7 +29,7 @@
                     @csrf
                     @method('PUT')
                     <div class="card-header">
-                        <h5 class="card-title">Permissions</h5>
+                        <h5 class="card-title">{{ $role->name }}</h5>
                         <div class="card-tools">
                             <!-- Permissions Select All Checkbox -->
                             <input class="mx-1" type="checkbox" id="selectAllPermissions"
@@ -39,7 +39,22 @@
                     <div class="table-responsive">
                         <table class="table table-bordered mg-b-0 text-md-nowrap table-hover">
                             <tr>
-                                <td class="wd-500">permission</td>
+                                <td class="wd-500">الصلاحيات</td>
+                                <td>
+                                    @foreach ($permissions->where('category', 'roles') as $permission)
+                                        <div class="col-md-12">
+                                            <label>
+                                                <input type="checkbox" class="permissionsCheckbox" name="permission[]"
+                                                    value="{{ $permission->name }}"
+                                                    {{ in_array($permission->id, $rolePermissions) ? 'checked' : '' }} />
+                                                {{ $permission->name }}
+                                            </label>
+                                        </div>
+                                    @endforeach
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="wd-500">الأذونات</td>
                                 <td>
                                     @foreach ($permissions->where('category', 'Permissions') as $permission)
                                         <div class="col-md-12">
