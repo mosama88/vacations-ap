@@ -43,11 +43,13 @@ class LeaveController extends Controller
     {
         $emplyeeId = Auth::user()->id;
         $other['weeks'] = Week::where('id', $emplyeeId)->get();
-
+        $leave_balance = LeaveBalance::where('employee_id', $emplyeeId)
+            ->where('status', LeaveBalanceStatus::Open)
+            ->first();
         $employees = Employee::with(['leaveBalance' => function ($query) {
             $query->where('status', LeaveBalanceStatus::Open);
         }])->where('id', $emplyeeId)->first();
-        return view('dashboard.leaves.create', compact('employees', 'other'));
+        return view('dashboard.leaves.create', compact('employees', 'other', 'leave_balance'));
     }
 
     /**
@@ -55,6 +57,7 @@ class LeaveController extends Controller
      */
     public function store(LeaveRequest $request, LeaveService $leaveService)
     {
+
         $authEmployeeAuth = Auth::user()->id;
 
         $employee = Employee::find($authEmployeeAuth);
@@ -68,7 +71,7 @@ class LeaveController extends Controller
         }
 
         $leave_balance = LeaveBalance::where('id', $request->leave_balance_id)->where('status', LeaveBalanceStatus::Open)->where('employee_id', $employee->id)->first();
-
+        // dd($leave_balance);
         if (!$leave_balance) {
             return redirect()->back()->withErrors(['error' => 'عفوآ لا يوجد رصيد اجازات'])->withInput();
         }
@@ -112,7 +115,6 @@ class LeaveController extends Controller
         if ($check instanceof RedirectResponse) {
             return $check; // وقف التنفيذ هنا
         }
-
 
         try {
             $leaveInsert =  Leave::create([
@@ -329,10 +331,10 @@ class LeaveController extends Controller
 
 
         // التحقق من صلاحية الإجازة الأعتيادى
-        $isLeaveValid = $leaveService->CheckLeaveRegular($request->leave_type, $request->start_date);
+        $isLeaveValidRegular = $leaveService->CheckLeaveRegular($request->leave_type, $request->start_date);
 
         // التأكد من التحقق بشكل صحيح
-        if (!$isLeaveValid) {
+        if (!$isLeaveValidRegular) {
             // إذا كانت الإجازة غير صحيحة، يتم إعادة التوجيه مع رسالة خطأ
             return redirect()->back()
                 ->withErrors(['error' => 'الإجازة الأعتيادى يجب أن تكون في نفس اليوم أو في وقت لاحق.'])

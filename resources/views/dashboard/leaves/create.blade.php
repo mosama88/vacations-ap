@@ -8,7 +8,6 @@
     <!-- Select2 -->
     <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/plugins/select2/css/select2.min.css">
     <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
-    
 @endpush
 @section('content')
 
@@ -38,6 +37,7 @@
                             @csrf
                             <div class="card-body">
                                 <div class="row">
+                                    <input type="text" name="leave_balance_id" value="{{ $leave_balance->id }}" hidden>
                                     <div class="form-group col-4" id="employee_div">
                                         <label for="exampleInputName">كود الموظف</label>
                                         <input disabled type="text" id="employee_code"
@@ -245,7 +245,7 @@
         })
     </script>
 
-    
+
 
 
     <script>
