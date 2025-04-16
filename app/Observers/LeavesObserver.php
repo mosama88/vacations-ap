@@ -24,34 +24,56 @@ class LeavesObserver
     /**
      * Handle the Leave "updated" event.
      */
+ 
     public function updated(Leave $leave)
     {
         // نتأكد إن الحالة تمت الموافقة عليها
         if ($leave->leave_status != LeaveStatusEnum::Approved) {
             return;
         }
-
+    
         // تحديد ID الموظف صاحب الإجازة (مش الأدمن اللي وافق)
         $employeeId = $leave->employee_id;
-
+    
         // الحصول على رصيد الإجازات
-        $leaveBalance = LeaveBalance::where('employee_id', $employeeId)->where('status', LeaveBalanceStatus::Open)->first();
+        $leaveBalance = LeaveBalance::where('employee_id', $employeeId)
+                                    ->where('status', LeaveBalanceStatus::Open)
+                                    ->first();
+    
         if (!$leaveBalance) {
             return;
         }
-
-        // تحديد نوع الخصم حسب نوع الإجازة
-        if ($leave->leave_type == LeaveTypeEnum::Emergency) {
-            $leaveBalance->remainig_days_emergency -= $leave->days_taken;
-            $leaveBalance->used_days_emergency += $leave->days_taken;
-        } else {
-            $leaveBalance->remainig_days -= $leave->days_taken;
-            $leaveBalance->used_days += $leave->days_taken;
+    
+        // تجاهل الإجازات المرضية
+        if ($leave->leave_type == LeaveTypeEnum::Sick) {
+            return;
         }
-
-        $leaveBalance->save();
+    
+        // تحديد نوع الخصم حسب نوع الإجازة
+        switch ($leave->leave_type) {
+            case LeaveTypeEnum::Emergency:
+                $leaveBalance->remainig_days_emergency -= $leave->days_taken;
+                $leaveBalance->used_days_emergency += $leave->days_taken;
+                break;
+            case LeaveTypeEnum::Regular:
+            case LeaveTypeEnum::Annual:
+                $leaveBalance->remainig_days -= $leave->days_taken;
+                $leaveBalance->used_days += $leave->days_taken;
+                break;
+            default:
+                return; // إذا كان النوع غير مدعوم
+        }
+    
+        // حفظ التغييرات
+        try {
+            $leaveBalance->save();
+        } catch (\Exception $e) {
+            // يمكنك هنا إضافة منطق لمتابعة الأخطاء، مثل:
+            // Log::error("Error saving leave balance: " . $e->getMessage());
+            return;
+        }
     }
-
+    
 
     /**
      * Handle the Leave "deleted" event.
@@ -77,3 +99,36 @@ class LeavesObserver
         //
     }
 }
+
+
+
+
+
+
+// public function updated(Leave $leave)
+// {
+//     // نتأكد إن الحالة تمت الموافقة عليها
+//     if ($leave->leave_status != LeaveStatusEnum::Approved) {
+//         return;
+//     }
+
+//     // تحديد ID الموظف صاحب الإجازة (مش الأدمن اللي وافق)
+//     $employeeId = $leave->employee_id;
+
+//     // الحصول على رصيد الإجازات
+//     $leaveBalance = LeaveBalance::where('employee_id', $employeeId)->where('status', LeaveBalanceStatus::Open)->first();
+//     if (!$leaveBalance) {
+//         return;
+//     }
+
+//     // تحديد نوع الخصم حسب نوع الإجازة
+//     if ($leave->leave_type == LeaveTypeEnum::Emergency) {
+//         $leaveBalance->remainig_days_emergency -= $leave->days_taken;
+//         $leaveBalance->used_days_emergency += $leave->days_taken;
+//     } else {
+//         $leaveBalance->remainig_days -= $leave->days_taken;
+//         $leaveBalance->used_days += $leave->days_taken;
+//     }
+
+//     $leaveBalance->save();
+// }

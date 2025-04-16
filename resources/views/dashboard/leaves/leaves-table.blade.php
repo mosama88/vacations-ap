@@ -71,13 +71,28 @@
             <select wire:model.live="governrate_search" class="form-control select">
                 <option value="">-- أختر المحافظة --</option>
                 @forelse ($other['governorates'] as $governorate)
-                    <option @if (old('governorate_id') == $governorate->id) selected @endif value="{{ $governorate->id }}">
+                    <option value="{{ $governorate->id }}">
                         {{ $governorate->name }}</option>
                 @empty
                     عفوآ لا توجد بيانات!
                 @endforelse
             </select>
         </div>
+
+
+        <div class="form-group col-6">
+            <label for="exampleSelectBorder">بحث السنه المالية</label>
+            <select wire:model.live="finance_calendars_search" class="form-control select">
+                <option value="">-- أختر السنه --</option>
+                @forelse ($other['finance_calendars'] as $finance)
+                    <option value="{{ $finance->id }}">
+                        {{ $finance->finance_yr }}</option>
+                @empty
+                    عفوآ لا توجد بيانات!
+                @endforelse
+            </select>
+        </div>
+
         <div class="form-group col-3">
             <label></label>
             <div class="mg-t-10">
@@ -86,6 +101,7 @@
                         empty($end_date_search) &&
                         empty($leave_type_search) &&
                         empty($leave_status_search) &&
+                        empty($finance_calendars_search) &&
                         empty($governrate_search))
                     <div class="mg-t-10">
                         <button class="btn  btn-light btn-block" disabled>أمسح</button>

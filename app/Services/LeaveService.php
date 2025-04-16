@@ -132,8 +132,8 @@ class LeaveService
             throw new \Exception('لا يوجد رصيد إجازات متاح');
         }
         $balances = [
+            LeaveTypeEnum::Regular->value => ['field' => 'remainig_days', 'name' => 'الإجازة السنويةالأعتيادى'],
             LeaveTypeEnum::Annual->value => ['field' => 'remainig_days', 'name' => 'الإجازة السنوية'],
-            LeaveTypeEnum::Sick->value => ['field' => 'remainig_days_sick', 'name' => 'الإجازة المرضية'],
             LeaveTypeEnum::Emergency->value => ['field' => 'remainig_days_emergency', 'name' => 'الإجازة العارضة'],
         ];
 
@@ -159,7 +159,7 @@ class LeaveService
         }
         return true; // التاريخ صحيح (في نفس اليوم أو في تاريخ سابق)
     }
-    
+
 
     public function CheckLeaveRegular($leaveType, $startDate)
     {
