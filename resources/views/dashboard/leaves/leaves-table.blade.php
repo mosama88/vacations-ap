@@ -35,8 +35,8 @@
                 الأجازة</label>
             <div class="input-group">
                 <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
-                <input type="text" id="start_date" wire:model.live="start_date_search" class="form-control bg-white"
-                    value="" placeholder="اختر تاريخ البداية">
+                <input type="text" id="start_date" autocomplete="none" wire:model.live="start_date_search"
+                    class="form-control bg-white" value="" placeholder="اختر تاريخ البداية">
             </div>
 
         </div>
@@ -46,8 +46,8 @@
                 الأجازة</label>
             <div class="input-group">
                 <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
-                <input type="text" id="end_date" wire:model.live="end_date_search" class="form-control bg-white"
-                    value="" placeholder="اختر تاريخ النهاية">
+                <input type="text" id="end_date" autocomplete="off" wire:model.live="end_date_search"
+                    class="form-control bg-white" value="" placeholder="اختر تاريخ النهاية">
             </div>
         </div>
 
