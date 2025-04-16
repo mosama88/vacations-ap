@@ -159,14 +159,14 @@ class LeaveService
         }
         return true; // التاريخ صحيح (في نفس اليوم أو في تاريخ سابق)
     }
-
+    
 
     public function CheckLeaveRegular($leaveType, $startDate)
     {
-        // تحقق إذا كانت الإجازة العارضة وتاريخ البدء في المستقبل
-        if ($leaveType == 2 && Carbon::parse($startDate)->gt(Carbon::now()->endOfDay())) {
-            return true; // إرجاع false يعني أن التاريخ في المستقبل
+        // تحقق إذا كانت الإجازة العادية وتاريخ البدء في المستقبل
+        if ($leaveType == 2 && Carbon::parse($startDate)->lte(Carbon::now()->endOfDay())) {
+            return false; // إذا كانت الإجازة في الماضي، إرجاع false
         }
-        return false; // التاريخ صحيح (في نفس اليوم أو في تاريخ سابق)
+        return true; // التاريخ صحيح (في نفس اليوم أو في تاريخ لاحق)
     }
 }

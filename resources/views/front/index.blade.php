@@ -163,7 +163,7 @@
                                                 @endif
                                             </td>
 
-                                            <td>{{ $info->description }}</td>
+                                            <td>{{ Str::limit($info->description, 20) }}</td>
                                             <td>{{ $info->created_by ? $info->createdBy->name : 'لا يوجد' }}</td>
                                             <td>{{ $info->updated_by ? $info->updatedBy->name : 'لا يوجد تحديث' }}</td>
                                             <td>

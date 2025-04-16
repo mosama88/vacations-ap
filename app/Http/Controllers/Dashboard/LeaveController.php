@@ -316,7 +316,6 @@ class LeaveController extends Controller
 
     private function checkDateForLeaveType(Request $request, LeaveService $leaveService)
     {
-
         // التحقق من صلاحية الإجازة العارضة
         $isLeaveValid = $leaveService->CheckLeaveEmergancy($request->leave_type, $request->start_date);
 
@@ -328,8 +327,6 @@ class LeaveController extends Controller
                 ->withInput();
         }
 
-
-
         // التحقق من صلاحية الإجازة الأعتيادى
         $isLeaveValidRegular = $leaveService->CheckLeaveRegular($request->leave_type, $request->start_date);
 
@@ -337,7 +334,7 @@ class LeaveController extends Controller
         if (!$isLeaveValidRegular) {
             // إذا كانت الإجازة غير صحيحة، يتم إعادة التوجيه مع رسالة خطأ
             return redirect()->back()
-                ->withErrors(['error' => 'الإجازة الأعتيادى يجب أن تكون في نفس اليوم أو في وقت لاحق.'])
+                ->withErrors(['error' => 'الإجازة الأعتيادى يجب أن تكون في  وقت لاحق.'])
                 ->withInput();
         }
     }
