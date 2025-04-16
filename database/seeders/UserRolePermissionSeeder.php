@@ -129,6 +129,7 @@ class UserRolePermissionSeeder extends Seeder
         }
 
         // Create Roles
+        $superUserRole = Role::create(['name' => 'super-user', 'guard_name' => $guardAdmin]); //as super-admin
         $superAdminRole = Role::create(['name' => 'super-admin', 'guard_name' => $guardAdmin]); //as super-admin
         $adminRole = Role::create(['name' => 'admin', 'guard_name' => $guardAdmin]);
         $staffRole = Role::create(['name' => 'staff', 'guard_name' => $guardAdmin]);
@@ -136,6 +137,7 @@ class UserRolePermissionSeeder extends Seeder
 
         // Lets give all permission to super-admin role.
         $allPermissionNames = Permission::where('guard_name', $guardAdmin)->pluck('name')->toArray();
+        $superUserRole->givePermissionTo($allPermissionNames);
         $superAdminRole->givePermissionTo($allPermissionNames);
 
         // Let's give few permissions to admin role.

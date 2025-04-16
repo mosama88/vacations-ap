@@ -18,6 +18,7 @@ use App\Http\Requests\Dashboard\FinanceCalendarRequest;
 
 class FinanceCalendarController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      */

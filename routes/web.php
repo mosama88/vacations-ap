@@ -20,7 +20,7 @@ Route::get('/', function () {
 
 
 
-Route::middleware(['auth:employee', 'role:super-admin,employee'])->name('dashboard.')->group(function () {
+Route::middleware(['auth:employee', 'role:super-admin|super-user'])->name('dashboard.')->group(function () {
 
 
     //------------------------ Profile
@@ -33,7 +33,7 @@ Route::middleware(['auth:employee', 'role:super-admin,employee'])->name('dashboa
         ->name('employees.logout');
 
     // ---------------------------------------------------- بداية تكويد السنوات المالية
-    Route::resource('/financeCalendars', FinanceCalendarController::class);
+    Route::resource('/financeCalendars', FinanceCalendarController::class)->middleware('permission:السنوات المالية');
     Route::controller(FinanceCalendarController::class)->name('financeCalendars.')->prefix('financeCalendars')->group(function () {
         Route::get('open/{id}', 'open')->name('open');
         Route::get('close/{id}', 'close')->name('close');
@@ -41,21 +41,21 @@ Route::middleware(['auth:employee', 'role:super-admin,employee'])->name('dashboa
 
 
     // ---------------------------------------------- بداية تكويد الفروع
-    Route::resource('/branches', BranchController::class);
+    Route::resource('/branches', BranchController::class)->middleware('permission:الفروع');
 
     // --------------------------------------------- بداية تكويد الدرجات الوظيفية
     Route::resource('/jobGrades', JobGradeController::class)->middleware('permission:الدرجات الوظيفية');
 
     // ---------------------------------------------- بداية تكويد الموظفين
-    Route::resource('/employees', EmployeeController::class);
+    Route::resource('/employees', EmployeeController::class)->middleware('permission:بيانات الموظفين');
 
     // --------------------------------------------- بداية رصيد الأجازات
-    Route::resource('/leaveBalances', LeaveBalanceController::class);
+    Route::resource('/leaveBalances', LeaveBalanceController::class)->middleware('permission:رصيد الموظف');
 
     // ---------------------------------------------------- بداية تكويد الأجازات
-    Route::resource('/leaves', LeaveController::class);
+    Route::resource('/leaves', LeaveController::class)->middleware('permission:الأجازات');
     Route::controller(LeaveController::class)->name('leaves.')->prefix('leaves')->group(function () {
-        Route::get('/pending/employee', 'getLeavepending')->name('getLeavespending');
+        Route::get('/pending/employee', 'getLeavepending')->name('getLeavespending')->middleware('permission:المعلقه الأجازات');
     });
 
     // ---------------------------------------------------- بداية تكويد الصفحه الامامين للمستخدمين

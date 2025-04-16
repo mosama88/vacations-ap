@@ -10,13 +10,13 @@ use App\Http\Requests\Dashboard\JobGradeRequest;
 class JobGradeController extends Controller
 {
 
-    // protected array $middleware = [
-    //     'permission: الدرجات الوظيفية' => ['only' => ['index']],
-    //     'permission:عرض الدرجات الوظيفية' => ['only' => ['show']],
-    //     'permission:اضافة الدرجات الوظيفية' => ['only' => ['create', 'store']],
-    //     'permission:تعديل الدرجات الوظيفية' => ['only' => ['edit', 'update']],
-    //     'permission:حذف الدرجات الوظيفية' => ['only' => ['destroy']],
-    // ];
+    protected array $middleware = [
+        'permission: الدرجات الوظيفية' => ['only' => ['index']],
+        'permission:عرض الدرجات الوظيفية' => ['only' => ['show']],
+        'permission:اضافة الدرجات الوظيفية' => ['only' => ['create', 'store']],
+        'permission:تعديل الدرجات الوظيفية' => ['only' => ['edit', 'update']],
+        'permission:حذف الدرجات الوظيفية' => ['only' => ['destroy']],
+    ];
 
 
     /**
