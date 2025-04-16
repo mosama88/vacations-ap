@@ -132,7 +132,7 @@ class LeaveService
             throw new \Exception('لا يوجد رصيد إجازات متاح');
         }
         $balances = [
-            LeaveTypeEnum::Regular->value => ['field' => 'remainig_days', 'name' => 'الإجازة السنويةالأعتيادى'],
+            LeaveTypeEnum::Regular->value => ['field' => 'remainig_days', 'name' => 'الإجازة الأعتيادى'],
             LeaveTypeEnum::Annual->value => ['field' => 'remainig_days', 'name' => 'الإجازة السنوية'],
             LeaveTypeEnum::Emergency->value => ['field' => 'remainig_days_emergency', 'name' => 'الإجازة العارضة'],
         ];
