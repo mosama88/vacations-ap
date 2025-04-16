@@ -100,6 +100,10 @@
                                 </tbody>
                             </table>
                         </div>
+                        <div class="col-md-12">
+                            {{ $data->links() }}
+
+                        </div>
                         <!-- /.card-body -->
 
                     </div>

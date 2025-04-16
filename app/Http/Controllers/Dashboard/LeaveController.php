@@ -67,7 +67,7 @@ class LeaveController extends Controller
             return $financial_year;
         }
 
-        $leave_balance = LeaveBalance::where('status', LeaveBalanceStatus::Open)->where('employee_id', $employee->id)->first();
+        $leave_balance = LeaveBalance::where('id', $request->leave_balance_id)->where('status', LeaveBalanceStatus::Open)->where('employee_id', $employee->id)->first();
 
         if (!$leave_balance) {
             return redirect()->back()->withErrors(['error' => 'عفوآ لا يوجد رصيد اجازات'])->withInput();
@@ -175,12 +175,11 @@ class LeaveController extends Controller
         }
 
 
-        $leave_balance = LeaveBalance::find($leave->id)->where('status', LeaveBalanceStatus::Open)->first();
+        $leave_balance = LeaveBalance::where('id', $leave->leave_balance_id)->where('status', LeaveBalanceStatus::Open)->first();
 
         if (!$leave_balance) {
             return redirect()->back()->withErrors(['error' => 'عفوآ لا يوجد رصيد اجازات'])->withInput();
         }
-
 
         // في دالة store
         try {
@@ -308,7 +307,7 @@ class LeaveController extends Controller
         $other['weeks'] = Week::where('id', $emplyeeId)->get();
         $employees = Employee::with('leaveBalance')->where('id', $emplyeeId)->first();
         $data = Leave::orderByDesc('id')->where('leave_status', LeaveStatusEnum::Pending)->paginate(10);
-        return view('front.leaves.leaves-pending', compact('data', 'employees', 'other'));
+        return view('dashboard.leaves.leaves-pending', compact('data', 'employees', 'other'));
     }
 
 

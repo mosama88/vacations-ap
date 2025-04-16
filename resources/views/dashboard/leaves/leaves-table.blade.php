@@ -146,7 +146,7 @@
                             @endif
 
                         </td>
-                        <td>{{ $info->description }}</td>
+                        <td>{{ Str::limit($info->description, 20) }}</td>
                         <td>{{ $info->employee->governorate->name }}</td>
                         <td>{{ $info->updated_by ? $info->updatedBy->name : 'لا يوجد تحديث' }}</td>
                         <td>

@@ -54,7 +54,6 @@ Route::middleware('auth:employee')->name('dashboard.')->group(function () {
 
     // ---------------------------------------------------- بداية تكويد الأجازات
     Route::resource('/leaves', LeaveController::class);
-
     Route::controller(LeaveController::class)->name('leaves.')->prefix('leaves')->group(function () {
         Route::get('/pending/employee', 'getLeavepending')->name('getLeavespending');
     });
