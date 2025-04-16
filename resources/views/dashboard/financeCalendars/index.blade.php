@@ -44,7 +44,7 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body p-0">
-                            <table class="table table-head-fixed text-nowrap">
+                            <table class="table table-head-fixed text-nowrap table-responsive">
                                 <thead>
                                     <tr>
                                         <th>#</th>
@@ -75,53 +75,44 @@
                                                 @endif
                                             </td>
 
-                                            <td>
-                                                <div class="btn-group">
-                                                    <button type="button" class="btn btn-secondary  dropdown-toggle"
-                                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                                        العمليات
-                                                    </button>
-                                                    <ul class="dropdown-menu">
-
-                                                        @include('dashboard.partials.action-dropDown', [
-                                                            'name' => 'financeCalendars',
-                                                            'name_id' => $info,
-                                                        ])
-
-
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                @if ($info->status === App\Enum\StatusActive::Inactive)
-                                                    <a class="dropdown-item text-success"
-                                                        href="{{ route('dashboard.financeCalendars.open', $info->id) }}">
-                                                        <i class="mx-1 fas fa-lock-open"></i> فتح
-                                                        السنه</a>
-                                                @elseif ($info->status === App\Enum\StatusActive::Active)
-                                                    <a class="dropdown-item text-secondary"
-                                                        href="{{ route('dashboard.financeCalendars.close', $info->id) }}">
-                                                        <i class="mx-1 fas fa-lock"></i> غلق
-                                                        السنه</a>
-                                                @else
-                                                @endif
-                                            </td>
-                                        </tr>
-                                    @empty
-                                        <div class="alert alert-primary" role="alert">
-                                            عفوآ لاتوجد بيانات
-                                            !
-                                        </div>
-                                    @endforelse
-                                </tbody>
-                            </table>
+                                            <td class="project-actions">
+                                                @include('dashboard.partials.action', [
+                                                    'name' => 'financeCalendars',
+                                                    'name_id' => $info,
+                                                ])
+                                                </ul>
                         </div>
-                        <!-- /.card-body -->
+                        </td>
+                        <td>
+                            @if ($info->status === App\Enum\StatusActive::Inactive)
+                                <a class="dropdown-item text-success"
+                                    href="{{ route('dashboard.financeCalendars.open', $info->id) }}">
+                                    <i class="mx-1 fas fa-lock-open"></i> فتح
+                                    السنه</a>
+                            @elseif ($info->status === App\Enum\StatusActive::Active)
+                                <a class="dropdown-item text-secondary"
+                                    href="{{ route('dashboard.financeCalendars.close', $info->id) }}">
+                                    <i class="mx-1 fas fa-lock"></i> غلق
+                                    السنه</a>
+                            @else
+                            @endif
+                        </td>
+                        </tr>
+                    @empty
+                        <div class="alert alert-primary" role="alert">
+                            عفوآ لاتوجد بيانات
+                            !
+                        </div>
+                        @endforelse
+                        </tbody>
+                        </table>
                     </div>
-                    <!-- /.card -->
+                    <!-- /.card-body -->
                 </div>
+                <!-- /.card -->
             </div>
-            <!-- /.row (main row) -->
+        </div>
+        <!-- /.row (main row) -->
         </div><!-- /.container-fluid -->
     </section>
 
