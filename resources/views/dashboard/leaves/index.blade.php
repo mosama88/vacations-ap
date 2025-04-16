@@ -85,39 +85,9 @@
         })
     </script>
 
-    <script>
-        $(document).on('change', '#employee_id', function(e) {
-            getLeaveBalance();
-        });
 
-        function getLeaveBalance() {
-            var employee_id = $("#employee_id").val();
-            jQuery.ajax({
-                url: '{{ route('dashboard.leaves.getLeavesBalances') }}',
-                type: 'POST',
-                dataType: 'json', // التأكد من أنك ترجع البيانات بتنسيق JSON
-                cache: false,
-                data: {
-                    "_token": '{{ csrf_token() }}',
-                    "employee_id": employee_id
-                },
-                success: function(data) {
-                    // تأكد أن الخادم يعيد البيانات بتنسيق JSON يحتوي على القيم المناسبة
-                    if (data.leave_balance) {
-                        // تحديث القيم في الحقول
-                        $("#exampleInputtotal_days").val(data.leave_balance.total_days);
-                        $("#exampleInputused_days").val(data.leave_balance.used_days);
-                        $("#exampleInputremainig_days").val(data.leave_balance.remainig_days);
-                    } else {
-                        alert("لا توجد بيانات للموظف.");
-                    }
-                },
-                error: function() {
-                    alert("عفوا، لقد حدث خطأ.");
-                }
-            });
-        }
-    </script>
+
+
     <script>
         flatpickr("#start_date", {
             dateFormat: "Y-m-d",

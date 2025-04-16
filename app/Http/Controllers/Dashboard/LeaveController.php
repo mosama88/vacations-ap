@@ -312,27 +312,6 @@ class LeaveController extends Controller
     }
 
 
-    
-    public function getLeaveBalance(Request $request)
-    {
-        if ($request->ajax()) {
-            $employee_id = $request->employee_id;
-            $leave_balance = LeaveBalance::select('total_days', 'used_days', 'remainig_days')
-                ->where('employee_id', $employee_id)
-                ->orderBy('id', 'desc')
-                ->first();  // فقط أول سجل للحصول على البيانات المطلوبة
-
-            // التأكد من أن البيانات موجودة وإرجاعها بتنسيق JSON
-            if ($leave_balance) {
-                return response()->json([
-                    'leave_balance' => $leave_balance
-                ]);
-            } else {
-                return response()->json(['dashboard.leave_balance' => null]);
-            }
-        }
-    }
-
 
     private function checkDateForLeaveType(Request $request, LeaveService $leaveService)
     {

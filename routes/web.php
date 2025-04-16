@@ -57,7 +57,6 @@ Route::middleware('auth:employee')->name('dashboard.')->group(function () {
 
     Route::controller(LeaveController::class)->name('leaves.')->prefix('leaves')->group(function () {
         Route::get('/pending/employee', 'getLeavepending')->name('getLeavespending');
-        Route::post('/balance', 'getLeaveBalance')->name('getLeavesBalances');
     });
 
     // ---------------------------------------------------- بداية تكويد الصفحه الامامين للمستخدمين
