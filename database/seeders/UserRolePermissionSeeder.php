@@ -67,6 +67,7 @@ class UserRolePermissionSeeder extends Seeder
             ['name' => 'الدرجات الوظيفية', 'category' => 'jobsGrades', 'guard_name' => $guardAdmin],
             ['name' => 'اضافة الدرجات الوظيفية', 'category' => 'jobsGrades', 'guard_name' => $guardAdmin],
             ['name' => 'تعديل الدرجات الوظيفية', 'category' => 'jobsGrades', 'guard_name' => $guardAdmin],
+            ['name' => 'عرض الدرجات الوظيفية', 'category' => 'jobsGrades', 'guard_name' => $guardAdmin],
             ['name' => 'حذف الدرجات الوظيفية', 'category' => 'jobsGrades', 'guard_name' => $guardAdmin],
 
             //    المحافظات

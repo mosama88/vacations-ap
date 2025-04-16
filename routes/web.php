@@ -20,7 +20,7 @@ Route::get('/', function () {
 
 
 
-Route::middleware('auth:employee')->name('dashboard.')->group(function () {
+Route::middleware(['auth:employee', 'role:super-admin,employee'])->name('dashboard.')->group(function () {
 
 
     //------------------------ Profile
@@ -44,7 +44,7 @@ Route::middleware('auth:employee')->name('dashboard.')->group(function () {
     Route::resource('/branches', BranchController::class);
 
     // --------------------------------------------- بداية تكويد الدرجات الوظيفية
-    Route::resource('/jobGrades', JobGradeController::class);
+    Route::resource('/jobGrades', JobGradeController::class)->middleware('permission:الدرجات الوظيفية');
 
     // ---------------------------------------------- بداية تكويد الموظفين
     Route::resource('/employees', EmployeeController::class);
@@ -79,7 +79,7 @@ Route::middleware('redirect.employee')->group(function () {
 
 
 // ---------------------------------------------- بداية تكويد الصلاحيات
-Route::middleware(['auth:employee', 'role:super-admin,employee'])
+Route::middleware(['auth:employee', 'role:super-admin|employee'])
     ->name('dashboard.')
     ->group(function () {
         Route::prefix('roles')->controller(RoleController::class)->group(function () {
