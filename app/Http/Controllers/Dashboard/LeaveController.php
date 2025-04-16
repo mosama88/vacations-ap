@@ -16,6 +16,7 @@ use App\Models\FinanceCalendar;
 use App\Enum\LeaveBalanceStatus;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\Dashboard\LeaveRequest;
 
 class LeaveController extends Controller
@@ -62,7 +63,7 @@ class LeaveController extends Controller
         }
 
         $financial_year = $leaveService->checkFinanceCalendar($request);
-        if ($financial_year instanceof \Illuminate\Http\RedirectResponse) {
+        if ($financial_year instanceof RedirectResponse) {
             return $financial_year;
         }
 
@@ -93,12 +94,6 @@ class LeaveController extends Controller
         $startDate = Carbon::parse($request->start_date);
         $endDate = Carbon::parse($request->end_date);
 
-        if ($startDate->gt($endDate)) {
-            return redirect()->back()
-                ->withErrors(['error' => 'تاريخ البداية يجب أن يكون قبل تاريخ النهاية'])
-                ->withInput();
-        }
-
         if ($leaveService->hasOverlappingLeaves($employee->id, $startDate, $endDate)) {
             $existingLeave = $leaveService->getOverlappingLeave($employee->id, $startDate, $endDate);
             $message = 'عفواً يوجد إجازة مسجلة في هذه الفترة';
@@ -112,6 +107,13 @@ class LeaveController extends Controller
         }
 
         $daysTaken = $leaveService->calculateWorkingDays($startDate, $endDate, $employee->id);
+
+        $check = $this->checkDateForLeaveType($request, $leaveService);
+        if ($check instanceof RedirectResponse) {
+            return $check; // وقف التنفيذ هنا
+        }
+
+
         try {
             $leaveInsert =  Leave::create([
                 'finance_calendar_id' => $financial_year['id'],
@@ -208,9 +210,6 @@ class LeaveController extends Controller
         $startDate = Carbon::parse($request->start_date);
         $endDate = Carbon::parse($request->end_date);
 
-        if ($startDate->gt($endDate)) {
-            return redirect()->back()->withErrors(['error' => 'تاريخ البداية يجب أن يكون قبل تاريخ النهاية'])->withInput();
-        }
 
         if ($leaveService->hasOverlappingLeaves($employee->id, $startDate, $endDate, $leave->id)) {
             $existingLeave = $leaveService->getOverlappingLeave($employee->id, $startDate, $endDate, $leave->id);
@@ -225,6 +224,11 @@ class LeaveController extends Controller
         }
 
         $daysTaken = $leaveService->calculateWorkingDays($startDate, $endDate, $employee->id);
+
+        $check = $this->checkDateForLeaveType($request, $leaveService);
+        if ($check instanceof RedirectResponse) {
+            return $check; // وقف التنفيذ هنا
+        }
 
         try {
             $leave->update([
@@ -323,6 +327,35 @@ class LeaveController extends Controller
             } else {
                 return response()->json(['dashboard.leave_balance' => null]);
             }
+        }
+    }
+
+
+    private function checkDateForLeaveType(Request $request, LeaveService $leaveService)
+    {
+
+        // التحقق من صلاحية الإجازة العارضة
+        $isLeaveValid = $leaveService->CheckLeaveEmergancy($request->leave_type, $request->start_date);
+
+        // التأكد من التحقق بشكل صحيح
+        if (!$isLeaveValid) {
+            // إذا كانت الإجازة غير صحيحة، يتم إعادة التوجيه مع رسالة خطأ
+            return redirect()->back()
+                ->withErrors(['error' => 'الإجازة العارضة يجب أن تكون في نفس اليوم أو في وقت سابق.'])
+                ->withInput();
+        }
+
+
+
+        // التحقق من صلاحية الإجازة الأعتيادى
+        $isLeaveValid = $leaveService->CheckLeaveRegular($request->leave_type, $request->start_date);
+
+        // التأكد من التحقق بشكل صحيح
+        if (!$isLeaveValid) {
+            // إذا كانت الإجازة غير صحيحة، يتم إعادة التوجيه مع رسالة خطأ
+            return redirect()->back()
+                ->withErrors(['error' => 'الإجازة الأعتيادى يجب أن تكون في نفس اليوم أو في وقت لاحق.'])
+                ->withInput();
         }
     }
 }

@@ -149,4 +149,25 @@ class LeaveService
 
         return true;
     }
+
+
+    public function CheckLeaveEmergancy($leaveType, $startDate)
+    {
+        // تحقق إذا كانت الإجازة العارضة وتاريخ البدء في المستقبل
+        if ($leaveType == 1 && Carbon::parse($startDate)->gt(Carbon::now()->endOfDay())) {
+            return false; // إرجاع false يعني أن التاريخ في المستقبل
+        }
+        return true; // التاريخ صحيح (في نفس اليوم أو في تاريخ سابق)
+    }
+
+
+    public function CheckLeaveRegular($leaveType, $startDate)
+    {
+        // تحقق إذا كانت الإجازة العارضة وتاريخ البدء في المستقبل
+        if ($leaveType == 2 && Carbon::parse($startDate)->gt(Carbon::now()->endOfDay())) {
+            return true; // إرجاع false يعني أن التاريخ في المستقبل
+        }
+        return false; // التاريخ صحيح (في نفس اليوم أو في تاريخ سابق)
+    }
+    
 }
