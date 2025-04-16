@@ -51,20 +51,7 @@
             </div>
         </div>
 
-        <div class="form-group col-6">
-            <label for="leave_status">حالة الإجازة</label>
-            <select wire:model.live="leave_status_search" class="custom-select form-control-border"
-                id="exampleSelectBorder">
-                <option value="">-- أختر حالة الأجازه --</option>
-                <option value="{{ LeaveStatusEnum::Pending }}">
-                    معلق</option>
-                <option value="{{ LeaveStatusEnum::Approved }}">
-                    موافق</option>
-                <option value="{{ LeaveStatusEnum::Refused }}">
-                    مرفوض
-                </option>
-            </select>
-        </div>
+        
 
         <div class="form-group col-6">
             <label for="exampleSelectBorder">المحافظة التابع لها <code>الموظف</code></label>
@@ -85,7 +72,6 @@
                         empty($start_date_search) &&
                         empty($end_date_search) &&
                         empty($leave_type_search) &&
-                        empty($leave_status_search) &&
                         empty($governrate_search))
                     <div class="mg-t-10">
                         <button class="btn  btn-light btn-block" disabled>أمسح</button>
@@ -99,6 +85,7 @@
             </div>
 
         </div>
+
         <table class="table table-bordered table-responsive">
             <thead>
                 <tr>
@@ -111,9 +98,8 @@
                     <th>عدد الأيام</th>
                     <th>حالة الاجازه</th>
                     <th>ملاحظات</th>
-                    <th>الفرع</th>
                     <th>تحديث بواسطة</th>
-                    <th>عرض الرصيد</th>
+                    <th>الأجراءات</th>
                 </tr>
             </thead>
             <tbody>
@@ -144,17 +130,14 @@
                             @else
                                 <span class="badge bg-danger">مرفوض</span>
                             @endif
-
                         </td>
+
                         <td>{{ Str::limit($info->description, 20) }}</td>
-                        <td>{{ $info->employee->governorate->name }}</td>
                         <td>{{ $info->updated_by ? $info->updatedBy->name : 'لا يوجد تحديث' }}</td>
                         <td>
-                            {{-- @if ($info->leave_status != LeaveStatusEnum::Pending)
-                                <a class="btn btn-outline-info btn-sm mx-2"
-                                    href="{{ route('dashboard.leaves.edit', $info->id) }}"><i
-                                        class="fas fa-edit ml-1"></i></a>
-                            @endif --}}
+                            <a class="btn btn-outline-info btn-sm mx-2"
+                                href="{{ route('dashboard.leaves.edit', $info->id) }}"><i
+                                    class="fas fa-edit ml-1"></i></a>
 
                             <a class="btn btn-outline-success btn-sm mx-2"
                                 href="{{ route('dashboard.leaves.show', $info->id) }}"><i
@@ -166,11 +149,10 @@
                 </tr>
             </tbody>
         </table>
+    </div>
+    <div class="col-md-12">
+        {{ $data->links() }}
 
-        <div class="col-md-12">
-            {{ $data->links() }}
-
-        </div>
     </div>
 </div>
 </div>
