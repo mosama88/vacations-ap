@@ -39,5 +39,8 @@
     <!-- Toastr -->
     <script src="{{ asset('dashboard') }}/assets/plugins/toastr/toastr.min.js"></script>
 
+    <!-- flatpickr -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ar.js"></script>
 
     @stack('js')

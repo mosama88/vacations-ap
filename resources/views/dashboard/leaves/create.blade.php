@@ -8,8 +8,7 @@
     <!-- Select2 -->
     <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/plugins/select2/css/select2.min.css">
     <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
-    <!-- flatpickr -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    
 @endpush
 @section('content')
 
@@ -232,9 +231,7 @@
 @push('js')
     <!-- Select2 -->
     <script src="{{ asset('dashboard') }}/assets/plugins/select2/js/select2.full.min.js"></script>
-    <!-- flatpickr -->
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ar.js"></script>
+
 
     <script>
         $(function() {
@@ -281,7 +278,52 @@
             });
         }
     </script>
-    {{-- <script>
+
+
+    <script>
+        // تفعيل Flatpickr مع اللغة العربية
+        flatpickr("#start_date", {
+            dateFormat: "Y-m-d",
+            locale: "ar",
+            onChange: calculateDays
+        });
+
+        flatpickr("#end_date", {
+            dateFormat: "Y-m-d",
+            locale: "ar",
+            onChange: calculateDays
+        });
+
+        // دالة حساب عدد الأيام (الآن تشمل جميع الأيام بما فيها الجمعة)
+        function calculateDays() {
+            const startDate = document.getElementById('start_date').value;
+            const endDate = document.getElementById('end_date').value;
+
+            if (startDate && endDate) {
+                const start = new Date(startDate);
+                const end = new Date(endDate);
+
+                // التأكد من أن تاريخ البداية قبل تاريخ النهاية
+                if (start > end) {
+                    document.getElementById('days_taken').value = 0;
+                    return;
+                }
+
+                // حساب الفرق بين التاريخين بالأيام (بما فيها الجمعة)
+                const diffTime = Math.abs(end - start);
+                const totalDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+
+                document.getElementById('days_taken').value = totalDays;
+            }
+        }
+    </script>
+@endpush
+
+
+{{--
+ 
+ حساب يوم الجمعه
+ <script>
         flatpickr("#start_date", {
             dateFormat: "Y-m-d",
             locale: "ar"
@@ -338,42 +380,3 @@
             }
         }
     </script> --}}
-
-    <script>
-        // تفعيل Flatpickr مع اللغة العربية
-        flatpickr("#start_date", {
-            dateFormat: "Y-m-d",
-            locale: "ar",
-            onChange: calculateDays
-        });
-
-        flatpickr("#end_date", {
-            dateFormat: "Y-m-d",
-            locale: "ar",
-            onChange: calculateDays
-        });
-
-        // دالة حساب عدد الأيام (الآن تشمل جميع الأيام بما فيها الجمعة)
-        function calculateDays() {
-            const startDate = document.getElementById('start_date').value;
-            const endDate = document.getElementById('end_date').value;
-
-            if (startDate && endDate) {
-                const start = new Date(startDate);
-                const end = new Date(endDate);
-
-                // التأكد من أن تاريخ البداية قبل تاريخ النهاية
-                if (start > end) {
-                    document.getElementById('days_taken').value = 0;
-                    return;
-                }
-
-                // حساب الفرق بين التاريخين بالأيام (بما فيها الجمعة)
-                const diffTime = Math.abs(end - start);
-                const totalDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
-
-                document.getElementById('days_taken').value = totalDays;
-            }
-        }
-    </script>
-@endpush

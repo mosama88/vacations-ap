@@ -36,6 +36,9 @@
 <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/dist/css/style.css">
 <!-- Toastr -->
 <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/plugins/toastr/toastr.min.css">
+
+<!-- flatpickr -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 @stack('css')
 <style>
     .select2-container--default .select2-selection--single {

@@ -48,28 +48,40 @@
                                         </span>
                                     @enderror
                                 </div>
+
                                 <div class="row">
-                                    <div class="form-group col-6">
-                                        <label>بداية السنه</label>
-                                        <input type="date" name="start_date"
-                                            class="form-control @error('start_date') is-invalid @enderror"
-                                            value="{{ old('start_date') }}" placeholder="أدخل السنه المالية">
-                                        @error('start_date')
-                                            <span class="invalid-feedback text-right" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
+                                    <div class="form-group col-4">
+                                        <label class="visually-hidden" for="specificSizeInputGroupUsername">بداية
+                                            السنه</label>
+                                        <div class="input-group">
+                                            <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
+                                            <input type="text" id="start_date" name="start_date"
+                                                class="form-control bg-white  @error('start_date') is-invalid @enderror"
+                                                value="{{ old('start_date') }}" placeholder="اختر تاريخ البداية">
+                                            @error('start_date')
+                                                <span class="invalid-feedback text-right" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+
                                     </div>
-                                    <div class="form-group col-6">
-                                        <label>نهاية السنه</label>
-                                        <input type="date" name="end_date"
-                                            class="form-control @error('end_date') is-invalid @enderror"
-                                            value="{{ old('end_date') }}" placeholder="أدخل السنه المالية">
-                                        @error('end_date')
-                                            <span class="invalid-feedback text-right" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
+
+                                    <div class="form-group col-4">
+                                        <label class="visually-hidden" for="specificSizeInputGroupUsername">نهاية
+                                            السنه</label>
+                                        <div class="input-group">
+                                            <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
+                                            <input type="text" id="end_date" name="end_date"
+                                                class="form-control bg-white  @error('end_date') is-invalid @enderror"
+                                                value="{{ old('end_date') }}" placeholder="اختر تاريخ النهاية">
+                                            @error('end_date')
+                                                <span class="invalid-feedback text-right" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+
                                     </div>
                                 </div>
 
@@ -93,3 +105,17 @@
         </div><!-- /.container-fluid -->
     </section>
 @endsection
+@push('js')
+    <script>
+        // تفعيل Flatpickr مع اللغة العربية
+        flatpickr("#start_date", {
+            dateFormat: "Y-m-d",
+            locale: "ar",
+        });
+
+        flatpickr("#end_date", {
+            dateFormat: "Y-m-d",
+            locale: "ar",
+        });
+    </script>
+@endpush
