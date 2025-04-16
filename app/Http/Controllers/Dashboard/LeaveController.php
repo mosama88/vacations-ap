@@ -119,6 +119,7 @@ class LeaveController extends Controller
                 'finance_calendar_id' => $financial_year['id'],
                 'leave_code' => $newLeaveCode,
                 'employee_id' => $employee->id,
+                'leave_balance_id' => $leave_balance->id,
                 'start_date' => $startDate,
                 'end_date' => $endDate,
                 'days_taken' => $daysTaken,
@@ -310,6 +311,8 @@ class LeaveController extends Controller
         return view('front.leaves.leaves-pending', compact('data', 'employees', 'other'));
     }
 
+
+    
     public function getLeaveBalance(Request $request)
     {
         if ($request->ajax()) {
