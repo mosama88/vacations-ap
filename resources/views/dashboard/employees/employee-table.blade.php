@@ -1,7 +1,7 @@
 @php
     use App\Enum\EmployeeStatus;
 @endphp
-<div class="card-body p-0">
+<div class="container-fluid">
 
     <div class="row col-12 my-2">
         <div class="form-group col-4">
@@ -76,7 +76,10 @@
             </div>
 
         </div>
-        <table class="table table-head-fixed text-nowrap table-responsive">
+    </div>
+    <div class="card-body p-0 row col-md-12">
+
+        <table class="table table-head-fixed text-nowrap ">
             <thead>
                 <tr>
                     <th>#</th>
@@ -100,7 +103,6 @@
                         <td>{{ $info->mobile }}</td>
                         <td>{{ $info->week->name }}</td>
                         <td>{{ $info->governorate->name }}</td>
-                        <td>{{ $info->status }}</td>
                         <td>
                             @if ($info->status == EmployeeStatus::Active)
                                 <span class="badge bg-success">نشط</span>
