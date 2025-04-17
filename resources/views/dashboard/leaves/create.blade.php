@@ -167,7 +167,7 @@
 
                                     <div class="form-group col-4">
                                         <label for="exampleInputName">عدد الأيام </label>
-                                        <input disabled type="text" value="{{ old('days_taken') }}" name="days_taken"
+                                        <input readonly type="text" value="{{ old('days_taken') }}" name="days_taken"
                                             class="form-control bg-white" id="days_taken" placeholder="">
                                     </div>
 

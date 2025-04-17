@@ -114,7 +114,7 @@ class LeaveController extends Controller
             return redirect()->back()->withErrors(['error' => $message])->withInput();
         }
 
-        $daysTaken = $leaveService->calculateWorkingDays($startDate, $endDate, $employee->id);
+        // $daysTaken = $leaveService->calculateWorkingDays($startDate, $endDate, $employee->id);
 
         $check = $this->checkDateForLeaveType($request, $leaveService);
         if ($check instanceof RedirectResponse) {
@@ -129,7 +129,7 @@ class LeaveController extends Controller
                 'leave_balance_id' => $leave_balance->id,
                 'start_date' => $startDate,
                 'end_date' => $endDate,
-                'days_taken' => $daysTaken,
+                'days_taken' => $request->days_taken,
                 'leave_type' => $request->leave_type,
                 'leave_status' => LeaveStatusEnum::Pending,
                 'description' => $request->description,
@@ -230,7 +230,7 @@ class LeaveController extends Controller
             return redirect()->back()->withErrors(['error' => $message])->withInput();
         }
 
-        $daysTaken = $leaveService->calculateWorkingDays($startDate, $endDate, $employee->id);
+        // $daysTaken = $leaveService->calculateWorkingDays($startDate, $endDate, $employee->id);
 
         $check = $this->checkDateForLeaveType($request, $leaveService);
         if ($check instanceof RedirectResponse) {
@@ -244,7 +244,7 @@ class LeaveController extends Controller
                 'leave_balance_id' => $leave_balance->id,
                 'start_date' => $startDate,
                 'end_date' => $endDate,
-                'days_taken' => $daysTaken,
+                'days_taken' => $request->days_taken,
                 'leave_type' => $request->leave_type,
                 'leave_status' => $request->leave_status,
                 'description' => $request->description,

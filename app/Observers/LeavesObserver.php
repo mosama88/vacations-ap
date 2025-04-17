@@ -24,31 +24,31 @@ class LeavesObserver
     /**
      * Handle the Leave "updated" event.
      */
- 
+
     public function updated(Leave $leave)
     {
         // نتأكد إن الحالة تمت الموافقة عليها
         if ($leave->leave_status != LeaveStatusEnum::Approved) {
             return;
         }
-    
+
         // تحديد ID الموظف صاحب الإجازة (مش الأدمن اللي وافق)
         $employeeId = $leave->employee_id;
-    
+
         // الحصول على رصيد الإجازات
         $leaveBalance = LeaveBalance::where('employee_id', $employeeId)
-                                    ->where('status', LeaveBalanceStatus::Open)
-                                    ->first();
-    
+            ->where('status', LeaveBalanceStatus::Open)
+            ->first();
+
         if (!$leaveBalance) {
             return;
         }
-    
+
         // تجاهل الإجازات المرضية
         if ($leave->leave_type == LeaveTypeEnum::Sick) {
             return;
         }
-    
+
         // تحديد نوع الخصم حسب نوع الإجازة
         switch ($leave->leave_type) {
             case LeaveTypeEnum::Emergency:
@@ -56,6 +56,9 @@ class LeavesObserver
                 $leaveBalance->used_days_emergency += $leave->days_taken;
                 break;
             case LeaveTypeEnum::Regular:
+                $leaveBalance->remainig_days -= $leave->days_taken;
+                $leaveBalance->used_days += $leave->days_taken;
+                break;
             case LeaveTypeEnum::Annual:
                 $leaveBalance->remainig_days -= $leave->days_taken;
                 $leaveBalance->used_days += $leave->days_taken;
@@ -63,7 +66,7 @@ class LeavesObserver
             default:
                 return; // إذا كان النوع غير مدعوم
         }
-    
+
         // حفظ التغييرات
         try {
             $leaveBalance->save();
@@ -73,7 +76,7 @@ class LeavesObserver
             return;
         }
     }
-    
+
 
     /**
      * Handle the Leave "deleted" event.

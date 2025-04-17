@@ -59,36 +59,36 @@ class LeaveService
     }
 
 
-    public function calculateWorkingDays($startDate, $endDate, $employeeId): int
-    {
-        $employee = Employee::with('week')->find($employeeId);
+    // public function calculateWorkingDays($startDate, $endDate, $employeeId): int
+    // {
+    //     $employee = Employee::with('week')->find($employeeId);
 
-        if (!$employee) {
-            throw new \Exception("Employee not found");
-        }
+    //     if (!$employee) {
+    //         throw new \Exception("Employee not found");
+    //     }
 
-        // أيام العطلة الافتراضية (الجمعة)
-        // $weekendDays = [Carbon::FRIDAY];
+    //     // أيام العطلة الافتراضية (الجمعة)
+    //     // $weekendDays = [Carbon::FRIDAY];
 
-        // إذا كان للموظف يوم عطلة أسبوعية مختلف
-        // if ($employee->week) {
-        //     // تحويل اسم اليوم إلى رقم اليوم في الأسبوع
-        //     $dayName = $employee->week->name;
-        //     $weekendDays[] = $this->convertArabicDayToNumber($dayName);
-        // }
+    //     // إذا كان للموظف يوم عطلة أسبوعية مختلف
+    //     // if ($employee->week) {
+    //     //     // تحويل اسم اليوم إلى رقم اليوم في الأسبوع
+    //     //     $dayName = $employee->week->name;
+    //     //     $weekendDays[] = $this->convertArabicDayToNumber($dayName);
+    //     // }
 
-        $days = 0;
-        $start = Carbon::parse($startDate);
-        $end = Carbon::parse($endDate);
+    //     $days = 0;
+    //     $start = Carbon::parse($startDate);
+    //     $end = Carbon::parse($endDate);
 
-        for ($date = $start; $date->lte($end); $date->addDay()) {
-            if ($date->dayOfWeek) {
-                $days++;
-            }
-        }
+    //     for ($date = $start; $date->lte($end); $date->addDay()) {
+    //         if ($date->dayOfWeek) {
+    //             $days++;
+    //         }
+    //     }
 
-        return $days;
-    }
+    //     return $days;
+    // }
 
     public function convertArabicDayToNumber($arabicDayName): int
     {
