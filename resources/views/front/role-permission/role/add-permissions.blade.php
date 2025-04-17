@@ -69,6 +69,21 @@
                                 </td>
                             </tr>
                             <tr>
+                                <td class="wd-500">Users</td>
+                                <td>
+                                    @foreach ($permissions->where('category', 'UserList') as $permission)
+                                        <div class="col-md-12">
+                                            <label>
+                                                <input type="checkbox" class="permissionsCheckbox" name="permission[]"
+                                                    value="{{ $permission->name }}"
+                                                    {{ in_array($permission->id, $rolePermissions) ? 'checked' : '' }} />
+                                                {{ $permission->name }}
+                                            </label>
+                                        </div>
+                                    @endforeach
+                                </td>
+                            </tr>
+                            <tr>
                                 <td class="wd-500">Roles</td>
                                 <td>
                                     @foreach ($permissions->where('category', 'Roles') as $permission)
