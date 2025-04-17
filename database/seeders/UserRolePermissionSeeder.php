@@ -152,7 +152,7 @@ class UserRolePermissionSeeder extends Seeder
             'update user',
         ];
 
-        $adminRole->givePermissionTo($adminPermissions);
+        $adminRole->givePermissionTo($allPermissionNames);
 
         // Let's Create User and assign Role to it.
         $superAdminUser = Employee::firstOrCreate([
@@ -171,7 +171,7 @@ class UserRolePermissionSeeder extends Seeder
             'branch_id' => 10,
             'governorate_id' => 24,
         ]);
-        $superAdminUser->assignRole($superAdminRole);
+        $superAdminUser->assignRole($allPermissionNames);
 
         $superAdminUser2 = Employee::firstOrCreate([
             'username' => 'mosama',
@@ -206,7 +206,7 @@ class UserRolePermissionSeeder extends Seeder
             'branch_id' => 10,
             'governorate_id' => 24,
         ]);
-        $superAdminUser2->assignRole($superAdminRole);
+        $superAdminUser2->assignRole($allPermissionNames);
 
         $adminUser = Employee::firstOrCreate([
             'username' => 'admin'
@@ -224,7 +224,7 @@ class UserRolePermissionSeeder extends Seeder
             'branch_id' => 10,
             'governorate_id' => 24,
         ]);
-        $adminUser->assignRole($adminRole);
+        $adminUser->assignRole($allPermissionNames);
 
         $staffUser = Employee::firstOrCreate([
             'username' => 'staff',
@@ -242,7 +242,7 @@ class UserRolePermissionSeeder extends Seeder
             'branch_id' => 10,
             'governorate_id' => 24,
         ]);
-        $staffUser->assignRole($staffRole);
+        $staffUser->assignRole($allPermissionNames);
 
         $staffUser2 = Employee::firstOrCreate([
             'username' => 'heba',
@@ -260,7 +260,7 @@ class UserRolePermissionSeeder extends Seeder
             'branch_id' => 10,
             'governorate_id' => 24,
         ]);
-        $staffUser2->assignRole($staffRole);
+        $staffUser2->assignRole($allPermissionNames);
 
 
         $userRole = Employee::firstOrCreate([
@@ -279,6 +279,6 @@ class UserRolePermissionSeeder extends Seeder
             'branch_id' => 10,
             'governorate_id' => 24,
         ]);
-        $userRole->assignRole($staffRole);
+        $userRole->assignRole($allPermissionNames);
     }
 }
