@@ -13,6 +13,14 @@ use Illuminate\Support\Facades\Auth;
 
 class EmployeePanel extends Controller
 {
+
+    protected array $middleware = [
+        'permission: الموظفين الأجازات' => ['only' => ['index']],
+        'permission: طباعة الأجازات' => ['only' => ['showLeave']],
+    ];
+
+
+
     public function index()
     {
         $financial_year = FinanceCalendar::select('id', 'finance_yr', 'status')->where('status', StatusActive::Active)->first();

@@ -102,6 +102,7 @@ class UserRolePermissionSeeder extends Seeder
             //    أنواع الأجازات
             ['name' => 'الأجازات', 'category' => 'leaves', 'guard_name' => $guardAdmin],
             ['name' => 'تعديل الأجازات', 'category' => 'leaves', 'guard_name' => $guardAdmin],
+            ['name' => 'عرض الأجازات', 'category' => 'leaves', 'guard_name' => $guardAdmin],
             ['name' => 'حذف الأجازات', 'category' => 'leaves', 'guard_name' => $guardAdmin],
             ['name' => 'اخذ اجراء الأجازات', 'category' => 'leaves', 'guard_name' => $guardAdmin],
             ['name' => 'المعلقه الأجازات', 'category' => 'leaves', 'guard_name' => $guardAdmin],
