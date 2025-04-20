@@ -66,18 +66,7 @@
             </select>
         </div>
 
-        <div class="form-group col-6">
-            <label for="exampleSelectBorder">الفرع التابع لها <code>الموظف</code></label>
-            <select wire:model.live="branches_search" class="form-control select">
-                <option value="">-- أختر الفرع --</option>
-                @forelse ($other['branches'] as $branch)
-                    <option value="{{ $branch->id }}">
-                        {{ $branch->name }}</option>
-                @empty
-                    عفوآ لا توجد بيانات!
-                @endforelse
-            </select>
-        </div>
+
 
 
         <div class="form-group col-6">
@@ -101,8 +90,7 @@
                         empty($end_date_search) &&
                         empty($leave_type_search) &&
                         empty($leave_status_search) &&
-                        empty($finance_calendars_search) &&
-                        empty($branches_search))
+                        empty($finance_calendars_search))
                     <div class="mg-t-10">
                         <button class="btn  btn-light btn-block" disabled>أمسح</button>
                     </div>

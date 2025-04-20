@@ -9,6 +9,7 @@ use App\Enum\StatusActive;
 use App\Enum\LeaveStatusEnum;
 use App\Models\FinanceCalendar;
 use App\Http\Controllers\Controller;
+use App\Models\Branch;
 use Illuminate\Support\Facades\Auth;
 
 class EmployeePanel extends Controller
@@ -30,6 +31,15 @@ class EmployeePanel extends Controller
         return view('front.index', compact('data'), compact('data', 'other', 'financial_year'));
     }
 
+
+
+    // get employees which the same barnch
+    public function indexManager()
+    {
+        $financial_year = FinanceCalendar::select('id', 'finance_yr', 'status')->where('status', StatusActive::Active)->first();
+
+        return view('front.index-manager', compact('financial_year'));
+    }
 
     public function showLeave($id)
     {

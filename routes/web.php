@@ -68,6 +68,7 @@ Route::middleware(['auth:employee', 'role:super-admin|super-user|staff'])->name(
     // ---------------------------------------------------- بداية تكويد الصفحه الامامين للمستخدمين
     Route::controller(EmployeePanel::class)->prefix('leave')->group(function () {
         Route::get('employee-panel/user', 'index')->name('employee-panel.index');
+        Route::get('employee-panel/manager', 'indexManager')->name('employee-panel.manager');
         Route::get('/data/{id}',  'showLeave')->name('leaves.showLeavesall');
         Route::get('/print/{id}',  'printLeave')->name('leaves.print');
     });

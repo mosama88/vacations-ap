@@ -1,23 +1,23 @@
 <?php
 
-namespace App\Livewire\Dashboard\Leaves;
+namespace App\Livewire\Front;
 
 use App\Models\Week;
 use App\Models\Leave;
+use App\Models\Branch;
 use Livewire\Component;
+use App\Models\Employee;
 use App\Enum\StatusActive;
 use Livewire\WithPagination;
 use App\Enum\LeaveStatusEnum;
-use App\Models\Branch;
 use App\Models\FinanceCalendar;
-use App\Models\Governorate;
 use Illuminate\Support\Facades\Auth;
 
-class LeavesTable extends Component
+class BranchLeaveTable extends Component
 {
     use WithPagination;
 
-    public $other, $emp_search, $start_date_search, $end_date_search, $leave_type_search, $finance_calendars_search, $leave_status_search, $branches_search;
+    public $other, $emp_search, $start_date_search, $end_date_search, $leave_type_search, $finance_calendars_search, $leave_status_search;
 
 
     public function updatingSearch()
@@ -32,7 +32,6 @@ class LeavesTable extends Component
         $this->start_date_search = null;
         $this->leave_type_search = null;
         $this->leave_status_search = null;
-        $this->branches_search = null;
         $this->finance_calendars_search = null;
 
         $this->resetPage();
@@ -42,7 +41,6 @@ class LeavesTable extends Component
     public function mount()
     {
         $this->other['weeks'] = Week::get();
-        $this->other['branches'] = Branch::get();
         $this->other['finance_calendars'] = FinanceCalendar::get();
     }
 
@@ -79,18 +77,21 @@ class LeavesTable extends Component
             $query->where('leave_status', $this->leave_status_search);
         }
 
-        if ($this->branches_search) {
-            $query->whereHas('employee', function ($query) {
-                // البحث باستخدام الاسم
-                $query->where('branch_id',  $this->branches_search);
-            });
-        }
+
 
 
         $financial_year = FinanceCalendar::select('id', 'finance_yr')->where('status', StatusActive::Active)->first();
-        $emplyeeId = Auth::user()->id;
-        $data = $query->select('*')->orderByDesc('id')->where('leave_status', "!=", LeaveStatusEnum::Pending)->paginate(10);
+        // Get the current user's branch (assuming the manager is logged in)
+        // You might need to adjust this based on your authentication setup
+        $user_branch_id = Auth::user()->branch_id;
+        // Get employees in the same branch as the manager
+        $employees = Employee::with('branch')
+            ->where('branch_id', $user_branch_id)
+            ->get();
 
-        return view('dashboard.leaves.leaves-table', compact('data', 'financial_year'));
+        // Get leave requests for these employees
+        $data = $query->whereIn('employee_id', $employees->pluck('id'))->orderByDesc('id')->paginate(10);
+
+        return view('front.branch-leave-table', compact('data', 'financial_year'));
     }
 }
