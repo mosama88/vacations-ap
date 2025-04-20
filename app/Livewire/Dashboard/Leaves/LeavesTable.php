@@ -77,19 +77,9 @@ class LeavesTable extends Component
         }
 
 
-
-
         $financial_year = FinanceCalendar::select('id', 'finance_yr')->where('status', StatusActive::Active)->first();
-        // Get the current user's branch (assuming the manager is logged in)
-        // You might need to adjust this based on your authentication setup
-        $user_branch_id = Auth::user()->branch_id;
-        // Get employees in the same branch as the manager
-        $employees = Employee::with('branch')
-            ->where('branch_id', $user_branch_id)
-            ->get();
 
-        // Get leave requests for these employees
-        $data = $query->whereIn('employee_id', $employees->pluck('id'))->where('leave_status', "!=", LeaveStatusEnum::Pending)->orderByDesc('id')->paginate(10);
+        $data = $query->where('leave_status', "!=", LeaveStatusEnum::Pending)->orderByDesc('id')->paginate(10);
 
 
         return view('dashboard.leaves.leaves-table', compact('data', 'financial_year'));
