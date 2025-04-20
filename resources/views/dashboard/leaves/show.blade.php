@@ -65,9 +65,8 @@
                                     <label for="exampleInputName">الرصيد المستخدم <span class="text-info">(الأعتيادى)</span>
                                     </label>
                                     <input disabled type="text" name="used_days"
-                                        value="{{ $employees->leaveBalance->used_days ?? 'لا يوجد رصيد' }}"
-                                        name="used_days" class="form-control bg-white" id="exampleInputused_days"
-                                        placeholder="">
+                                        value="{{ $employees->leaveBalance->used_days ?? 'لا يوجد رصيد' }}" name="used_days"
+                                        class="form-control bg-white" id="exampleInputused_days" placeholder="">
                                 </div>
 
                                 <div class="form-group col-4">
@@ -90,7 +89,8 @@
 
 
                                 <div class="form-group col-4">
-                                    <label for="exampleInputName">الرصيد المستخدم <span class="text-success">(العارضه)</span>
+                                    <label for="exampleInputName">الرصيد المستخدم <span
+                                            class="text-success">(العارضه)</span>
                                     </label>
                                     <input disabled type="text" name="used_days_emergency"
                                         value="{{ $employees->leaveBalance->used_days_emergency ?? 'لا يوجد رصيد' }}"
@@ -168,37 +168,66 @@
                                     <textarea disabled class="form-control bg-white @error('description') is-invalid @enderror" name="description"
                                         rows="3" placeholder="أدخل السبب ...">{{ old('description', $leave->description) }}</textarea>
                                 </div>
-                                @can('اخذ اجراء الأجازات')
-                                    <div class="form-group col-12">
-                                        <label for="leave_status">حالة الإجازة</label>
 
-                                        <div class="custom-control custom-radio">
-                                            <input disabled class="custom-control-input" type="radio" id="customPending"
-                                                name="leave_status" value="{{ LeaveStatusEnum::Pending }}"
-                                                @if (old('leave_status', $leave->leave_status) == LeaveStatusEnum::Pending) checked @endif>
-                                            <label for="customPending" class="custom-control-label"> <i
-                                                    class="fas fa-hourglass-half text-warning mx-1"></i>معلقة</label>
+                                <form action="{{ route('dashboard.leaves.updateStatusLeave', $leave->id) }}"
+                                    method="POST">
+                                    @csrf
+                                    @method('PUT')
+                                    @can('اخذ اجراء الأجازات')
+                                        <!-- /.card-body -->
+                                        <div class="form-group col-12">
+                                            <label for="leave_status">حالة الإجازة</label>
+
+                                            <div class="custom-control custom-radio">
+                                                <input class="custom-control-input" type="radio" id="customPending"
+                                                    name="leave_status" value="{{ LeaveStatusEnum::Pending }}"
+                                                    @if (old('leave_status', $leave->leave_status) == LeaveStatusEnum::Pending) checked @endif>
+                                                <label for="customPending" class="custom-control-label"> <i
+                                                        class="fas fa-hourglass-half text-warning mx-1"></i>معلقة</label>
+                                            </div>
+
+                                            <div class="custom-control custom-radio">
+                                                <input class="custom-control-input" type="radio" id="customApproved"
+                                                    name="leave_status" value="{{ LeaveStatusEnum::Approved }}"
+                                                    @if (old('leave_status', $leave->leave_status) == LeaveStatusEnum::Approved) checked @endif>
+                                                <label for="customApproved" class="custom-control-label"> <i
+                                                        class="fas fa-thumbs-up mx-1 text-success"></i> موافق</label>
+                                            </div>
+
+                                            <div class="custom-control custom-radio">
+                                                <input class="custom-control-input" type="radio" id="customRefused"
+                                                    name="leave_status" value="{{ LeaveStatusEnum::Refused }}"
+                                                    @if (old('leave_status', $leave->leave_status) == LeaveStatusEnum::Refused) checked @endif>
+                                                <label for="customRefused" class="custom-control-label"> <i
+                                                        class="fas fa-times-circle mx-1 text-danger"></i> مرفوض </label>
+                                            </div>
+                                            @error('leave_status')
+                                                <span class="invalid-feedback text-right" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
                                         </div>
-
-                                        <div class="custom-control custom-radio">
-                                            <input disabled class="custom-control-input" type="radio" id="customApproved"
-                                                name="leave_status" value="{{ LeaveStatusEnum::Approved }}"
-                                                @if (old('leave_status', $leave->leave_status) == LeaveStatusEnum::Approved) checked @endif>
-                                            <label for="customApproved" class="custom-control-label"> <i
-                                                    class="fas fa-thumbs-up mx-1 text-success"></i> موافق</label>
-                                        </div>
-
-                                        <div class="custom-control custom-radio">
-                                            <input disabled class="custom-control-input" type="radio" id="customRefused"
-                                                name="leave_status" value="{{ LeaveStatusEnum::Refused }}"
-                                                @if (old('leave_status', $leave->leave_status) == LeaveStatusEnum::Refused) checked @endif>
-                                            <label for="customRefused" class="custom-control-label"> <i
-                                                    class="fas fa-times-circle mx-1 text-danger"></i> مرفوض </label>
-                                        </div>
-                                    </div>
-                                @endcan
-
+                                    @endcan
                             </div>
+                            <div class="form-group col-12" id="rejectionReasonContainer"
+                                style="@if (old('leave_status', $leave->leave_status) != LeaveStatusEnum::Refused) display: none; @endif">
+                                <label for="exampleSelectBorder">سبب الرفض</label>
+                                <textarea class="form-control @error('reason_for_rejection') is-invalid @enderror" name="reason_for_rejection"
+                                    rows="3" placeholder="أدخل السبب ...">{{ old('reason_for_rejection', $leave->reason_for_rejection) }}</textarea>
+                                @error('reason_for_rejection')
+                                    <span class="invalid-feedback text-right" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            @if ($leave->leave_status != LeaveStatusEnum::Approved)
+                                <div class="card-footer text-center ">
+                                    <button type="submit" class="btn btn-primary">حفظ <i class="fas fa-save mx-1"></i>
+                                    </button>
+                                </div>
+                            @endif
+                            </form>
+
                         </div>
 
                     </div>
@@ -216,3 +245,61 @@
         </div><!-- /.container-fluid -->
     </section>
 @endsection
+@push('js')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const rejectionReasonContainer = document.getElementById('rejectionReasonContainer');
+            const radioButtons = document.querySelectorAll('input[name="leave_status"]');
+
+            radioButtons.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    if (this.value === '{{ LeaveStatusEnum::Refused }}') {
+                        rejectionReasonContainer.style.display = 'block';
+                    } else {
+                        rejectionReasonContainer.style.display = 'none';
+                        document.querySelector('textarea[name="reason_for_rejection"]').value = '';
+                    }
+                });
+            });
+        });
+    </script>
+
+
+    <script>
+        // تفعيل Flatpickr مع اللغة العربية
+        flatpickr("#start_date", {
+            dateFormat: "Y-m-d",
+            locale: "ar",
+            onChange: calculateDays
+        });
+
+        flatpickr("#end_date", {
+            dateFormat: "Y-m-d",
+            locale: "ar",
+            onChange: calculateDays
+        });
+
+        // دالة حساب عدد الأيام (الآن تشمل جميع الأيام بما فيها الجمعة)
+        function calculateDays() {
+            const startDate = document.getElementById('start_date').value;
+            const endDate = document.getElementById('end_date').value;
+
+            if (startDate && endDate) {
+                const start = new Date(startDate);
+                const end = new Date(endDate);
+
+                // التأكد من أن تاريخ البداية قبل تاريخ النهاية
+                if (start > end) {
+                    document.getElementById('days_taken').value = 0;
+                    return;
+                }
+
+                // حساب الفرق بين التاريخين بالأيام (بما فيها الجمعة)
+                const diffTime = Math.abs(end - start);
+                const totalDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+
+                document.getElementById('days_taken').value = totalDays;
+            }
+        }
+    </script>
+@endpush

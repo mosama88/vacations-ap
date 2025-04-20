@@ -218,58 +218,6 @@
                                         @enderror
                                     </div>
 
-
-
-
-                                    @can('اخذ اجراء الأجازات')
-                                        <!-- /.card-body -->
-                                        <div class="form-group col-12">
-                                            <label for="leave_status">حالة الإجازة</label>
-
-                                            <div class="custom-control custom-radio">
-                                                <input class="custom-control-input" type="radio" id="customPending"
-                                                    name="leave_status" value="{{ LeaveStatusEnum::Pending }}"
-                                                    @if (old('leave_status', $leave->leave_status) == LeaveStatusEnum::Pending) checked @endif>
-                                                <label for="customPending" class="custom-control-label"> <i
-                                                        class="fas fa-hourglass-half text-warning mx-1"></i>معلقة</label>
-                                            </div>
-
-                                            <div class="custom-control custom-radio">
-                                                <input class="custom-control-input" type="radio" id="customApproved"
-                                                    name="leave_status" value="{{ LeaveStatusEnum::Approved }}"
-                                                    @if (old('leave_status', $leave->leave_status) == LeaveStatusEnum::Approved) checked @endif>
-                                                <label for="customApproved" class="custom-control-label"> <i
-                                                        class="fas fa-thumbs-up mx-1 text-success"></i> موافق</label>
-                                            </div>
-
-                                            <div class="custom-control custom-radio">
-                                                <input class="custom-control-input" type="radio" id="customRefused"
-                                                    name="leave_status" value="{{ LeaveStatusEnum::Refused }}"
-                                                    @if (old('leave_status', $leave->leave_status) == LeaveStatusEnum::Refused) checked @endif>
-                                                <label for="customRefused" class="custom-control-label"> <i
-                                                        class="fas fa-times-circle mx-1 text-danger"></i> مرفوض </label>
-                                            </div>
-                                            @error('leave_status')
-                                                <span class="invalid-feedback text-right" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                    @endcan
-
-                                    <div class="form-group col-12" id="rejectionReasonContainer"
-                                        style="@if (old('leave_status', $leave->leave_status) != LeaveStatusEnum::Refused) display: none; @endif">
-                                        <label for="exampleSelectBorder">سبب الرفض</label>
-                                        <textarea class="form-control @error('reason_for_rejection') is-invalid @enderror" name="reason_for_rejection"
-                                            rows="3" placeholder="أدخل السبب ...">{{ old('reason_for_rejection', $leave->reason_for_rejection) }}</textarea>
-                                        @error('reason_for_rejection')
-                                            <span class="invalid-feedback text-right" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-
-
                                 </div>
                             </div>
 

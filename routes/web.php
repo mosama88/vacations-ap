@@ -61,6 +61,7 @@ Route::middleware(['auth:employee', 'role:super-admin|super-user|staff'])->name(
         Route::get('/edit/{id}', 'edit')->name('edit')->middleware('permission:تعديل الأجازات');
         Route::get('/show/{id}', 'show')->name('show')->middleware('permission:عرض الأجازات');
         Route::put('/edit/{id}', 'update')->name('update');
+        Route::put('/update/status/leave/{id}', 'updateStatusLeave')->name('updateStatusLeave');
         Route::delete('/destroy/{id}', 'destroy')->name('destroy');
         Route::get('/pending/employee', 'getLeavepending')->name('getLeavespending')->middleware('permission:المعلقه الأجازات');
     });

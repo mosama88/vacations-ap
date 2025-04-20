@@ -22,7 +22,7 @@ use App\Http\Requests\Dashboard\LeaveRequest;
 class LeaveController extends Controller
 {
 
- 
+
 
 
     /**
@@ -340,6 +340,46 @@ class LeaveController extends Controller
             // إذا كانت الإجازة غير صحيحة، يتم إعادة التوجيه مع رسالة خطأ
             return redirect()->back()
                 ->withErrors(['error' => 'الإجازة الأعتيادى يجب أن تكون في  وقت لاحق.'])
+                ->withInput();
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public function updateStatusLeave(Request $request, $id, LeaveService $leaveService)
+    {
+        $leave = Leave::findOrFail($id);
+        if ($leave->leave_status == LeaveStatusEnum::Approved) {
+            return redirect()->back()->withErrors(['error' => 'لا يمكن تعديل الإجازة بعد الموافقة عليها'])->withInput();
+        }
+
+        try {
+            $leave->update([
+                'leave_status' => $request->leave_status,
+                'reason_for_rejection' => $request->reason_for_rejection,
+                'updated_by' => Auth::id(),
+            ]);
+
+            session()->flash('success', 'تم تعديل الإجازة بنجاح');
+            if (Auth::check() && Auth::user()->type == EmployeeType::Manager) {
+                return redirect()->route('dashboard.leaves.getLeavespending');
+            } else {
+                return redirect()->route('dashboard.employee-panel.index');
+            }
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->withErrors(['error' => 'حدث خطأ أثناء حفظ الإجازة: ' . $e->getMessage()])
                 ->withInput();
         }
     }
