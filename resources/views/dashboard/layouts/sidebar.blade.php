@@ -138,6 +138,14 @@
                                         <p>طلب أجازه</p>
                                     </a>
                                 @endcan
+                                @can('النيابة الأجازات')
+                                <li class="nav-item">
+                                    <a href="{{ route('dashboard.employee-panel.manager') }}"
+                                        class="nav-link @yield('active-leaves-create')">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>أجازات النيابة</p>
+                                    </a>
+                                @endcan
                             </li>
 
 
