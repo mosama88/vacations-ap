@@ -1,4 +1,5 @@
 @php
+    use App\Enum\EmployeeType;
     use App\Enum\LeaveStatusEnum;
     use App\Enum\LeaveTypeEnum;
 @endphp
@@ -221,10 +222,14 @@
                                 @enderror
                             </div>
                             @if ($leave->leave_status != LeaveStatusEnum::Approved)
-                                <div class="card-footer text-center ">
-                                    <button type="submit" class="btn btn-primary">حفظ <i class="fas fa-save mx-1"></i>
-                                    </button>
-                                </div>
+                                @if ($leave->employee->type === EmployeeType::Manager)
+                                    <div class="card-footer text-center ">
+                                        <button type="submit" class="btn btn-primary">حفظ <i
+                                                class="fas fa-save mx-1"></i>
+                                        </button>
+                                    </div>
+                                @endif
+
                             @endif
                             </form>
 
