@@ -822,7 +822,7 @@ class EmployeeFactory extends Factory
         // التأكد من أن الـ username فريد
         while (DB::table('employees')->where('username', $username)->exists()) {
             // إذا كان الـ username مكررًا، قم بتغيير شيء فيه
-            $username = $username . fake()->randomLetter(); // إضافة حرف عشوائي لإيجاد اسم مستخدم فريد
+            $username = $username . fake()->randomLetter() . fake()->randomElement([1,2,3,4,5,6,7,8,9]); // إضافة حرف عشوائي لإيجاد اسم مستخدم فريد
         }
 
         // تحديد الأيام الإجمالية
