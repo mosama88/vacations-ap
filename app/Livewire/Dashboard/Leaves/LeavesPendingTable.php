@@ -2,14 +2,15 @@
 
 namespace App\Livewire\Dashboard\Leaves;
 
-use Livewire\Component;
 use App\Models\Week;
 use App\Models\Leave;
+use Livewire\Component;
+use App\Models\Employee;
 use App\Enum\StatusActive;
+use App\Models\Governorate;
 use Livewire\WithPagination;
 use App\Enum\LeaveStatusEnum;
 use App\Models\FinanceCalendar;
-use App\Models\Governorate;
 use Illuminate\Support\Facades\Auth;
 
 class LeavesPendingTable extends Component
@@ -76,9 +77,19 @@ class LeavesPendingTable extends Component
         }
 
 
+
         $financial_year = FinanceCalendar::select('id', 'finance_yr')->where('status', StatusActive::Active)->first();
-        $emplyeeId = Auth::user()->id;
-        $data = $query->select('*')->orderByDesc('id')->where('finance_calendar_id', $financial_year->id)->where('leave_status', "=", LeaveStatusEnum::Pending)->paginate(10);
+        // Get the current user's branch (assuming the manager is logged in)
+        // You might need to adjust this based on your authentication setup
+        $user_branch_id = Auth::user()->branch_id;
+        // Get employees in the same branch as the manager
+        $employees = Employee::with('branch')
+            ->where('branch_id', $user_branch_id)
+            ->get();
+
+        // Get leave requests for these employees
+        $data = $query->whereIn('employee_id', $employees->pluck('id'))->where('leave_status', "=", LeaveStatusEnum::Pending)->orderByDesc('id')->paginate(10);
+
 
         return view('dashboard.leaves.leaves-pending-table', compact('data', 'financial_year'));
     }

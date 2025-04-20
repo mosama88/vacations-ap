@@ -109,7 +109,6 @@ class UserRolePermissionSeeder extends Seeder
             ['name' => 'الموظفين الأجازات', 'category' => 'leaves', 'guard_name' => $guardAdmin],
             ['name' => 'طلب الأجازات', 'category' => 'leaves', 'guard_name' => $guardAdmin],
             ['name' => 'طباعة الأجازات', 'category' => 'leaves', 'guard_name' => $guardAdmin],
-            ['name' => 'النيابة الأجازات', 'category' => 'leaves', 'guard_name' => $guardAdmin],
 
             // الصلاحيات
             ['name' => 'الصلاحيات', 'category' => 'roles', 'guard_name' => $guardAdmin],

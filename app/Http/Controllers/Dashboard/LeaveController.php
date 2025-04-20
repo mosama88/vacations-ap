@@ -30,13 +30,9 @@ class LeaveController extends Controller
      */
     public function index()
     {
-        $financial_year = FinanceCalendar::select('id', 'finance_yr')->where('status', StatusActive::Active)->first();
+        $financial_year = FinanceCalendar::select('id', 'finance_yr', 'status')->where('status', StatusActive::Active)->first();
 
-        $emplyeeId = Auth::user()->id;
-        $other['weeks'] = Week::where('id', $emplyeeId)->get();
-        $data = Leave::orderByDesc('id')->where('leave_status', "!=", LeaveStatusEnum::Pending)->paginate(10);
-
-        return view('dashboard.leaves.index', compact('data', 'other', 'financial_year'));
+        return view('dashboard.leaves.index', compact('financial_year'));
     }
 
 
@@ -309,12 +305,8 @@ class LeaveController extends Controller
 
     public function getLeavepending()
     {
-
-        $emplyeeId = Auth::user()->id;
-        $other['weeks'] = Week::where('id', $emplyeeId)->get();
-        $employees = Employee::with('leaveBalance')->where('id', $emplyeeId)->first();
-        $data = Leave::orderByDesc('id')->where('leave_status', LeaveStatusEnum::Pending)->paginate(10);
-        return view('dashboard.leaves.leaves-pending', compact('data', 'employees', 'other'));
+        $financial_year = FinanceCalendar::select('id', 'finance_yr', 'status')->where('status', StatusActive::Active)->first();
+        return view('dashboard.leaves.leaves-pending', compact('financial_year'));
     }
 
 

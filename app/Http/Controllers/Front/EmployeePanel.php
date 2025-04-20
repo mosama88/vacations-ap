@@ -33,21 +33,6 @@ class EmployeePanel extends Controller
 
 
 
-    // get employees which the same barnch
-    public function indexManager()
-    {
-        $financial_year = FinanceCalendar::select('id', 'finance_yr', 'status')->where('status', StatusActive::Active)->first();
-
-        return view('front.index-manager', compact('financial_year'));
-    }
-
-    public function showLeave($id)
-    {
-        $leave = Leave::findOrFail($id);
-        return view('front.leaves.show-leave',  compact('leave'));
-    }
-
-
     public function printLeave($id)
     {
         $leave = Leave::findOrFail($id);
