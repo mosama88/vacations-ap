@@ -249,11 +249,7 @@ class LeaveController extends Controller
             ]);
 
             session()->flash('success', 'تم تعديل الإجازة بنجاح');
-            if (Auth::check() && Auth::user()->type == EmployeeType::Manager) {
-                return redirect()->route('dashboard.leaves.getLeavespending');
-            } else {
-                return redirect()->route('dashboard.employee-panel.index');
-            }
+            return redirect()->route('dashboard.employee-panel.index');
         } catch (\Exception $e) {
             return redirect()->back()
                 ->withErrors(['error' => 'حدث خطأ أثناء حفظ الإجازة: ' . $e->getMessage()])
