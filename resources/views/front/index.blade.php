@@ -20,7 +20,7 @@
                     <!-- small box -->
                     <div class="small-box bg-info">
                         <div class="inner">
-                            <h3>150</h3>
+                            <h3>{{$approvedLeaves}}</h3>
 
                             <p>إجمالى الأجازات</p>
                         </div>
@@ -35,7 +35,7 @@
                     <!-- small box -->
                     <div class="small-box bg-success">
                         <div class="inner">
-                            <h3>53<sup style="font-size: 20px">%</sup></h3>
+                            <h3>{{ $pendingLeaves }}<sup style="font-size: 20px"></sup></h3>
 
                             <p>إجمالى الأجازات المعلقه</p>
 
@@ -51,7 +51,7 @@
                     <!-- small box -->
                     <div class="small-box bg-warning">
                         <div class="inner">
-                            <h3>70</h3>
+                            <h3>{{ $branch_employees }}</h3>
 
                             <p>إجمالى الموظفين بالنيابه</p>
                         </div>

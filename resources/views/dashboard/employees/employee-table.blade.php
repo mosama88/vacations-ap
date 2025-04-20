@@ -88,7 +88,7 @@
                     <th>أسم المستخدم</th>
                     <th>الموبايل</th>
                     <th>الراحه</th>
-                    <th>المحافظة</th>
+                    <th>الفرع</th>
                     <th>الحالة</th>
                     <th>العمليات</th>
                 </tr>
@@ -102,7 +102,7 @@
                         <td>{{ $info->username }}</td>
                         <td>{{ $info->mobile }}</td>
                         <td>{{ $info->week->name }}</td>
-                        <td>{{ $info->governorate->name }}</td>
+                        <td>{{ $info->branch->name }}</td>
                         <td>
                             @if ($info->status == EmployeeStatus::Active)
                                 <span class="badge bg-success">نشط</span>

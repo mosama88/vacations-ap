@@ -28,7 +28,24 @@ class EmployeePanel extends Controller
         $employee = Auth::user()->id;
         $other['weeks'] = Week::where('id', $employee)->get();
         $data = Leave::where('employee_id', $employee)->orderByDesc('id')->paginate(10);
-        return view('front.index', compact('data'), compact('data', 'other', 'financial_year'));
+        //Count Branch Employees
+        $branchId = Auth::user()->branch_id;
+        $branch_employees = Employee::where('branch_id', $branchId)->where('status', StatusActive::Active)->count();
+        //Count Pending Leaves For All Employees               
+        $pendingLeaves = Leave::whereHas('employee', function ($query) use ($branchId) {
+            $query->where('branch_id', $branchId);
+        })->where('leave_status', LeaveStatusEnum::Pending)->where('finance_calendar_id', $financial_year->id)->count();
+
+
+
+
+        //Count Approved Leaves For All Employees        
+        $approvedLeaves = Leave::whereHas('employee', function ($query) use ($branchId) {
+            $query->where('branch_id', $branchId);
+        })->where('leave_status', LeaveStatusEnum::Approved)->where('finance_calendar_id', $financial_year->id)->count();
+
+
+        return view('front.index',  compact('data', 'other', 'financial_year', 'branch_employees', 'pendingLeaves', 'approvedLeaves'));
     }
 
 
