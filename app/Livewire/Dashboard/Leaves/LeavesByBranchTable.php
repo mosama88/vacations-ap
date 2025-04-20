@@ -12,7 +12,8 @@ use App\Enum\LeaveStatusEnum;
 use App\Models\FinanceCalendar;
 use Illuminate\Support\Facades\Auth;
 
-class LeavesTable extends Component
+
+class LeavesByBranchTable extends Component
 {
     use WithPagination;
 
@@ -92,6 +93,6 @@ class LeavesTable extends Component
         $data = $query->whereIn('employee_id', $employees->pluck('id'))->where('leave_status', "!=", LeaveStatusEnum::Pending)->orderByDesc('id')->paginate(10);
 
 
-        return view('dashboard.leaves.leaves-table', compact('data', 'financial_year'));
+        return view('dashboard.leaves.leaves-by-branch-table', compact('data', 'financial_year'));
     }
 }

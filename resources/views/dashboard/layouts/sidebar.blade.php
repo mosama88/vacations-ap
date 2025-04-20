@@ -131,6 +131,15 @@
                                     </a>
                                 </li>
                             @endcan
+                            @can('الموظفين الأجازات')
+                                <li class="nav-item">
+                                    <a href="{{ route('dashboard.leaves.leaveByBranch.index') }}"
+                                        class="nav-link @yield('active-leaveByBranch')">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p> أجازات الموظفين كل النيابات</p>
+                                    </a>
+                                </li>
+                            @endcan
                             @can('طلب الأجازات')
                                 <li class="nav-item">
                                     <a href="{{ route('dashboard.leaves.create') }}" class="nav-link @yield('active-leaves-create')">

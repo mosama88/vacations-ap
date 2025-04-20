@@ -36,6 +36,15 @@ class LeaveController extends Controller
     }
 
 
+    public function leaveByBranch()
+    {
+        $financial_year = FinanceCalendar::select('id', 'finance_yr', 'status')->where('status', StatusActive::Active)->first();
+
+        return view('dashboard.leaves.leaves-by-branch', compact('financial_year'));
+    }
+
+
+
 
     /**
      * Show the form for creating a new resource.

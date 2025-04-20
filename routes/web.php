@@ -19,7 +19,7 @@ Route::get('/', function () {
 })->middleware(['redirect.employee']);
 
 
-
+// Login and Profile
 Route::middleware(['auth:employee'])->name('dashboard.')->group(function () {
     //------------------------ Profile
     Route::get('profile', [EmployeeController::class, 'profile'])
@@ -56,6 +56,7 @@ Route::middleware(['auth:employee', 'role:super-admin|super-user|staff'])->name(
     // ---------------------------------------------------- بداية تكويد الأجازات
     Route::controller(LeaveController::class)->name('leaves.')->prefix('leaves')->group(function () {
         Route::get('/', 'index')->name('index')->middleware('permission:الأجازات');
+        Route::get('/leaveByBranch', 'leaveByBranch')->name('leaveByBranch.index')->middleware('permission:الأجازات');
         Route::get('/create', 'create')->name('create')->middleware('permission:طلب الأجازات');
         Route::post('/create', 'store')->name('store');
         Route::get('/edit/{id}', 'edit')->name('edit')->middleware('permission:تعديل الأجازات');
