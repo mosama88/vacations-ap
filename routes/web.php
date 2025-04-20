@@ -20,17 +20,20 @@ Route::get('/', function () {
 
 
 
+Route::middleware(['auth:employee'])->name('dashboard.')->group(function () {
+//------------------------ Profile
+Route::get('profile', [EmployeeController::class, 'profile'])
+    ->name('profile');
+Route::post('profile', [EmployeeController::class, 'changePassword']);
+
+//------------------------ Logout
+Route::post('logout', [EmployeeLoginController::class, 'destroy'])
+    ->name('employees.logout');
+});
+
 Route::middleware(['auth:employee', 'role:super-admin|super-user|staff'])->name('dashboard.')->group(function () {
 
 
-    //------------------------ Profile
-    Route::get('profile', [EmployeeController::class, 'profile'])
-        ->name('profile');
-    Route::post('profile', [EmployeeController::class, 'changePassword']);
-
-    //------------------------ Logout
-    Route::post('logout', [EmployeeLoginController::class, 'destroy'])
-        ->name('employees.logout');
 
     // ---------------------------------------------------- بداية تكويد السنوات المالية
     Route::resource('/financeCalendars', FinanceCalendarController::class)->middleware('permission:السنوات المالية');
@@ -53,7 +56,6 @@ Route::middleware(['auth:employee', 'role:super-admin|super-user|staff'])->name(
     Route::resource('/leaveBalances', LeaveBalanceController::class)->middleware('permission:رصيد الموظف');
 
     // ---------------------------------------------------- بداية تكويد الأجازات
-    // Route::resource('/leaves', LeaveController::class);
     Route::controller(LeaveController::class)->name('leaves.')->prefix('leaves')->group(function () {
         Route::get('/', 'index')->name('index')->middleware('permission:الأجازات');
         Route::get('/create', 'create')->name('create')->middleware('permission:طلب الأجازات');
