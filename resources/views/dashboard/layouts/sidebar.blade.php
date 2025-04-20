@@ -123,11 +123,12 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                @can('الموظفين الأجازات')
+
+                                @can('كل موظفين النيابات الأجازات')
                                 <li class="nav-item">
                                     <a href="{{ route('dashboard.leaves.index') }}" class="nav-link @yield('active-all')">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p> أجازات الموظفين</p>
+                                        <p> أجازات الموظفين كل النيابات</p>
                                     </a>
                                 </li>
                             @endcan
@@ -136,7 +137,7 @@
                                     <a href="{{ route('dashboard.leaves.leaveByBranch.index') }}"
                                         class="nav-link @yield('active-leaveByBranch')">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p> أجازات الموظفين كل النيابات</p>
+                                        <p> أجازات الموظفين</p>
                                     </a>
                                 </li>
                             @endcan
