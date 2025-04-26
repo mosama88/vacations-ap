@@ -1,6 +1,9 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>لوحة التحكم | @yield('title')</title>
+<!-- Logo -->
+<link rel="icon" href="{{ asset('dashboard') }}/assets/dist/img/administrativprosecution.png" type="image/x-icon">
+
 <!-- Tell the browser to be responsive to screen width -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- Font Awesome -->
