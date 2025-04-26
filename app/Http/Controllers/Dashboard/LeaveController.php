@@ -8,6 +8,7 @@ use App\Models\Leave;
 use App\Models\Employee;
 use App\Enum\EmployeeType;
 use App\Enum\StatusActive;
+use App\Enum\LeaveTypeEnum;
 use App\Models\LeaveBalance;
 use Illuminate\Http\Request;
 use App\Enum\LeaveStatusEnum;
@@ -381,6 +382,10 @@ class LeaveController extends Controller
         $emplyeeId = Auth::user()->id;
         $other['weeks'] = Week::where('id', $emplyeeId)->get();
         $employees = Employee::with('leaveBalance')->where('id', $emplyeeId)->first();
-        return view('front.leaves.print-emergency',  compact('leave', 'other', 'employees'));
+        if ($leave->leave_type === LeaveTypeEnum::Emergency) {
+            return view('front.leaves.print-emergency',  compact('leave', 'other', 'employees'));
+        } else {
+            return view('front.leaves.print-regular',  compact('leave', 'other', 'employees'));
+        }
     }
 }

@@ -171,13 +171,13 @@
                                                     href="{{ route('dashboard.leaves.show', $info->id) }}"><i
                                                         class="fas fa-eye ml-1"></i></a>
 
+
                                                 {{-- طباعه --}}
                                                 @if ($info->leave_status === LeaveStatusEnum::Approved)
                                                     <a class="btn btn-outline-dark btn-sm mx-2"
                                                         href="{{ route('dashboard.leaves.print', $info->id) }}"><i
                                                             class="fas fa-print"></i></a>
                                                 @endif
-
                                             </td>
                                         </tr>
                                     @empty
