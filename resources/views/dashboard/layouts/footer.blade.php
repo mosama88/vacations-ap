@@ -1,4 +1,4 @@
-<footer class="main-footer">
+<footer class="main-footer no-print">
     <strong>حقوق الطبع والنشر &copy; 2025 <a href="">التحول الرقمى</a>.</strong>
     جميع الحقوق محفوظة.
     <div class="float-right d-none d-sm-inline-block">
