@@ -39,13 +39,13 @@
                             <span class="text-center col-12">وحدة التحول الرقمى</span>
                         </div>
                         <div class="col-6 text-right">
-                            <img src="{{ asset('dashboard') }}/assets/dist/img/v-apa.png"
-                                alt="AdminLTE Logo" class="img-circle elevation-3" style="opacity: .8;width:100px">
+                            <img src="{{ asset('dashboard') }}/assets/dist/img/v-apa.png" alt="AdminLTE Logo"
+                                class="img-circle elevation-3" style="opacity: .8;width:100px">
                         </div>
 
                     </div>
                     <div class="p-4">
-                        <h2 class="text-center mb-5">(إجازة عارضة)</h2>
+                        <h2 class="text-center mb-5">(إجازة إعتيادى)</h2>
                         <div class="row mb-4">
                             <div class="col-6">
                                 <span class="form-label">الاسم/ </span>
