@@ -340,19 +340,9 @@ class LeaveController extends Controller
                 ->withInput();
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
+    /**
+     * Update the status of the leave.
+     */
 
     public function updateStatusLeave(Request $request, $id, LeaveService $leaveService)
     {
@@ -379,5 +369,18 @@ class LeaveController extends Controller
                 ->withErrors(['error' => 'حدث خطأ أثناء حفظ الإجازة: ' . $e->getMessage()])
                 ->withInput();
         }
+    }
+
+
+    /**
+     * Print the leave details.
+     */
+    public function printLeave($id)
+    {
+        $leave = Leave::findOrFail($id);
+        $emplyeeId = Auth::user()->id;
+        $other['weeks'] = Week::where('id', $emplyeeId)->get();
+        $employees = Employee::with('leaveBalance')->where('id', $emplyeeId)->first();
+        return view('front.leaves.print',  compact('leave', 'other', 'employees'));
     }
 }

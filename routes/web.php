@@ -65,13 +65,13 @@ Route::middleware(['auth:employee', 'role:super-admin|super-user|staff'])->name(
         Route::put('/update/status/leave/{id}', 'updateStatusLeave')->name('updateStatusLeave');
         Route::delete('/destroy/{id}', 'destroy')->name('destroy');
         Route::get('/pending/employee', 'getLeavepending')->name('getLeavespending')->middleware('permission:المعلقه الأجازات');
+        Route::get('/print/{id}', 'printLeave')->name('print');
     });
 
     // ---------------------------------------------------- بداية تكويد الصفحه الامامين للمستخدمين
     Route::controller(EmployeePanel::class)->prefix('leave')->group(function () {
         Route::get('employee-panel/user', 'index')->name('employee-panel.index');
         Route::get('/data/{id}',  'showLeave')->name('leaves.showLeavesall');
-        Route::get('/print/{id}',  'printLeave')->name('leaves.print');
     });
 });
 

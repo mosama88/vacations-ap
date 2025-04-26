@@ -5,7 +5,7 @@
 
     @include('dashboard.layouts.breadcrumb', [
         'pageTitle' => 'الملف الشخصى',
-        'previousPage' => 'الملف الشخصى',
+        'previousPage' => 'الصفحة الرئيسية',
         'urlPreviousPage' => 'employee-panel.index',
         'currentPage' => 'الملف الشخصى',
     ])

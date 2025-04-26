@@ -1,13 +1,21 @@
 @php
+    // 1. ضبط المنطقة الزمنية مباشرة
+    date_default_timezone_set('Africa/Cairo');
+
+    // 2. إنشاء كائن التاريخ مع التوقيت المصري
+    $egyptTime = new DateTime('now', new DateTimeZone('Africa/Cairo'));
+    $egyptTime->modify('+1 hour'); // إضافة ساعة يدوياً إذا لزم الأمر
+    // 3. تهيئة العارض للتاريخ العربي
     $formatter = new IntlDateFormatter(
         'ar_SA',
         IntlDateFormatter::FULL,
         IntlDateFormatter::NONE,
-        'Asia/Riyadh',
+        'Africa/Cairo',
         IntlDateFormatter::GREGORIAN,
-        'EEEE y/MM/dd',
+        'EEEE d MMMM y - h:mm:ss a',
     );
 @endphp
+
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
@@ -18,7 +26,8 @@
             <a href="index3.html" class="nav-link">Home</a>
         </li> --}}
         <li class="nav-item d-none d-sm-inline-block">
-            <a href="#" class="nav-link"><?= $formatter->format(time()) ?>
+            <a href="#" class="nav-link">
+                {{ $formatter->format($egyptTime) }}
             </a>
         </li>
     </ul>

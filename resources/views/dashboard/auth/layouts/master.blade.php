@@ -25,14 +25,31 @@
 
     <div class="login-box">
         <div class="login-logo">
-            <a href="../../index2.html" style="color: #fff; text-shadow: 0 0 10px rgba(0,0,0,0.5);">
-                <b>برنامج الأجازات</b> هيئة النيابة الأدارية
-            </a>
+            <span style="color: #fff; text-shadow: 0 0 10px rgba(0,0,0,0.5);">
+                <b>هيئة النيابة الأدارية</b> برنامج الأجازات
+            </span>
         </div>
 
         <div class="card" style="background-color: rgba(255, 255, 255, 0.9);"> <!-- 90% white opacity -->
             <div class="card-body login-card-body">
-                <p class="login-box-msg">قم بتسجيل الدخول لبدء جلستك</p>
+                <h4 class="login-box-msg">قم بتسجيل الدخول</h4>
+
+                <div class="mb-3 text-center">
+                    <img src="{{ asset('dashboard') }}/assets/dist/img/administrativprosecution.png" alt="AdminLTE Logo"
+                        class="elevation-3"
+                        style="
+                    width: 100px;
+                    height: 100px;
+                    object-fit: contain;
+                    border-radius: 50%;
+                    border: 3px solid rgba(0,0,0,0.1);
+                    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+                    transition: all 0.3s ease;
+                 "
+                        onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 6px 12px rgba(0,0,0,0.15)';"
+                        onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 8px rgba(0,0,0,0.1)';">
+                </div>
+
 
                 @yield('content')
 

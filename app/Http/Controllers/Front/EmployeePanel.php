@@ -50,12 +50,5 @@ class EmployeePanel extends Controller
 
 
 
-    public function printLeave($id)
-    {
-        $leave = Leave::findOrFail($id);
-        $emplyeeId = Auth::user()->id;
-        $other['weeks'] = Week::where('id', $emplyeeId)->get();
-        $employees = Employee::with('leaveBalance')->where('id', $emplyeeId)->first();
-        return view('front.leaves.print',  compact('leave', 'other', 'employees'));
-    }
+
 }

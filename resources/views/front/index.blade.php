@@ -20,12 +20,12 @@
                     <!-- small box -->
                     <div class="small-box bg-info">
                         <div class="inner">
-                            <h3>{{$approvedLeaves}}</h3>
+                            <h3>{{ $approvedLeaves }}</h3>
 
                             <p>إجمالى الأجازات</p>
                         </div>
                         <div class="icon">
-                            <i class="ion ion-bag"></i>
+                            <i class="ion ion-pie-graph"></i>
                         </div>
                         <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
@@ -170,6 +170,14 @@
                                                 <a class="btn btn-outline-success btn-sm mx-2"
                                                     href="{{ route('dashboard.leaves.show', $info->id) }}"><i
                                                         class="fas fa-eye ml-1"></i></a>
+
+                                                {{-- طباعه --}}
+                                                @if ($info->leave_status === LeaveStatusEnum::Approved)
+                                                    <a class="btn btn-outline-dark btn-sm mx-2"
+                                                        href="{{ route('dashboard.leaves.print', $info->id) }}"><i
+                                                            class="fas fa-print"></i></a>
+                                                @endif
+
                                             </td>
                                         </tr>
                                     @empty
