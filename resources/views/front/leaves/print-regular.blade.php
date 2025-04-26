@@ -61,7 +61,7 @@
                     </div>
                     <div class="p-4">
                         <h2 class="text-center mb-5">(إجازة إعتيادى)</h2>
-                        <div class="row mb-3">
+                        <div class="row mb-4">
                             <div class="col-6">
                                 <span class="form-label">الاسم/ </span>
                                 {{ $employees->name }}
@@ -70,26 +70,29 @@
                             <div class="col-6">
 
                                 <span class="form-label">الوظيفه/ </span>
-                                {{ $employees->name }}
+                                {{ $employees->jobGrade->name }}
                             </div>
                         </div>
-                        <div class="row mb-3">
+                        <div class="row mb-4">
                             <div class="col-6">
                                 <span class="form-label">جهه العمل/ </span>
-                                {{ $employees->name }}
+                                {{ $employees->branch->name }}
                             </div>
 
                             <div class="col-6">
                                 <span class="form-label">مدة الأجازه/ </span>
-                                {{ $employees->name }}
+                                {{ $leave->days_taken }}
                             </div>
                         </div>
 
                         <div class="row mb-3">
                             <div class="col-8">
-                                <p>من يوم الخميس الموافق 13/4/2025 حتى يوم الاحدالموافق 16/4/2025 </p>
+                                <p>من يوم <span class="mr-4"></span> الموافق {{ $leave->start_date }} حتى يوم <span
+                                        class="mr-4"></span>
+                                    الموافق
+                                    {{ $leave->end_date }} </p>
                                 </br>
-                                <p>يوم الراحه الاسبوعية السبت الموافق 18/5/2025</p>
+                                <p>يوم الراحه الاسبوعية {{ $employees->week->name }} الموافق </p>
                             </div>
                             <div class="col-4 mt-5">
                                 <p>"أسم القائم بالأعمال" </p>
@@ -121,10 +124,10 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td class="text-center">1</td>
-                                        <td class="text-center">2</td>
-                                        <td class="text-center">3</td>
-                                        <td class="text-center">4</td>
+                                        <td class="text-center">{{ $employees->leaveBalance->total_days }}</td>
+                                        <td class="text-center">{{ $employees->leaveBalance->used_days }}</td>
+                                        <td class="text-center">{{ $employees->leaveBalance->remainig_days }}</td>
+                                        <td class="text-center"></td>
                                     </tr>
                                 </tbody>
                             </table>

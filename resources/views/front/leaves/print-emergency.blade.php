@@ -39,8 +39,8 @@
                             <span class="text-center col-12">وحدة التحول الرقمى</span>
                         </div>
                         <div class="col-6 text-right">
-                            <img src="{{ asset('dashboard') }}/assets/dist/img/v-apa.png"
-                                alt="AdminLTE Logo" class="img-circle elevation-3" style="opacity: .8;width:100px">
+                            <img src="{{ asset('dashboard') }}/assets/dist/img/v-apa.png" alt="AdminLTE Logo"
+                                class="img-circle elevation-3" style="opacity: .8;width:100px">
                         </div>
 
                     </div>
@@ -55,26 +55,28 @@
                             <div class="col-6">
 
                                 <span class="form-label">الوظيفه/ </span>
-                                {{ $employees->name }}
+                                {{ $employees->jobGrade->name }}
                             </div>
                         </div>
                         <div class="row mb-4">
                             <div class="col-6">
                                 <span class="form-label">جهه العمل/ </span>
-                                {{ $employees->name }}
+                                {{ $employees->branch->name }}
                             </div>
 
                             <div class="col-6">
                                 <span class="form-label">مدة الأجازه/ </span>
-                                {{ $employees->name }}
+                                {{ $leave->days_taken }}
                             </div>
                         </div>
 
                         <div class="row mb-4">
                             <div class="col-10">
-                                <p>يوم الخميس الموافق 13/4/2025 م الى يوم الاحدالموافق 16/4/2025 م </p>
-                                </br>
-                                <p>يوم الراحه الاسبوعية السبت الموافق 18/5/2025 م</p>
+                                <p>يوم <span class="mr-4"></span> الموافق {{ $leave->start_date }} الى يوم <span
+                                        class="mr-4"></span> الموافق
+                                    {{ $leave->end_date }} </p>
+                                <p>يوم الراحه الاسبوعية {{ $employees->week->name }} الموافق <span
+                                        class="mr-4"></span> </p>
                             </div>
                         </div>
 
@@ -97,9 +99,11 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td class="text-center">1</td>
-                                        <td class="text-center">2</td>
-                                        <td class="text-center">3</td>
+                                        <td class="text-center">{{ $employees->leaveBalance->total_days_emergency }}
+                                        </td>
+                                        <td class="text-center">{{ $employees->leaveBalance->used_days_emergency }}</td>
+                                        <td class="text-center">{{ $employees->leaveBalance->remainig_days_emergency }}
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
