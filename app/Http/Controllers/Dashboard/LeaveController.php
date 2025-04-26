@@ -381,6 +381,6 @@ class LeaveController extends Controller
         $emplyeeId = Auth::user()->id;
         $other['weeks'] = Week::where('id', $emplyeeId)->get();
         $employees = Employee::with('leaveBalance')->where('id', $emplyeeId)->first();
-        return view('front.leaves.print',  compact('leave', 'other', 'employees'));
+        return view('front.leaves.print-emergency',  compact('leave', 'other', 'employees'));
     }
 }
