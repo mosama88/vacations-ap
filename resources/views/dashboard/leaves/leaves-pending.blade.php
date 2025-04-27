@@ -5,6 +5,10 @@
 @extends('dashboard.layouts.master')
 @section('active-pending', 'active')
 @section('title', 'الاجازات المعلقه')
+@push('css')
+    <!-- flatpickr -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+@endpush
 @section('content')
 
 
@@ -56,4 +60,23 @@
 
 @endsection
 @push('js')
+    <!-- flatpickr -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ar.js"></script>
+
+
+
+
+
+    <script>
+        flatpickr("#start_date", {
+            dateFormat: "Y-m-d",
+            locale: "ar"
+        });
+
+        flatpickr("#end_date", {
+            dateFormat: "Y-m-d",
+            locale: "ar"
+        });
+    </script>
 @endpush

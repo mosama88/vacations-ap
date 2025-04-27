@@ -56,13 +56,15 @@ class LeavesPendingTable extends Component
             });
         }
 
-        if ($this->start_date_search) {
-            $query->orWhere('start_date', 'LIKE', '%' . $this->start_date_search . '%');
+        //search by start date between end date
+        if ($this->start_date_search && $this->end_date_search) {
+            $query->whereBetween('start_date', [$this->start_date_search, $this->end_date_search]);
+        } elseif ($this->start_date_search) {
+            $query->where('start_date', '>=', $this->start_date_search);
+        } elseif ($this->end_date_search) {
+            $query->where('end_date', '<=', $this->end_date_search);
         }
 
-        if ($this->end_date_search) {
-            $query->orWhere('end_date', 'LIKE', '%' . $this->end_date_search . '%');
-        }
 
         if ($this->leave_type_search) {
             $query->where('leave_type', $this->leave_type_search);
