@@ -134,12 +134,12 @@
 
                         <td>{{ Str::limit($info->description, 20) }}</td>
                         <td>{{ $info->updated_by ? $info->updatedBy->name : 'لا يوجد تحديث' }}</td>
-                        <td>
-                            <a class="btn btn-outline-info btn-sm mx-2"
+                        <td class="col-2">
+                            <a class="btn btn-outline-info btn-sm mx-1"
                                 href="{{ route('dashboard.leaves.edit', $info->id) }}"><i
                                     class="fas fa-edit ml-1"></i></a>
 
-                            <a class="btn btn-outline-success btn-sm mx-2"
+                            <a class="btn btn-outline-success btn-sm"
                                 href="{{ route('dashboard.leaves.show', $info->id) }}"><i
                                     class="fas fa-eye ml-1"></i></a>
                         </td>

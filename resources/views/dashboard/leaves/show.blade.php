@@ -222,7 +222,7 @@
                                 @enderror
                             </div>
                             @if ($leave->leave_status != LeaveStatusEnum::Approved)
-                                @if ($leave->employee->type === EmployeeType::Manager)
+                                @if (auth()->user()->hasRole('super-admin') || Auth::user()->hasRole('admin'))
                                     <div class="card-footer text-center ">
                                         <button type="submit" class="btn btn-primary">حفظ <i
                                                 class="fas fa-save mx-1"></i>

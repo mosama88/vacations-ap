@@ -26,23 +26,11 @@
             <a href="index3.html" class="nav-link">Home</a>
         </li> --}}
         <li class="nav-item d-none d-sm-inline-block">
-            <a href="#" class="nav-link">
-                {{ $formatter->format($egyptTime) }}
+            <a href="#" class="nav-link" style="font-size: 18px; color: #343a40; font-weight: 600; border-radius: 8px; padding: 10px 15px; transition: all 0.3s ease; display: inline-flex; align-items: center; justify-content: center;">
+                <span class="time-text" style="transition: opacity 0.3s ease;">{{ $formatter->format($egyptTime) }}</span>
             </a>
         </li>
     </ul>
-
-    <!-- SEARCH FORM -->
-    {{-- <form class="form-inline ml-3">
-        <div class="input-group input-group-sm">
-            <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-            <div class="input-group-append">
-                <button class="btn btn-navbar" type="submit">
-                    <i class="fas fa-search"></i>
-                </button>
-            </div>
-        </div>
-    </form> --}}
 
     <!-- Right navbar links -->
     <ul class="navbar-nav mr-auto-navbav">
