@@ -157,7 +157,7 @@
                                             id="exampleSelectBorder">
                                             <option value="">-- أختر نوع الوظيفه --</option>
                                             @forelse ($other['job_types'] as $job_type)
-                                                <option @if (old('job_type_id') == $employee->job_type_id) selected @endif
+                                                <option @if (old('job_type_id') == $employee->job_type) selected @endif
                                                     value="{{ $job_type->id }}">{{ $job_type->name }}</option>
                                             @empty
                                                 عفوآ لا توجد بيانات!

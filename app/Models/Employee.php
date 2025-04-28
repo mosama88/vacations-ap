@@ -41,6 +41,7 @@ class Employee extends Authenticatable implements HasMedia
         'total_days_balance',
         'week_id',
         'job_grade_id',
+        'job_type_id',
         'branch_id',
         'governorate_id',
     ];
