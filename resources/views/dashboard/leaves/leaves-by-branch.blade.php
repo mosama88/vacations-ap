@@ -5,9 +5,6 @@
 @extends('dashboard.layouts.master')
 @section('active-leaveByBranch', 'active')
 @push('css')
-    <!-- Select2 -->
-    <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/plugins/select2/css/select2.min.css">
-    <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
     <!-- flatpickr -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 @endpush
@@ -67,23 +64,10 @@
 
 @endsection
 @push('js')
-    <!-- Select2 -->
-    <script src="{{ asset('dashboard') }}/assets/plugins/select2/js/select2.full.min.js"></script>
     <!-- flatpickr -->
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ar.js"></script>
 
-    <script>
-        $(function() {
-            //Initialize Select2 Elements
-            $('.select2').select2()
-
-            //Initialize Select2 Elements
-            $('.select2bs4').select2({
-                theme: 'bootstrap4'
-            });
-        })
-    </script>
 
 
 
@@ -102,47 +86,47 @@
 
     <script>
         // تفعيل Flatpickr مع اللغة العربية
-        flatpickr("#start_date", {
-            dateFormat: "Y-m-d",
-            locale: "ar",
-            onChange: calculateDays
-        });
+        // flatpickr("#start_date", {
+        //     dateFormat: "Y-m-d",
+        //     locale: "ar",
+        //     onChange: calculateDays
+        // });
 
-        flatpickr("#end_date", {
-            dateFormat: "Y-m-d",
-            locale: "ar",
-            onChange: calculateDays
-        });
+        // flatpickr("#end_date", {
+        //     dateFormat: "Y-m-d",
+        //     locale: "ar",
+        //     onChange: calculateDays
+        // });
 
         // دالة حساب عدد الأيام مع استثناء يوم الجمعة
-        function calculateDays() {
-            const startDate = document.getElementById('start_date').value;
-            const endDate = document.getElementById('end_date').value;
+        // function calculateDays() {
+        //     const startDate = document.getElementById('start_date').value;
+        //     const endDate = document.getElementById('end_date').value;
 
-            if (startDate && endDate) {
-                const start = new Date(startDate);
-                const end = new Date(endDate);
+        //     if (startDate && endDate) {
+        //         const start = new Date(startDate);
+        //         const end = new Date(endDate);
 
-                let totalDays = 0;
-                let currentDate = new Date(start);
+        //         let totalDays = 0;
+        //         let currentDate = new Date(start);
 
-                // التأكد من أن تاريخ البداية قبل تاريخ النهاية
-                if (start > end) {
-                    document.getElementById('days_taken').value = 0;
-                    return;
-                }
+        //         // التأكد من أن تاريخ البداية قبل تاريخ النهاية
+        //         if (start > end) {
+        //             document.getElementById('days_taken').value = 0;
+        //             return;
+        //         }
 
-                // حساب الأيام مع استثناء الجمعة
-                while (currentDate <= end) {
-                    // إذا كان اليوم ليس جمعة (5 في نظام الأيام حيث الأحد = 0)
-                    if (currentDate.getDay() !== 5) {
-                        totalDays++;
-                    }
-                    currentDate.setDate(currentDate.getDate() + 1);
-                }
+        //         // حساب الأيام مع استثناء الجمعة
+        //         while (currentDate <= end) {
+        //             // إذا كان اليوم ليس جمعة (5 في نظام الأيام حيث الأحد = 0)
+        //             if (currentDate.getDay() !== 5) {
+        //                 totalDays++;
+        //             }
+        //             currentDate.setDate(currentDate.getDate() + 1);
+        //         }
 
-                document.getElementById('days_taken').value = totalDays;
-            }
-        }
+        //         document.getElementById('days_taken').value = totalDays;
+        //     }
+        // }
     </script>
 @endpush

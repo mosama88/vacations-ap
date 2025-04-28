@@ -161,20 +161,20 @@
                                             <td>{{ Str::limit($info->description, 20) }}</td>
                                             <td>{{ $info->created_by ? $info->createdBy->name : 'لا يوجد' }}</td>
                                             <td>{{ $info->updated_by ? $info->updatedBy->name : 'لا يوجد تحديث' }}</td>
-                                            <td>
+                                            <td class="col-2">
                                                 @if ($info->leave_status != LeaveStatusEnum::Approved)
-                                                    <a class="btn btn-outline-info btn-sm mx-2"
+                                                    <a class="btn btn-outline-info btn-sm mx-1"
                                                         href="{{ route('dashboard.leaves.edit', $info->id) }}"><i
                                                             class="fas fa-edit ml-1"></i></a>
                                                 @endif
-                                                <a class="btn btn-outline-success btn-sm mx-2"
+                                                <a class="btn btn-outline-success btn-sm"
                                                     href="{{ route('dashboard.leaves.show', $info->id) }}"><i
                                                         class="fas fa-eye ml-1"></i></a>
 
 
                                                 {{-- طباعه --}}
                                                 @if ($info->leave_status === LeaveStatusEnum::Approved)
-                                                    <a class="btn btn-outline-dark btn-sm mx-2"
+                                                    <a class="btn btn-outline-dark btn-sm"
                                                         href="{{ route('dashboard.leaves.print', $info->id) }}"><i
                                                             class="fas fa-print"></i></a>
                                                 @endif

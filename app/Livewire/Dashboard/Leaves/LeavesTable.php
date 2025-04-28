@@ -56,15 +56,18 @@ class LeavesTable extends Component
             });
         }
 
-        if ($this->start_date_search) {
-            $query->orWhere('start_date', 'LIKE', '%' . $this->start_date_search . '%');
-        }
+
         if ($this->finance_calendars_search) {
             $query->orWhere('finance_calendar_id',  $this->finance_calendars_search);
         }
 
-        if ($this->end_date_search) {
-            $query->orWhere('end_date', 'LIKE', '%' . $this->end_date_search . '%');
+        //search by start date between end date
+        if ($this->start_date_search && $this->end_date_search) {
+            $query->whereBetween('start_date', [$this->start_date_search, $this->end_date_search]);
+        } elseif ($this->start_date_search) {
+            $query->where('start_date', '>=', $this->start_date_search);
+        } elseif ($this->end_date_search) {
+            $query->where('end_date', '<=', $this->end_date_search);
         }
 
         if ($this->leave_type_search) {
@@ -77,11 +80,10 @@ class LeavesTable extends Component
         }
 
 
-        $financial_year = FinanceCalendar::select('id', 'finance_yr')->where('status', StatusActive::Active)->first();
 
         $data = $query->where('leave_status', "!=", LeaveStatusEnum::Pending)->orderByDesc('id')->paginate(10);
 
 
-        return view('dashboard.leaves.leaves-table', compact('data', 'financial_year'));
+        return view('dashboard.leaves.leaves-table', compact('data'));
     }
 }

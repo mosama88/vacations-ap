@@ -32,7 +32,7 @@
 
         <div class="form-group col-6">
             <label class="visually-hidden" for="specificSizeInputGroupUsername">بداية
-                الأجازة</label>
+                التاريخ</label>
             <div class="input-group">
                 <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
                 <input type="text" id="start_date" autocomplete="none" wire:model.live="start_date_search"
@@ -43,7 +43,7 @@
 
         <div class="form-group col-6">
             <label class="visually-hidden" for="specificSizeInputGroupUsername">نهاية
-                الأجازة</label>
+                التاريخ</label>
             <div class="input-group">
                 <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
                 <input type="text" id="end_date" autocomplete="off" wire:model.live="end_date_search"
@@ -51,7 +51,7 @@
             </div>
         </div>
 
-        
+
 
         <div class="form-group col-6">
             <label for="exampleSelectBorder">المحافظة التابع لها <code>الموظف</code></label>
@@ -134,12 +134,12 @@
 
                         <td>{{ Str::limit($info->description, 20) }}</td>
                         <td>{{ $info->updated_by ? $info->updatedBy->name : 'لا يوجد تحديث' }}</td>
-                        <td>
-                            <a class="btn btn-outline-info btn-sm mx-2"
+                        <td class="col-2">
+                            <a class="btn btn-outline-info btn-sm mx-1"
                                 href="{{ route('dashboard.leaves.edit', $info->id) }}"><i
                                     class="fas fa-edit ml-1"></i></a>
 
-                            <a class="btn btn-outline-success btn-sm mx-2"
+                            <a class="btn btn-outline-success btn-sm"
                                 href="{{ route('dashboard.leaves.show', $info->id) }}"><i
                                     class="fas fa-eye ml-1"></i></a>
                         </td>
