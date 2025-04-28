@@ -37,7 +37,7 @@
                 </span> --}}
 
                 <!-- عنصر لعرض الوقت في الوقت الفعلي -->
-                <p class="time-text mt-1" style="transition: opacity 0.3s ease;" id="live-time"> </p>
+                <p class="time-text mt-2" style="transition: opacity 0.3s ease;" id="live-time"> </p>
             </a>
         </li>
     </ul>
