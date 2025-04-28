@@ -70,7 +70,7 @@
                             <div class="col-6">
 
                                 <span class="form-label">الوظيفه/ </span>
-                                {{ $employees->jobGrade->name }}
+                                {{ $employees->jobType->name }}
                             </div>
                         </div>
                         <div class="row mb-4">
