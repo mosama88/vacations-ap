@@ -66,10 +66,10 @@
                             </div>
                             <div class="row">
                                 <div class="form-group col-6">
-                                    <label for="exampleSelectBorder">بيانات الموظف التابع له <code>الموظف</code></label>
+                                    <label for="exampleSelectBorder">الفرع التابع له <code>الموظف</code></label>
                                     <select disabled name="branch_id" class="custom-select bg-white form-control-border"
                                         id="exampleSelectBorder">
-                                        <option value="">-- أختر بيانات الموظف --</option>
+                                        <option value="">-- أختر الفرع --</option>
                                         @forelse ($other['branches'] as $branche)
                                             <option @if (old('branch_id', $employee->branch_id) == $branche->id) selected @endif
                                                 value="{{ $branche->id }}">{{ $branche->name }}</option>
