@@ -12,7 +12,7 @@
         IntlDateFormatter::NONE,
         'Africa/Cairo',
         IntlDateFormatter::GREGORIAN,
-        'EEEE d MMMM y - h:mm a',
+        'EEEE d MMMM y - h:mm:ss a',
     );
 @endphp
 
@@ -26,8 +26,18 @@
             <a href="index3.html" class="nav-link">Home</a>
         </li> --}}
         <li class="nav-item d-none d-sm-inline-block">
-            <a href="#" class="nav-link" style="font-size: 18px; color: #343a40; font-weight: 600; border-radius: 8px; padding: 10px 15px; transition: all 0.3s ease; display: inline-flex; align-items: center; justify-content: center;">
-                <span class="time-text" style="transition: opacity 0.3s ease;">{{ $formatter->format($egyptTime) }}</span>
+            <a href="#" class="nav-link"
+                style="font-size: 18px; color: #343a40; font-weight: 600; border-radius: 8px; padding: 10px 15px; transition: all 0.3s ease; display: inline-flex; align-items: center; justify-content: center;">
+                {{-- <span class="time-text" style="transition: opacity 0.3s ease;">
+                    {{ $formatter->format($egyptTime) }}
+                </span> --}}
+                <!-- عرض الوقت عند تحميل الصفحة -->
+                {{-- <span class="time-text" style="transition: opacity 0.3s ease;">التوقيت المصري الحالي:
+                    {{ $formatter->format($egyptTime) }}
+                </span> --}}
+
+                <!-- عنصر لعرض الوقت في الوقت الفعلي -->
+                <p class="time-text mt-1" style="transition: opacity 0.3s ease;" id="live-time"> </p>
             </a>
         </li>
     </ul>
@@ -95,3 +105,17 @@
         </li>
     </ul>
 </nav>
+@push('js')
+    <script>
+        // دالة لتحديث الوقت الحي كل ثانية
+        function updateTime() {
+            var currentTime = new Date().toLocaleString('ar-EG', {
+                hour12: true
+            });
+            document.getElementById('live-time').innerHTML = 'الوقت الحالي: ' + currentTime;
+        }
+
+        // تحديث الوقت كل ثانية
+        setInterval(updateTime, 1000);
+    </script>
+@endpush
