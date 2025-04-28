@@ -32,6 +32,7 @@ class EmployeeRequest extends FormRequest
             'mobile' => 'required|string|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:15', // يجب أن يكون رقم موبايل صحيح
             'week_id' => 'required|exists:weeks,id', // تأكد من أن week_id موجود في جدول weeks
             'job_grade_id' => 'required|exists:job_grades,id', // تأكد من أن job_grade_id موجود في جدول job_grades
+            'job_type_id' => 'required|exists:job_types,id', // تأكد من أن job_type_id موجود في جدول job_types
             'branch_id' => 'required|exists:branches,id', // تأكد من أن branch_id موجود في جدول branches
             'governorate_id' => 'required|exists:governorates,id', // تأكد من أن governorate_id موجود في جدول governorates
             'type' => 'required|in:0,1', // تأكد من أن governorate_id موجود في جدول governorates
@@ -74,6 +75,9 @@ class EmployeeRequest extends FormRequest
 
             'job_grade_id.required' => 'الدرجه الوظيفية مطلوب.',
             'job_grade_id.exists' => 'الدرجه الوظيفية غير موجود في قاعدة البيانات.',
+
+            'job_type_id.required' => 'نوع الوظيفه مطلوب.',
+            'job_type_id.exists' => 'نوع الوظيفه غير موجود في قاعدة البيانات.',
 
             'branch_id.required' => 'الفرع  مطلوب.',
             'branch_id.exists' => 'الفرع مطلوب غير موجود في قاعدة البيانات.',

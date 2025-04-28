@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Models\Week;
 use App\Models\Branch;
+use App\Models\JobType;
 use App\Models\Employee;
 use App\Models\JobGrade;
 use App\Models\Governorate;
@@ -34,6 +35,7 @@ class EmployeeController extends Controller
         $other['weeks'] = Week::get();
         $other['job_grades'] = JobGrade::get();
         $other['branches'] = Branch::get();
+        $other['job_types'] = JobType::get();
         $roles = Role::pluck('name', 'name')->all();
 
         return view('dashboard.employees.create', compact('other', 'roles'));
@@ -69,6 +71,7 @@ class EmployeeController extends Controller
         $other['weeks'] = Week::get();
         $other['job_grades'] = JobGrade::get();
         $other['branches'] = Branch::get();
+        $other['job_types'] = JobType::get();
         $roles = Role::pluck('name', 'name')->all();
         $employeeRoles = $employee->roles->pluck('name', 'name')->all();
         return view('dashboard.employees.show', compact('employee', 'other', 'roles', 'employeeRoles'));
@@ -82,6 +85,7 @@ class EmployeeController extends Controller
         $other['weeks'] = Week::get();
         $other['job_grades'] = JobGrade::get();
         $other['branches'] = Branch::get();
+        $other['job_types'] = JobType::get();
         $roles = Role::pluck('name', 'name')->all();
         $employeeRoles = $employee->roles->pluck('name', 'name')->all();
         return view('dashboard.employees.edit', compact('employee', 'other', 'roles', 'employeeRoles'));

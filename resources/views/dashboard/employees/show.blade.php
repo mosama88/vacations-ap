@@ -97,22 +97,16 @@
                             <div class="row">
                                 <div class="form-group col-4">
                                     <label for="exampleSelectBorder">نوع الوظيفه</code></label>
-                                    <select name="job_grade_id"
-                                        class="custom-select form-control-border @error('job_type_id') is-invalid @enderror"
+                                    <select disabled name="job_type_id" class="custom-select bg-white form-control-border"
                                         id="exampleSelectBorder">
                                         <option value="">-- أختر نوع الوظيفه --</option>
                                         @forelse ($other['job_types'] as $job_type)
-                                            <option @if (old('job_type_id') == $employee->job_type->id) selected @endif
+                                            <option @if (old('job_type_id') == $employee->job_type_id) selected @endif
                                                 value="{{ $job_type->id }}">{{ $job_type->name }}</option>
                                         @empty
                                             عفوآ لا توجد بيانات!
                                         @endforelse
                                     </select>
-                                    @error('job_grade_id')
-                                        <span class="invalid-feedback text-right" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
                                 </div>
 
                                 <div class="form-group col-4">
