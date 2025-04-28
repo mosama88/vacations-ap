@@ -1,4 +1,5 @@
 @php
+    use Carbon\Carbon;
     use App\Enum\StatusActive;
     use App\Enum\LeaveStatusEnum;
     use App\Enum\LeaveTypeEnum;
@@ -49,37 +50,65 @@
                         <div class="row mb-4">
                             <div class="col-6">
                                 <span class="form-label">الاسم/ </span>
-                                {{ $employees->name }}
+                                <span class="font-weight-bold">{{ $employees->name }}</span>
                             </div>
 
                             <div class="col-6">
 
                                 <span class="form-label">الوظيفه/ </span>
-                                {{ $employees->jobType->name }}
+                                <span class="font-weight-bold">{{ $employees->jobType->name }}</span>
                             </div>
                         </div>
                         <div class="row mb-4">
                             <div class="col-6">
                                 <span class="form-label">جهه العمل/ </span>
-                                {{ $employees->branch->name }}
+                                <span class="font-weight-bold">{{ $employees->branch->name }}</span>
                             </div>
 
                             <div class="col-6">
                                 <span class="form-label">مدة الأجازه/ </span>
-                                {{ $leave->days_taken }}
+                                <span class="font-weight-bold">
+                                    @if ($leave->days_taken <= 2 || $leave->days_taken >= 11)
+                                        {{ $leave->days_taken }} يوم
+                                    @elseif ($leave->days_taken > 2)
+                                        {{ $leave->days_taken }} أيام
+                                    @else
+                                        {{ $leave->days_taken }}
+                                    @endif
+
+                                </span>
                             </div>
                         </div>
 
                         <div class="row mb-4">
                             <div class="col-10">
-                                <p>يوم <span class="mr-4"></span> الموافق {{ $leave->start_date }} الى يوم <span
-                                        class="mr-4"></span> الموافق
-                                    {{ $leave->end_date }} </p>
-                                <p>يوم الراحه الاسبوعية {{ $employees->week->name }} الموافق <span
-                                        class="mr-4"></span> </p>
+                                <p>يوم <span
+                                        class="font-weight-bold">{{ Carbon::parse($leave->start_date)->locale('ar')->translatedFormat('l') }}</span>
+                                    الموافق <span class="font-weight-bold">{{ $leave->start_date }}</span> الى يوم <span
+                                        class="font-weight-bold">{{ \Carbon\Carbon::parse($leave->end_date)->locale('ar')->translatedFormat('l') }}</span>
+                                    الموافق <span class="font-weight-bold">{{ $leave->end_date }}</span> </p>
+                                <p>يوم الراحة الأسبوعية <span class="font-weight-bold">{{ $employees->week->name }}
+                                    </span>الموافق
+                                    ......................................
+
+                                </p>
                             </div>
                         </div>
-
+                        {{-- <div class="row mb-3">
+                            <div class="col-8">
+                                <p>من يوم <span class="font-weight-bold">
+                                        {{ Carbon::parse($leave->start_date)->locale('ar')->translatedFormat('l') }}
+                                    </span> الموافق <span class="font-weight-bold">{{ $leave->start_date }}</span> حتى
+                                    يوم <span class="font-weight-bold">
+                                        {{ Carbon::parse($leave->end_date)->locale('ar')->translatedFormat('l') }}
+                                    </span> الموافق <span class="font-weight-bold">{{ $leave->end_date }}</span> </p>
+                                </br>
+                                <p>يوم الراحة الأسبوعية
+                                    <span class="font-weight-bold">{{ $employees->week->name }}</span>
+                                    الموافق
+                                    ......................................
+                                </p>
+                            </div> --}}
 
                         <div class="row mb-4">
                             <div class="col-10">
@@ -99,10 +128,13 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td class="text-center">{{ $employees->leaveBalance->total_days_emergency }}
+                                        <td class="text-center">
+                                            {{ $employees->leaveBalance->total_days_emergency }}
                                         </td>
-                                        <td class="text-center">{{ $employees->leaveBalance->used_days_emergency }}</td>
-                                        <td class="text-center">{{ $employees->leaveBalance->remainig_days_emergency }}
+                                        <td class="text-center">{{ $employees->leaveBalance->used_days_emergency }}
+                                        </td>
+                                        <td class="text-center">
+                                            {{ $employees->leaveBalance->remainig_days_emergency }}
                                         </td>
                                     </tr>
                                 </tbody>
@@ -122,7 +154,8 @@
                             <div class="col-6">
                                 <span>تحريرآ فى </span></br>
                                 <span> </span>
-                                <span class="m-2"> / </span> <span class="m-4"> / <span class="m-4">20 </span>
+                                <span class="m-2"> / </span> <span class="m-4"> / <span class="m-4">20
+                                    </span>
                                 </span>
                             </div>
 
