@@ -14,6 +14,7 @@ use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Password;
 use App\Http\Requests\Dashboard\EmployeeRequest;
 
 class EmployeeController extends Controller
@@ -142,12 +143,22 @@ class EmployeeController extends Controller
     public function changePassword(Request $request)
     {
         $request->validate([
-            'password' => 'required|min:5|max:30|confirmed',
+            'password' => [
+                'required',
+                'confirmed',
+                'max:15',
+                Password::min(8)
+                    ->mixedCase()
+                    ->letters()
+                    ->numbers()
+                    ->symbols()
+                    ->uncompromised()
+            ],
             'password_confirmation' => 'required'
         ], [
             'password.required' => 'حقل كلمة المرور مطلوب',
-            'password.min' => 'يجب أن تتكون كلمة المرور من 5 أحرف على الأقل',
-            'password.max' => 'يجب ألا تزيد كلمة المرور عن 30 حرفاً',
+            'password.min' => 'يجب أن تتكون كلمة المرور من 8 أحرف على الأقل',
+            'password.max' => 'يجب ألا تزيد كلمة المرور عن 15 حرفاً',
             'password.confirmed' => 'كلمتا المرور غير متطابقتين',
             'password_confirmation.required' => 'حقل تأكيد كلمة المرور مطلوب'
         ]);
