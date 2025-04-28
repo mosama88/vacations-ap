@@ -69,6 +69,13 @@ class UserRolePermissionSeeder extends Seeder
             ['name' => 'تعديل الدرجات الوظيفية', 'category' => 'jobsGrades', 'guard_name' => $guardAdmin],
             ['name' => 'عرض الدرجات الوظيفية', 'category' => 'jobsGrades', 'guard_name' => $guardAdmin],
             ['name' => 'حذف الدرجات الوظيفية', 'category' => 'jobsGrades', 'guard_name' => $guardAdmin],
+            
+            // نوع الوظيفه
+            ['name' => 'نوع الوظيفه', 'category' => 'JobTypes', 'guard_name' => $guardAdmin],
+            ['name' => 'اضافة نوع الوظيفه', 'category' => 'JobTypes', 'guard_name' => $guardAdmin],
+            ['name' => 'تعديل نوع الوظيفه', 'category' => 'JobTypes', 'guard_name' => $guardAdmin],
+            ['name' => 'عرض نوع الوظيفه', 'category' => 'JobTypes', 'guard_name' => $guardAdmin],
+            ['name' => 'حذف نوع الوظيفه', 'category' => 'JobTypes', 'guard_name' => $guardAdmin],
 
             //    المحافظات
             ['name' => 'المحافظات', 'category' => 'governorates', 'guard_name' => $guardAdmin],
@@ -170,6 +177,7 @@ class UserRolePermissionSeeder extends Seeder
             'status' => EmployeeStatus::Active,
             'week_id' => 7,
             'job_grade_id' => 9,
+            'job_type_id' => 9,
             'branch_id' => 10,
             'governorate_id' => 24,
         ]);
@@ -188,6 +196,7 @@ class UserRolePermissionSeeder extends Seeder
             'status' => EmployeeStatus::Active,
             'week_id' => 7,
             'job_grade_id' => 9,
+            'job_type_id' => 9,
             'branch_id' => 10,
             'governorate_id' => 24,
         ]);
@@ -205,6 +214,7 @@ class UserRolePermissionSeeder extends Seeder
             'status' => EmployeeStatus::Active,
             'week_id' => 7,
             'job_grade_id' => 9,
+            'job_type_id' => 9,
             'branch_id' => 10,
             'governorate_id' => 24,
         ]);
@@ -223,6 +233,7 @@ class UserRolePermissionSeeder extends Seeder
             'status' => EmployeeStatus::Active,
             'week_id' => 7,
             'job_grade_id' => 9,
+            'job_type_id' => 9,
             'branch_id' => 10,
             'governorate_id' => 24,
         ]);
@@ -241,6 +252,7 @@ class UserRolePermissionSeeder extends Seeder
             'status' => EmployeeStatus::Active,
             'week_id' => 7,
             'job_grade_id' => 9,
+            'job_type_id' => 9,
             'branch_id' => 10,
             'governorate_id' => 24,
         ]);
@@ -259,6 +271,7 @@ class UserRolePermissionSeeder extends Seeder
             'status' => EmployeeStatus::Active,
             'week_id' => 7,
             'job_grade_id' => 9,
+            'job_type_id' => 9,
             'branch_id' => 10,
             'governorate_id' => 24,
         ]);
@@ -278,6 +291,7 @@ class UserRolePermissionSeeder extends Seeder
             'status' => EmployeeStatus::Active,
             'week_id' => 7,
             'job_grade_id' => 9,
+            'job_type_id' => 9,
             'branch_id' => 10,
             'governorate_id' => 24,
         ]);

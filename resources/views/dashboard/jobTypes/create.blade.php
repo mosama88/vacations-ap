@@ -1,13 +1,13 @@
 @extends('dashboard.layouts.master')
-@section('active-jobGrades', 'active')
-@section('title', 'أنشاء درجه وظيفية جديدة')
+@section('active-jobTypes', 'active')
+@section('title', 'أنشاء نوع وظيفه جديدة')
 @section('content')
 
     @include('dashboard.layouts.breadcrumb', [
-        'pageTitle' => 'أنشاء درجه وظيفية جديدة',
-        'previousPage' => 'جدول الدرجات الوظيفية',
-        'urlPreviousPage' => 'jobGrades.index',
-        'currentPage' => 'أنشاء درجه وظيفية جديدة',
+        'pageTitle' => 'أنشاء نوع وظيفه جديدة',
+        'previousPage' => 'جدول نوع الوظيفه',
+        'urlPreviousPage' => 'jobTypes.index',
+        'currentPage' => 'أنشاء نوع وظيفه جديدة',
     ])
 
     @include('dashboard.layouts.message')
@@ -20,18 +20,18 @@
                     <!-- general form elements -->
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">أنشاء درجه وظيفية جديدة</h3>
+                            <h3 class="card-title">أنشاء نوع وظيفه جديدة</h3>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="{{ route('dashboard.jobGrades.store') }}" method="POST">
+                        <form action="{{ route('dashboard.jobTypes.store') }}" method="POST">
                             @csrf
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="exampleInputName">اسم الدرجه وظيفية</label>
+                                    <label for="exampleInputName">اسم نوع الوظيفه</label>
                                     <input type="text" name="name" value="{{ old('name') }}"
                                         class="form-control @error('name') is-invalid @enderror" id="exampleInputName"
-                                        placeholder="أدخل اسم الدرجه وظيفية">
+                                        placeholder="أدخل اسم نوع الوظيفه">
                                     @error('name')
                                         <span class="invalid-feedback text-right" role="alert">
                                             <strong>{{ $message }}</strong>

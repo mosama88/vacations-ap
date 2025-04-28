@@ -159,6 +159,21 @@
                                 </td>
                             </tr>
                             <tr>
+                                <td class="wd-500">نوع الوظيفه</td>
+                                <td>
+                                    @foreach ($permissions->where('category', 'JobTypes') as $permission)
+                                        <div class="col-md-12">
+                                            <label>
+                                                <input type="checkbox" class="permissionsCheckbox" name="permission[]"
+                                                    value="{{ $permission->name }}"
+                                                    {{ in_array($permission->id, $rolePermissions) ? 'checked' : '' }} />
+                                                {{ $permission->name }}
+                                            </label>
+                                        </div>
+                                    @endforeach
+                                </td>
+                            </tr>
+                            <tr>
                                 <td class="wd-500"> الأجازات</td>
                                 <td>
                                     @foreach ($permissions->where('category', 'leaves') as $permission)
@@ -252,7 +267,8 @@
                         </table>
 
                         <div class="card-footer text-center ">
-                            <button type="submit" class="btn btn-primary">تعديل الصلاحية <i class="fas fa-save mx-1"></i>
+                            <button type="submit" class="btn btn-primary">تعديل الصلاحية <i
+                                    class="fas fa-save mx-1"></i>
                             </button>
                         </div>
                     </div>

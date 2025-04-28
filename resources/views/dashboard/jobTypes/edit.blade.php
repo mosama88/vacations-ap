@@ -1,13 +1,13 @@
 @extends('dashboard.layouts.master')
-@section('active-jobGrades', 'active')
-@section('title', 'أنشاء درجه وظيفية جديدة')
+@section('active-jobTypes', 'active')
+@section('title', 'تعديل نوع الوظيفه')
 @section('content')
 
     @include('dashboard.layouts.breadcrumb', [
-        'pageTitle' => 'أنشاء درجه وظيفية جديدة',
-        'previousPage' => 'جدول الدرجات الوظيفية',
-        'urlPreviousPage' => 'jobGrades.index',
-        'currentPage' => 'أنشاء درجه وظيفية جديدة',
+        'pageTitle' => 'تعديل نوع الوظيفه',
+        'previousPage' => 'جدول نوع الوظيفه',
+        'urlPreviousPage' => 'jobTypes.index',
+        'currentPage' => 'تعديل نوع الوظيفه',
     ])
 
     @include('dashboard.layouts.message')
@@ -18,20 +18,21 @@
             <div class="row">
                 <div class="col-12">
                     <!-- general form elements -->
-                    <div class="card card-primary">
+                    <div class="card card-info">
                         <div class="card-header">
-                            <h3 class="card-title">أنشاء درجه وظيفية جديدة</h3>
+                            <h3 class="card-title">تعديل نوع الوظيفه</h3>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="{{ route('dashboard.jobGrades.store') }}" method="POST">
+                        <form action="{{ route('dashboard.jobTypes.update', $jobType->slug) }}" method="POST">
                             @csrf
+                            @method('PUT')
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="exampleInputName">اسم الدرجه وظيفية</label>
-                                    <input type="text" name="name" value="{{ old('name') }}"
+                                    <label for="exampleInputName">اسم نوع الوظيفه</label>
+                                    <input type="text" name="name" value="{{ old('name', $jobType->name) }}"
                                         class="form-control @error('name') is-invalid @enderror" id="exampleInputName"
-                                        placeholder="أدخل اسم الدرجه وظيفية">
+                                        placeholder="أدخل نوع الوظيفه">
                                     @error('name')
                                         <span class="invalid-feedback text-right" role="alert">
                                             <strong>{{ $message }}</strong>

@@ -8,6 +8,7 @@ use App\Http\Controllers\Front\EmployeePanel;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\Dashboard\LeaveController;
 use App\Http\Controllers\Dashboard\BranchController;
+use App\Http\Controllers\Dashboard\JobTypeController;
 use App\Http\Controllers\Auth\EmployeeLoginController;
 use App\Http\Controllers\Dashboard\EmployeeController;
 use App\Http\Controllers\Dashboard\JobGradeController;
@@ -47,11 +48,16 @@ Route::middleware(['auth:employee', 'role:super-admin|super-user|staff'])->name(
     // --------------------------------------------- بداية تكويد الدرجات الوظيفية
     Route::resource('/jobGrades', JobGradeController::class)->middleware('permission:الدرجات الوظيفية');
 
+    // --------------------------------------------- بداية نوع الوظيفه
+    Route::resource('/jobTypes', JobTypeController::class)->middleware('permission:نوع الوظيفه');
+
     // ---------------------------------------------- بداية تكويد الموظفين
     Route::resource('/employees', EmployeeController::class)->middleware('permission:بيانات الموظفين');
 
     // --------------------------------------------- بداية رصيد الأجازات
     Route::resource('/leaveBalances', LeaveBalanceController::class)->middleware('permission:رصيد الموظف');
+
+
 
     // ---------------------------------------------------- بداية تكويد الأجازات
     Route::controller(LeaveController::class)->name('leaves.')->prefix('leaves')->group(function () {

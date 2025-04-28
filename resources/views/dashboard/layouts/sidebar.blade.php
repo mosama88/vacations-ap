@@ -49,9 +49,9 @@
                 </li>
                 @can('الأعدادت')
                     <li
-                        class="nav-item has-treeview {{ request()->is('financeCalendars*') || request()->is('branches*') || request()->is('jobGrades*') ? 'menu-open' : '' }} ">
+                        class="nav-item has-treeview {{ request()->is('financeCalendars*') || request()->is('branches*') || request()->is('jobGrades*') || request()->is('jobTypes*') ? 'menu-open' : '' }} ">
                         <a href="#"
-                            class="nav-link {{ request()->is('financeCalendars*') || request()->is('branches*') || request()->is('jobGrades*') ? 'active' : '' }} ">
+                            class="nav-link {{ request()->is('financeCalendars*') || request()->is('branches*') || request()->is('jobGrades*') || request()->is('jobTypes*') ? 'active' : '' }} ">
                             <i class="nav-icon fas fa-cog"></i>
                             <p>
                                 الأعدادت
@@ -78,6 +78,13 @@
                                 <a href="{{ route('dashboard.jobGrades.index') }}" class="nav-link @yield('active-jobGrades')">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>الدرجات الوظيفية</p>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="{{ route('dashboard.jobTypes.index') }}" class="nav-link @yield('active-jobTypes')">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>نوع الوظيفه</p>
                                 </a>
                             </li>
                         </ul>

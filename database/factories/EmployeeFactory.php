@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\Week;
 use App\Models\Admin;
 use App\Models\Branch;
+use App\Models\JobType;
 use App\Models\JobGrade;
 use App\Enum\EmployeeType;
 use App\Models\Governorate;
@@ -839,6 +840,7 @@ class EmployeeFactory extends Factory
             'branch_id' => Branch::inRandomOrder()->first()->id,
             'governorate_id' => Governorate::inRandomOrder()->first()->id,
             'job_grade_id' => JobGrade::inRandomOrder()->first()->id,
+            'job_type_id' => JobType::inRandomOrder()->first()->id,
             'week_id' => Week::inRandomOrder()->first()->id,
             'remember_token' => Str::random(10),
         ];

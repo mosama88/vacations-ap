@@ -34,7 +34,7 @@ class EmployeePanel extends Controller
         //Count Pending Leaves For All Employees               
         $pendingLeaves = Leave::whereHas('employee', function ($query) use ($branchId) {
             $query->where('branch_id', $branchId);
-        })->where('leave_status', LeaveStatusEnum::Pending)->where('finance_calendar_id', $financial_year->id)->count();
+        })->where('leave_status', LeaveStatusEnum::Pending)->where('finance_calendar_id', $financial_year->id ?? 0)->count();
 
 
 
@@ -42,7 +42,7 @@ class EmployeePanel extends Controller
         //Count Approved Leaves For All Employees        
         $approvedLeaves = Leave::whereHas('employee', function ($query) use ($branchId) {
             $query->where('branch_id', $branchId);
-        })->where('leave_status', LeaveStatusEnum::Approved)->where('finance_calendar_id', $financial_year->id)->count();
+        })->where('leave_status', LeaveStatusEnum::Approved)->where('finance_calendar_id', $financial_year->id ?? 0)->count();
 
 
         return view('front.index',  compact('data', 'other', 'financial_year', 'branch_employees', 'pendingLeaves', 'approvedLeaves'));

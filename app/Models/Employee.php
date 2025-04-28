@@ -79,6 +79,11 @@ class Employee extends Authenticatable implements HasMedia
         return $this->belongsTo(JobGrade::class, 'job_grade_id');
     }
 
+    public function jobType()
+    {
+        return $this->belongsTo(jobType::class, 'job_type_id');
+    }
+
     public function branch()
     {
         return $this->belongsTo(Branch::class, 'branch_id');

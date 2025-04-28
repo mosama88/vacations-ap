@@ -1,13 +1,13 @@
 @extends('dashboard.layouts.master')
-@section('active-jobGrades', 'active')
-@section('title', 'عرض الدرجه الوظيفية')
+@section('active-jobTypes', 'active')
+@section('title', 'عرض نوع الوظيفه')
 @section('content')
 
     @include('dashboard.layouts.breadcrumb', [
-        'pageTitle' => 'عرض الدرجه الوظيفية',
-        'previousPage' => 'جدول الدرجات الوظيفية',
-        'urlPreviousPage' => 'jobGrades.index',
-        'currentPage' => 'عرض الدرجه الوظيفية',
+        'pageTitle' => 'عرض نوع الوظيفه',
+        'previousPage' => 'جدول نوع الوظيفه',
+        'urlPreviousPage' => 'jobTypes.index',
+        'currentPage' => 'عرض نوع الوظيفه',
     ])
 
     <section class="content">
@@ -18,17 +18,17 @@
                     <!-- general form elements -->
                     <div class="card card-secondary">
                         <div class="card-header">
-                            <h3 class="card-title">عرض الدرجه الوظيفية</h3>
+                            <h3 class="card-title">عرض نوع الوظيفه</h3>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
 
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="exampleInputName">اسم الدرجه الوظيفية</label>
-                                <input type="text" name="name" value="{{ old('name', $jobGrade->name) }}"
+                                <label for="exampleInputName">اسم نوع الوظيفه</label>
+                                <input type="text" name="name" value="{{ old('name', $jobType->name) }}"
                                     class="form-control @error('name') is-invalid @enderror" id="exampleInputName"
-                                    placeholder="أدخل الدرجه الوظيفية">
+                                    placeholder="أدخل نوع الوظيفه">
                             </div>
 
                         </div>

@@ -5,7 +5,7 @@
 
     @include('dashboard.layouts.breadcrumb', [
         'pageTitle' => 'تعديل الدرجه الوظيفية',
-        'previousPage' => 'جدول الفروع',
+        'previousPage' => 'جدول الدرجات الوظيفية',
         'urlPreviousPage' => 'jobGrades.index',
         'currentPage' => 'تعديل الدرجه الوظيفية',
     ])

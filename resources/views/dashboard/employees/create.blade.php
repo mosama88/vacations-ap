@@ -72,8 +72,7 @@
                                     <div class="form-group col-6">
                                         <label>الصلاحيات</label>
                                         <select class="select2bs4 @error('roles') is-invalid @enderror" name="roles[]"
-                                            multiple="multiple"
-                                            data-placeholder="-- حدد الصلاحية --" style="width: 100%;">
+                                            multiple="multiple" data-placeholder="-- حدد الصلاحية --" style="width: 100%;">
                                             @foreach ($roles as $role)
                                                 <option value="{{ $role }}">{{ $role }}</option>
                                             @endforeach
@@ -127,7 +126,26 @@
 
 
                                 <div class="row">
-                                    <div class="form-group col-6">
+                                    <div class="form-group col-4">
+                                        <label for="exampleSelectBorder">نوع الوظيفه</code></label>
+                                        <select name="job_grade_id"
+                                            class="custom-select form-control-border @error('job_type_id') is-invalid @enderror"
+                                            id="exampleSelectBorder">
+                                            <option value="">-- أختر نوع الوظيفه --</option>
+                                            @forelse ($other['job_types'] as $job_type)
+                                                <option @if (old('job_type_id') == $job_type->id) selected @endif
+                                                    value="{{ $job_type->id }}">{{ $job_type->name }}</option>
+                                            @empty
+                                                عفوآ لا توجد بيانات!
+                                            @endforelse
+                                        </select>
+                                        @error('job_grade_id')
+                                            <span class="invalid-feedback text-right" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group col-4">
                                         <label for="exampleSelectBorder">الدرجه الوظيفية</code></label>
                                         <select name="job_grade_id"
                                             class="custom-select form-control-border @error('job_grade_id') is-invalid @enderror"
@@ -146,7 +164,7 @@
                                             </span>
                                         @enderror
                                     </div>
-                                    <div class="form-group col-6">
+                                    <div class="form-group col-4">
                                         <label for="exampleSelectBorder">الراحه الاسبوعية</code></label>
                                         <select name="week_id"
                                             class="custom-select form-control-border @error('week_id') is-invalid @enderror"
