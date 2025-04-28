@@ -12,7 +12,7 @@
         IntlDateFormatter::NONE,
         'Africa/Cairo',
         IntlDateFormatter::GREGORIAN,
-        'EEEE d MMMM y - h:mm:ss a',
+        'EEEE d MMMM y - h:mm a',
     );
 @endphp
 

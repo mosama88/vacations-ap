@@ -37,7 +37,7 @@
                     <div class="row my-3">
                         <div class="col-6">
                             <h5>نموذج الاجازات - بإدارة النيابات</h5>
-                            <span class="text-center col-12">وحدة التحول الرقمى</span>
+                            <span class="text-center col-12">{{ $employees->branch->name }}</span>
                         </div>
                         <div class="col-6 text-right">
                             <img src="{{ asset('dashboard') }}/assets/dist/img/v-apa.png" alt="AdminLTE Logo"
@@ -94,21 +94,7 @@
                                 </p>
                             </div>
                         </div>
-                        {{-- <div class="row mb-3">
-                            <div class="col-8">
-                                <p>من يوم <span class="font-weight-bold">
-                                        {{ Carbon::parse($leave->start_date)->locale('ar')->translatedFormat('l') }}
-                                    </span> الموافق <span class="font-weight-bold">{{ $leave->start_date }}</span> حتى
-                                    يوم <span class="font-weight-bold">
-                                        {{ Carbon::parse($leave->end_date)->locale('ar')->translatedFormat('l') }}
-                                    </span> الموافق <span class="font-weight-bold">{{ $leave->end_date }}</span> </p>
-                                </br>
-                                <p>يوم الراحة الأسبوعية
-                                    <span class="font-weight-bold">{{ $employees->week->name }}</span>
-                                    الموافق
-                                    ......................................
-                                </p>
-                            </div> --}}
+
 
                         <div class="row mb-4">
                             <div class="col-10">
@@ -167,9 +153,15 @@
                         </div>
 
                         <div class="row my-4">
-                            <div class="col-10">
-                                <span>المدير الادارى</span></br>
+                            <div class="col-9">
+                                <span>مدير السكرتارية</span></br>
                                 <span>.............................................</span>
+                            </div>
+
+                            <div class="col-3">
+                                <span>نائب رئيس الهيئة </span></br>
+                                <span> مدير</span> <br>
+                                <span>المستشار / </span><span>.....................................</span>
                             </div>
                         </div>
                     </div>

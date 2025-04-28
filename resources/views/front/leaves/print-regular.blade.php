@@ -52,7 +52,7 @@
                     <div class="row my-2">
                         <div class="col-6">
                             <h5>نموذج الاجازات - بإدارة النيابات</h5>
-                            <span class="text-center col-12">وحدة التحول الرقمى</span>
+                            <span class="text-center col-12">{{ $employees->branch->name }}</span>
                         </div>
                         <div class="col-6 text-right">
                             <img src="{{ asset('dashboard') }}/assets/dist/img/v-apa.png" alt="AdminLTE Logo"
