@@ -123,7 +123,7 @@
         document.getElementById('storeForm').addEventListener('submit', function(event) {
             var submitButton = document.getElementById('submitButton');
             submitButton.disabled = true;
-            submitButton.innerHTML = 'جارى التعديل ...'; // Optional: Change text while submitting
+            submitButton.innerHTML = 'جارى الحفظ ...'; // Optional: Change text while submitting
         });
     </script>
 @endpush
