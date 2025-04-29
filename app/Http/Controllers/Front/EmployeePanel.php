@@ -45,7 +45,7 @@ class EmployeePanel extends Controller
         })->where('leave_status', LeaveStatusEnum::Approved)->where('finance_calendar_id', $financial_year->id ?? 0)->count();
 
 
-        return view('front.index',  compact('data', 'other', 'financial_year', 'branch_employees', 'pendingLeaves', 'approvedLeaves'));
+        return view('front.index',  compact('data', 'other', 'financial_year', 'employee', 'branch_employees', 'pendingLeaves', 'approvedLeaves'));
     }
 
 
