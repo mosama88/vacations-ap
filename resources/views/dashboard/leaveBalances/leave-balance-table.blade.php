@@ -33,7 +33,7 @@
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $info->employee->employee_code }}</td>
                         <td>{{ $info->employee->name }}</td>
-                        <td>{{ $info->financeCalendar->finance_yr }}</td>
+                        <td>{{ $info->financeCalendar?->finance_yr }}</td>
                         <td>{{ $info->total_days }}</td>
                         <td>{{ $info->used_days }}</td>
                         <td>{{ $info->remainig_days }}</td>
