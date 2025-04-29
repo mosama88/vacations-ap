@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Models\JobType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Dashboard\JobTypeRequest;
 
@@ -40,12 +41,18 @@ class JobTypeController extends Controller
      */
     public function store(JobTypeRequest $request)
     {
-        $jobTypes = $request->validated();
+        try {
+            DB::beginTransaction();
+            $jobTypes = $request->validated();
 
-        JobType::create($jobTypes);
-        session()->flash('success', 'تم أضافة الوظيفه بنجاح');
-
-        return redirect()->route('dashboard.jobTypes.index');
+            JobType::create($jobTypes);
+            DB::commit();
+            session()->flash('success', 'تم أضافة الوظيفه بنجاح');
+            return redirect()->route('dashboard.jobTypes.index');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->withErrors(['error' => 'عفوا حدث خطأ' . $e->getMessage()])->withInput();
+        }
     }
 
     /**
@@ -71,12 +78,18 @@ class JobTypeController extends Controller
      */
     public function update(JobTypeRequest $request, JobType $jobType)
     {
-        $jobType->fill($request->validated());
+        try {
+            DB::beginTransaction();
+            $jobType->fill($request->validated());
 
-        $jobType->update();
-        session()->flash('success', 'تم تعديل الوظيفه بنجاح');
-
-        return redirect()->route('dashboard.jobTypes.index');
+            $jobType->update();
+            DB::commit();
+            session()->flash('success', 'تم تعديل الوظيفه بنجاح');
+            return redirect()->route('dashboard.jobTypes.index');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->withErrors(['error' => 'عفوا حدث خطأ' . $e->getMessage()])->withInput();
+        }
     }
 
     /**

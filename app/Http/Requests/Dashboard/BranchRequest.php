@@ -21,8 +21,7 @@ class BranchRequest extends FormRequest
      */
     public function rules(): array
     {
-        $branchId = $this->route()->branches->id ?? null;
-
+        $branchId = $this->route('branch') ? $this->route('branch')->id : null;
         return [
             'name' => 'required|unique:branches,name,' . $branchId,
             'governorate_id' => 'required|exists:governorates,id',

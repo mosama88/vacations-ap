@@ -10,6 +10,7 @@ use App\Models\JobGrade;
 use App\Models\Governorate;
 use App\Enum\EmployeeStatus;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -47,20 +48,26 @@ class EmployeeController extends Controller
      */
     public function store(EmployeeRequest $request)
     {
-        $lastEmployees = Employee::orderByDesc('employee_code')->value('employee_code');
-        $new_employeeCode = $lastEmployees ? $lastEmployees + 1 : 1000;
-        $employees = $request->validated();
-        $data = array_merge($employees, [
-            'employee_code' => $new_employeeCode,
-            'password' => Hash::make('P@ssw0rd'),
-            'status' => EmployeeStatus::Active,
-        ]);
-        $employee = Employee::create($data);
-        $employee->syncRoles($request->roles);
+        try {
+            DB::beginTransaction();
+            $lastEmployees = Employee::orderByDesc('employee_code')->value('employee_code');
+            $new_employeeCode = $lastEmployees ? $lastEmployees + 1 : 1000;
+            $employees = $request->validated();
+            $data = array_merge($employees, [
+                'employee_code' => $new_employeeCode,
+                'password' => Hash::make('P@ssw0rd'),
+                'status' => EmployeeStatus::Active,
+            ]);
+            $employee = Employee::create($data);
+            $employee->syncRoles($request->roles);
+            DB::commit();
 
-        session()->flash('success', 'تم أضافة الموظف بنجاح');
-
-        return redirect()->route('dashboard.employees.index');
+            session()->flash('success', 'تم أضافة الموظف بنجاح');
+            return redirect()->route('dashboard.employees.index');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->withErrors(['error' => 'عفوا حدث خطأ' . $e->getMessage()])->withInput();
+        }
     }
 
     /**
@@ -97,21 +104,26 @@ class EmployeeController extends Controller
      */
     public function update(EmployeeRequest $request, Employee $employee)
     {
-        $employees = $request->validated();
-        $data = array_merge($employees, [
-            'status' => $request->status,
-        ]);
-        if (!empty($request->password)) {
-            // إذا كانت كلمة المرور موجودة، يتم تشفيرها وتحديث البيانات
-            $employee['password'] = Hash::make($request->password);
+        try {
+            DB::beginTransaction();
+            $employees = $request->validated();
+            $data = array_merge($employees, [
+                'status' => $request->status,
+            ]);
+            if (!empty($request->password)) {
+                // إذا كانت كلمة المرور موجودة، يتم تشفيرها وتحديث البيانات
+                $employee['password'] = Hash::make($request->password);
+            }
+            $employee->update($data);
+
+            $employee->syncRoles($request->roles);
+            DB::commit();
+            session()->flash('success', 'تم تعديل الموظف بنجاح');
+            return redirect()->route('dashboard.employees.index');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->withErrors(['error' => 'عفوا حدث خطأ' . $e->getMessage()])->withInput();
         }
-        $employee->update($data);
-
-        $employee->syncRoles($request->roles);
-
-        session()->flash('success', 'تم تعديل الموظف بنجاح');
-
-        return redirect()->route('dashboard.employees.index');
     }
 
     /**
@@ -185,7 +197,7 @@ class EmployeeController extends Controller
             // في حالة حدوث أي استثناء
             session()->flash('error', 'حدث خطأ أثناء تغيير كلمة المرور');
 
-            
+
             return redirect()->back();
         }
     }

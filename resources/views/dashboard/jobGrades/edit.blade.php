@@ -24,7 +24,7 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="{{ route('dashboard.jobGrades.update', $jobGrade->slug) }}" method="POST">
+                        <form action="{{ route('dashboard.jobGrades.update', $jobGrade->slug) }}" method="POST" id="editForm">
                             @csrf
                             @method('PUT')
                             <div class="card-body">
@@ -39,14 +39,15 @@
                                         </span>
                                     @enderror
                                 </div>
-                               
+
                             </div>
 
                     </div>
                     <!-- /.card-body -->
 
                     <div class="card-footer text-center ">
-                        <button type="submit" class="btn btn-primary">حفظ البيانات <i class="fas fa-save mx-1"></i>
+                        <button type="submit" id="submitButton" class="btn btn-info">تعديل البيانات <i
+                                class="fas fa-save mx-1"></i>
                         </button>
                     </div>
                     </form>
@@ -62,3 +63,12 @@
         </div><!-- /.container-fluid -->
     </section>
 @endsection
+@push('js')
+    <script>
+        document.getElementById('editForm').addEventListener('submit', function(event) {
+            var submitButton = document.getElementById('submitButton');
+            submitButton.disabled = true;
+            submitButton.innerHTML = 'جاري التعديل...'; // Optional: Change text while submitting
+        });
+    </script>
+@endpush

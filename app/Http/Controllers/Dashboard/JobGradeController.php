@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Models\JobGrade;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Dashboard\JobGradeRequest;
 
@@ -41,12 +42,17 @@ class JobGradeController extends Controller
      */
     public function store(JobGradeRequest $request)
     {
-        $branches = $request->validated();
-
-        JobGrade::create($branches);
-        session()->flash('success', 'تم أضافة الدرجه الوظيفية بنجاح');
-
-        return redirect()->route('dashboard.jobGrades.index');
+        try {
+            DB::beginTransaction();
+            $JobGrade = $request->validated();
+            JobGrade::create($JobGrade);
+            DB::commit();
+            session()->flash('success', 'تم أضافة الدرجه الوظيفية بنجاح');
+            return redirect()->route('dashboard.jobGrades.index');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->withErrors(['error' => 'عفوا حدث خطأ' . $e->getMessage()])->withInput();
+        }
     }
 
     /**
@@ -72,12 +78,18 @@ class JobGradeController extends Controller
      */
     public function update(JobGradeRequest $request, JobGrade $jobGrade)
     {
-        $jobGrade->fill($request->validated());
+        try {
+            DB::beginTransaction();
+            $jobGrade->fill($request->validated());
 
-        $jobGrade->update();
-        session()->flash('success', 'تم تعديل الدرجه الوظيفية بنجاح');
-
-        return redirect()->route('dashboard.jobGrades.index');
+            $jobGrade->update();
+            DB::commit();
+            session()->flash('success', 'تم تعديل الدرجه الوظيفية بنجاح');
+            return redirect()->route('dashboard.jobGrades.index');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->withErrors(['error' => 'عفوا حدث خطأ' . $e->getMessage()])->withInput();
+        }
     }
 
     /**

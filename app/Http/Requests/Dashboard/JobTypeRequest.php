@@ -21,7 +21,8 @@ class JobTypeRequest extends FormRequest
      */
     public function rules(): array
     {
-        $job_typesId = $this->route()->job_types->id ?? null;
+        $job_typesId = $this->route('jobType') ? $this->route('jobType')->id : null;
+
 
         return [
             'name' => 'required|unique:job_types,name,' . $job_typesId,
