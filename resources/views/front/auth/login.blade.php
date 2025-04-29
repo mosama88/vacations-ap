@@ -10,7 +10,7 @@
             </div>
         @endforeach
     @endif
-    <form action="{{ route('employees.login') }}" method="POST">
+    <form action="{{ route('employees.login') }}" method="POST" id="loginForm">
         @csrf
         <div class="input-group mb-3">
             <input type="text" name="username" class="form-control  @error('username') is-invalid @enderror"
@@ -42,7 +42,7 @@
         </div>
         <div class="row">
             <div class="col-6">
-                <button type="submit" class="btn btn-primary btn-block btn-flat">تسجيل الدخول</button>
+                <button type="submit" id="submitButton" class="btn btn-primary btn-block btn-flat">تسجيل الدخول</button>
             </div>
             <!-- /.col -->
             <div class="col-6 text-right">

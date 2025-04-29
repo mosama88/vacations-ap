@@ -55,15 +55,30 @@
 
                 <div class="social-auth-links text-center mb-3">
                     <p>- أو -</p>
-                    <a href="#" class="btn btn-block btn-info">
-                        <i class="fab fa-facebook mr-2"></i> التواصل مع وحدة التحول الرقمى
-                    </a>
+
+                    <img src="{{ asset('dashboard') }}/assets/dist/img/dt-apa.png" alt="وحدة التحول الرقمى"
+                        class="elevation-3"
+                        style="
+                    width: 50px;
+                    height: 50px;
+                    object-fit: contain;
+                    border-radius: 50%;
+                    border: 3px solid rgba(0,0,0,0.1);
+                    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+                    transition: all 0.3s ease;
+                 "
+                        onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 6px 12px rgba(0,0,0,0.15)';"
+                        onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 8px rgba(0,0,0,0.1)';">
+                    التواصل مع
+                    وحدة التحول الرقمى
+
                 </div>
             </div>
         </div>
     </div>
 
     @include('dashboard.auth.layouts.js')
+
 </body>
 
 </html>
