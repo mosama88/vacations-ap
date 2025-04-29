@@ -24,7 +24,7 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="{{ route('dashboard.profile') }}" method="POST">
+                        <form action="{{ route('dashboard.profile') }}" method="POST" id="storeForm">
                             @csrf
                             <div class="card-body">
                                 <div class="row  mx-auto">
@@ -53,9 +53,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group mb-3 text-center">
-
-                                    <button type="submit" class="btn btn-primary">تغيير كلة المرور <i
-                                            class="fas fa-save mx-1"></i>
+                                    <button type="submit" class="btn btn-primary" id="submitButton">تغيير كلمة المرور <i
+                                            class="fas fa-key"></i>
                                     </button>
                                 </div>
 
@@ -141,7 +140,7 @@
                                 </select>
                             </div>
                         </div>
-                     
+
 
                     </div>
 
@@ -163,3 +162,12 @@
         </div><!-- /.container-fluid -->
     </section>
 @endsection
+@push('js')
+    <script>
+        document.getElementById('storeForm').addEventListener('submit', function(event) {
+            var submitButton = document.getElementById('submitButton');
+            submitButton.disabled = true;
+            submitButton.innerHTML = 'جاري تغيير كلمة المرور... <i class="fas fa-spinner fa-spin"></i>';
+        });
+    </script>
+@endpush

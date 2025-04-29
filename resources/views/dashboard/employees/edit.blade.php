@@ -1,7 +1,7 @@
 @php
-    use App\Enum\EmployeeStatus;
     use App\Enum\EmployeeType;
     use App\Enum\EmployeeGender;
+    use App\Enum\EmployeeStatus;
 @endphp
 @extends('dashboard.layouts.master')
 @section('active-employees', 'active')
@@ -96,17 +96,20 @@
                                             </span>
                                         @enderror
                                     </div>
+
                                     <div class="form-group col-6">
                                         <label for="exampleInputpassword">كلمة المرور</label>
-                                        <input type="password" name="password" value="{{ old('password') }}"
+                                        <input type="password" name="password"
+                                            value="{{ old('password', isset($employee->password) ? $employee->password : '') }}"
                                             class="form-control @error('password') is-invalid @enderror"
-                                            id="exampleInputpassword" placeholder="أدخل *************">
+                                            id="exampleInputpassword" placeholder="أدخل *************" disabled>
                                         @error('password')
                                             <span class="invalid-feedback text-right" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
                                     </div>
+
 
                                 </div>
                                 <div class="row">
@@ -219,9 +222,9 @@
                                             class="custom-select form-control-border @error('gender') is-invalid @enderror"
                                             id="exampleSelectBorder">
                                             <option value="">-- أختر النوع --</option>
-                                            <option @if (old('gender', $employee->gender == EmployeeGender::Male)) selected @endif
+                                            <option @if (old('gender', $employee->gender) === EmployeeGender::Male) selected @endif
                                                 value="{{ EmployeeGender::Male }}">ذكر</option>
-                                            <option @if (old('gender', $employee->gender == EmployeeGender::Female)) selected @endif
+                                            <option @if (old('gender', $employee->gender) === EmployeeGender::Female) selected @endif
                                                 value="{{ EmployeeGender::Female }}">انثى</option>
                                         </select>
                                         @error('gender')
@@ -236,9 +239,9 @@
                                             class="custom-select form-control-border @error('type') is-invalid @enderror"
                                             id="exampleSelectBorder">
                                             <option value="">-- أختر نوع الحساب --</option>
-                                            <option @if (old('type', $employee->type == EmployeeType::User)) selected @endif
+                                            <option @if (old('type', $employee->type) == EmployeeType::User) selected @endif
                                                 value="{{ EmployeeType::User }}">موظف</option>
-                                            <option @if (old('type', $employee->type == EmployeeType::Manager)) selected @endif
+                                            <option @if (old('type', $employee->type) == EmployeeType::Manager) selected @endif
                                                 value="{{ EmployeeType::Manager }}">مدير</option>
                                         </select>
                                         @error('type')
@@ -307,7 +310,7 @@
                                 </div>
                             </div>
                             <div class="card-footer text-center ">
-                                <button type="submit" id="submitButton" class="btn btn-info">حفظ البيانات <i
+                                <button type="submit" id="submitButton" class="btn btn-info">تعديل البيانات <i
                                         class="fas fa-save mx-1"></i>
                                 </button>
                             </div>
