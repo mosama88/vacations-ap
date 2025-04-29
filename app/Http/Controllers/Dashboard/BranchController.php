@@ -7,6 +7,7 @@ use App\Models\Governorate;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Dashboard\BranchRequest;
+use Illuminate\Support\Facades\DB;
 
 class BranchController extends Controller
 {
@@ -33,13 +34,20 @@ class BranchController extends Controller
      */
     public function store(BranchRequest $request)
     {
+        try {
+            DB::beginTransaction();
         $branches = $request->validated();
         $data = array_merge($branches, [
         ]);
         Branch::create($data);
         session()->flash('success', 'تم أضافة الفرع بنجاح');
-
+        
+        DB::commit();
         return redirect()->route('dashboard.branches.index');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->withErrors(['error' => 'عفوا حدث خطأ']);
+        }
     }
 
     /**

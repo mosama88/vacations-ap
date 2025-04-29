@@ -10,6 +10,7 @@ use App\Models\LeaveBalance;
 use Illuminate\Http\Request;
 use App\Models\FinanceCalendar;
 use App\Enum\LeaveBalanceStatus;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Dashboard\FinanceCalendarRequest;
@@ -41,15 +42,21 @@ class FinanceCalendarController extends Controller
      */
     public function store(FinanceCalendarRequest $request)
     {
+        try {
+            DB::beginTransaction();
 
-        $dataValidated = $request->validated();
-        $data = array_merge($dataValidated, [
-            'status' => StatusActive::Inactive,
-        ]);
-        FinanceCalendar::create($data);
-
-        session()->flash('success', 'تم أضافة السنه المالية بنجاح!');
-        return redirect()->route('dashboard.financeCalendars.index');
+            $dataValidated = $request->validated();
+            $data = array_merge($dataValidated, [
+                'status' => StatusActive::Inactive,
+            ]);
+            DB::commit();
+            FinanceCalendar::create($data);
+            session()->flash('success', 'تم أضافة السنه المالية بنجاح!');
+            return redirect()->route('dashboard.financeCalendars.index');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->withErrors(['error' => 'عفوا حدث خطأ']);
+        }
     }
 
     /**
@@ -78,16 +85,22 @@ class FinanceCalendarController extends Controller
      */
     public function update(FinanceCalendarRequest $request, FinanceCalendar $financeCalendar)
     {
+        try {
+            DB::beginTransaction();
+            if ($financeCalendar->status === StatusActive::Active) {
+                return redirect()->route('dashboard.financeCalendars.index')->withErrors(['error' => 'عفوآ سنه مالية مفتوحة لا يمكن تعديلها ']);
+            }
+            $financeCalendar->fill($request->validated());
+            DB::commit();
 
-        if ($financeCalendar->status === StatusActive::Active) {
-            return redirect()->route('dashboard.financeCalendars.index')->withErrors(['error' => 'عفوآ سنه مالية مفتوحة لا يمكن تعديلها ']);
+            $financeCalendar->update();
+
+            session()->flash('success', 'تم تعديل السنه المالية بنجاح!');
+            return redirect()->route('dashboard.financeCalendars.index');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->withErrors(['error' => 'عفوا حدث خطأ']);
         }
-        $financeCalendar->fill($request->validated());
-
-        $financeCalendar->update();
-
-        session()->flash('success', 'تم تعديل السنه المالية بنجاح!');
-        return redirect()->route('dashboard.financeCalendars.index');
     }
 
 
@@ -140,39 +153,51 @@ class FinanceCalendarController extends Controller
         if ($CheckDataOpenCounter > 0) {
             return redirect()->back()->withErrors(['error' => ' عفوا هناك بالفعل سنة مالية مازالت مفتوحة']);
         }
+        try {
+            DB::beginTransaction();
+            // تحديث الحالة للسنة المالية إلى "نشط"
+            $data->status = StatusActive::Active;
 
-        // تحديث الحالة للسنة المالية إلى "نشط"
-        $data->status = StatusActive::Active;
+            DB::commit();
+            // حفظ التحديث و استدعاء دالة إنشاء الأرصدة للموظفين
+            if ($data->save()) {
+                $this->createLeaveBalancesForAllEmployees($data); // تمرير الكائن الصحيح
+            }
 
-        // حفظ التحديث و استدعاء دالة إنشاء الأرصدة للموظفين
-        if ($data->save()) {
-            $this->createLeaveBalancesForAllEmployees($data); // تمرير الكائن الصحيح
+            session()->flash('success', 'تم تحديث البيانات بنجاح!');
+            return redirect()->route('dashboard.financeCalendars.index');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->withErrors(['error' => 'عفوا حدث خطأ']);
         }
-
-        session()->flash('success', 'تم تحديث البيانات بنجاح!');
-        return redirect()->route('dashboard.financeCalendars.index');
     }
 
 
 
     public function close($id)
     {
-        // البحث عن بيانات السنة المالية باستخدام المعرف المقدم
-        $data = FinanceCalendar::find($id);
+        try {
+            DB::beginTransaction();
+            // البحث عن بيانات السنة المالية باستخدام المعرف المقدم
+            $data = FinanceCalendar::find($id);
 
-        // التحقق من وجود البيانات
-        if (empty($data)) {
-            return redirect()->back()->with(['error' => 'عفوا، لا توجد بيانات للسنة المالية المحددة.']);
+            // التحقق من وجود البيانات
+            if (empty($data)) {
+                return redirect()->back()->with(['error' => 'عفوا، لا توجد بيانات للسنة المالية المحددة.']);
+            }
+
+            DB::commit();
+            $data->update([
+                'status' => StatusActive::Archive,
+            ]);
+
+
+            session()->flash('success', 'تم تحديث البيانات بنجاح!');
+            return redirect()->route('dashboard.financeCalendars.index');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->withErrors(['error' => 'عفوا حدث خطأ']);
         }
-
-
-        $data->update([
-            'status' => StatusActive::Archive,
-        ]);
-
-
-        session()->flash('success', 'تم تحديث البيانات بنجاح!');
-        return redirect()->route('dashboard.financeCalendars.index');
     }
 
 

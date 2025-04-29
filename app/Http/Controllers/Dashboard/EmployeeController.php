@@ -142,34 +142,51 @@ class EmployeeController extends Controller
 
     public function changePassword(Request $request)
     {
+        // إضافة قواعد التحقق
         $request->validate([
             'password' => [
                 'required',
                 'confirmed',
                 'max:15',
-                Password::min(8)
-                    ->mixedCase()
-                    ->letters()
-                    ->numbers()
-                    ->symbols()
-                    ->uncompromised()
+                Password::min(8)->mixedCase()  // يتطلب الحروف الكبيرة والصغيرة
             ],
             'password_confirmation' => 'required'
         ], [
             'password.required' => 'حقل كلمة المرور مطلوب',
-            'password.min' => 'يجب أن تتكون كلمة المرور من 8 أحرف على الأقل',
-            'password.max' => 'يجب ألا تزيد كلمة المرور عن 15 حرفاً',
             'password.confirmed' => 'كلمتا المرور غير متطابقتين',
-            'password_confirmation.required' => 'حقل تأكيد كلمة المرور مطلوب'
+            'password.max' => 'يجب ألا تزيد كلمة المرور عن 15 حرفاً',
+            'password.min' => 'يجب ألا تقل كلمة المرور عن 8 أحرف',
+            'password_confirmation.required' => 'حقل تأكيد كلمة المرور مطلوب',
         ]);
-        $user = Auth::user()->id;
-        $employee = Employee::findOrFail($user);
-        $employee->password = $request->password;
 
-        $employee->save();
+        // الحصول على المستخدم
+        $user = Auth::user();
 
-        session()->flash('success', 'تم تغيير كلمة المرور بنجاح');
+        if (!$user) {
+            session()->flash('error', 'المستخدم غير موجود');
+            return redirect()->back();
+        }
 
-        return redirect()->back();
+        try {
+            // استرجاع الموظف باستخدام المعرف الخاص بالمستخدم
+            $employee = Employee::findOrFail($user->id);
+
+            // تحديث كلمة المرور بشكل آمن
+            $employee->password = Hash::make($request->password);
+
+            // حفظ البيانات
+            $employee->save();
+
+            // إرسال رسالة نجاح
+            session()->flash('success', 'تم تغيير كلمة المرور بنجاح');
+
+            return redirect()->back();
+        } catch (\Exception $e) {
+            // في حالة حدوث أي استثناء
+            session()->flash('error', 'حدث خطأ أثناء تغيير كلمة المرور');
+
+            
+            return redirect()->back();
+        }
     }
 }

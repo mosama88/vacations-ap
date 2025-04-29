@@ -29,7 +29,7 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="{{ route('dashboard.employees.store') }}" method="POST">
+                        <form action="{{ route('dashboard.employees.store') }}" method="POST" id="storeForm">
                             @csrf
                             <div class="card-body">
                                 <div class="row">
@@ -242,7 +242,7 @@
                             </div>
 
                             <div class="card-footer text-center ">
-                                <button type="submit" class="btn btn-primary">حفظ البيانات <i
+                                <button type="submit" id="submitButton" class="btn btn-primary">حفظ البيانات <i
                                         class="fas fa-save mx-1"></i>
                                 </button>
                             </div>
@@ -277,4 +277,12 @@
             });
         })
     </script>
+        <script>
+            document.getElementById('storeForm').addEventListener('submit', function(event) {
+                var submitButton = document.getElementById('submitButton');
+                submitButton.disabled = true;
+                submitButton.innerHTML = 'جاري الحفظ...'; // Optional: Change text while submitting
+            });
+        </script>
+
 @endpush
