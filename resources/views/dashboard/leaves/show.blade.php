@@ -171,7 +171,7 @@
                                 </div>
 
                                 <form action="{{ route('dashboard.leaves.updateStatusLeave', $leave->id) }}"
-                                    method="POST">
+                                    method="POST" id="showForm">
                                     @csrf
                                     @method('PUT')
                                     @can('اخذ اجراء الأجازات')
@@ -224,7 +224,7 @@
                             @if ($leave->leave_status != LeaveStatusEnum::Approved)
                                 @if (auth()->user()->hasRole('super-admin') || Auth::user()->hasRole('admin'))
                                     <div class="card-footer text-center ">
-                                        <button type="submit" class="btn btn-primary">حفظ <i
+                                        <button type="submit" id="submitButton" class="btn btn-info">أخذ إجراء <i
                                                 class="fas fa-save mx-1"></i>
                                         </button>
                                     </div>
@@ -306,5 +306,12 @@
                 document.getElementById('days_taken').value = totalDays;
             }
         }
+    </script>
+    <script>
+        document.getElementById('showForm').addEventListener('submit', function(event) {
+            var submitButton = document.getElementById('submitButton');
+            submitButton.disabled = true;
+            submitButton.innerHTML = 'جاري أخذ الأجراء...'; // Optional: Change text while submitting
+        });
     </script>
 @endpush

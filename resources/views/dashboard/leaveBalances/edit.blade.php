@@ -30,7 +30,8 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="{{ route('dashboard.leaveBalances.update', $leaveBalance->id) }}" method="POST">
+                        <form action="{{ route('dashboard.leaveBalances.update', $leaveBalance->id) }}" method="POST"
+                            id="editForm">
                             @csrf
                             @method('PUT')
                             <div class="card-body">
@@ -77,7 +78,8 @@
                     <!-- /.card-body -->
 
                     <div class="card-footer text-center ">
-                        <button type="submit" class="btn btn-info">حفظ البيانات <i class="fas fa-save mx-1"></i>
+                        <button type="submit" id="submitButton" class="btn btn-info">تعديل البيانات <i
+                                class="fas fa-save mx-1"></i>
                         </button>
                     </div>
                     </form>
@@ -107,5 +109,12 @@
                 theme: 'bootstrap4'
             });
         })
+    </script>
+    <script>
+        document.getElementById('editForm').addEventListener('submit', function(event) {
+            var submitButton = document.getElementById('submitButton');
+            submitButton.disabled = true;
+            submitButton.innerHTML = 'جاري التعديل...'; // Optional: Change text while submitting
+        });
     </script>
 @endpush

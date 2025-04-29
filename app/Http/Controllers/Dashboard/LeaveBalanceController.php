@@ -10,6 +10,7 @@ use function Termwind\parse;
 use Illuminate\Http\Request;
 use App\Models\FinanceCalendar;
 use App\Enum\LeaveBalanceStatus;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Dashboard\LeaveBalanceRequest;
@@ -47,23 +48,29 @@ class LeaveBalanceController extends Controller
         if ($checkExists) {
             return redirect()->back()->withErrors(['error' => 'الموظف مسجل من قبل'])->withInput();
         }
-        $total_days_emergency = 7;
-        $leaveBalancees = $request->validated();
-        $data = array_merge($leaveBalancees, [
-            'finance_calendar_id' => $financial_year['id'],
-            'remainig_days' => $remainig_days = $request->total_days,
-            'used_days' => parse($remainig_days - $request->total_days),
-            'total_days_emergency' => $total_days_emergency,
-            'remainig_days_emergency' => $remainig_days_emergency = $total_days_emergency,
-            'used_days_emergency' => parse($remainig_days_emergency - $total_days_emergency),
-            'status' => LeaveBalanceStatus::Open,
-            'created_by' => Auth::user()->id,
-        ]);
 
-        LeaveBalance::create($data);
-        session()->flash('success', 'تم أضافة رصيد أجازات الموظف بنجاح');
-
-        return redirect()->route('dashboard.leaveBalances.index');
+        try {
+            DB::beginTransaction();
+            $total_days_emergency = 7;
+            $leaveBalancees = $request->validated();
+            $data = array_merge($leaveBalancees, [
+                'finance_calendar_id' => $financial_year['id'],
+                'remainig_days' => $remainig_days = $request->total_days,
+                'used_days' => parse($remainig_days - $request->total_days),
+                'total_days_emergency' => $total_days_emergency,
+                'remainig_days_emergency' => $remainig_days_emergency = $total_days_emergency,
+                'used_days_emergency' => parse($remainig_days_emergency - $total_days_emergency),
+                'status' => LeaveBalanceStatus::Open,
+                'created_by' => Auth::user()->id,
+            ]);
+            LeaveBalance::create($data);
+            DB::commit();
+            session()->flash('success', 'تم أضافة رصيد أجازات الموظف بنجاح');
+            return redirect()->route('dashboard.leaveBalances.index');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->withErrors(['error' => 'عفوا حدث خطأ' . $e->getMessage()])->withInput();
+        }
     }
 
     /**
@@ -97,17 +104,21 @@ class LeaveBalanceController extends Controller
         if ($checkExists) {
             return redirect()->back()->withErrors(['error' => 'الموظف مسجل من قبل'])->withInput();
         }
-
-        $leaveBalance->fill($request->validated());
-        $leaveBalance->finance_calendar_id = $financial_year['id'];
-        $leaveBalance->total_days = $request->total_days;
-        $leaveBalance->remainig_days = parse($request->total_days - $request->used_days);
-        $leaveBalance->used_days = parse($request->total_days - $request->remainig_days);
-
-        $leaveBalance->update();
-        session()->flash('success', 'تم تعديل رصيد أجازات الموظف بنجاح');
-
-        return redirect()->route('dashboard.leaveBalances.index');
+        try {
+            DB::beginTransaction();
+            $leaveBalance->fill($request->validated());
+            $leaveBalance->finance_calendar_id = $financial_year['id'];
+            $leaveBalance->total_days = $request->total_days;
+            $leaveBalance->remainig_days = parse($request->total_days - $request->used_days);
+            $leaveBalance->used_days = parse($request->total_days - $request->remainig_days);
+            $leaveBalance->update();
+            DB::commit();
+            session()->flash('success', 'تم تعديل رصيد أجازات الموظف بنجاح');
+            return redirect()->route('dashboard.leaveBalances.index');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->withErrors(['error' => 'عفوا حدث خطأ' . $e->getMessage()])->withInput();
+        }
     }
 
     /**

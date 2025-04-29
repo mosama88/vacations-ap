@@ -35,7 +35,7 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="{{ route('dashboard.leaves.update', $leave->id) }}" method="POST">
+                        <form action="{{ route('dashboard.leaves.update', $leave->id) }}" method="POST" id="editForm">
                             @csrf
                             @method('PUT')
                             <div class="card-body">
@@ -225,7 +225,7 @@
                             <!-- /.card-body -->
                             @if ($leave->leave_status != LeaveStatusEnum::Approved)
                                 <div class="card-footer text-center ">
-                                    <button type="submit" class="btn btn-primary">تعديل الأجازه <i
+                                    <button type="submit" id="submitButton" class="btn btn-info">تعديل البيانات <i
                                             class="fas fa-save mx-1"></i>
                                     </button>
                                 </div>
@@ -319,6 +319,13 @@
                 document.getElementById('days_taken').value = totalDays;
             }
         }
+    </script>
+    <script>
+        document.getElementById('editForm').addEventListener('submit', function(event) {
+            var submitButton = document.getElementById('submitButton');
+            submitButton.disabled = true;
+            submitButton.innerHTML = 'جاري التعديل...'; // Optional: Change text while submitting
+        });
     </script>
 @endpush
 
