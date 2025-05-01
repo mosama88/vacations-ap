@@ -1,20 +1,18 @@
-@php
-    // 1. ضبط المنطقة الزمنية مباشرة
-    date_default_timezone_set('Africa/Cairo');
+<?php
+// 1. ضبط المنطقة الزمنية مباشرة
+// date_default_timezone_set('Africa/Cairo');
 
-    // 2. إنشاء كائن التاريخ مع التوقيت المصري
-    $egyptTime = new DateTime('now', new DateTimeZone('Africa/Cairo'));
-    $egyptTime->modify('+1 hour'); // إضافة ساعة يدوياً إذا لزم الأمر
-    // 3. تهيئة العارض للتاريخ العربي
-    $formatter = new IntlDateFormatter(
-        'ar_SA',
-        IntlDateFormatter::FULL,
-        IntlDateFormatter::NONE,
-        'Africa/Cairo',
-        IntlDateFormatter::GREGORIAN,
-        'EEEE d MMMM y - h:mm:ss a',
-    );
-@endphp
+// // 2. إنشاء كائن التاريخ مع التوقيت المصري
+// $egyptTime = new DateTime('now', new DateTimeZone('Africa/Cairo'));
+// $egyptTime->modify('+1 hour'); // إضافة ساعة يدوياً إذا لزم الأمر
+
+// // 3. تهيئة العارض للتاريخ العربي
+// $formatter = new IntlDateFormatter('ar_SA', IntlDateFormatter::FULL, IntlDateFormatter::NONE, 'Africa/Cairo', IntlDateFormatter::GREGORIAN, 'EEEE d MMMM y - h:mm:ss a');
+
+// // تنسيق التاريخ
+// echo $formatter->format($egyptTime);
+?>
+
 
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
