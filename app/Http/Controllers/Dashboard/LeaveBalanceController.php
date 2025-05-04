@@ -48,7 +48,7 @@ class LeaveBalanceController extends Controller
         if ($checkExists) {
             return redirect()->back()->withErrors(['error' => 'الموظف مسجل من قبل'])->withInput();
         }
-
+// يوجد تعديل
         try {
             DB::beginTransaction();
             $total_days_emergency = 7;

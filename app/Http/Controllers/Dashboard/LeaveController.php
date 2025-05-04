@@ -52,6 +52,10 @@ class LeaveController extends Controller
      */
     public function create()
     {
+        $checkLeaveBalance = LeaveBalance::orderByDesc('total_days')->value('total_days');
+        if (!$checkLeaveBalance) {
+            return redirect()->back()->withErrors(['error' => 'عفوا لا يوجد رصيد أجازات للموظف']);
+        }
         $emplyeeId = Auth::user()->id;
         $other['weeks'] = Week::where('id', $emplyeeId)->get();
         $leave_balance = LeaveBalance::where('employee_id', $emplyeeId)
