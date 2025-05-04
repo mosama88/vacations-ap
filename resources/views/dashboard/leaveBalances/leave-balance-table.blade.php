@@ -13,7 +13,7 @@
     </div>
     <!-- /.card-header -->
     <div class="card-body p-0">
-        <table class="table table-head-fixed text-nowrap">
+        <table class="table table-head-fixed text-nowrap table-responsive">
             <thead>
                 <tr>
                     <th>#</th>

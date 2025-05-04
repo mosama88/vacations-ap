@@ -5,7 +5,7 @@
 
     <div class="row col-12 my-2">
         <div class="form-group col-6">
-            <label for="exampleInputName">بحث باسم الموظف أو أسم المستخدم أو كود الموظف</label>
+            <label for="exampleInputName">بحث بالأسم, أسم المستخدم, الكود</label>
             <input type="text" wire:model.live="emp_search" class="form-control" id="exampleInputName"
                 placeholder="أدخل موظف جديد">
         </div>
@@ -79,7 +79,7 @@
     </div>
     <div class="card-body p-0 row col-md-12">
 
-        <table class="table table-head-fixed text-nowrap ">
+        <table class="table table-head-fixed text-nowrap table-responsive">
             <thead>
                 <tr>
                     <th>#</th>

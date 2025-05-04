@@ -109,8 +109,7 @@ class LeaveBalanceController extends Controller
             $leaveBalance->fill($request->validated());
             $leaveBalance->finance_calendar_id = $financial_year['id'];
             $leaveBalance->total_days = $request->total_days;
-            $leaveBalance->remainig_days = parse($request->total_days - $request->used_days);
-            $leaveBalance->used_days = parse($request->total_days - $request->remainig_days);
+            $leaveBalance->remainig_days = $request->total_days;
             $leaveBalance->update();
             DB::commit();
             session()->flash('success', 'تم تعديل رصيد أجازات الموظف بنجاح');

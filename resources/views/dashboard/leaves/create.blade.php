@@ -75,13 +75,19 @@
                                             name="used_days" class="form-control bg-white" id="exampleInputused_days"
                                             placeholder="">
                                     </div>
+                                    @php
+                                        $remaining_regular = $employees->leaveBalance->remainig_days ?? null;
+                                        $class_regular = 'form-control bg-white';
 
+                                        if (!is_null($remaining_regular) && $remaining_regular <= 3) {
+                                            $class_regular = 'form-control bg-danger';
+                                        }
+                                    @endphp
                                     <div class="form-group col-4">
                                         <label for="exampleInputName">الرصيد المتبقى <span
                                                 class="text-info">(الأعتيادى)</span> </label>
-                                        <input disabled type="text"
-                                            value="{{ $employees->leaveBalance->remainig_days ?? 'لا يوجد رصيد' }}"
-                                            name="remainig_days" class="form-control bg-white"
+                                        <input disabled type="text" value="{{ $remaining_regular ?? 'لا يوجد رصيد' }}"
+                                            name="remainig_days" class="{{ $class_regular }}"
                                             id="exampleInputremainig_days" placeholder="">
                                     </div>
                                 </div>
@@ -297,7 +303,7 @@
 
 
 {{--
- 
+
  حساب يوم الجمعه
  <script>
         flatpickr("#start_date", {
