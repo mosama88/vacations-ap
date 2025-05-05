@@ -177,21 +177,16 @@ class EmployeeController extends Controller
         }
 
         try {
-            // استرجاع الموظف باستخدام المعرف الخاص بالمستخدم
             $employee = Employee::findOrFail($user->id);
 
-            // تحديث كلمة المرور بشكل آمن
             $employee->password = Hash::make($request->password);
 
-            // حفظ البيانات
             $employee->save();
 
-            // إرسال رسالة نجاح
             session()->flash('success', 'تم تغيير كلمة المرور بنجاح');
 
             return redirect()->back();
         } catch (\Exception $e) {
-            // في حالة حدوث أي استثناء
             session()->flash('error', 'حدث خطأ أثناء تغيير كلمة المرور');
 
 

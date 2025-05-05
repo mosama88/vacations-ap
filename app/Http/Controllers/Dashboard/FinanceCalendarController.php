@@ -135,33 +135,27 @@ class FinanceCalendarController extends Controller
 
     public function open($id)
     {
-        // البحث عن السنة المالية باستخدام الـ ID
         $data = FinanceCalendar::find($id);
 
-        // التأكد من وجود السنة المالية
         if (!$data) {
             return redirect()->route('dashboard.financeCalendars.index')->withErrors(['error' => 'عفوا حدث خطأ']);
         }
 
-        // إذا كانت السنة المالية مفتوحة بالفعل
         if ($data->status === StatusActive::Active) {
             return redirect()->route('dashboard.financeCalendars.index')->withErrors(['error' => ' عفوا لايمكن فتح السنة المالية في هذه الحالة']);
         }
 
-        // التأكد من عدم وجود سنة مالية مفتوحة بالفعل
         $CheckDataOpenCounter = FinanceCalendar::where('status', StatusActive::Active)->count();
         if ($CheckDataOpenCounter > 0) {
             return redirect()->back()->withErrors(['error' => ' عفوا هناك بالفعل سنة مالية مازالت مفتوحة']);
         }
         try {
             DB::beginTransaction();
-            // تحديث الحالة للسنة المالية إلى "نشط"
             $data->status = StatusActive::Active;
 
             DB::commit();
-            // حفظ التحديث و استدعاء دالة إنشاء الأرصدة للموظفين
             if ($data->save()) {
-                $this->createLeaveBalancesForAllEmployees($data); // تمرير الكائن الصحيح
+                $this->createLeaveBalancesForAllEmployees($data); 
             }
 
             session()->flash('success', 'تم تحديث البيانات بنجاح!');
@@ -178,10 +172,8 @@ class FinanceCalendarController extends Controller
     {
         try {
             DB::beginTransaction();
-            // البحث عن بيانات السنة المالية باستخدام المعرف المقدم
             $data = FinanceCalendar::find($id);
 
-            // التحقق من وجود البيانات
             if (empty($data)) {
                 return redirect()->back()->with(['error' => 'عفوا، لا توجد بيانات للسنة المالية المحددة.']);
             }
@@ -202,16 +194,13 @@ class FinanceCalendarController extends Controller
 
 
 
-    // دالة لإنشاء أرصدة الإجازات لجميع الموظفين بناءً على السنة المالية
     protected function createLeaveBalancesForAllEmployees(FinanceCalendar $financeCalendar)
     {
         $total_days_emergency = 7;
 
-        // احضار الموظفين النشطين فقط
         $employees = Employee::where('status', EmployeeStatus::Active)->get();
 
         foreach ($employees as $employee) {
-            // تحقق من أن الرصيد غير موجود مسبقًا
             $exists = LeaveBalance::where('employee_id', $employee->id)
                 ->where('finance_calendar_id', $financeCalendar->id)
                 ->exists();

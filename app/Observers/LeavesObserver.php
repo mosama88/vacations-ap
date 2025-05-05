@@ -32,10 +32,8 @@ class LeavesObserver
             return;
         }
 
-        // تحديد ID الموظف صاحب الإجازة (مش الأدمن اللي وافق)
         $employeeId = $leave->employee_id;
 
-        // الحصول على رصيد الإجازات
         $leaveBalance = LeaveBalance::where('employee_id', $employeeId)
             ->where('status', LeaveBalanceStatus::Open)
             ->first();
@@ -44,12 +42,10 @@ class LeavesObserver
             return;
         }
 
-        // تجاهل الإجازات المرضية
         if ($leave->leave_type == LeaveTypeEnum::Sick) {
             return;
         }
 
-        // تحديد نوع الخصم حسب نوع الإجازة
         switch ($leave->leave_type) {
             case LeaveTypeEnum::Emergency:
                 $leaveBalance->remainig_days_emergency -= $leave->days_taken;
@@ -64,14 +60,12 @@ class LeavesObserver
                 $leaveBalance->used_days += $leave->days_taken;
                 break;
             default:
-                return; // إذا كان النوع غير مدعوم
+                return; 
         }
 
-        // حفظ التغييرات
         try {
             $leaveBalance->save();
         } catch (\Exception $e) {
-            // يمكنك هنا إضافة منطق لمتابعة الأخطاء، مثل:
             // Log::error("Error saving leave balance: " . $e->getMessage());
             return;
         }
